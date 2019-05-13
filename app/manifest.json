@@ -1,0 +1,77 @@
+{
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appName__",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+M",
+        "mac": "Alt+Shift+M",
+        "chromeos": "Alt+Shift+M",
+        "linux": "Alt+Shift+M"
+      }
+    }
+  },
+  "icons": {
+    "16": "images/jingtumlogo.png",
+    "128": "images/jingtumlogo.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "chromereload.js",
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/jingtumlogo.png",
+      "38": "images/jingtumlogo.png"
+    },
+    "default_title": "JingtumMask",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor/content-script.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "http://localhost:8545/",
+    "activeTab",
+    "webRequest",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    "inpage.js",
+    "phishing.html"
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ]
+  }
+}
