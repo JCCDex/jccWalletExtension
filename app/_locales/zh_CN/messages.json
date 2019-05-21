@@ -244,7 +244,7 @@
     "message": "默认以太坊交易网络为主网。"
   },
   "denExplainer": {
-    "message": "你的 DEN 是存储在 MetaMask 中的已加密密码。"
+    "message": "你的 DEN 是存储在 JingtumMask 中的已加密密码。"
   },
   "deposit": {
     "message": "存入"
@@ -257,10 +257,10 @@
     "description": "Tells the user what coin they have selected to deposit with shapeshift"
   },
   "depositEth": {
-    "message": "存入 Eth"
+    "message": "存入 swtc"
   },
   "depositEther": {
-    "message": "存入 Ether"
+    "message": "存入 swtc"
   },
   "depositFiat": {
     "message": "从 Fiat 存入"
@@ -272,7 +272,7 @@
     "message": "从 ShapeShift 存入"
   },
   "depositShapeShiftExplainer": {
-    "message": "如果你拥有其他加密货币，你可以直接交易并存入 Ether 到你的 MetaMask 钱包。 不需要帐户。"
+    "message": "如果你拥有其他加密货币，你可以直接交易并存入 swtc 到你的 JingtumMask 钱包。 不需要帐户。"
   },
   "details": {
     "message": "详情"
@@ -281,10 +281,10 @@
     "message": "直接存入"
   },
   "directDepositEther": {
-    "message": "直接存入 Ether"
+    "message": "直接存入 swtc"
   },
   "directDepositEtherExplainer": {
-    "message": "如果你已经有了一些 Ether，通过直接转入是你的新钱包获取 Ether 的最快捷方式。"
+    "message": "如果你已经有了一些 swtc，通过直接转入是你的新钱包获取 swtc 的最快捷方式。"
   },
   "done": {
     "message": "完成"
@@ -549,7 +549,7 @@
     "message": "至少选择一种代币."
   },
   "needEtherInWallet": {
-    "message": "使用 MetaMask 与 DAPP 交互，需要你的钱包里有 Ether。"
+    "message": "使用 JingtumMask，需要你的钱包里有 swtc, 新钱包需要35个swtc激活，swtc可到https://weidex.vip购买。"
   },
   "needImportFile": {
     "message": "必须选择导入一个文件。",
