@@ -7708,12 +7708,12 @@ div.message-container > div:first-child {
     padding: 16px 20px;
     display: grid;
     grid-template-columns: 45px 1fr 1fr 1fr;
-    grid-template-areas: "identicon action status primary-amount" "identicon nonce status secondary-amount"; }
+    grid-template-areas: "identicon action status primary-amount" "identicon nonce status secondary-amount"; }
     @media screen and (max-width: 575px) {
       .transaction-list-item__grid {
         padding: 8px 20px 12px;
         grid-template-columns: 45px 5fr 3fr;
-        grid-template-areas: "nonce nonce nonce" "identicon action primary-amount" "identicon status secondary-amount"; } }
+        grid-template-areas: "nonce nonce nonce" "identicon action primary-amount" "identicon status secondary-amount"; } }
     .transaction-list-item__grid:hover {
       background: rgba(222, 222, 222, 0.2); }
   .transaction-list-item__identicon {
