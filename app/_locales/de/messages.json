@@ -39,10 +39,10 @@
     "message": "Web3-API-Anfrage"
   },
   "reviewProviderRequest": {
-    "message": "Bitte lesen Sie diese Ethereum-API-Anfrage."
+    "message": "Bitte lesen Sie diese Jingtum-API-Anfrage."
   },
   "providerRequestInfo": {
-    "message": "Die unten aufgeführte Domäne versucht, Zugriff auf die Ethereum-API anzufordern, damit sie mit der Ethereum-Blockchain interagieren kann. Überprüfen Sie immer, dass Sie sich auf der richtigen Website befinden, bevor Sie den Web3-Zugriff genehmigen."
+    "message": "Die unten aufgeführte Domäne versucht, Zugriff auf die Jingtum-API anzufordern, damit sie mit der Jingtum-Blockchain interagieren kann. Überprüfen Sie immer, dass Sie sich auf der richtigen Website befinden, bevor Sie den Web3-Zugriff genehmigen."
   },
   "accept": {
     "message": "Annehmen"
@@ -75,11 +75,11 @@
     "message": "Betrag + Gas"
   },
   "appDescription": {
-    "message": "Ethereum Browsererweiterung",
+    "message": "Jingtum Browsererweiterung",
     "description": "Die Beschreibung der Erweiterung"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "Der Name der Erweiterung"
   },
   "approved": {
@@ -120,7 +120,7 @@
     "message": "Mit Dharma ausleihen (Beta)"
   },
   "builtInCalifornia": {
-    "message": "MetaMask wurde in Kalifornien entwickelt und gebaut."
+    "message": "JingtumMask wurde in Kalifornien entwickelt und gebaut."
   },
   "buy": {
     "message": "Kaufen"
@@ -129,7 +129,7 @@
     "message": "Auf Coinbase kaufen"
   },
   "buyCoinbaseExplainer": {
-    "message": "Coinbase ist die weltweit bekannteste Art und Weise um Bitcoin, Ethereum und Litecoin zu kaufen und verkaufen."
+    "message": "Coinbase ist die weltweit bekannteste Art und Weise um Bitcoin, Jingtum und Litecoin zu kaufen und verkaufen."
   },
   "ok": {
     "message": "Ok"
@@ -232,7 +232,7 @@
     "message": "Das Standardnetzwerk für Ether Transaktionen ist das Main Net."
   },
   "denExplainer": {
-    "message": "Dein DEN ist dein passwortverschlüsselter Speicher innerhalb von MetaMask."
+    "message": "Dein DEN ist dein passwortverschlüsselter Speicher innerhalb von JingtumMask."
   },
   "deposit": {
     "message": "Einzahlen"
@@ -260,7 +260,7 @@
     "message": "Mit ShapeShift einzahlen"
   },
   "depositShapeShiftExplainer": {
-    "message": "Wenn du andere Kryptowährungen besitzt, kannst du diese direkt mit Hilfe deiner MetaMask Wallet handeln und einzahlen. Du benötigst keinen Account."
+    "message": "Wenn du andere Kryptowährungen besitzt, kannst du diese direkt mit Hilfe deiner JingtumMask Wallet handeln und einzahlen. Du benötigst keinen Account."
   },
   "details": {
     "message": "Details"
@@ -414,7 +414,7 @@
     "message": "Account importieren"
   },
   "importAccountMsg": {
-    "message": " Importierte Accounts werden nicht mit der Seed-Wörterfolge  deines ursprünglichen MetaMask Accounts verknüpft. Erfahre mehr über importierte Accounts."
+    "message": " Importierte Accounts werden nicht mit der Seed-Wörterfolge  deines ursprünglichen JingtumMask Accounts verknüpft. Erfahre mehr über importierte Accounts."
   },
   "importAnAccount": {
     "message": "Einen Account importieren"
@@ -504,13 +504,13 @@
     "message": "Die Wörter der Seed-Wörterfolgen sind alle kleingeschrieben"
   },
   "mainnet": {
-    "message": "Ethereum Main Net"
+    "message": "Jingtum Main Net"
   },
   "message": {
     "message": "Nachricht"
   },
   "metamaskDescription": {
-    "message": "MetaMask ist ein sicherer Identitätssafe für Ethereum."
+    "message": "JingtumMask ist ein sicherer Identitätssafe für Jingtum."
   },
   "min": {
     "message": "Minimum"
@@ -522,7 +522,7 @@
     "message": "Du musst mindestens 1 Token auswählen."
   },
   "needEtherInWallet": {
-    "message": "Um dezentralisierte Applikationen mit MetaMask verwenden zu können, benötigst du Ether in deiner Wallet."
+    "message": "Um dezentralisierte Applikationen mit JingtumMask verwenden zu können, benötigst du Ether in deiner Wallet."
   },
   "needImportFile": {
     "message": "Für den Import musst du eine Datei auswählen.",
@@ -683,7 +683,7 @@
     "message": "Aktueller RPC"
   },
   "connectingToMainnet": {
-    "message": "Verbinde zum Ethereum Main Net"
+    "message": "Verbinde zum Jingtum Main Net"
   },
   "connectingToRopsten": {
     "message": " Verbinde zum Ropsten Testnetzwerk"
@@ -745,7 +745,7 @@
     "message": "Token senden"
   },
   "onlySendToEtherAddress": {
-    "message": "ETH unbedingt nur zu einer Ethereum Adresse senden."
+    "message": "ETH unbedingt nur zu einer Jingtum Adresse senden."
   },
   "sendTokensAnywhere": {
     "message": "Token zu einer beliebigen Person mit einem Ethereumaccount senden"
@@ -842,7 +842,7 @@
     "message": "Tokensymbol"
   },
   "tokenWarning1": {
-    "message": "Behalte die Token die du mit deinem MetaMask Account gekauft hast im Blick. Wenn du Token mit einem anderen Account gekauft hast, werden diese hier nicht angezeigt."
+    "message": "Behalte die Token die du mit deinem JingtumMask Account gekauft hast im Blick. Wenn du Token mit einem anderen Account gekauft hast, werden diese hier nicht angezeigt."
   },
   "total": {
     "message": "Gesamt"
@@ -864,7 +864,7 @@
     "description": "Gefolgt von einem Link (hier) um die Tokenguthaben anzuzeigen"
   },
   "twelveWords": {
-    "message": "Diese 12 Wörter stellen die einzige Möglichkeit dar deinen MetaMask Account wiederherzustellen. Speichere sie daher an einem sicheren und geheimen Ort."
+    "message": "Diese 12 Wörter stellen die einzige Möglichkeit dar deinen JingtumMask Account wiederherzustellen. Speichere sie daher an einem sicheren und geheimen Ort."
   },
   "typePassword": {
     "message": "Passwort eingeben"
@@ -873,7 +873,7 @@
     "message": "Willkommen zur neuen Oberfläche (Beta)"
   },
   "uiWelcomeMessage": {
-    "message": "Du verwendest  nun die neue MetaMask Oberfläche. Schau dich um, teste die neuen Features wie z.B. das Senden von Token und lass es uns wissen falls du irgendwelche Probleme hast."
+    "message": "Du verwendest  nun die neue JingtumMask Oberfläche. Schau dich um, teste die neuen Features wie z.B. das Senden von Token und lass es uns wissen falls du irgendwelche Probleme hast."
   },
   "unapproved": {
     "message": "Nicht genehmigt"
@@ -919,7 +919,7 @@
     "message": "Warnung"
   },
   "welcome": {
-    "message": "Willkommen zu MetaMask"
+    "message": "Willkommen zu JingtumMask"
   },
   "whatsThis": {
     "message": "Was ist das?"

@@ -9,7 +9,7 @@ Additional features or functionality on the send screen should include an update
 ## Send Eth mode
   - [ ] **Header** _It should:_
     - [ ] have title "Send ETH"
-    - [ ] have sub title "Only send ETH to an Ethereum address."
+    - [ ] have sub title "Only send ETH to an Jingtum address."
     - [ ] return user to main screen when top right X is clicked
   - [ ] **From row** _It should:_
     - [ ] show the currently selected account by default 
@@ -51,7 +51,7 @@ Additional features or functionality on the send screen should include an update
 ## Send token mode
 - [ ] **Header** _It should:_
   - [ ] have title "Send Tokens"
-  - [ ] have sub title "Only send [token symbol] to an Ethereum address."
+  - [ ] have sub title "Only send [token symbol] to an Jingtum address."
   - [ ] return user to main screen when top right X is clicked
 - [ ] **From row** _It should:_
   - [ ] Behave the same as 'Send ETH mode' (see above)

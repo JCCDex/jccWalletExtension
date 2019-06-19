@@ -36,10 +36,10 @@
     "message": "Počisti podatke o odobritvi"
   },
   "providerAPIRequest": {
-    "message": "Zahteva za Ethereum API"
+    "message": "Zahteva za Jingtum API"
   },
   "reviewProviderRequest": {
-    "message": "Preglejte zahtevo za Ethereum API."
+    "message": "Preglejte zahtevo za Jingtum API."
   },
   "providerRequestInfo": {
     "message": "Domena zahteva dostop do verige blokov in ogled vašega računa. Pred potrditvjo vedno preverite ali ste na želeni spletni strani."
@@ -90,7 +90,7 @@
     "message": "Dodaj priporočene žetone"
   },
   "addAcquiredTokens": {
-    "message": "Dodaj žetone pridobljene z MetaMask"
+    "message": "Dodaj žetone pridobljene z JingtumMask"
   },
   "advanced": {
     "message": "Napredno"
@@ -105,11 +105,11 @@
     "message": "Znesek + TX Fee"
   },
   "appDescription": {
-    "message": "Denarnica za Ethereum v brskalniku",
+    "message": "Denarnica za Jingtum v brskalniku",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "The name of the application"
   },
   "approve": {
@@ -201,7 +201,7 @@
     "message": "Vaš brskalnik ni podptrt ..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask je zasnovan in ustvarjen v Kaliforniji."
+    "message": "JingtumMask je zasnovan in ustvarjen v Kaliforniji."
   },
   "buy": {
     "message": "Kupi"
@@ -391,7 +391,7 @@
     "message": "Privzeto omrežje za transkacije je glavno omrežje."
   },
   "denExplainer": {
-    "message": "Vaš DEN je z geslom šifrirana shramba v MetaMask."
+    "message": "Vaš DEN je z geslom šifrirana shramba v JingtumMask."
   },
   "deposit": {
     "message": "Vplačaj"
@@ -419,7 +419,7 @@
     "message": "Vplačilo z ShapeShift"
   },
   "depositShapeShiftExplainer": {
-    "message": "Če imate druge kriptovalute, lahko Ether vplačate neposredno v MetaMask. Brez računov."
+    "message": "Če imate druge kriptovalute, lahko Ether vplačate neposredno v JingtumMask. Brez računov."
   },
   "details": {
     "message": "Podrobnosti"
@@ -431,7 +431,7 @@
     "message": "Neposredno vplačilo ehera"
   },
   "directDepositEtherExplainer": {
-    "message": "Če že imate Ether, ga lahko najhitreje dobite v MetaMask z neposrednim vplačilom."
+    "message": "Če že imate Ether, ga lahko najhitreje dobite v JingtumMask z neposrednim vplačilom."
   },
   "done": {
     "message": "Končano"
@@ -707,7 +707,7 @@
     "description": "format for importing an account"
   },
   "keepTrackTokens": {
-    "message": "Sledite žetonom, ki ste jih pridobili z MetaMask."
+    "message": "Sledite žetonom, ki ste jih pridobili z JingtumMask."
   },
   "kovan": {
     "message": "Testno omrežje Kovan"
@@ -771,7 +771,7 @@
     "message": "Sporočilo"
   },
   "metamaskDescription": {
-    "message": "MetaMask je varen identitetni sklad za Ethereum."
+    "message": "JingtumMask je varen identitetni sklad za Jingtum."
   },
   "metamaskSeedWords": {
     "message": "Seed Words"
@@ -897,10 +897,10 @@
     "message": "Vrnili ste se v star uporabniški vmesnik. V novega se lahko vrnete z možnostjo v spustnem meniju v zgornjem desnem kotu."
   },
   "onlySendToEtherAddress": {
-    "message": "Na Ethereum naslov pošljute samo ETH."
+    "message": "Na Jingtum naslov pošljute samo ETH."
   },
   "onlySendTokensToAccountAddress": {
-    "message": "Na Ethereum naslov pošljute samo $1.",
+    "message": "Na Jingtum naslov pošljute samo $1.",
     "description": "displays token symbol"
   },
   "openInTab": {
@@ -1187,7 +1187,7 @@
     "message": "Izberi račun"
   },
   "selectAnAccountHelp": {
-    "message": "Izberi račun za prikaz v MetaMask"
+    "message": "Izberi račun za prikaz v JingtumMask"
   },
   "selectAHigherGasFee": {
     "message": "Izberite višji gas fee, da pospešite obdelavo vaše transakcije.*"
@@ -1199,7 +1199,7 @@
     "message": "Če obstoječih Ledger ne vidite, poskusite izbrati \"Legacy (MEW / MyCrypto)\""
   },
   "sendTokensAnywhere": {
-    "message": "Pošljite žetone komurkoli z Ethereum naslovom"
+    "message": "Pošljite žetone komurkoli z Jingtum naslovom"
   },
   "settings": {
     "message": "Nastavitve"
@@ -1292,7 +1292,7 @@
     "message": "3. Začnite uporabljati dApps in več!"
   },
   "step3HardwareWalletMsg": {
-    "message": "Uporabite strojno denarnico kot katerikoli drug Ethereum račun. Prijavite se v dApps, pošljite Ether in ERC20 žetone in žetone kot CryptoKitties."
+    "message": "Uporabite strojno denarnico kot katerikoli drug Jingtum račun. Prijavite se v dApps, pošljite Ether in ERC20 žetone in žetone kot CryptoKitties."
   },
   "submit": {
     "message": "Potrdi"
@@ -1344,7 +1344,7 @@
     "message": "Simbol žetona"
   },
   "tokenWarning1": {
-    "message": "Sledite žetonom, ki ste jih kupili z MetaMask metamask računom. Če ste jih kupili drugje, ne bodo prikazani tukaj."
+    "message": "Sledite žetonom, ki ste jih kupili z JingtumMask metamask računom. Če ste jih kupili drugje, ne bodo prikazani tukaj."
   },
   "total": {
     "message": "Skupno"
@@ -1426,10 +1426,10 @@
     "message": "Poskusi znova"
   },
   "twelveWords": {
-    "message": "Edini način za obnovitev MetaMask računa, je teh 12 besed.\nShranite jih na varno in skrivno mesto."
+    "message": "Edini način za obnovitev JingtumMask računa, je teh 12 besed.\nShranite jih na varno in skrivno mesto."
   },
   "typePassword": {
-    "message": "Vnesite vaše MetaMask geslo"
+    "message": "Vnesite vaše JingtumMask geslo"
   },
   "uiWelcome": {
     "message": "Dobrodošli v nov UI (Beta)"
@@ -1523,7 +1523,7 @@
     "message": "Dobrodošli nazaj!"
   },
   "welcome": {
-    "message": "Dobrodošli v MetaMask"
+    "message": "Dobrodošli v JingtumMask"
   },
   "whatsThis": {
     "message": "Kaj je to?"

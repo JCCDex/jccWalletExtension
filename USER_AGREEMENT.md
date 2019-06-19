@@ -6,7 +6,7 @@ _Our Terms of Use have been updated as of September 5, 2016_
 
 ## 1. Acceptance of Terms ##
 
-MetaMask provides a platform for managing Ethereum (or "ETH") accounts, and allowing ordinary websites to interact with the Ethereum blockchain, while keeping the user in control over what transactions they approve, through our website located at[ ](http://metamask.io)[https://metamask.io/](https://metamask.io/) and browser plugin (the "Site") — which includes text, images, audio, code and other materials  (collectively, the “Content”) and all of the features, and services provided. The Site, and any other features, tools, materials, or other services offered from time to time by MetaMask are referred to here as the “Service.” Please read these Terms of Use (the “Terms” or “Terms of Use”) carefully before using the Service. By using or otherwise accessing the Services, or clicking to accept or agree to these Terms where that option is made available, you (1) accept and agree to these Terms (2) consent to the collection, use, disclosure and other handling of information as described in our Privacy Policy  and (3) any additional terms, rules and conditions of participation issued by MetaMask from time to time. If you do not agree to the Terms, then you may not access or use the Content or Services.
+MetaMask provides a platform for managing Jingtum (or "ETH") accounts, and allowing ordinary websites to interact with the Jingtum blockchain, while keeping the user in control over what transactions they approve, through our website located at[ ](http://metamask.io)[https://metamask.io/](https://metamask.io/) and browser plugin (the "Site") — which includes text, images, audio, code and other materials  (collectively, the “Content”) and all of the features, and services provided. The Site, and any other features, tools, materials, or other services offered from time to time by MetaMask are referred to here as the “Service.” Please read these Terms of Use (the “Terms” or “Terms of Use”) carefully before using the Service. By using or otherwise accessing the Services, or clicking to accept or agree to these Terms where that option is made available, you (1) accept and agree to these Terms (2) consent to the collection, use, disclosure and other handling of information as described in our Privacy Policy  and (3) any additional terms, rules and conditions of participation issued by MetaMask from time to time. If you do not agree to the Terms, then you may not access or use the Content or Services.
 
 ## 2. Modification of Terms of Use ##
 
@@ -32,11 +32,11 @@ You expressly understand and agree that your use of the Service is at your sole 
 
 ### 5.2 Sophistication and Risk of Cryptographic Systems ###
 
-By utilizing the Service or interacting with the Content or platform in any way, you represent that you understand the inherent risks associated with cryptographic systems; and warrant that you have an understanding of the usage and intricacies of native cryptographic tokens, like Ether (ETH) and Bitcoin (BTC), smart contract based tokens such as those that follow the Ethereum Token Standard (https://github.com/ethereum/EIPs/issues/20), and blockchain-based software systems.
+By utilizing the Service or interacting with the Content or platform in any way, you represent that you understand the inherent risks associated with cryptographic systems; and warrant that you have an understanding of the usage and intricacies of native cryptographic tokens, like Ether (ETH) and Bitcoin (BTC), smart contract based tokens such as those that follow the Jingtum Token Standard (https://github.com/ethereum/EIPs/issues/20), and blockchain-based software systems.
 
 ### 5.3 Risk of Regulatory Actions in One or More Jurisdictions ###
 
-MetaMask and ETH could be impacted by one or more regulatory inquiries or regulatory action, which could impede or limit the ability of MetaMask to continue to develop, or which could impede or limit your ability to access or use the Service or Ethereum blockchain.
+MetaMask and ETH could be impacted by one or more regulatory inquiries or regulatory action, which could impede or limit the ability of MetaMask to continue to develop, or which could impede or limit your ability to access or use the Service or Jingtum blockchain.
 
 ### 5.4 Risk of Weaknesses or Exploits in the Field of Cryptography ###
 
@@ -44,11 +44,11 @@ You acknowledge and understand that Cryptography is a progressing field. Advance
 
 ### 5.5 Volatility of Crypto Currencies ###
 
-You understand that Ethereum and other blockchain technologies and associated currencies or tokens are highly volatile due to many factors including but not limited to adoption, speculation, technology and security risks. You also acknowledge that the cost of transacting on such technologies is variable and may increase at any time causing impact to any activities taking place on the Ethereum blockchain. You acknowledge these risks and represent that MetaMask cannot be held liable for such fluctuations or increased costs.
+You understand that Jingtum and other blockchain technologies and associated currencies or tokens are highly volatile due to many factors including but not limited to adoption, speculation, technology and security risks. You also acknowledge that the cost of transacting on such technologies is variable and may increase at any time causing impact to any activities taking place on the Jingtum blockchain. You acknowledge these risks and represent that MetaMask cannot be held liable for such fluctuations or increased costs.
 
 ### 5.6 Application Security ###
 
-You acknowledge that Ethereum applications are code subject to flaws and acknowledge that you are solely responsible for evaluating any code provided by the Services or Content and the trustworthiness of any third-party websites, products, smart-contracts, or Content you access or use through the Service. You further expressly acknowledge and represent that Ethereum applications can be written maliciously or negligently, that MetaMask cannot be held liable for your interaction with such applications and that such applications may cause the loss of property or even identity. This warning and others later provided by MetaMask in no way evidence or represent an on-going duty to alert you to all of the potential risks of utilizing the Service or Content.
+You acknowledge that Jingtum applications are code subject to flaws and acknowledge that you are solely responsible for evaluating any code provided by the Services or Content and the trustworthiness of any third-party websites, products, smart-contracts, or Content you access or use through the Service. You further expressly acknowledge and represent that Jingtum applications can be written maliciously or negligently, that MetaMask cannot be held liable for your interaction with such applications and that such applications may cause the loss of property or even identity. This warning and others later provided by MetaMask in no way evidence or represent an on-going duty to alert you to all of the potential risks of utilizing the Service or Content.
 
 ## 6. Indemnity ##
 

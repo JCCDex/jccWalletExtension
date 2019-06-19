@@ -4,7 +4,7 @@
       "symbol": "ethaud",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "aud",
@@ -15,7 +15,7 @@
       "symbol": "ethhkd",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "hkd",
@@ -26,7 +26,7 @@
       "symbol": "ethsgd",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "sgd",
@@ -37,7 +37,7 @@
       "symbol": "ethidr",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "idr",
@@ -48,7 +48,7 @@
       "symbol": "ethphp",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "php",
@@ -59,7 +59,7 @@
       "symbol": "eth1st",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "1st",
@@ -70,7 +70,7 @@
       "symbol": "ethadt",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "adt",
@@ -81,7 +81,7 @@
       "symbol": "ethadx",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "adx",
@@ -92,7 +92,7 @@
       "symbol": "ethant",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "ant",
@@ -103,7 +103,7 @@
       "symbol": "ethbat",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "bat",
@@ -114,7 +114,7 @@
       "symbol": "ethbnt",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "bnt",
@@ -125,7 +125,7 @@
       "symbol": "ethbtc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "btc",
@@ -136,7 +136,7 @@
       "symbol": "ethcad",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "cad",
@@ -147,7 +147,7 @@
       "symbol": "ethcfi",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "cfi",
@@ -158,7 +158,7 @@
       "symbol": "ethcrb",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "crb",
@@ -169,7 +169,7 @@
       "symbol": "ethcvc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "cvc",
@@ -180,7 +180,7 @@
       "symbol": "ethdash",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "dash",
@@ -191,7 +191,7 @@
       "symbol": "ethdgd",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "dgd",
@@ -202,18 +202,18 @@
       "symbol": "ethetc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "etc",
-        "name": "Ethereum Classic"
+        "name": "Jingtum Classic"
       }
     },
     {
       "symbol": "etheur",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "eur",
@@ -224,7 +224,7 @@
       "symbol": "ethfun",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "fun",
@@ -235,7 +235,7 @@
       "symbol": "ethgbp",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "gbp",
@@ -246,7 +246,7 @@
       "symbol": "ethgno",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "gno",
@@ -257,7 +257,7 @@
       "symbol": "ethgnt",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "gnt",
@@ -268,7 +268,7 @@
       "symbol": "ethgup",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "gup",
@@ -279,7 +279,7 @@
       "symbol": "ethhmq",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "hmq",
@@ -290,7 +290,7 @@
       "symbol": "ethjpy",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "jpy",
@@ -301,7 +301,7 @@
       "symbol": "ethlgd",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "lgd",
@@ -312,7 +312,7 @@
       "symbol": "ethlsk",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "lsk",
@@ -323,7 +323,7 @@
       "symbol": "ethltc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "ltc",
@@ -334,7 +334,7 @@
       "symbol": "ethlun",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "lun",
@@ -345,7 +345,7 @@
       "symbol": "ethmco",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "mco",
@@ -356,7 +356,7 @@
       "symbol": "ethmtl",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "mtl",
@@ -367,7 +367,7 @@
       "symbol": "ethmyst",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "myst",
@@ -378,7 +378,7 @@
       "symbol": "ethnmr",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "nmr",
@@ -389,7 +389,7 @@
       "symbol": "ethomg",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "omg",
@@ -400,7 +400,7 @@
       "symbol": "ethpay",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "pay",
@@ -411,7 +411,7 @@
       "symbol": "ethptoy",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "ptoy",
@@ -422,7 +422,7 @@
       "symbol": "ethqrl",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "qrl",
@@ -433,7 +433,7 @@
       "symbol": "ethqtum",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "qtum",
@@ -444,7 +444,7 @@
       "symbol": "ethrep",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "rep",
@@ -455,7 +455,7 @@
       "symbol": "ethrlc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "rlc",
@@ -466,7 +466,7 @@
       "symbol": "ethrub",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "rub",
@@ -477,7 +477,7 @@
       "symbol": "ethsc",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "sc",
@@ -488,7 +488,7 @@
       "symbol": "ethsngls",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "sngls",
@@ -499,7 +499,7 @@
       "symbol": "ethsnt",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "snt",
@@ -510,7 +510,7 @@
       "symbol": "ethsteem",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "steem",
@@ -521,7 +521,7 @@
       "symbol": "ethstorj",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "storj",
@@ -532,7 +532,7 @@
       "symbol": "ethtime",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "time",
@@ -543,7 +543,7 @@
       "symbol": "ethtkn",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "tkn",
@@ -554,7 +554,7 @@
       "symbol": "ethtrst",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "trst",
@@ -565,7 +565,7 @@
       "symbol": "ethuah",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "uah",
@@ -576,7 +576,7 @@
       "symbol": "ethusd",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "usd",
@@ -587,7 +587,7 @@
       "symbol": "ethwings",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "wings",
@@ -598,7 +598,7 @@
       "symbol": "ethxem",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "xem",
@@ -609,7 +609,7 @@
       "symbol": "ethxlm",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "xlm",
@@ -620,7 +620,7 @@
       "symbol": "ethxmr",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "xmr",
@@ -631,7 +631,7 @@
       "symbol": "ethxrp",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "xrp",
@@ -642,7 +642,7 @@
       "symbol": "ethzec",
       "base": {
         "code": "eth",
-        "name": "Ethereum"
+        "name": "Jingtum"
       },
       "quote": {
         "code": "zec",

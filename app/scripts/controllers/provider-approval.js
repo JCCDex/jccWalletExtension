@@ -1,7 +1,7 @@
 const ObservableStore = require('obs-store')
 
 /**
- * A controller that services user-approved requests for a full Ethereum provider API
+ * A controller that services user-approved requests for a full Jingtum provider API
  */
 class ProviderApprovalController {
   /**
@@ -49,7 +49,7 @@ class ProviderApprovalController {
   }
 
   /**
-   * Called when a tab requests access to a full Ethereum provider API
+   * Called when a tab requests access to a full Jingtum provider API
    *
    * @param {string} origin - Origin of the window requesting full provider access
    * @param {string} siteTitle - The title of the document requesting full provider access
@@ -101,7 +101,7 @@ class ProviderApprovalController {
   }
 
   /**
-   * Called when a user approves access to a full Ethereum provider API
+   * Called when a user approves access to a full Jingtum provider API
    *
    * @param {string} tabID - ID of the target window that approved provider access
    */
@@ -120,7 +120,7 @@ class ProviderApprovalController {
   }
 
   /**
-   * Called when a tab rejects access to a full Ethereum provider API
+   * Called when a tab rejects access to a full Jingtum provider API
    *
    * @param {string} tabID - ID of the target window that rejected provider access
    */

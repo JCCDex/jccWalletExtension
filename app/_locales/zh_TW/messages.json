@@ -96,7 +96,7 @@
     "message": "加入建議的代幣"
   },
   "addAcquiredTokens": {
-    "message": "將您已經擁有的代幣顯示於 MetaMask"
+    "message": "將您已經擁有的代幣顯示於 JingtumMask"
   },
   "advanced": {
     "message": "進階"
@@ -115,7 +115,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "The name of the application"
   },
   "approved": {
@@ -174,7 +174,7 @@
     "message": "您的瀏覽器尚未支援..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask 是在加州設計製造"
+    "message": "JingtumMask 是在加州設計製造"
   },
   "buy": {
     "message": "購買"
@@ -222,7 +222,7 @@
     "message": "關閉"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "您需要在 Google Chrome 瀏覽器使用 MetaMask 連結您的硬體錢包"
+    "message": "您需要在 Google Chrome 瀏覽器使用 JingtumMask 連結您的硬體錢包"
   },
   "confirm": {
     "message": "確認"
@@ -358,7 +358,7 @@
     "message": "預設乙太幣交易網路為主網路"
   },
   "denExplainer": {
-    "message": "您的 DEN 是 MetaMask 中您的的密碼加密儲存庫。"
+    "message": "您的 DEN 是 JingtumMask 中您的的密碼加密儲存庫。"
   },
   "deposit": {
     "message": "存入"
@@ -386,7 +386,7 @@
     "message": "從 ShapeShift 存入"
   },
   "depositShapeShiftExplainer": {
-    "message": "如果您擁有其他加密貨幣，可直接轉換為乙太幣存入 MetaMask 錢包。不需開新帳戶。"
+    "message": "如果您擁有其他加密貨幣，可直接轉換為乙太幣存入 JingtumMask 錢包。不需開新帳戶。"
   },
   "details": {
     "message": "詳情"
@@ -586,7 +586,7 @@
     "message": "連線硬體錢包"
   },
   "hardwareWalletsMsg": {
-    "message": "選擇要連線到 MetaMask 的硬體錢包"
+    "message": "選擇要連線到 JingtumMask 的硬體錢包"
   },
   "havingTroubleConnecting": {
     "message": "無法正確連線?"
@@ -627,7 +627,7 @@
     "message": "匯入帳戶"
   },
   "importAccountMsg": {
-    "message": " 匯入的帳戶與您原有 MetaMask 帳戶的助憶詞並無關聯。請查看與匯入帳戶相關的資料 "
+    "message": " 匯入的帳戶與您原有 JingtumMask 帳戶的助憶詞並無關聯。請查看與匯入帳戶相關的資料 "
   },
   "importAccountSeedPhrase": {
     "message": "利用助憶詞還原"
@@ -696,7 +696,7 @@
     "description": "format for importing an account"
   },
   "keepTrackTokens": {
-    "message": "持續追蹤您 MetaMask 帳戶中的代幣。"
+    "message": "持續追蹤您 JingtumMask 帳戶中的代幣。"
   },
   "kovan": {
     "message": "Kovan 測試網路"
@@ -745,7 +745,7 @@
     "message": "登出"
   },
   "loose": {
-    "message": "非 MetaMask 帳號"
+    "message": "非 JingtumMask 帳號"
   },
   "loweCaseWords": {
     "message": "助憶詞僅包含小寫字元"
@@ -763,13 +763,13 @@
     "message": "訊息"
   },
   "metamaskDescription": {
-    "message": "MetaMask 是乙太坊安全身份識別金庫"
+    "message": "JingtumMask 是乙太坊安全身份識別金庫"
   },
   "metamaskSeedWords": {
-    "message": "MetaMask Seed Words"
+    "message": "JingtumMask Seed Words"
   },
   "metamaskVersion": {
-    "message": "MetaMask 版本"
+    "message": "JingtumMask 版本"
   },
   "min": {
     "message": "最小"
@@ -787,7 +787,7 @@
     "message": "必須選擇至少 1 代幣"
   },
   "needEtherInWallet": {
-    "message": "要使用 MetaMask 存取去中心化應用服務時，您的錢包中需要有乙太幣。"
+    "message": "要使用 JingtumMask 存取去中心化應用服務時，您的錢包中需要有乙太幣。"
   },
   "needImportFile": {
     "message": "您必須選擇一個檔案來匯入",
@@ -1088,7 +1088,7 @@
     "message": "當前的 RPC"
   },
   "connectingToMainnet": {
-    "message": "連線到主 Ethereum 網路"
+    "message": "連線到主 Jingtum 網路"
   },
   "connectingToRopsten": {
     "message": "連線到 Ropsten 測試網路"
@@ -1207,7 +1207,7 @@
     "message": "選擇帳戶"
   },
   "selectAnAccountHelp": {
-    "message": "Select the account to view in MetaMask"
+    "message": "Select the account to view in JingtumMask"
   },
   "selectAHigherGasFee": {
     "message": "選擇更高的交易費可加速您的交易處理時間 *"
@@ -1376,7 +1376,7 @@
     "message": "代幣代號"
   },
   "tokenWarning1": {
-    "message": "使用 MetaMask 帳戶追蹤您已購得的代幣。如果使用不同的帳戶保存購得的代幣，那些代幣就不會出現在這裡。"
+    "message": "使用 JingtumMask 帳戶追蹤您已購得的代幣。如果使用不同的帳戶保存購得的代幣，那些代幣就不會出現在這裡。"
   },
   "total": {
     "message": "總量"
@@ -1458,19 +1458,19 @@
     "message": "再試一次"
   },
   "twelveWords": {
-    "message": "這 12 個單詞是唯一回復您的 MetaMask 帳戶的方法。\n將它們儲存到那些安全且隱密的地方吧。"
+    "message": "這 12 個單詞是唯一回復您的 JingtumMask 帳戶的方法。\n將它們儲存到那些安全且隱密的地方吧。"
   },
   "typePassword": {
     "message": "請輸入密碼"
   },
   "uiMigrationAnnouncement": {
-    "message": "歡迎使用 MetaMask 新版使用介面。若您有任何關於使用介面的改善建議，請到GitHub聯絡我們的服務小組。"
+    "message": "歡迎使用 JingtumMask 新版使用介面。若您有任何關於使用介面的改善建議，請到GitHub聯絡我們的服務小組。"
   },
   "uiWelcome": {
     "message": "歡迎使用新版界面 (Beta)"
   },
   "uiWelcomeMessage": {
-    "message": "您現在正在使用 MetaMask 新版界面。試試發送代幣等新功能吧，有任何問題請告知我們。"
+    "message": "您現在正在使用 JingtumMask 新版界面。試試發送代幣等新功能吧，有任何問題請告知我們。"
   },
   "unapproved": {
     "message": "未批准"
@@ -1543,7 +1543,7 @@
     "message": "歡迎回來!"
   },
   "welcome": {
-    "message": "歡迎來到 MetaMask"
+    "message": "歡迎來到 JingtumMask"
   },
   "whatsThis": {
     "message": "這是什麼？"

@@ -64,7 +64,7 @@ These team members are working on projects that will benefit MetaMask, but are n
 @hermanjunge
 Software Engineer
 
-Herman is currently leading the Mustekala project, a JavaScript, IPFS-based Ethereum light client.
+Herman is currently leading the Mustekala project, a JavaScript, IPFS-based Jingtum light client.
 
 ## Kyokan Team Members
 

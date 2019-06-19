@@ -1343,7 +1343,7 @@ describe('MetaMask', function () {
       await networkDropdown.click()
       await delay(regularDelayMs)
 
-      const customRpcButton = await findElement(driver, By.xpath(`//span[contains(text(), 'Main Ethereum Network')]`))
+      const customRpcButton = await findElement(driver, By.xpath(`//span[contains(text(), 'Main Jingtum Network')]`))
       await customRpcButton.click()
       await delay(largeDelayMs * 2)
     })
