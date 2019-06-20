@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button'
 import TextField from '../../text-field'
 import getCaretCoordinates from 'textarea-caret'
 import { EventEmitter } from 'events'
-import Mascot from '../../mascot'
 import { DEFAULT_ROUTE } from '../../../routes'
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 

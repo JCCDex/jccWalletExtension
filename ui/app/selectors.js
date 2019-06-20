@@ -1,5 +1,4 @@
 
-const abi = require('human-standard-token-abi')
 const {
   multiplyCurrencies,
 } = require('./conversion-util')
@@ -11,7 +10,6 @@ const selectors = {
   getSelectedIdentity,
   getSelectedAccount,
   getSelectedToken,
-  getSelectedTokenExchangeRate,
   getSelectedTokenAssetImage,
   getAssetImages,
   getTokenExchangeRate,
@@ -22,11 +20,8 @@ const selectors = {
   getCurrentCurrency,
   getNativeCurrency,
   getSendAmount,
- // getSelectedTokenToFiatRate,
-  getSelectedTokenContract,
   getSendMaxModeState,
   getCurrentViewContext,
-  getTotalUnapprovedCount,
   preferencesSelector,
   getMetaMaskAccounts,
   getSelectedAsset,
@@ -134,12 +129,6 @@ function getSelectedToken (state) {
   return selectedToken || sendToken || null
 }
 
-function getSelectedTokenExchangeRate (state) {
-  const contractExchangeRates = state.metamask.contractExchangeRates
-  const selectedToken = getSelectedToken(state) || {}
-  const { address } = selectedToken
-  return contractExchangeRates[address] || 0
-}
 
 function getSelectedTokenAssetImage (state) {
   const assetImages = state.metamask.assetImages || {}
@@ -202,28 +191,10 @@ function getNativeCurrency (state) {
   return state.metamask.nativeCurrency
 }
 
-function getSelectedTokenContract (state) {
-  const selectedToken = getSelectedToken(state)
-  return selectedToken
-    ? global.eth.contract(abi).at(selectedToken.address)
-    : null
-}
 
 function getCurrentViewContext (state) {
   const { currentView = {} } = state.appState
   return currentView.context
-}
-
-function getTotalUnapprovedCount ({ metamask }) {
-  const {
-    unapprovedTxs = {},
-    unapprovedMsgCount,
-    unapprovedPersonalMsgCount,
-    unapprovedTypedMessagesCount,
-  } = metamask
-
-  return Object.keys(unapprovedTxs).length + unapprovedMsgCount + unapprovedPersonalMsgCount +
-    unapprovedTypedMessagesCount
 }
 
 

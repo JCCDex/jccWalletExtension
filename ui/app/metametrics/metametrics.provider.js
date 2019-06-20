@@ -9,9 +9,6 @@ import {
   getNumberOfAccounts,
   getNumberOfTokens,
 } from '../selectors'
-import {
-  txDataSelector,
-} from '../selectors/confirm-transaction'
 import { getEnvironmentType } from '../../../app/scripts/lib/util'
 import {
   sendMetaMetricsEvent,
@@ -81,13 +78,11 @@ class MetaMetricsProvider extends Component {
 }
 
 const mapStateToProps = state => {
-  const txData = txDataSelector(state) || {}
 
   return {
     environmentType: getEnvironmentType(),
     activeCurrency: getSelectedAsset(state),
     accountType: getAccountType(state),
-    confirmTransactionOrigin: txData.origin,
     metaMetricsId: state.metamask.metaMetricsId,
     participateInMetaMetrics: state.metamask.participateInMetaMetrics,
     metaMetricsSendCount: state.metamask.metaMetricsSendCount,

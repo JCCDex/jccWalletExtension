@@ -76,10 +76,6 @@ createCopyTasks('images', {
   source: './app/images/',
   destinations: commonPlatforms.map(platform => `./dist/${platform}/images`),
 })
-createCopyTasks('contractImages', {
-  source: './node_modules/eth-contract-metadata/images/',
-  destinations: commonPlatforms.map(platform => `./dist/${platform}/images/contract`),
-})
 createCopyTasks('fonts', {
   source: './app/fonts/',
   destinations: commonPlatforms.map(platform => `./dist/${platform}/fonts`),
@@ -281,7 +277,7 @@ const buildJsFiles = [
   'contentscript',
   'background',
   'ui',
-  'phishing-detect',
+ // 'phishing-detect',
 ]
 
 // bundle tasks
@@ -458,7 +454,7 @@ function generateBundler (opts, performBundle) {
 
   // inject variables into bundle
   bundler.transform(envify({
-    METAMASK_DEBUG: opts.devMode,
+    JingtumMask_DEBUG: opts.devMode,
     NODE_ENV: opts.devMode ? 'development' : 'production',
     PUBNUB_SUB_KEY: process.env.PUBNUB_SUB_KEY || '',
     PUBNUB_PUB_KEY: process.env.PUBNUB_PUB_KEY || '',

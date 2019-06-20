@@ -23,10 +23,7 @@
 */
 
 const BigNumber = require('bignumber.js')
-const ethUtil = require('ethereumjs-util')
-const BN = ethUtil.BN
 const R = require('ramda')
-const { stripHexPrefix } = require('ethereumjs-util')
 
 BigNumber.config({
   ROUNDING_MODE: BigNumber.ROUND_HALF_DOWN,
@@ -48,22 +45,11 @@ const decToBigNumberViaString = n => R.pipe(String, toBigNumber['dec'])
 const toBigNumber = {
   hex: n => new BigNumber(stripHexPrefix(n), 16),
   dec: n => new BigNumber(String(n), 10),
-  BN: n => new BigNumber(n.toString(16), 16),
 }
-const toNormalizedDenomination = {
-  WEI: bigNumber => bigNumber.div(BIG_NUMBER_WEI_MULTIPLIER),
-  GWEI: bigNumber => bigNumber.div(BIG_NUMBER_GWEI_MULTIPLIER),
-  ETH: bigNumber => bigNumber.div(BIG_NUMBER_ETH_MULTIPLIER),
-}
-const toSpecifiedDenomination = {
-  WEI: bigNumber => bigNumber.times(BIG_NUMBER_WEI_MULTIPLIER).round(),
-  GWEI: bigNumber => bigNumber.times(BIG_NUMBER_GWEI_MULTIPLIER).round(9),
-  ETH: bigNumber => bigNumber.times(BIG_NUMBER_ETH_MULTIPLIER).round(9),
-}
+
 const baseChange = {
   hex: n => n.toString(16),
   dec: n => (new BigNumber(n)).toString(10),
-  BN: n => new BN(n.toString(16)),
 }
 
 // Predicates
@@ -105,9 +91,9 @@ const converter = R.pipe(
   whenPredSetCRWithPropAndSetter(R.prop('conversionRate'), 'conversionRate', decToBigNumberViaString),
   whenPredSetCRWithPropAndSetter(R.prop('invertConversionRate'), 'conversionRate', invertConversionRate),
   whenPropApplySetterMap('fromNumericBase', toBigNumber),
-  whenPropApplySetterMap('fromDenomination', toNormalizedDenomination),
+  //whenPropApplySetterMap('fromDenomination', toNormalizedDenomination),
   whenPredSetWithPropAndSetter(fromAndToCurrencyPropsNotEqual, 'conversionRate', convert),
-  whenPropApplySetterMap('toDenomination', toSpecifiedDenomination),
+  //whenPropApplySetterMap('toDenomination', toSpecifiedDenomination),
   whenPredSetWithPropAndSetter(R.prop('numberOfDecimals'), 'numberOfDecimals', round),
   whenPredSetWithPropAndSetter(R.prop('roundDown'), 'roundDown', roundDown),
   whenPropApplySetterMap('toNumericBase', baseChange),

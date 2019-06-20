@@ -25,10 +25,6 @@ import Lock from './components/pages/lock'
 import UiMigrationAnnouncement from './components/ui-migration-annoucement'
 const RestoreVaultPage = require('./components/pages/keychains/restore-vault').default
 const RevealSeedConfirmation = require('./components/pages/keychains/reveal-seed')
-const MobileSyncPage = require('./components/pages/mobile-sync')
-const AddTokenPage = require('./components/pages/add-token')
-const ConfirmAddTokenPage = require('./components/pages/confirm-add-token')
-const ConfirmAddSuggestedTokenPage = require('./components/pages/confirm-add-suggested-token')
 const CreateAccountPage = require('./components/pages/create-account')
 const NoticeScreen = require('./components/pages/notice')
 
@@ -52,11 +48,7 @@ import {
   UNLOCK_ROUTE,
   SETTINGS_ROUTE,
   REVEAL_SEED_ROUTE,
-  MOBILE_SYNC_ROUTE,
   RESTORE_VAULT_ROUTE,
-  ADD_TOKEN_ROUTE,
-  CONFIRM_ADD_TOKEN_ROUTE,
-  CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
   NEW_ACCOUNT_ROUTE,
   SEND_ROUTE,
   CONFIRM_TRANSACTION_ROUTE,
@@ -75,21 +67,6 @@ class App extends Component {
   componentWillMount () {
     const { currentCurrency} = this.props
 
-
-
-    this.props.history.listen((locationObj, action) => {
-      if (action === 'PUSH') {
-        const url = `&url=${encodeURIComponent('http://www.metamask.io/metametrics' + locationObj.pathname)}`
-        this.context.metricsEvent({}, {
-          currentPath: '',
-          pathname: locationObj.pathname,
-          url,
-          pageOpts: {
-            hideDimensions: true,
-          },
-        })
-      }
-    })
   }
 
   renderRoutes () {
@@ -100,13 +77,9 @@ class App extends Component {
         <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
         <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
         <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
-        <Authenticated path={MOBILE_SYNC_ROUTE} component={MobileSyncPage} exact />
         <Authenticated path={SETTINGS_ROUTE} component={Settings} />
         <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
         <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
-        <Authenticated path={ADD_TOKEN_ROUTE} component={AddTokenPage} exact />
-        <Authenticated path={CONFIRM_ADD_TOKEN_ROUTE} component={ConfirmAddTokenPage} exact />
-        <Authenticated path={CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE} component={ConfirmAddSuggestedTokenPage} exact />
         <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
       </Switch>
@@ -116,11 +89,6 @@ class App extends Component {
   onInitializationUnlockPage () {
     const { location } = this.props
     return Boolean(matchPath(location.pathname, { path: INITIALIZE_UNLOCK_ROUTE, exact: true }))
-  }
-
-  onConfirmPage () {
-    const { location } = this.props
-    return Boolean(matchPath(location.pathname, { path: CONFIRM_TRANSACTION_ROUTE, exact: false }))
   }
 
   hasProviderRequests () {
@@ -144,7 +112,7 @@ class App extends Component {
     }
 
     if (window.METAMASK_UI_TYPE === ENVIRONMENT_TYPE_POPUP) {
-      return this.onConfirmPage() || this.hasProviderRequests()
+      return  this.hasProviderRequests()
     }
   }
 
@@ -152,8 +120,6 @@ class App extends Component {
     const {
       isLoading,
       alertMessage,
-      provider,
-      frequentRpcListDetail,
       setMouseUserState,
       sidebar,
     } = this.props
@@ -199,7 +165,6 @@ class App extends Component {
           !this.hideAppHeader() && (
             <AppHeader
               hideNetworkIndicator={this.onInitializationUnlockPage()}
-              disabled={this.onConfirmPage()}
             />
           )
         }
@@ -281,7 +246,6 @@ function mapStateToProps (state) {
   const {
     identities,
     address,
-    keyrings,
     isInitialized,
     noActiveNotices,
     seedWords,
@@ -324,7 +288,6 @@ function mapStateToProps (state) {
     // state needed to get account dropdown temporarily rendering from app bar
     identities,
     selected,
-    keyrings,
     providerRequests,
   }
 }

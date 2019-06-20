@@ -1226,7 +1226,7 @@
     "message": "WARNING: Never disclose your backup key. Anyone with this key can take your swt forever."
   },
   "secretPhrase": {
-    "message": "Enter your secret twelve word phrase here to restore your vault."
+    "message": "Enter your key store here to restore your vault."
   },
   "secondsShorthand": {
     "message": "Sec"

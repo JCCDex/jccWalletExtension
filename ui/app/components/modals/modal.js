@@ -4,7 +4,6 @@ const inherits = require('util').inherits
 const connect = require('react-redux').connect
 const FadeModal = require('boron').FadeModal
 const actions = require('../../actions')
-const isMobileView = require('../../../lib/is-mobile-view')
 const { getEnvironmentType } = require('../../../../app/scripts/lib/util')
 const { ENVIRONMENT_TYPE_POPUP } = require('../../../../app/scripts/lib/enums')
 
@@ -328,7 +327,7 @@ Modal.prototype.render = function () {
   const modal = MODALS[this.props.modalState.name || 'DEFAULT']
 
   const { contents: children, disableBackdropClick = false } = modal
-  const modalStyle = modal[isMobileView() ? 'mobileModalStyle' : 'laptopModalStyle']
+  const modalStyle = modal['laptopModalStyle']
   const contentStyle = modal.contentStyle || {}
 
   return h(FadeModal,

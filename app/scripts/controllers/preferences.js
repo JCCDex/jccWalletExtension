@@ -1,6 +1,4 @@
 const ObservableStore = require('obs-store')
-const normalizeAddress = require('eth-sig-util').normalize
-const { isValidAddress, sha3, bufferToHex } = require('ethereumjs-util')
 const extend = require('xtend')
 
 
@@ -16,7 +14,6 @@ class PreferencesController {
    * @property {array} store.tokens The tokens the user wants display in their token lists
    * @property {object} store.accountTokens The tokens stored per account and then per network type
    * @property {object} store.assetImages Contains assets objects related to assets added
-   * @property {boolean} store.useBlockie The users preference for blockie identicons within the UI
    * @property {object} store.featureFlags A key-boolean map, where keys refer to features and booleans to whether the
    * user wishes to see that feature.
    *
@@ -34,7 +31,6 @@ class PreferencesController {
       assetImages: {},
       tokens: [],
       suggestedTokens: {},
-      useBlockie: false,
 
       // WARNING: Do not use feature flags for security-sensitive things.
       // Feature flag toggling is available in the global namespace
@@ -94,25 +90,6 @@ class PreferencesController {
     this.store.updateState({ useBlockie: val })
   }
 
-  /**
-   * Setter for the `participateInMetaMetrics` property
-   *
-   * @param {boolean} bool Whether or not the user wants to participate in MetaMetrics
-   * @returns {string|null} the string of the new metametrics id, or null if not set
-   *
-   */
-  setParticipateInMetaMetrics (bool) {
-    this.store.updateState({ participateInMetaMetrics: bool })
-    let metaMetricsId = null
-    if (bool && !this.store.getState().metaMetricsId) {
-      metaMetricsId = bufferToHex(sha3(String(Date.now()) + String(Math.round(Math.random() * Number.MAX_SAFE_INTEGER))))
-      this.store.updateState({ metaMetricsId })
-    } else if (bool === false) {
-      this.store.updateState({ metaMetricsId })
-    }
-    return metaMetricsId
-  }
-
   setMetaMetricsSendCount (val) {
     this.store.updateState({ metaMetricsSendCount: val })
   }
@@ -140,15 +117,6 @@ class PreferencesController {
     return this.store.getState().assetImages
   }
 
-  addSuggestedERC20Asset (tokenOpts) {
-    this._validateERC20AssetParams(tokenOpts)
-    const suggested = this.getSuggestedTokens()
-    const { rawAddress, symbol, decimals, image } = tokenOpts
-    const address = normalizeAddress(rawAddress)
-    const newEntry = { address, symbol, decimals, image }
-    suggested[address] = newEntry
-    this.store.updateState({ suggestedTokens: suggested })
-  }
 
   /**
    * Add new methodData to state, to avoid requesting this information again through Infura
@@ -162,44 +130,6 @@ class PreferencesController {
     this.store.updateState({ knownMethodData })
   }
 
-  /**
-   * RPC engine middleware for requesting new asset added
-   *
-   * @param req
-   * @param res
-   * @param {Function} - next
-   * @param {Function} - end
-   */
-  async requestWatchAsset (req, res, next, end) {
-    if (req.method === 'metamask_watchAsset' || req.method === 'wallet_watchAsset') {
-      const { type, options } = req.params
-      switch (type) {
-        case 'ERC20':
-          const result = await this._handleWatchAssetERC20(options)
-          if (result instanceof Error) {
-            end(result)
-          } else {
-            res.result = result
-            end()
-          }
-          break
-        default:
-          end(new Error(`Asset of type ${type} not supported`))
-      }
-    } else {
-      next()
-    }
-  }
-
-  /**
-   * Getter for the `useBlockie` property
-   *
-   * @returns {boolean} this.store.useBlockie
-   *
-   */
-  getUseBlockie () {
-    return this.store.getState().useBlockie
-  }
 
   /**
    * Setter for the `currentLocale` property
@@ -320,12 +250,6 @@ class PreferencesController {
     return selected
   }
 
-  removeSuggestedTokens () {
-    return new Promise((resolve, reject) => {
-      this.store.updateState({ suggestedTokens: {} })
-      resolve({})
-    })
-  }
 
   /**
    * Setter for the `selectedAddress` property
@@ -349,63 +273,6 @@ class PreferencesController {
    */
   getSelectedAddress () {
     return this.store.getState().selectedAddress
-  }
-
-  /**
-   * Contains data about tokens users add to their account.
-   * @typedef {Object} AddedToken
-   * @property {string} address - The hex address for the token contract. Will be all lower cased and hex-prefixed.
-   * @property {string} symbol - The symbol of the token, usually 3 or 4 capitalized letters
-   *  {@link https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md#symbol}
-   * @property {boolean} decimals - The number of decimals the token uses.
-   *  {@link https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md#decimals}
-   */
-
-  /**
-   * Adds a new token to the token array, or updates the token if passed an address that already exists.
-   * Modifies the existing tokens array from the store. All objects in the tokens array array AddedToken objects.
-   * @see AddedToken {@link AddedToken}
-   *
-   * @param {string} rawAddress Hex address of the token contract. May or may not be a checksum address.
-   * @param {string} symbol The symbol of the token
-   * @param {number} decimals  The number of decimals the token uses.
-   * @returns {Promise<array>} Promises the new array of AddedToken objects.
-   *
-   */
-  async addToken (rawAddress, symbol, decimals, image) {
-    const address = normalizeAddress(rawAddress)
-    const newEntry = { address, symbol, decimals }
-    const tokens = this.store.getState().tokens
-    const assetImages = this.getAssetImages()
-    const previousEntry = tokens.find((token, index) => {
-      return token.address === address
-    })
-    const previousIndex = tokens.indexOf(previousEntry)
-
-    if (previousEntry) {
-      tokens[previousIndex] = newEntry
-    } else {
-      tokens.push(newEntry)
-    }
-    assetImages[address] = image
-    this._updateAccountTokens(tokens, assetImages)
-    return Promise.resolve(tokens)
-  }
-
-  /**
-   * Removes a specified token from the tokens array.
-   *
-   * @param {string} rawAddress Hex address of the token contract to remove.
-   * @returns {Promise<array>} The new array of AddedToken objects
-   *
-   */
-  removeToken (rawAddress) {
-    const tokens = this.store.getState().tokens
-    const assetImages = this.getAssetImages()
-    const updatedTokens = tokens.filter(token => token.address !== rawAddress)
-    delete assetImages[rawAddress]
-    this._updateAccountTokens(updatedTokens, assetImages)
-    return Promise.resolve(updatedTokens)
   }
 
   /**
@@ -446,86 +313,6 @@ class PreferencesController {
       this.store.updateState({ currentAccountTab })
       resolve()
     })
-  }
-
-  /**
-   * updates custom RPC details
-   *
-   * @param {string} url The RPC url to add to frequentRpcList.
-   * @param {number} chainId Optional chainId of the selected network.
-   * @param {string} ticker   Optional ticker symbol of the selected network.
-   * @param {string} nickname Optional nickname of the selected network.
-   * @returns {Promise<array>} Promise resolving to updated frequentRpcList.
-   *
-   */
-
-
-  updateRpc (newRpcDetails) {
-    const rpcList = this.getFrequentRpcListDetail()
-    const index = rpcList.findIndex((element) => { return element.rpcUrl === newRpcDetails.rpcUrl })
-    if (index > -1) {
-      const rpcDetail = rpcList[index]
-      const updatedRpc = extend(rpcDetail, newRpcDetails)
-      rpcList[index] = updatedRpc
-      this.store.updateState({ frequentRpcListDetail: rpcList })
-    } else {
-      const { rpcUrl, chainId, ticker, nickname } = newRpcDetails
-      return this.addToFrequentRpcList(rpcUrl, chainId, ticker, nickname)
-    }
-    return Promise.resolve(rpcList)
-  }
-  /**
-   * Adds custom RPC url to state.
-   *
-   * @param {string} url The RPC url to add to frequentRpcList.
-   * @param {number} chainId Optional chainId of the selected network.
-   * @param {string} ticker   Optional ticker symbol of the selected network.
-   * @param {string} nickname Optional nickname of the selected network.
-   * @returns {Promise<array>} Promise resolving to updated frequentRpcList.
-   *
-   */
-  addToFrequentRpcList (url, chainId, ticker = 'ETH', nickname = '') {
-    const rpcList = this.getFrequentRpcListDetail()
-    const index = rpcList.findIndex((element) => { return element.rpcUrl === url })
-    if (index !== -1) {
-      rpcList.splice(index, 1)
-    }
-    if (url !== 'http://localhost:8545') {
-      let checkedChainId
-      if (!!chainId && !Number.isNaN(parseInt(chainId))) {
-        checkedChainId = chainId
-      }
-      rpcList.push({ rpcUrl: url, chainId: checkedChainId, ticker, nickname })
-    }
-    this.store.updateState({ frequentRpcListDetail: rpcList })
-    return Promise.resolve(rpcList)
-  }
-
-  /**
-   * Removes custom RPC url from state.
-   *
-   * @param {string} url The RPC url to remove from frequentRpcList.
-   * @returns {Promise<array>} Promise resolving to updated frequentRpcList.
-   *
-   */
-  removeFromFrequentRpcList (url) {
-    const rpcList = this.getFrequentRpcListDetail()
-    const index = rpcList.findIndex((element) => { return element.rpcUrl === url })
-    if (index !== -1) {
-      rpcList.splice(index, 1)
-    }
-    this.store.updateState({ frequentRpcListDetail: rpcList })
-    return Promise.resolve(rpcList)
-  }
-
-  /**
-   * Getter for the `frequentRpcListDetail` property.
-   *
-   * @returns {array<array>} An array of rpc urls.
-   *
-   */
-  getFrequentRpcListDetail () {
-    return this.store.getState().frequentRpcListDetail
   }
 
   /**
@@ -601,12 +388,6 @@ class PreferencesController {
     this.store.updateState({ completedUiMigration: true })
     return Promise.resolve(true)
   }
-
-  //
-  // PRIVATE METHODS
-  //
-
-
   /**
    * Updates `accountTokens` and `tokens` of current account and network according to it.
    *
@@ -619,8 +400,8 @@ class PreferencesController {
     this.store.updateState({ accountTokens, tokens, assetImages })
   }
 
-  /**
-   * Updates `tokens` of current account and network.
+    /**
+   * Updates `tokens` of current account.
    *
    * @param {string} selectedAddress Account address to be updated with.
    *
@@ -630,10 +411,10 @@ class PreferencesController {
     this.store.updateState({ tokens })
   }
 
-   /**
+     /**
    * A getter for `tokens` and `accountTokens` related states.
    *
-   * @param {string} selectedAddress A new hex address for an account
+   * @param {string} selectedAddress A new  address for an account
    * @returns {Object.<array, object, string, string>} States to interact with tokens in `accountTokens`
    *
    */
@@ -642,47 +423,6 @@ class PreferencesController {
     if (!selectedAddress) selectedAddress = this.store.getState().selectedAddress
     if (!(selectedAddress in accountTokens)) accountTokens[selectedAddress] = {}
     return { accountTokens, selectedAddress }
-  }
-
-  /**
-   * Handle the suggestion of an ERC20 asset through `watchAsset`
-   * *
-   * @param {Promise} promise Promise according to addition of ERC20 token
-   *
-   */
-  async _handleWatchAssetERC20 (options) {
-    const { address, symbol, decimals, image } = options
-    const rawAddress = address
-    try {
-      this._validateERC20AssetParams({ rawAddress, symbol, decimals })
-    } catch (err) {
-      return err
-    }
-    const tokenOpts = { rawAddress, decimals, symbol, image }
-    this.addSuggestedERC20Asset(tokenOpts)
-    return this.openPopup().then(() => {
-      const tokenAddresses = this.getTokens().filter(token => token.address === normalizeAddress(rawAddress))
-      return tokenAddresses.length > 0
-    })
-  }
-
-  /**
-   * Validates that the passed options for suggested token have all required properties.
-   *
-   * @param {Object} opts The options object to validate
-   * @throws {string} Throw a custom error indicating that address, symbol and/or decimals
-   * doesn't fulfill requirements
-   *
-   */
-  _validateERC20AssetParams (opts) {
-    const { rawAddress, symbol, decimals } = opts
-    if (!rawAddress || !symbol || typeof decimals === 'undefined') throw new Error(`Cannot suggest token without address, symbol, and decimals`)
-    if (!(symbol.length < 7)) throw new Error(`Invalid symbol ${symbol} more than six characters`)
-    const numDecimals = parseInt(decimals, 10)
-    if (isNaN(numDecimals) || numDecimals > 36 || numDecimals < 0) {
-      throw new Error(`Invalid decimals ${decimals} must be at least 0, and not over 36`)
-    }
-    if (!isValidAddress(rawAddress)) throw new Error(`Invalid address ${rawAddress}`)
   }
 }
 

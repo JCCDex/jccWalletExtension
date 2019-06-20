@@ -106,6 +106,9 @@
   "balances": {
     "message": "代币余额"
   },
+  "balanceOutdated": {
+    "message": "Balance may be outdated"
+  },
   "balanceIsInsufficientGas": {
     "message": "当前余额不足以支付 Gas"
   },
@@ -193,6 +196,9 @@
   },
   "copy": {
     "message": "复制"
+  },
+  "copyAddress": {
+    "message": "复制地址到剪贴版"
   },
   "copyToClipboard": {
     "message": "复制到剪贴板"
@@ -414,6 +420,9 @@
   },
   "hideToken": {
     "message": "隐藏代币"
+  },
+  "history": {
+    "message": "历史"
   },
   "hideTokenPrompt": {
     "message": "隐藏代币？"
@@ -992,5 +1001,68 @@
   },
   "yourPrivateSeedPhrase": {
     "message": "你的私有助记词"
+  },
+  "happyToSeeYou": {
+    "message": "We’re happy to see you."
+  },
+  "getStarted": {
+    "message": "Get Started"
+  },
+  "newToMetaMask": {
+    "message": "New to JingtumMask?"
+  },
+  "noAlreadyHaveSeed": {
+    "message": "No, I already have a secret key"
+  },
+  "importYourExisting": {
+    "message": "Import your existing wallet using a secret key"
+  },
+  "importWallet": {
+    "message": "Import Wallet"
+  },
+  "letsGoSetUp": {
+    "message": "Yes, let’s get set up!"
+  },
+  "thisWillCreate": {
+    "message": "This will create a new wallet and key store"
+  },
+  "createAWallet": {
+    "message": "Create a Wallet"
+  },
+  "importAccountSeedPhrase": {
+    "message": "Import an Account with key store"
+  },
+  "congratulations": {
+    "message": "Congratulations"
+  },
+  "endOfFlowMessage1": {
+    "message": "You passed the test - keep your key store safe, it's your responsibility!"
+  },
+  "endOfFlowMessage2": {
+    "message": "Tips on storing it safely"
+  },
+  "endOfFlowMessage3": {
+    "message": "Save a backup in multiple places."
+  },
+  "endOfFlowMessage4": {
+    "message": "Never share the phrase with anyone."
+  },
+  "endOfFlowMessage5": {
+    "message": "Be careful of phishing! JingtumMask will never spontaneously ask for your key store."
+  },
+  "endOfFlowMessage6": {
+    "message": "If you need to back your up key store again, you can find it in Settings -> Security."
+  },
+  "endOfFlowMessage7": {
+    "message": "If you ever have questions or see something fishy, email support@metamask.io."
+  },
+  "endOfFlowMessage8": {
+    "message": "JingtumMask cannot recover your key store. Learn more."
+  },
+  "copyTransactionId": {
+    "message": "Copy Transaction ID"
+  },
+  "viewOnEtherscan": {
+    "message": "View on Etherscan"
   }
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TokenInput from './token-input.component'
-import { getSelectedToken, getSelectedTokenExchangeRate} from '../../selectors'
+import { getSelectedToken} from '../../selectors'
 
 const mapStateToProps = state => {
   const { metamask: { currentCurrency } } = state
@@ -10,7 +10,6 @@ const mapStateToProps = state => {
   return {
     currentCurrency,
     selectedToken: getSelectedToken(state),
-    selectedTokenExchangeRate: getSelectedTokenExchangeRate(state),
   //  hideConversion: (!isMainnet && !showFiatInTestnets),
   }
 }

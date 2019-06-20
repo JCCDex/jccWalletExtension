@@ -4,7 +4,6 @@ const PropTypes = require('prop-types')
 const h = require('react-hyperscript')
 const inherits = require('util').inherits
 const connect = require('react-redux').connect
-const { stripHexPrefix } = require('ethereumjs-util')
 const actions = require('../../actions')
 const AccountModalContainer = require('./account-modal-container')
 const { getSelectedIdentity } = require('../../selectors')
@@ -81,7 +80,7 @@ ExportPrivateKeyModal.prototype.renderPasswordLabel = function (privateKey) {
 }
 
 ExportPrivateKeyModal.prototype.renderPasswordInput = function (privateKey) {
-  const plainKey = privateKey && stripHexPrefix(privateKey)
+  const plainKey = privateKey 
 
   return privateKey
     ? h(ReadOnlyInput, {

@@ -1,5 +1,4 @@
 const extension = require('extensionizer')
-const {createExplorerLink: explorerLink} = require('etherscan-link')
 
 class ExtensionPlatform {
 
@@ -46,19 +45,6 @@ class ExtensionPlatform {
     }
   }
 
-  showTransactionNotification (txMeta) {
-    const { status, txReceipt: { status: receiptStatus } = {} } = txMeta
-
-    if (status === 'confirmed') {
-      // There was an on-chain failure
-      receiptStatus === '0x0'
-        ? this._showFailedTransaction(txMeta, 'Transaction encountered an error.')
-        : this._showConfirmedTransaction(txMeta)
-    } else if (status === 'failed') {
-      this._showFailedTransaction(txMeta)
-    }
-  }
-
   addMessageListener (cb) {
     extension.runtime.onMessage.addListener(cb)
   }
@@ -73,25 +59,6 @@ class ExtensionPlatform {
     })
   }
 
-  _showConfirmedTransaction (txMeta) {
-
-    this._subscribeToNotificationClicked()
-
-    const url = explorerLink(txMeta.hash, parseInt(txMeta.metamaskNetworkId))
-    const nonce = parseInt(txMeta.txParams.nonce, 16)
-
-    const title = 'Confirmed transaction'
-    const message = `Transaction ${nonce} confirmed! View on EtherScan`
-    this._showNotification(title, message, url)
-  }
-
-  _showFailedTransaction (txMeta, errorMessage) {
-
-    const nonce = parseInt(txMeta.txParams.nonce, 16)
-    const title = 'Failed transaction'
-    const message = `Transaction ${nonce} failed! ${errorMessage || txMeta.err.message}`
-    this._showNotification(title, message)
-  }
 
   _showNotification (title, message, url) {
     extension.notifications.create(
@@ -110,11 +77,6 @@ class ExtensionPlatform {
     }
   }
 
-  _viewOnEtherScan (txId) {
-    if (txId.startsWith('http://')) {
-      extension.tabs.create({ url: txId })
-    }
-  }
 }
 
 module.exports = ExtensionPlatform

@@ -1,6 +1,5 @@
 const EventEmitter = require('events')
 const ObservableStore = require('obs-store')
-const ethUtil = require('ethereumjs-util')
 const createId = require('./random-id')
 
 /**
@@ -266,12 +265,3 @@ module.exports = class MessageManager extends EventEmitter {
  * @returns {string} A hex string conversion of the buffer data
  *
  */
-function normalizeMsgData (data) {
-  if (data.slice(0, 2) === '0x') {
-    // data is already hex
-    return data
-  } else {
-    // data is unicode, convert to hex
-    return ethUtil.bufferToHex(Buffer.from(data, 'utf8'))
-  }
-}

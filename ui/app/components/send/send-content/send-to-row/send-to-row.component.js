@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SendRowWrapper from '../send-row-wrapper/'
 import EnsInput from '../../../ens-input'
-import { getToErrorObject, getToWarningObject } from './send-to-row.utils.js'
 
 export default class SendToRow extends Component {
 
@@ -29,10 +28,8 @@ export default class SendToRow extends Component {
     metricsEvent: PropTypes.func,
   }
 
-  handleToChange (to, nickname = '', toError, toWarning, network) {
-    const { hasHexData, updateSendTo, updateSendToError, tokens, selectedToken, updateSendToWarning } = this.props
-    const toErrorObject = getToErrorObject(to, toError, hasHexData, tokens, selectedToken, network)
-    const toWarningObject = getToWarningObject(to, toWarning, tokens, selectedToken)
+  handleToChange (to, nickname = '') {
+    const {updateSendTo, updateSendToError, updateSendToWarning } = this.props
     updateSendTo(to, nickname)
     updateSendToError(toErrorObject)
     updateSendToWarning(toWarningObject)
@@ -43,7 +40,6 @@ export default class SendToRow extends Component {
       closeToDropdown,
       inError,
       inWarning,
-      network,
       openToDropdown,
       to,
       toAccounts,
@@ -74,7 +70,6 @@ export default class SendToRow extends Component {
           dropdownOpen={toDropdownOpen}
           inError={inError}
           name={'address'}
-          network={network}
           onChange={({ toAddress, nickname, toError, toWarning }) => this.handleToChange(toAddress, nickname, toError, toWarning, this.props.network)}
           openDropdown={() => openToDropdown()}
           placeholder={this.context.t('recipientAddress')}

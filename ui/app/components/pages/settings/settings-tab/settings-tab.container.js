@@ -12,7 +12,6 @@ import {
   showModal,
   setUseNativeCurrencyAsPrimaryCurrencyPreference,
   setShowFiatConversionOnTestnetsPreference,
-  setParticipateInMetaMetrics,
 } from '../../../../actions'
 import { preferencesSelector } from '../../../../selectors'
 
@@ -71,7 +70,6 @@ const mapDispatchToProps = dispatch => {
       return dispatch(setShowFiatConversionOnTestnetsPreference(value))
     },
     showClearApprovalModal: () => dispatch(showModal({ name: 'CLEAR_APPROVED_ORIGINS' })),
-    setParticipateInMetaMetrics: (val) => dispatch(setParticipateInMetaMetrics(val)),
   }
 }
 

@@ -2,10 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import UnitInput from '../unit-input'
 import CurrencyDisplay from '../currency-display'
-import { getWeiHexFromDecimalValue } from '../../helpers/conversions.util'
-import ethUtil from 'ethereumjs-util'
 import { conversionUtil, multiplyCurrencies } from '../../conversion-util'
-import { ETH } from '../../constants/common'
+import { SWTC } from '../../constants/common'
 
 /**
  * Component that allows user to enter token values as a number, and props receive a converted
@@ -23,7 +21,6 @@ export default class TokenInput extends PureComponent {
     onBlur: PropTypes.func,
     value: PropTypes.string,
     suffix: PropTypes.string,
-    showFiat: PropTypes.bool,
     hideConversion: PropTypes.bool,
     selectedToken: PropTypes.object,
     selectedTokenExchangeRate: PropTypes.number,
@@ -41,31 +38,6 @@ export default class TokenInput extends PureComponent {
     }
   }
 
-  componentDidUpdate (prevProps) {
-    const { value: prevPropsHexValue } = prevProps
-    const { value: propsHexValue } = this.props
-    const { hexValue: stateHexValue } = this.state
-
-    if (prevPropsHexValue !== propsHexValue && propsHexValue !== stateHexValue) {
-      const decimalValue = this.getValue(this.props)
-      this.setState({ hexValue: propsHexValue, decimalValue })
-    }
-  }
-
-  getValue (props) {
-    const { value: hexValue, selectedToken: { decimals, symbol } = {} } = props
-
-    const multiplier = Math.pow(10, Number(decimals || 0))
-    const decimalValueString = conversionUtil(ethUtil.addHexPrefix(hexValue), {
-      fromNumericBase: 'hex',
-      toNumericBase: 'dec',
-      toCurrency: symbol,
-      conversionRate: multiplier,
-      invertConversionRate: true,
-    })
-
-    return Number(decimalValueString) ? decimalValueString : ''
-  }
 
   handleChange = decimalValue => {
     const { selectedToken: { decimals } = {}, onChange } = this.props
@@ -82,7 +54,7 @@ export default class TokenInput extends PureComponent {
   }
 
   renderConversionComponent () {
-    const { selectedTokenExchangeRate, showFiat, currentCurrency, hideConversion } = this.props
+    const { selectedTokenExchangeRate, currentCurrency, hideConversion } = this.props
     const { decimalValue } = this.state
     let currency, numberOfDecimals
 
@@ -94,22 +66,11 @@ export default class TokenInput extends PureComponent {
       )
     }
 
-    if (showFiat) {
-      // Display Fiat
-      currency = currentCurrency
-      numberOfDecimals = 2
-    } else {
-      // Display ETH
-      currency = ETH
+   
+      // Display SWTC
+      currency = SWTC
       numberOfDecimals = 6
-    }
-
-    const decimalEthValue = (decimalValue * selectedTokenExchangeRate) || 0
-    const hexWeiValue = getWeiHexFromDecimalValue({
-      value: decimalEthValue,
-      fromCurrency: ETH,
-      fromDenomination: ETH,
-    })
+    
 
     return selectedTokenExchangeRate
       ? (

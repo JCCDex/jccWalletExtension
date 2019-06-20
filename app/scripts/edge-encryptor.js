@@ -3,7 +3,7 @@ const Unibabel = require('browserify-unibabel')
 
 /**
  * A Microsoft Edge-specific encryption class that exposes
- * the interface expected by eth-keykeyring-controller
+ * 
  */
 class EdgeEncryptor {
   /**

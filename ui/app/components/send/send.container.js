@@ -9,8 +9,6 @@ import {
   getRecentBlocks,
   getSelectedAddress,
   getSelectedToken,
-  getSelectedTokenContract,
- // getSelectedTokenToFiatRate,
   getSendAmount,
   getSendEditingTransactionId,
   getSendHexDataFeatureFlagState,
@@ -29,7 +27,6 @@ import {
   resetSendState,
   updateSendErrors,
 } from '../../ducks/send.duck'
-
 import {
   SEND_ROUTE,
 } from '../../routes'
@@ -53,8 +50,6 @@ function mapStateToProps (state) {
     showHexData: getSendHexDataFeatureFlagState(state),
     to: getSendTo(state),
     tokenBalance: getTokenBalance(state),
-    tokenContract: getSelectedTokenContract(state),
-    //tokenToFiatRate: getSelectedTokenToFiatRate(state),
     qrCodeData: getQrCodeData(state),
     warning: state.appState.warning,
   }
@@ -65,7 +60,6 @@ function mapDispatchToProps (dispatch) {
     updateSendTokenBalance: ({ selectedToken, tokenContract, address }) => {
       dispatch(updateSendTokenBalance({
         selectedToken,
-        tokenContract,
         address,
       }))
     },

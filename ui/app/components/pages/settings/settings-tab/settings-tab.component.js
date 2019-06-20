@@ -66,7 +66,6 @@ export default class SettingsTab extends PureComponent {
     showFiatInTestnets: PropTypes.bool,
     setShowFiatConversionOnTestnetsPreference: PropTypes.func.isRequired,
     participateInMetaMetrics: PropTypes.bool,
-    setParticipateInMetaMetrics: PropTypes.func,
   }
 
   state = {
@@ -626,7 +625,7 @@ export default class SettingsTab extends PureComponent {
 
   renderMetaMetricsOptIn () {
     const { t } = this.context
-    const { participateInMetaMetrics, setParticipateInMetaMetrics } = this.props
+    const { participateInMetaMetrics } = this.props
 
     return (
       <div className="settings-page__content-row">
@@ -640,7 +639,7 @@ export default class SettingsTab extends PureComponent {
           <div className="settings-page__content-item-col">
             <ToggleButton
               value={participateInMetaMetrics}
-              onToggle={value => setParticipateInMetaMetrics(!value)}
+              onToggle={flase}
               activeLabel=""
               inactiveLabel=""
             />

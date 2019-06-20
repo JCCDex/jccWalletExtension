@@ -8,7 +8,7 @@ const log = require('loglevel')
 
 module.exports = launchMetamaskUi
 
-log.setLevel(global.METAMASK_DEBUG ? 'debug' : 'warn')
+log.setLevel(global.JingtumMask_DEBUG ? 'debug' : 'warn')
 
 function launchMetamaskUi (opts, cb) {
   var accountManager = opts.accountManager

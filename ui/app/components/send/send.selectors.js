@@ -1,5 +1,4 @@
 const { valuesFor } = require('../../util')
-const abi = require('human-standard-token-abi')
 const {
   multiplyCurrencies,
 } = require('../../conversion-util')
@@ -22,9 +21,6 @@ const selectors = {
   getSelectedAddress,
   getSelectedIdentity,
   getSelectedToken,
-  getSelectedTokenContract,
-  getSelectedTokenExchangeRate,
- // getSelectedTokenToFiatRate,
   getSendAmount,
   getSendHexData,
   getSendHexDataFeatureFlagState,
@@ -133,23 +129,6 @@ function getSelectedToken (state) {
   return selectedToken || sendToken || null
 }
 
-function getSelectedTokenContract (state) {
-  const selectedToken = getSelectedToken(state)
-
-  return selectedToken
-    ? global.eth.contract(abi).at(selectedToken.address)
-    : null
-}
-
-function getSelectedTokenExchangeRate (state) {
-  const tokenExchangeRates = state.metamask.tokenExchangeRates
-  const selectedToken = getSelectedToken(state) || {}
-  const { symbol = '' } = selectedToken
-  const pair = `${symbol.toLowerCase()}_eth`
-  const { rate: tokenExchangeRate = 0 } = tokenExchangeRates && tokenExchangeRates[pair] || {}
-
-  return tokenExchangeRate
-}
 
 function getSendAmount (state) {
   return state.metamask.send.amount

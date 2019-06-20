@@ -1,6 +1,4 @@
 var iconFactory
-const isValidAddress = require('ethereumjs-util').isValidAddress
-const contractMap = require('eth-contract-metadata')
 
 module.exports = function (jazzicon) {
   if (!iconFactory) {
@@ -23,6 +21,10 @@ IconFactory.prototype.iconForAddress = function (address, diameter) {
   return this.generateIdenticonSvg(address, diameter)
 }
 
+function iconExistsFor (address) {
+  return false
+}
+
 // returns svg dom element
 IconFactory.prototype.generateIdenticonSvg = function (address, diameter) {
   var cacheId = `${address}:${diameter}`
@@ -41,20 +43,6 @@ IconFactory.prototype.generateNewIdenticon = function (address, diameter) {
 }
 
 // util
-
-function iconExistsFor (address) {
-  return contractMap[address] && isValidAddress(address) && contractMap[address].logo
-}
-
-function imageElFor (address) {
-  const contract = contractMap[address]
-  const fileName = contract.logo
-  const path = `images/contract/${fileName}`
-  const img = document.createElement('img')
-  img.src = path
-  img.style.width = '100%'
-  return img
-}
 
 function jsNumberForAddress (address) {
   var addr = address.slice(2, 10)

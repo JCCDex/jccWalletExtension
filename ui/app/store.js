@@ -4,12 +4,12 @@ const thunkMiddleware = require('redux-thunk').default
 const rootReducer = require('./reducers')
 const createLogger = require('redux-logger').createLogger
 
-global.METAMASK_DEBUG = process.env.METAMASK_DEBUG
+global.JingtumMask_DEBUG = process.env.JingtumMask_DEBUG
 
 module.exports = configureStore
 
 const loggerMiddleware = createLogger({
-  predicate: () => global.METAMASK_DEBUG,
+  predicate: () => global.JingtumMask_DEBUG,
 })
 
 const middlewares = [thunkMiddleware, loggerMiddleware]

@@ -14,9 +14,6 @@ const actions = require('../actions')
 import BalanceComponent from './balance'
 const TokenList = require('./token-list')
 const selectors = require('../selectors')
-const { ADD_TOKEN_ROUTE } = require('../routes')
-
-import AddTokenButton from './add-token-button'
 
 module.exports = compose(
   withRouter,
@@ -98,30 +95,6 @@ WalletView.prototype.renderWalletBalance = function () {
   ])
 }
 
-WalletView.prototype.renderAddToken = function () {
-  const {
-    sidebarOpen,
-    hideSidebar,
-    history,
-  } = this.props
-  const { metricsEvent } = this.context
-
-  return h(AddTokenButton, {
-    onClick () {
-      history.push(ADD_TOKEN_ROUTE)
-      metricsEvent({
-        eventOpts: {
-          category: 'Navigation',
-          action: 'Token Menu',
-          name: 'Clicked "Add Token"',
-        },
-      })
-      if (sidebarOpen) {
-        hideSidebar()
-      }
-    },
-  })
-}
 
 WalletView.prototype.render = function () {
   const {

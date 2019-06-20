@@ -17,8 +17,6 @@ const PreferencesController = require('./controllers/preferences')
 const CachedBalancesController = require('./controllers/cached-balances')
 const NoticeController = require('./notice-controller')
 const MessageManager = require('./lib/message-manager')
-const PersonalMessageManager = require('./lib/personal-message-manager')
-const TypedMessageManager = require('./lib/typed-message-manager')
 const nodeify = require('./lib/nodeify')
 const accountImporter = require('./account-import-strategies')
 const {Mutex} = require('await-semaphore')
@@ -87,10 +85,7 @@ module.exports = class MetamaskController extends EventEmitter {
       firstVersion: initState.firstTimeInfo.version,
     })
 
-
     this.messageManager = new MessageManager()
-    this.personalMessageManager = new PersonalMessageManager()
-    this.typedMessageManager = new TypedMessageManager({ networkController: this.networkController })
     this.publicConfigStore = this.initPublicConfigStore()
 
 
@@ -104,8 +99,6 @@ module.exports = class MetamaskController extends EventEmitter {
     this.memStore = new ComposableObservableStore(null, {
       AccountTracker: this.accountTracker.store,
       MessageManager: this.messageManager.memStore,
-      PersonalMessageManager: this.personalMessageManager.memStore,
-      TypesMessageManager: this.typedMessageManager.memStore,
       PreferencesController: this.preferencesController.store,
       NoticeController: this.noticeController.memStore,
       CachedBalancesController: this.cachedBalancesController.store,
@@ -175,8 +168,6 @@ module.exports = class MetamaskController extends EventEmitter {
     return {
       // etc
       getState: (cb) => cb(null, this.getState()),
-      setParticipateInMetaMetrics: this.setParticipateInMetaMetrics.bind(this),
-      setMetaMetricsSendCount: this.setMetaMetricsSendCount.bind(this),
       setFirstTimeFlowType: this.setFirstTimeFlowType.bind(this),
       setCurrentLocale: this.setCurrentLocale.bind(this),
       markAccountsFound: this.markAccountsFound.bind(this),
@@ -193,6 +184,8 @@ module.exports = class MetamaskController extends EventEmitter {
       removeAccount: nodeify(this.removeAccount, this),
       importAccountWithStrategy: nodeify(this.importAccountWithStrategy, this),
 
+      createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
+      createNewVaultAndRestore: nodeify(this.createNewVaultAndRestore, this),
 
       // mobile
       fetchInfoToSync: nodeify(this.fetchInfoToSync, this),
@@ -202,33 +195,14 @@ module.exports = class MetamaskController extends EventEmitter {
 
       // PreferencesController
       setSelectedAddress: nodeify(preferencesController.setSelectedAddress, preferencesController),
-      addToken: nodeify(preferencesController.addToken, preferencesController),
-      removeToken: nodeify(preferencesController.removeToken, preferencesController),
-      removeSuggestedTokens: nodeify(preferencesController.removeSuggestedTokens, preferencesController),
       setCurrentAccountTab: nodeify(preferencesController.setCurrentAccountTab, preferencesController),
       setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
       setFeatureFlag: nodeify(preferencesController.setFeatureFlag, preferencesController),
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
-      completeUiMigration: nodeify(preferencesController.completeUiMigration, preferencesController),
       completeOnboarding: nodeify(preferencesController.completeOnboarding, preferencesController),
       addKnownMethodData: nodeify(preferencesController.addKnownMethodData, preferencesController),
 
-      // KeyringController
-      setLocked: nodeify(this.setLocked, this),
-      createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
-      createNewVaultAndRestore: nodeify(this.createNewVaultAndRestore, this),
 
-      // messageManager
-      signMessage: nodeify(this.signMessage, this),
-      cancelMessage: this.cancelMessage.bind(this),
-
-      // personalMessageManager
-      signPersonalMessage: nodeify(this.signPersonalMessage, this),
-      cancelPersonalMessage: this.cancelPersonalMessage.bind(this),
-
-      // personalMessageManager
-      signTypedMessage: nodeify(this.signTypedMessage, this),
-      cancelTypedMessage: this.cancelTypedMessage.bind(this),
 
       // notices
       checkNotices: noticeController.updateNoticesList.bind(noticeController),
@@ -527,114 +501,6 @@ module.exports = class MetamaskController extends EventEmitter {
 
 
 
-  /**
-   * Signifies user intent to complete an eth_sign method.
-   *
-   * @param  {Object} msgParams The params passed to eth_call.
-   * @returns {Promise<Object>} Full state update.
-   */
-  signMessage (msgParams) {
-    const msgId = msgParams.metamaskId
-
-    // sets the status op the message to 'approved'
-    // and removes the metamaskId for signing
-    return this.messageManager.approveMessage(msgParams)
-    .then((cleanMsgParams) => {
-      // signs the message
-      return this.keyringController.signMessage(cleanMsgParams)
-    })
-    .then((rawSig) => {
-      // tells the listener that the message has been signed
-      // and can be returned to the dapp
-      this.messageManager.setMsgStatusSigned(msgId, rawSig)
-      return this.getState()
-    })
-  }
-
-  /**
-   * Used to cancel a message submitted via eth_sign.
-   *
-   * @param {string} msgId - The id of the message to cancel.
-   */
-  cancelMessage (msgId, cb) {
-    const messageManager = this.messageManager
-    messageManager.rejectMsg(msgId)
-    if (cb && typeof cb === 'function') {
-      cb(null, this.getState())
-    }
-  }
-
-  // personal_sign methods:
-
-  /**
-   * Called when a dapp uses the personal_sign method.
-   * This is identical to the Geth eth_sign method, and may eventually replace
-   * eth_sign.
-   *
-   * We currently define our eth_sign and personal_sign mostly for legacy Dapps.
-   *
-   * @param {Object} msgParams - The params of the message to sign & return to the Dapp.
-   * @param {Function} cb - The callback function called with the signature.
-   * Passed back to the requesting Dapp.
-   */
-  async newUnsignedPersonalMessage (msgParams, req) {
-    const promise = this.personalMessageManager.addUnapprovedMessageAsync(msgParams, req)
-    this.sendUpdate()
-    this.opts.showUnconfirmedMessage()
-    return promise
-  }
-
-  /**
-   * Signifies a user's approval to sign a personal_sign message in queue.
-   * Triggers signing, and the callback function from newUnsignedPersonalMessage.
-   *
-   * @param {Object} msgParams - The params of the message to sign & return to the Dapp.
-   * @returns {Promise<Object>} - A full state update.
-   */
-  signPersonalMessage (msgParams) {
-    const msgId = msgParams.metamaskId
-    // sets the status op the message to 'approved'
-    // and removes the metamaskId for signing
-    return this.personalMessageManager.approveMessage(msgParams)
-    .then((cleanMsgParams) => {
-      // signs the message
-      return this.keyringController.signPersonalMessage(cleanMsgParams)
-    })
-    .then((rawSig) => {
-      // tells the listener that the message has been signed
-      // and can be returned to the dapp
-      this.personalMessageManager.setMsgStatusSigned(msgId, rawSig)
-      return this.getState()
-    })
-  }
-
-  /**
-   * Used to cancel a personal_sign type message.
-   * @param {string} msgId - The ID of the message to cancel.
-   * @param {Function} cb - The callback function called with a full state update.
-   */
-  cancelPersonalMessage (msgId, cb) {
-    const messageManager = this.personalMessageManager
-    messageManager.rejectMsg(msgId)
-    if (cb && typeof cb === 'function') {
-      cb(null, this.getState())
-    }
-  }
-
-
-  /**
-   * Used to cancel a eth_signTypedData type message.
-   * @param {string} msgId - The ID of the message to cancel.
-   * @param {Function} cb - The callback function called with a full state update.
-   */
-  cancelTypedMessage (msgId, cb) {
-    const messageManager = this.typedMessageManager
-    messageManager.rejectMsg(msgId)
-    if (cb && typeof cb === 'function') {
-      cb(null, this.getState())
-    }
-  }
-
   // ---------------------------------------------------------------------------
   // MetaMask Version 3 Migration Account Restauration Methods
 
@@ -794,22 +660,6 @@ module.exports = class MetamaskController extends EventEmitter {
 //=============================================================================
 
   // Log blocks
-
-
-
-  /**
-   * Sets whether or not the user will have usage data tracked with MetaMetrics
-   * @param {boolean} bool - True for users that wish to opt-in, false for users that wish to remain out.
-   * @param {Function} cb - A callback function called when complete.
-   */
-  setParticipateInMetaMetrics (bool, cb) {
-    try {
-      const metaMetricsId = this.preferencesController.setParticipateInMetaMetrics(bool)
-      cb(null, metaMetricsId)
-    } catch (err) {
-      cb(err)
-    }
-  }
 
   setMetaMetricsSendCount (val, cb) {
     try {

@@ -4,7 +4,6 @@ import PageContainerFooter from '../../page-container/page-container-footer'
 
 export default class MetaMetricsOptInModal extends Component {
   static propTypes = {
-    setParticipateInMetaMetrics: PropTypes.func,
     hideModal: PropTypes.func,
   }
 
@@ -14,7 +13,7 @@ export default class MetaMetricsOptInModal extends Component {
 
   render () {
     const { metricsEvent } = this.context
-    const { setParticipateInMetaMetrics, hideModal } = this.props
+    const { hideModal } = this.props
 
     return (
       <div className="metametrics-opt-in metametrics-opt-in-modal">
@@ -68,36 +67,12 @@ export default class MetaMetricsOptInModal extends Component {
           <div className="metametrics-opt-in__footer">
             <PageContainerFooter
               onCancel={() => {
-                setParticipateInMetaMetrics(false)
-                  .then(() => {
-                    metricsEvent({
-                      eventOpts: {
-                        category: 'Onboarding',
-                        action: 'Metrics Option',
-                        name: 'Metrics Opt Out',
-                      },
-                      isOptIn: true,
-                    }, {
-                      excludeMetaMetricsId: true,
-                    })
-                    hideModal()
-                  })
+                hideModal()
               }}
               cancelText={'No Thanks'}
               hideCancel={false}
               onSubmit={() => {
-                setParticipateInMetaMetrics(true)
-                  .then(() => {
-                    metricsEvent({
-                      eventOpts: {
-                        category: 'Onboarding',
-                        action: 'Metrics Option',
-                        name: 'Metrics Opt In',
-                      },
-                      isOptIn: true,
-                    })
-                    hideModal()
-                  })
+                hideModal()
               }}
               submitText={'I agree'}
               submitButtonType={'confirm'}

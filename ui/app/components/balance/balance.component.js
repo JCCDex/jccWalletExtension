@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import TokenBalance from '../token-balance'
 import Identicon from '../identicon'
 import UserPreferencedCurrencyDisplay from '../user-preferenced-currency-display'
-import { PRIMARY, SECONDARY } from '../../constants/common'
-import { formatBalance } from '../../util'
+import { PRIMARY } from '../../constants/common'
 
 export default class Balance extends PureComponent {
   static propTypes = {
@@ -23,7 +22,7 @@ export default class Balance extends PureComponent {
   }
 
   renderBalance () {
-    const { account, nativeCurrency, needsParse, showFiat } = this.props
+    const { account } = this.props
     const balanceValue = account && account.balance
 
     const formattedBalance = balanceValue

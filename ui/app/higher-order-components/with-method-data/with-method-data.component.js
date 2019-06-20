@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { getMethodData, getFourBytePrefix } from '../../helpers/transactions.util'
 
 export default function withMethodData (WrappedComponent) {
   return class MethodDataWrappedComponent extends PureComponent {
@@ -21,35 +20,6 @@ export default function withMethodData (WrappedComponent) {
       error: null,
     }
 
-    componentDidMount () {
-      this.fetchMethodData()
-    }
-
-    async fetchMethodData () {
-      const { transaction, knownMethodData, addKnownMethodData } = this.props
-      const { txParams: { data = '' } = {} } = transaction
-
-      if (data) {
-        try {
-          let methodData
-          const fourBytePrefix = getFourBytePrefix(data)
-          if (fourBytePrefix in knownMethodData) {
-            methodData = knownMethodData[fourBytePrefix]
-          } else {
-            methodData = await getMethodData(data)
-            if (!Object.entries(methodData).length === 0) {
-              addKnownMethodData(fourBytePrefix, methodData)
-            }
-          }
-
-          this.setState({ methodData, done: true })
-        } catch (error) {
-          this.setState({ done: true, error })
-        }
-      } else {
-        this.setState({ done: true })
-      }
-    }
 
     render () {
       const { methodData, done, error } = this.state

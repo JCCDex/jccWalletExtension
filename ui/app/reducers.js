@@ -9,7 +9,7 @@ const reduceMetamask = require('./reducers/metamask')
 const reduceApp = require('./reducers/app')
 const reduceLocale = require('./reducers/locale')
 const reduceSend = require('./ducks/send.duck').default
-import reduceConfirmTransaction from './ducks/confirm-transaction.duck'
+
 
 window.METAMASK_CACHED_LOG_STATE = null
 
@@ -47,7 +47,6 @@ function rootReducer (state, action) {
 
   state.send = reduceSend(state, action)
 
-  state.confirmTransaction = reduceConfirmTransaction(state, action)
 
   window.METAMASK_CACHED_LOG_STATE = state
   return state

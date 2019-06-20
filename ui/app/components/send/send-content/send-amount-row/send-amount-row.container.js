@@ -12,14 +12,10 @@ import {
 import {
   sendAmountIsInError,
 } from './send-amount-row.selectors'
-import { getAmountErrorObject } from '../../send.utils'
 import {
   setMaxModeTo,
   updateSendAmount,
 } from '../../../../actions'
-import {
-  updateSendErrors,
-} from '../../../../ducks/send.duck'
 import SendAmountRow from './send-amount-row.component'
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendAmountRow)
@@ -43,7 +39,6 @@ function mapDispatchToProps (dispatch) {
     setMaxModeTo: bool => dispatch(setMaxModeTo(bool)),
     updateSendAmount: newAmount => dispatch(updateSendAmount(newAmount)),
     updateSendAmountError: (amountDataObject) => {
-      dispatch(updateSendErrors(getAmountErrorObject(amountDataObject)))
     },
   }
 }

@@ -1,16 +1,8 @@
 /* eslint camelcase: 0 */
 
-const ethUtil = require('ethereumjs-util')
 
 const inDevelopment = process.env.NODE_ENV === 'development'
 
-const METAMETRICS_BASE_URL = 'https://chromeextensionmm.innocraft.cloud/piwik.php'
-const METAMETRICS_REQUIRED_PARAMS = `?idsite=${inDevelopment ? 1 : 2}&rec=1&apiv=1`
-const METAMETRICS_BASE_FULL = METAMETRICS_BASE_URL + METAMETRICS_REQUIRED_PARAMS
-
-const METAMETRICS_TRACKING_URL = inDevelopment
-  ? 'http://www.metamask.io/metametrics'
-  : 'http://www.metamask.io/metametrics-prod'
 
 const METAMETRICS_CUSTOM_FUNCTION_TYPE = 'functionType'
 const METAMETRICS_CUSTOM_RECIPIENT_KNOWN = 'recipientKnown'
@@ -110,14 +102,13 @@ function composeUrl (config, permissionPreferences = {}) {
   const url = configUrl || `&url=${encodeURIComponent(currentPath.replace(/chrome-extension:\/\/\w+/, METAMETRICS_TRACKING_URL))}`
   const _id = metaMetricsId && !excludeMetaMetricsId ? `&_id=${metaMetricsId.slice(2, 18)}` : ''
   const rand = `&rand=${String(Math.random()).slice(2)}`
-  const pv_id = `&pv_id=${ethUtil.bufferToHex(ethUtil.sha3(url || currentPath.match(/chrome-extension:\/\/\w+\/(.+)/)[0])).slice(2, 8)}`
   const uid = metaMetricsId && !excludeMetaMetricsId
     ? `&uid=${metaMetricsId.slice(2, 18)}`
     : excludeMetaMetricsId
       ? '&uid=0000000000000000'
       : ''
 
-  return [ base, e_c, e_a, e_n, cvar, action_name, urlref, dimensions, url, _id, rand, pv_id, uid, new_visit ].join('')
+  return [ base, e_c, e_a, e_n, cvar, action_name, urlref, dimensions, url, _id, rand, uid, new_visit ].join('')
 }
 
 export function sendMetaMetricsEvent (config, permissionPreferences) {

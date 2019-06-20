@@ -4,17 +4,12 @@ const h = require('react-hyperscript')
 const inherits = require('util').inherits
 const connect = require('react-redux').connect
 const actions = require('../../actions')
-const ShapeshiftForm = require('../shapeshift-form')
 
 import Button from '../button'
 
 let DIRECT_DEPOSIT_ROW_TITLE
 let DIRECT_DEPOSIT_ROW_TEXT
-let COINBASE_ROW_TITLE
-let COINBASE_ROW_TEXT
-let SHAPESHIFT_ROW_TITLE
-let SHAPESHIFT_ROW_TEXT
-let FAUCET_ROW_TITLE
+
 
 function mapStateToProps (state) {
   return {
@@ -44,8 +39,6 @@ function DepositEtherModal (props, context) {
   // need to set after i18n locale has loaded
   DIRECT_DEPOSIT_ROW_TITLE = context.t('directDepositEther')
   DIRECT_DEPOSIT_ROW_TEXT = context.t('directDepositEtherExplainer')
-  SHAPESHIFT_ROW_TITLE = context.t('depositShapeShift')
-  SHAPESHIFT_ROW_TEXT = context.t('depositShapeShiftExplainer')
 
 }
 

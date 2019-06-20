@@ -1,7 +1,6 @@
 import EventEmitter from 'events'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Mascot from '../../../mascot'
 import Button from '../../../button'
 import { INITIALIZE_CREATE_PASSWORD_ROUTE, INITIALIZE_SELECT_ACTION_ROUTE } from '../../../../routes'
 

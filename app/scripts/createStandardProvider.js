@@ -4,8 +4,6 @@ class StandardProvider {
 
   constructor (provider) {
     this._provider = provider
-    this._onMessage('ethereumpingerror', this._onClose.bind(this))
-    this._onMessage('ethereumpingsuccess', this._onConnect.bind(this))
     window.addEventListener('load', () => {
       this._subscribe()
       this._ping()

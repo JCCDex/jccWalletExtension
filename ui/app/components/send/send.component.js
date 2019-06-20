@@ -1,10 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import PersistentForm from '../../../lib/persistent-form'
-import {
-  getAmountErrorObject,
-  doesAmountErrorRequireUpdate,
-} from './send.utils'
 
 import SendHeader from './send-header/'
 import SendContent from './send-content/'
@@ -50,40 +46,6 @@ export default class SendTransactionScreen extends PersistentForm {
     }
   }
 
-  componentDidUpdate (prevProps) {
-    const {
-      amount,
-      amountConversionRate,
-      from: { balance },
-      primaryCurrency,
-      selectedToken,
-      tokenBalance,
-    } = this.props
-
-    const {
-      from: { balance: prevBalance },
-      tokenBalance: prevTokenBalance,
-    } = prevProps
-
-    const amountErrorRequiresUpdate = doesAmountErrorRequireUpdate({
-      balance,
-      prevBalance,
-      prevTokenBalance,
-      selectedToken,
-      tokenBalance,
-    })
-
-    if (amountErrorRequiresUpdate) {
-      const amountErrorObject = getAmountErrorObject({
-        amount,
-        amountConversionRate,
-        balance,
-        primaryCurrency,
-        selectedToken,
-        tokenBalance,
-      })
-  }
-}
 
   componentWillMount () {
     const {

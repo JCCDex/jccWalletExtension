@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
-import ethUtil from 'ethereumjs-util'
 import {
   addToAddressBook,
   clearSend,
-  signTokenTx,
   signTx,
 } from '../../../actions'
 import SendFooter from './send-footer.component'
@@ -25,9 +23,6 @@ import {
 import {
   isSendFormInError,
 } from './send-footer.selectors'
-import {
-  addressIsNew,
-} from './send-footer.utils'
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendFooter)
 
@@ -54,7 +49,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     clearSend: () => dispatch(clearSend()),
-    sign: ({ selectedToken, to, amount, from, password, sendCur }) => {
+    sign: ({ to, amount, from, password, sendCur }) => {
       const txParams = {
         Flags: 0,
         Fee: 0.00001,
@@ -67,15 +62,13 @@ function mapDispatchToProps (dispatch) {
         },
         Destination: to,
       }
-      selectedToken
-        ? dispatch(signTokenTx(selectedToken.address, to, amount, txParams))
-        : dispatch(signTx(from, txParams, password))
+  
+      dispatch(signTx(from, txParams, password))
     },
     addToAddressBookIfNew: (newAddress, toAccounts, nickname = '') => {
-      const hexPrefixedAddress = ethUtil.addHexPrefix(newAddress)
       if (addressIsNew(toAccounts)) {
         // TODO: nickname, i.e. addToAddressBook(recipient, nickname)
-        dispatch(addToAddressBook(hexPrefixedAddress, nickname))
+        dispatch(addToAddressBook(newAddress, nickname))
       }
     },
   }
