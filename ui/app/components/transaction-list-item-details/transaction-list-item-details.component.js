@@ -77,7 +77,7 @@ export default class TransactionListItemDetails extends PureComponent {
                 />
               </Button>
             </Tooltip>
-            <Tooltip title={t('viewOnEtherscan')}>
+            <Tooltip title={t('viewOnSwtcscan')}>
               <Button
                 type="raised"
                 onClick={this.handleEtherscanClick}

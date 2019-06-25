@@ -784,7 +784,7 @@
   "viewAccount": {
     "message": "アカウントを見る"
   },
-  "viewOnEtherscan": {
+  "viewOnSwtcscan": {
     "message": "Etherscan で見る"
   },
   "warning": {

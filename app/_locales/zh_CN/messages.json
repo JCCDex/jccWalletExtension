@@ -1062,7 +1062,7 @@
   "copyTransactionId": {
     "message": "Copy Transaction ID"
   },
-  "viewOnEtherscan": {
-    "message": "View on Etherscan"
+  "viewOnSwtcscan": {
+    "message": "View on swtcscan"
   }
 }

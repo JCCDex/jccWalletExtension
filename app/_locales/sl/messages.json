@@ -1507,7 +1507,7 @@
   "viewAccount": {
     "message": "Poglej račun"
   },
-  "viewOnEtherscan": {
+  "viewOnSwtcscan": {
     "message": "Poglej na Etherscan"
   },
   "visitWebSite": {

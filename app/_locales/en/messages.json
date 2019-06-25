@@ -1639,8 +1639,8 @@
   "viewAccount": {
     "message": "View Account"
   },
-  "viewOnEtherscan": {
-    "message": "View on Etherscan"
+  "viewOnSwtcscan": {
+    "message": "View on swtcscan"
   },
   "visitWebSite": {
     "message": "Visit our web site"

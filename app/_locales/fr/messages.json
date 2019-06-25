@@ -1291,7 +1291,7 @@
   "viewAccount": {
     "message": "Afficher le compte"
   },
-  "viewOnEtherscan": {
+  "viewOnSwtcscan": {
     "message": "Voir sur Etherscan"
   },
   "visitWebSite": {

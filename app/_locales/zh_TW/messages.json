@@ -1530,7 +1530,7 @@
   "viewAccount": {
     "message": "查看帳戶"
   },
-  "viewOnEtherscan": {
+  "viewOnSwtcscan": {
     "message": "在 Etherscan 上瀏覽"
   },
   "visitWebSite": {
