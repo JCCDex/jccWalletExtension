@@ -79,7 +79,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "The name of the application"
   },
   "attemptingConnect": {
@@ -794,7 +794,7 @@
     "message": "おかえりなさい!"
   },
   "welcome": {
-    "message": "MetaMask ベータ版へようこそ!"
+    "message": "JingtumMask ベータ版へようこそ!"
   },
   "whatsThis": {
     "message": "この機能について"

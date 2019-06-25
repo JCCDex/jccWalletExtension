@@ -36,13 +36,13 @@
     "message": "Odmítnout"
   },
   "providerAPIRequest": {
-    "message": "Požadavek API Ethereum"
+    "message": "Požadavek API Jingtum"
   },
   "reviewProviderRequest": {
-    "message": "Přečtěte si prosím tuto žádost API Ethereum."
+    "message": "Přečtěte si prosím tuto žádost API Jingtum."
   },
   "providerRequestInfo": {
-    "message": "Níže uvedená doména se pokouší požádat o přístup k API Ethereum, aby mohla komunikovat s blokádou Ethereum. Před schválením přístupu Ethereum vždy zkontrolujte, zda jste na správném místě."
+    "message": "Níže uvedená doména se pokouší požádat o přístup k API Jingtum, aby mohla komunikovat s blokádou Jingtum. Před schválením přístupu Jingtum vždy zkontrolujte, zda jste na správném místě."
   },
   "accept": {
     "message": "Přijmout"
@@ -75,11 +75,11 @@
     "message": "Částka + palivo"
   },
   "appDescription": {
-    "message": "Ethereum rozšíření prohlížeče",
+    "message": "Jingtum rozšíření prohlížeče",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "The name of the application"
   },
   "approved": {
@@ -120,7 +120,7 @@
     "message": "Pújčit si přes Dharma (Beta)"
   },
   "builtInCalifornia": {
-    "message": "MetaMask je navržen a vytvořen v Kalifornii."
+    "message": "JingtumMask je navržen a vytvořen v Kalifornii."
   },
   "buy": {
     "message": "Koupit"
@@ -263,7 +263,7 @@
     "message": "Vklad přes ShapeShift"
   },
   "depositShapeShiftExplainer": {
-    "message": "Pokud vlastníte jiné kryptoměny, můžete je směnit Ether a vložit ho přímo do peněženky MetaMask. Bez založení účtu."
+    "message": "Pokud vlastníte jiné kryptoměny, můžete je směnit Ether a vložit ho přímo do peněženky JingtumMask. Bez založení účtu."
   },
   "details": {
     "message": "Podrobnosti"
@@ -513,13 +513,13 @@
     "message": "slova klíčové fráze mají pouze malá písmena"
   },
   "mainnet": {
-    "message": "Main Ethereum Network"
+    "message": "Main Jingtum Network"
   },
   "message": {
     "message": "Zpráva"
   },
   "metamaskDescription": {
-    "message": "MetaMask je bezpečný osobní trezor pro Ethereum."
+    "message": "JingtumMask je bezpečný osobní trezor pro Jingtum."
   },
   "min": {
     "message": "Minimum"
@@ -695,7 +695,7 @@
     "message": "Současné RPC"
   },
   "connectingToMainnet": {
-    "message": "Připojuji se k Main Ethereum Network"
+    "message": "Připojuji se k Main Jingtum Network"
   },
   "connectingToRopsten": {
     "message": "Připojuji se k Ropsten Test Network"
@@ -763,13 +763,13 @@
     "message": "Odeslat tokeny"
   },
   "onlySendToEtherAddress": {
-    "message": "Posílejte jen ETH na Ethereum adresu."
+    "message": "Posílejte jen ETH na Jingtum adresu."
   },
   "searchTokens": {
     "message": "Hledat tokeny"
   },
   "sendTokensAnywhere": {
-    "message": "Posílejte tokeny komukoli s Ethereum účtem"
+    "message": "Posílejte tokeny komukoli s Jingtum účtem"
   },
   "settings": {
     "message": "Nastavení"
@@ -888,7 +888,7 @@
     "description": "Followed by a link (here) to view token balances"
   },
   "twelveWords": {
-    "message": "Těchto 12 slov je jedinou možností, jak obnovit MetaMask účet. \nUložte je na bezpečné a neveřejné místo."
+    "message": "Těchto 12 slov je jedinou možností, jak obnovit JingtumMask účet. \nUložte je na bezpečné a neveřejné místo."
   },
   "typePassword": {
     "message": "Zadejte své heslo"
@@ -943,7 +943,7 @@
     "message": "Varování"
   },
   "welcome": {
-    "message": "Vítejte v MetaMask"
+    "message": "Vítejte v JingtumMask"
   },
   "whatsThis": {
     "message": "Co to je?"

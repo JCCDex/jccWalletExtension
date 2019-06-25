@@ -66,7 +66,7 @@ describe('Network Dropdown', () => {
     })
 
     it('checks background color for first NetworkDropdownIcon', () => {
-      assert.equal(wrapper.find(NetworkDropdownIcon).at(0).prop('backgroundColor'), '#29B6AF') // Main Ethereum Network Teal
+      assert.equal(wrapper.find(NetworkDropdownIcon).at(0).prop('backgroundColor'), '#29B6AF') // Main Jingtum Network Teal
     })
 
     it('checks background color for second NetworkDropdownIcon', () => {

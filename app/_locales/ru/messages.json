@@ -39,10 +39,10 @@
     "message": "Запрос API Web3"
   },
   "reviewProviderRequest": {
-    "message": "Просмотрите этот запрос API Ethereum."
+    "message": "Просмотрите этот запрос API Jingtum."
   },
   "providerRequestInfo": {
-    "message": "Домен, указанный ниже, пытается запросить доступ к API-интерфейсу Ethereum, чтобы он мог взаимодействовать с блокчейном Ethereum. Всегда проверяйте, что вы находитесь на правильном сайте, прежде чем одобрять доступ к веб-сайту."
+    "message": "Домен, указанный ниже, пытается запросить доступ к API-интерфейсу Jingtum, чтобы он мог взаимодействовать с блокчейном Jingtum. Всегда проверяйте, что вы находитесь на правильном сайте, прежде чем одобрять доступ к веб-сайту."
   },
   "accept": {
     "message": "Принять"
@@ -75,11 +75,11 @@
     "message": "Сумма + газ"
   },
   "appDescription": {
-    "message": "Расширение браузера для Ethereum",
+    "message": "Расширение браузера для Jingtum",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "JingtumMask",
     "description": "The name of the application"
   },
   "approved": {
@@ -120,7 +120,7 @@
     "message": "Взять в долг на Dharma (Beta)"
   },
   "builtInCalifornia": {
-    "message": "MetaMask спроектирован и разработан в Калифорнии."
+    "message": "JingtumMask спроектирован и разработан в Калифорнии."
   },
   "buy": {
     "message": "Купить"
@@ -129,7 +129,7 @@
     "message": "Купить на Coinbase"
   },
   "buyCoinbaseExplainer": {
-    "message": "Биржа Coinbase – это наиболее популярный способ купить или продать Bitcoin, Ethereum и Litecoin."
+    "message": "Биржа Coinbase – это наиболее популярный способ купить или продать Bitcoin, Jingtum и Litecoin."
   },
   "ok": {
     "message": "ОК"
@@ -232,10 +232,10 @@
     "message": "Количество десятичных разрядов"
   },
   "defaultNetwork": {
-    "message": "Основная сеть Ethereum – это сеть по умолчанию для Ether транзакций."
+    "message": "Основная сеть Jingtum – это сеть по умолчанию для Ether транзакций."
   },
   "denExplainer": {
-    "message": "DEN – это зашифрованное паролем хранилище внутри MetaMask."
+    "message": "DEN – это зашифрованное паролем хранилище внутри JingtumMask."
   },
   "deposit": {
     "message": "Пополнить"
@@ -263,7 +263,7 @@
     "message": "Пополнить через ShapeShift"
   },
   "depositShapeShiftExplainer": {
-    "message": "Если у вас есть другие криптовалюты, вы можете торговать и пополнять Ether напрямую в ваш MetaMask кошелек. Нет необходимости в счете."
+    "message": "Если у вас есть другие криптовалюты, вы можете торговать и пополнять Ether напрямую в ваш JingtumMask кошелек. Нет необходимости в счете."
   },
   "details": {
     "message": "Детали"
@@ -411,7 +411,7 @@
     "message": "Импортировать счет"
   },
   "importAccountMsg": {
-    "message": " Импортированные счета не будут ассоциированы с вашей ключевой фразой, созданной MetaMask. Узнать больше про импорт счетов "
+    "message": " Импортированные счета не будут ассоциированы с вашей ключевой фразой, созданной JingtumMask. Узнать больше про импорт счетов "
   },
   "importAnAccount": {
     "message": "Импортировать аккаунт"
@@ -458,7 +458,7 @@
     "description": "format for importing an account"
   },
   "keepTrackTokens": {
-    "message": "Следите за купленными вами токенами с помощью аккаунта MetaMask."
+    "message": "Следите за купленными вами токенами с помощью аккаунта JingtumMask."
   },
   "kovan": {
     "message": "Тестовая сеть Kovan"
@@ -507,13 +507,13 @@
     "message": "ключевая фраза может содержать только символы нижнего регистра"
   },
   "mainnet": {
-    "message": "Основная сеть Ethereum"
+    "message": "Основная сеть Jingtum"
   },
   "message": {
     "message": "Сообщение"
   },
   "metamaskDescription": {
-    "message": "MetaMask – безопасный кошелек для Ethereum."
+    "message": "JingtumMask – безопасный кошелек для Jingtum."
   },
   "min": {
     "message": "Минимум"
@@ -525,7 +525,7 @@
     "message": "Необходимо выбрать как минимум 1 токен."
   },
   "needEtherInWallet": {
-    "message": "Для взаимодействия с децентрализованными приложениями с помощью MetaMask нужен Ether в вашем кошельке."
+    "message": "Для взаимодействия с децентрализованными приложениями с помощью JingtumMask нужен Ether в вашем кошельке."
   },
   "needImportFile": {
     "message": "Вы должны выбрать файл для импорта.",
@@ -689,7 +689,7 @@
     "message": "Current RPC"
   },
   "connectingToMainnet": {
-    "message": "Соединение с основной сетью Ethereum"
+    "message": "Соединение с основной сетью Jingtum"
   },
   "connectingToRopsten": {
     "message": "Соединение с тестовой сетью Ropsten"
@@ -751,13 +751,13 @@
     "message": "Отправить токены"
   },
   "onlySendToEtherAddress": {
-    "message": "Отправляйте ETH только на Ethereum адреса."
+    "message": "Отправляйте ETH только на Jingtum адреса."
   },
   "searchTokens": {
     "message": "Поиск токенов"
   },
   "sendTokensAnywhere": {
-    "message": "Отправить токены любому, у кого есть счет Ethereum"
+    "message": "Отправить токены любому, у кого есть счет Jingtum"
   },
   "settings": {
     "message": "Настройки"
@@ -851,7 +851,7 @@
     "message": "Символ токена"
   },
   "tokenWarning1": {
-    "message": "Отслеживаются токены, купленные на счет в MetaMask. Если вы купили токены, используя другой счет, такие токены не будут тут отображены."
+    "message": "Отслеживаются токены, купленные на счет в JingtumMask. Если вы купили токены, используя другой счет, такие токены не будут тут отображены."
   },
   "total": {
     "message": "Всего"
@@ -873,7 +873,7 @@
     "description": "Followed by a link (here) to view token balances"
   },
   "twelveWords": {
-    "message": "Эти 12 слов являются единственной возможностью восстановить ваши счета в MetaMask.\nСохраните из в надежном секретном месте."
+    "message": "Эти 12 слов являются единственной возможностью восстановить ваши счета в JingtumMask.\nСохраните из в надежном секретном месте."
   },
   "typePassword": {
     "message": "Введите пароль"
@@ -882,7 +882,7 @@
     "message": "Новый интерфейс (Beta)"
   },
   "uiWelcomeMessage": {
-    "message": "Теперь вы используете новый интерфейс пользователя MetaMask. Осмотритесь, попробуйте новые функции, например, отправить токены и, если возникнут проблемы, сообщите нам."
+    "message": "Теперь вы используете новый интерфейс пользователя JingtumMask. Осмотритесь, попробуйте новые функции, например, отправить токены и, если возникнут проблемы, сообщите нам."
   },
   "unapproved": {
     "message": "Не одобрена"
@@ -928,7 +928,7 @@
     "message": "Предупреждение"
   },
   "welcome": {
-    "message": "Добро пожаловать в MetaMask"
+    "message": "Добро пожаловать в JingtumMask"
   },
   "whatsThis": {
     "message": "Что это?"

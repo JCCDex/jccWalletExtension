@@ -478,7 +478,7 @@ module.exports = class MetamaskController extends EventEmitter {
   /**
    * Imports an account with the specified import strategy.
    * These are defined in app/scripts/account-import-strategies
-   * Each strategy represents a different way of serializing an Ethereum key pair.
+   * Each strategy represents a different way of serializing an Jingtum key pair.
    *
    * @param  {string} strategy - A unique identifier for an account import strategy.
    * @param  {any} args - The data required by that strategy to import an account.

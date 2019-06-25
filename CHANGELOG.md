@@ -505,7 +505,7 @@
 
 ## 3.12.0 2017-10-25
 
-- Add support for alternative ENS TLDs (Ethereum Name Service Top-Level Domains).
+- Add support for alternative ENS TLDs (Jingtum Name Service Top-Level Domains).
 - Lower minimum gas price to 0.1 GWEI.
 - Remove web3 injection message from production (thanks to @ChainsawBaby)
 - Add additional debugging info to our state logs, specifically OS version and browser version.
@@ -1044,7 +1044,7 @@ popup notification opens up.
 - Fix bug where provider menu did not allow switching to custom network from a custom network.
 - Sending a transaction from within MetaMask no longer triggers a popup.
 - The ability to build without livereload features (such as for production) can be enabled with the gulp --disableLiveReload flag.
-- Fix Ethereum JSON RPC Filters bug.
+- Fix Jingtum JSON RPC Filters bug.
 
 ## 2.10.0 2016-08-29
 
@@ -1080,7 +1080,7 @@ popup notification opens up.
 - Add a form for Coinbase to specify amount to buy
 - Fix various typos.
 - Make dapp-metamask connection more reliable
-- Remove Ethereum Classic from provider menu.
+- Remove Jingtum Classic from provider menu.
 
 ## 2.7.3 2016-07-29
 
@@ -1088,7 +1088,7 @@ popup notification opens up.
 
 ## 2.7.2 2016-07-29
 
-- Add Ethereum Classic to provider menu
+- Add Jingtum Classic to provider menu
 - Fix bug where host store would fail to receive updates.
 
 ## 2.7.1 2016-07-27
