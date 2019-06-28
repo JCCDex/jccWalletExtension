@@ -168,7 +168,7 @@ var actions = {
   updateSendTo,
   updateSendAmount,
   updateSendCurrency,
-  updateSendMemo,
+  updateMemoData,
   setMaxModeTo,
   updateSend,
   updateSendErrors,
@@ -909,7 +909,7 @@ function updateSendCurrency (sendCur) {
   }
 }
 
-function updateSendMemo (memo) {
+function updateMemoData (memo) {
   return {
     type: actions.UPDATE_SEND_MEMO,
     value: memo,

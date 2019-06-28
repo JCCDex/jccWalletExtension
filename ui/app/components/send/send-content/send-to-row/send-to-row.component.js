@@ -29,10 +29,8 @@ export default class SendToRow extends Component {
   }
 
   handleToChange (to, nickname = '') {
-    const {updateSendTo, updateSendToError, updateSendToWarning } = this.props
+    const {updateSendTo} = this.props
     updateSendTo(to, nickname)
-    updateSendToError(toErrorObject)
-    updateSendToWarning(toWarningObject)
   }
 
   render () {

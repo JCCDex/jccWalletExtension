@@ -1064,5 +1064,11 @@
   },
   "viewOnSwtcscan": {
     "message": "View on swtcscan"
+  },
+  "scanQrCode": {
+    "message": "扫描二维码"
+  },
+  "memo": {
+    "message": "备注"
   }
 }

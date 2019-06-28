@@ -5,6 +5,7 @@ import SendAmountRow from './send-amount-row/'
 import SendFromRow from './send-from-row/'
 import SendHexDataRow from './send-hex-data-row'
 import SendPasswordRow from './send-password-row'
+import SendMemoRow from './send-memo-row'
 import SendCurrencyRow from './send-currency-row'
 import SendToRow from './send-to-row/'
 
@@ -28,9 +29,7 @@ export default class SendContent extends Component {
           <SendAmountRow />
           <SendPasswordRow />
           <SendCurrencyRow />
-          {(this.props.showHexData && (
-            <SendHexDataRow />
-          ))}
+          <SendMemoRow />
         </div>
       </PageContainerContent>
     )

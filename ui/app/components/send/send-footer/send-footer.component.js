@@ -9,6 +9,7 @@ export default class SendFooter extends Component {
     addToAddressBookIfNew: PropTypes.func,
     amount: PropTypes.string,
     sendCur: PropTypes.string,
+    sendMemo: PropTypes.string,
     data: PropTypes.string,
     clearSend: PropTypes.func,
     disabled: PropTypes.bool,
@@ -53,6 +54,7 @@ export default class SendFooter extends Component {
       sign,
       to,
       sendCur,
+      sendMemo,
       history,
       warning,
     } = this.props
@@ -67,7 +69,7 @@ export default class SendFooter extends Component {
 
     // TODO: add nickname functionality
    // addToAddressBookIfNew(to, toAccounts)
-    const promise = sign({ data, selectedToken, to, amount, from, password, sendCur })
+    const promise = sign({ data, selectedToken, to, amount, from, password, sendCur, sendMemo })
     Promise.resolve(promise)
       .then((result) => {
         metricsEvent({

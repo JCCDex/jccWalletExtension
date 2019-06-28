@@ -39,6 +39,7 @@ const selectors = {
   transactionsSelector,
   getQrCodeData,
   getSendCur,
+  getSendMemo,
   getSendWarning,
   getJccSendWarnings,
 }
@@ -136,6 +137,10 @@ function getSendAmount (state) {
 
 function getSendCur (state) {
   return state.metamask.send.sendCur
+}
+
+function getSendMemo (state) {
+  return state.metamask.send.memo
 }
 
 function getSendHexData (state) {
