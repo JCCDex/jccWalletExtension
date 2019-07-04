@@ -500,7 +500,7 @@
     "message": "Enter password to continue"
   },
   "eth": {
-    "message": "ETH"
+    "message": "SWTC"
   },
   "etherscanView": {
     "message": "View account on Etherscan"
@@ -872,7 +872,7 @@
     "description": "Password and file needed to import an account"
   },
   "negativeETH": {
-    "message": "Can not send negative amounts of ETH."
+    "message": "Can not send negative amounts of SWTC."
   },
   "networks": {
     "message": "Networks"
@@ -981,7 +981,7 @@
     "message": "You have returned to the old UI. You can switch back to the New UI through the option in the top right dropdown menu."
   },
   "onlySendToEtherAddress": {
-    "message": "Only send ETH to an Jingtum address."
+    "message": "Only send SWTC to an Jingtum address."
   },
   "onlySendTokensToAccountAddress": {
     "message": "Only send $1 to an Jingtum account address.",
@@ -1262,7 +1262,7 @@
     "message": "Send Amount"
   },
   "sendETH": {
-    "message": "Send ETH"
+    "message": "Send SWTC"
   },
   "sendTokens": {
     "message": "Send Tokens"

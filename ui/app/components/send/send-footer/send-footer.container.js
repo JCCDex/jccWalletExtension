@@ -69,7 +69,6 @@ function mapDispatchToProps (dispatch) {
           }
         }],
       }
-      console.dir(txParams)
       dispatch(signTx(from, txParams, password))
     },
     addToAddressBookIfNew: (newAddress, toAccounts, nickname = '') => {
