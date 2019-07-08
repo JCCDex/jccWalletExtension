@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Identicon from '../identicon'
 import { DEFAULT_ROUTE } from '../../routes'
+const ExtensionPlatform = require('../../../../app/scripts/platforms/extension')
 
 export default class AppHeader extends PureComponent {
   static propTypes = {
@@ -24,7 +25,6 @@ export default class AppHeader extends PureComponent {
 
   renderAccountMenu () {
     const { isUnlocked, toggleAccountMenu, selectedAddress, disabled, isAccountMenuOpen } = this.props
-
     return (
       <div
         className={classnames('account-menu__icon', {
@@ -58,7 +58,7 @@ export default class AppHeader extends PureComponent {
       isUnlocked,
       disabled,
     } = this.props
-
+    const platform = new ExtensionPlatform()
     return (
       <div
         className={classnames('app-header', { 'app-header--back-drop': isUnlocked })}>
@@ -78,6 +78,7 @@ export default class AppHeader extends PureComponent {
               src="/images/logo/swtc.png"
               height={42}
               width={42}
+              onClick={() => platform.openExtensionInBrowser()}
             />
           </div>
           <div className="app-header__account-menu-container">

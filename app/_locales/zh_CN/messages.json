@@ -568,9 +568,6 @@
     "message": "必须为已选择的文件输入密码。",
     "description": "Password and file needed to import an account"
   },
-  "negativeETH": {
-    "message": "Can not send negative amounts of SWTC."
-  },
   "networks": {
     "message": "网络"
   },
@@ -801,7 +798,7 @@
   "send": {
     "message": "发送"
   },
-  "sendETH": {
+  "sendSWTC": {
     "message": "转账"
   },
   "sendTokens": {
@@ -887,10 +884,6 @@
   },
   "to": {
     "message": "至"
-  },
-  "toETHviaShapeShift": {
-    "message": "$1 ETH 通过 ShapeShift",
-    "description": "system will fill in deposit type in start of message"
   },
   "tokenAddress": {
     "message": "代币地址"

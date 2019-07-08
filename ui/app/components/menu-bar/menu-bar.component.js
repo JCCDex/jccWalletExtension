@@ -45,26 +45,6 @@ export default class MenuBar extends PureComponent {
         </Tooltip>
         <SelectedAccount />
 
-        <Tooltip
-          title={t('accountOptions')}
-          position="bottom"
-        >
-          <div
-            className="fa fa-ellipsis-h fa-lg menu-bar__open-in-browser"
-            onClick={() => {
-              this.context.metricsEvent({
-                eventOpts: {
-                  category: 'Navigation',
-                  action: 'Home',
-                  name: 'Opened Account Options',
-                },
-              })
-              this.setState({ accountDetailsMenuOpen: true })
-            }}
-          >
-          </div>
-        </Tooltip>
-
         {
           accountDetailsMenuOpen && (
             <AccountDetailsDropdown

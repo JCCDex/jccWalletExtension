@@ -735,9 +735,6 @@
   "knownAddressRecipient": {
     "message": "Known contract address."
   },
-  "invalidAddressRecipientNotEthNetwork": {
-    "message": "Not ETH network, set to lowercase"
-  },
   "invalidGasParams": {
     "message": "Invalid Gas Parameters"
   },
@@ -870,9 +867,6 @@
   "needImportPassword": {
     "message": "You must enter a password for the selected file.",
     "description": "Password and file needed to import an account"
-  },
-  "negativeETH": {
-    "message": "Can not send negative amounts of SWTC."
   },
   "networks": {
     "message": "Networks"
@@ -1059,9 +1053,6 @@
   },
   "primaryCurrencySetting": {
     "message": "Primary Currency"
-  },
-  "primaryCurrencySettingDescription": {
-    "message": "Select native to prioritize displaying values in the native currency of the chain (e.g. ETH). Select Fiat to prioritize displaying values in your selected fiat currency."
   },
   "privacyMsg": {
     "message": "Privacy Policy"
@@ -1261,7 +1252,7 @@
   "sendAmount": {
     "message": "Send Amount"
   },
-  "sendETH": {
+  "sendSWTC": {
     "message": "Send SWTC"
   },
   "sendTokens": {
@@ -1458,10 +1449,6 @@
   },
   "to": {
     "message": "To"
-  },
-  "toETHviaShapeShift": {
-    "message": "$1 to ETH via ShapeShift",
-    "description": "system will fill in deposit type in start of message"
   },
   "token": {
     "message": "Token"

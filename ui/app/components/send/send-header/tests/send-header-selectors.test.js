@@ -23,7 +23,7 @@ describe('send-header selectors', () => {
     })
 
     it('should return the correct key when getSendEditingTransactionId is falsy and getSelectedToken is falsy', () => {
-      assert.equal(getTitleKey({ e: null }), 'sendETH')
+      assert.equal(getTitleKey({ e: null }), 'sendSWTC')
     })
   })
 
