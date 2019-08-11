@@ -1249,6 +1249,9 @@
   "send": {
     "message": "Send"
   },
+  "CreateOrder": {
+    "message": "Create Order"
+  },
   "sendAmount": {
     "message": "Send Amount"
   },
@@ -1470,6 +1473,9 @@
   },
   "tokenSymbol": {
     "message": "Token Symbol"
+  },
+  "ticker": {
+    "message": "Ticker"
   },
   "tokenWarning1": {
     "message": "Keep track of the tokens you’ve bought with your JingtumMask account. If you bought tokens using a different account, those tokens will not appear here."

@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import UnitInput from '../unit-input'
 import CurrencyDisplay from '../currency-display'
-import { getValueFromWeiHex, getWeiHexFromDecimalValue } from '../../helpers/conversions.util'
-import { SWTC } from '../../constants/common'
 
 /**
  * Component that allows user to enter currency values as a number, and props receive a converted

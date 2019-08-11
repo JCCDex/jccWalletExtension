@@ -52,6 +52,12 @@ function mapDispatchToProps (dispatch) {
   return {
     clearSend: () => dispatch(clearSend()),
     sign: ({ to, amount, from, password, sendCur, sendMemo }) => {
+      if(sendCur == 'CNT') {
+        sendCur = 'CNY'
+      }
+      if(sendCur == 'SWTC') {
+        sendCur = 'SWT'
+      }
       const txParams = {
         Flags: 0,
         Fee: 0.00001,

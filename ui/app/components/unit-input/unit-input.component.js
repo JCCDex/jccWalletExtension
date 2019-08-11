@@ -75,28 +75,24 @@ export default class UnitInput extends PureComponent {
 
     return (
       <div
-        className={classnames('unit-input', { 'unit-input--error': error })}
+      style={{width:"255px", height:"32px"}}
+        //className={classnames('unit-input', { 'unit-input--error': error })}
         onClick={this.handleFocus}
       >
         <div className="unit-input__inputs">
           <div className="unit-input__input-container">
             <input
               type="number"
-              className="unit-input__input"
+              style={{width:"255px", height:"32px"}}
+              //className="unit-input__input"
               value={value}
               placeholder={placeholder}
               onChange={this.handleChange}
               onBlur={this.handleBlur}
-              style={{ width: this.getInputWidth(value) }}
+             // style={{ width: this.getInputWidth(value) }}
               ref={ref => { this.unitInput = ref }}
             />
-            {
-              suffix && (
-                <div className="unit-input__suffix">
-                  { suffix }
-                </div>
-              )
-            }
+            
           </div>
         </div>
         {actionComponent}

@@ -6,6 +6,7 @@ import Identicon from '../identicon'
 import TokenBalance from '../token-balance'
 import UserPreferencedCurrencyDisplay from '../user-preferenced-currency-display'
 import { SEND_ROUTE } from '../../routes'
+import { CREATE_ORDER_ROUTE } from '../../routes'
 import { PRIMARY } from '../../constants/common'
 import Tooltip from '../tooltip-v2'
 
@@ -99,6 +100,22 @@ export default class TransactionViewBalance extends PureComponent {
           }}
         >
           { t('send') }
+        </Button>
+        <Button
+          type="primary"
+          className="transaction-view-balance__button"
+          onClick={() => {
+            metricsEvent({
+              eventOpts: {
+                category: 'Navigation',
+                action: 'Home',
+                name: 'Clicked Create Order',
+              },
+            })
+            history.push(CREATE_ORDER_ROUTE)
+          }}
+        >
+          { t('CreateOrder') }
         </Button>
       </div>
     )

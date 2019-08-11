@@ -8,7 +8,7 @@ export default class SendCurrencyRow extends Component {
     super(props)
     this.state = {
       password: '',
-      sendCur: 'SWT',
+      sendCur: 'SWTC',
     }
     const { updateSendCurrency } = this.props
     updateSendCurrency(this.state.sendCur)
@@ -50,7 +50,7 @@ export default class SendCurrencyRow extends Component {
         showError={inError}
         errorType={'currency'}
       >
-       <select style={{width: '250px', height: '32px'}}
+       <select style={{width: '255px', height: '32px'}}
                 value={this.state.sendCur}
                 onChange={this.onCoinChange}
               >
@@ -59,8 +59,8 @@ export default class SendCurrencyRow extends Component {
                     {tokenBal.cur}
                   </option>
                 ))}
-                 <option key="SWT" value="SWT">
-                    {'SWT'}
+                 <option key="SWTC" value="SWTC">
+                    {'SWTC'}
                   </option>
               </select>
       </SendRowWrapper>

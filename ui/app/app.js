@@ -11,6 +11,7 @@ import { getMetaMaskAccounts } from './selectors'
 import FirstTimeFlow from './components/pages/first-time-flow'
 // accounts
 const SendTransactionScreen = require('./components/send/send.container')
+const OrderScreen = require('./components/create-order/order.container')
 
 // slideout menu
 const Sidebar = require('./components/sidebars').default
@@ -51,6 +52,7 @@ import {
   RESTORE_VAULT_ROUTE,
   NEW_ACCOUNT_ROUTE,
   SEND_ROUTE,
+  CREATE_ORDER_ROUTE,
   CONFIRM_TRANSACTION_ROUTE,
   INITIALIZE_ROUTE,
   INITIALIZE_UNLOCK_ROUTE,
@@ -80,6 +82,7 @@ class App extends Component {
         <Authenticated path={SETTINGS_ROUTE} component={Settings} />
         <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
         <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
+        <Authenticated path={CREATE_ORDER_ROUTE} component={OrderScreen} exact />
         <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
       </Switch>

@@ -36,6 +36,7 @@ class AccountTracker {
     const initState = extend({
       accounts: {},
       accountsTokenBal: {},
+      accountsAllTokenBal: {},
       currentBlockGasLimit: '',
     }, opts.initState)
    // const initState = {
@@ -170,23 +171,34 @@ class AccountTracker {
     const jccutils = new Jccutils()
     const accounts = this.store.getState().accounts
     const accountsTokenBal = this.store.getState().accountsTokenBal
+    const accountsAllTokenBal = this.store.getState().accountsAllTokenBal
       addresses.forEach(async (address, index) => {
         const balArray = await jccutils.getBalance(address)
-       
+        console.log('balArray:')
+        console.dir(balArray)
         //if (!accountsTokenBal[address]) {
           accountsTokenBal[address] = []
+          accountsAllTokenBal[address] = []
       //  }
       if (balArray.length > 0) {
         balArray.map((balObj) => {
-          let bal = balObj.value
+          let bal = Number(balObj.value).toFixed(4)
+          let freezed = Number(balObj.freezed).toFixed(4)
+          if(freezed > 0) {
+            bal = bal + ' freezed:' + freezed
+          }
           if (balObj.currency === 'SWT') {
             const balance = bal
             accounts[address] = { address, balance }
           } else {
-            const cur = balObj.currency
+            let cur = balObj.currency
+            if(cur == 'CNY'){
+              cur = 'CNT'
+            }
             const val = bal
             accountsTokenBal[address].push({ cur, val })
           }
+          accountsAllTokenBal[address].push([balObj.currency,bal])
         })
       } else {
         const balance = 0
@@ -195,6 +207,7 @@ class AccountTracker {
       })
       this.store.updateState({ accounts })
       this.store.updateState({ accountsTokenBal })
+      this.store.updateState({ accountsAllTokenBal })
   }
 
 }

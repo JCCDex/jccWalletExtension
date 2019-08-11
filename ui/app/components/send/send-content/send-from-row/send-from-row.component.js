@@ -15,7 +15,6 @@ export default class SendFromRow extends Component {
   render () {
     const { t } = this.context
     const { from } = this.props
-
     return (
       <SendRowWrapper label={`${t('from')}:`}>
         <div className="send-v2__from-dropdown">

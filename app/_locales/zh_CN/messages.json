@@ -798,6 +798,12 @@
   "send": {
     "message": "发送"
   },
+  "CreateOrder": {
+    "message": "交易"
+  },
+  "orderInSwtc": {
+    "message": "订单将在井通公链上撮合"
+  },
   "sendSWTC": {
     "message": "转账"
   },
@@ -897,8 +903,8 @@
   "tokenSelection": {
     "message": "搜索代币或从我们的常用代币列表中进行选择"
   },
-  "tokenSymbol": {
-    "message": "代币"
+  "ticker": {
+    "message": "交易对"
   },
   "tokenWarning1": {
     "message": "Keep track of the tokens you’ve bought with your JingtumMask account. If you bought tokens using a different account, those tokens will not appear here."
@@ -1063,5 +1069,20 @@
   },
   "memo": {
     "message": "备注"
+  },
+  "counter": {
+    "message": "交易对"
+  },
+  "price": {
+    "message": "价格"
+  },
+  "direction": {
+    "message": "交易方向"
+  },
+  "orderAmount": {
+    "message": "数量"
+  },
+  "tokenSymbol": {
+    "message": "代币"
   }
 }

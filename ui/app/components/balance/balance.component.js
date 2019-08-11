@@ -24,11 +24,9 @@ export default class Balance extends PureComponent {
   renderBalance () {
     const { account } = this.props
     const balanceValue = account && account.balance
-
     const formattedBalance = balanceValue
    //   ? formatBalance(balanceValue, 6, needsParse, nativeCurrency)
    //   : '...'
-
     if (formattedBalance === 'None' || formattedBalance === '...') {
       return (
         <div className="flex-column balance-display">
@@ -38,18 +36,32 @@ export default class Balance extends PureComponent {
         </div>
       )
     }
-
-    return (
-      <div className="flex-column balance-display">
-        <UserPreferencedCurrencyDisplay
-          className="token-amount"
-          value={balanceValue}
-          type={PRIMARY}
-          ethNumberOfDecimals={4}
-        />
-        
-      </div>
-    )
+    if(balanceValue != undefined){
+      if(balanceValue == 0) {
+        return (
+          <div className="flex-column balance-display">   
+          <div>swtc余额为0,表示账号未激活，需要转入该账号35个swtc激活</div>   
+          <UserPreferencedCurrencyDisplay
+            className="token-amount"
+            value={balanceValue}
+            type={PRIMARY}
+            ethNumberOfDecimals={4}
+          />       
+        </div> 
+      )
+      }else {
+        return (
+          <div className="flex-column balance-display">
+          <UserPreferencedCurrencyDisplay
+            className="token-amount"
+            value={balanceValue}
+            type={PRIMARY}
+            ethNumberOfDecimals={4}
+          />       
+        </div> 
+      )
+      }    
+    }
   }
 
   renderTokenBalance () {
@@ -68,7 +80,6 @@ export default class Balance extends PureComponent {
     const { token, network, assetImages } = this.props
     const address = token && token.address
     const image = assetImages && address ? assetImages[token.address] : undefined
-
     return (
       <div className="balance-container">
         <Identicon

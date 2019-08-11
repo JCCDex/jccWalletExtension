@@ -24,7 +24,7 @@ export default class TransactionListItemDetails extends PureComponent {
     const { transactionGroup } = this.props
     const { hash } = transactionGroup
 
-    const etherscanUrl = `https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash=${hash}`
+    const swtcscanUrl = `https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash=${hash}`
 
     this.context.metricsEvent({
       eventOpts: {
@@ -34,7 +34,7 @@ export default class TransactionListItemDetails extends PureComponent {
       },
     })
 
-    global.platform.openWindow({ url: etherscanUrl })
+    global.platform.openWindow({ url: swtcscanUrl })
   }
 
 
@@ -59,7 +59,9 @@ export default class TransactionListItemDetails extends PureComponent {
     const { t } = this.context
     const { justCopied } = this.state
     const { transactionGroup } = this.props
-    const { sender, receiver, amount, currency } = transactionGroup
+    const { sender, receiver, amount, currency, time } = transactionGroup
+    let timeToDate = new Date(time*1000).toLocaleString()
+    timeToDate = timeToDate.split("/").join('-');
     return (
       <div className="transaction-list-item-details">
         <div className="transaction-list-item-details__header">
@@ -111,7 +113,10 @@ export default class TransactionListItemDetails extends PureComponent {
             数量：{amount}
           </span>
           <span>
-            币种：{currency}
+          &nbsp;&nbsp;币种：{currency}
+          </span>
+          <span>
+            &nbsp;&nbsp;交易时间：{timeToDate}
           </span>
           </div>
         </div>

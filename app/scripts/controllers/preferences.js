@@ -293,7 +293,7 @@ class PreferencesController {
    */
   setAccountLabel (account, label) {
     if (!account) throw new Error('setAccountLabel requires a valid address, got ' + String(account))
-    const address = normalizeAddress(account)
+    const address = account.address
     const {identities} = this.store.getState()
     identities[address] = identities[address] || {}
     identities[address].name = label

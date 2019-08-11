@@ -184,7 +184,7 @@ WalletView.prototype.render = function () {
         h('i.fa.fa-clipboard', { style: { marginLeft: '8px' } }),
       ]),
     ]),
-
+   
     this.renderWalletBalance(),
 
     h(TokenList),

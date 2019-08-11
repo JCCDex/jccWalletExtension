@@ -40,6 +40,7 @@ export default class SendPasswordRow extends Component {
        <TextField
               id="password"
               type="password"
+              style={{width:"255px", height:"32px"}}
               className="first-time-flow__input"
               value={this.state.password}
               onBlur={event => {

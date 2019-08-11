@@ -7,6 +7,7 @@ const { ENVIRONMENT_TYPE_NOTIFICATION } = require('../../app/scripts/lib/enums')
 const WebcamUtils = require('../lib/webcam-utils')
 const LocalSign = require('jcc_jingtum_lib/src/local_sign')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
+import JCCExchange from "jcc_exchange";
 
 var actions = {
   _setBackgroundConnection: _setBackgroundConnection,
@@ -147,6 +148,7 @@ var actions = {
   cancelTypedMsg,
   sendTx: sendTx,
   signTx: signTx,
+  createJccOrder: createJccOrder,
   // send screen
   UPDATE_SEND_FROM: 'UPDATE_SEND_FROM',
   UPDATE_SEND_HEX_DATA: 'UPDATE_SEND_HEX_DATA',
@@ -154,6 +156,11 @@ var actions = {
   UPDATE_SEND_TO: 'UPDATE_SEND_TO',
   UPDATE_SEND_AMOUNT: 'UPDATE_SEND_AMOUNT',
   UPDATE_SEND_CURRENCY: 'UPDATE_SEND_CURRENCY',
+  UPDATE_COUNTER: 'UPDATE_COUNTER',
+  UPDATE_BASE: 'UPDATE_BASE',
+  UPDATE_ORDER_PRICE: 'UPDATE_ORDER_PRICE',
+  UPDATE_ORDER_AMOUNT: 'UPDATE_ORDER_AMOUNT',
+  UPDATE_DIRECTION: 'UPDATE_DIRECTION',
   UPDATE_SEND_MEMO: 'UPDATE_SEND_MEMO',
   UPDATE_SEND_ERRORS: 'UPDATE_SEND_ERRORS',
   UPDATE_SEND_WARNINGS: 'UPDATE_SEND_WARNINGS',
@@ -168,6 +175,11 @@ var actions = {
   updateSendTo,
   updateSendAmount,
   updateSendCurrency,
+  updateCounter,
+  updateBase,
+  updateDirection,
+  updateOrderPrice,
+  updateOrderAmount,
   updateMemoData,
   setMaxModeTo,
   updateSend,
@@ -833,6 +845,41 @@ function signTypedMsg (msgData) {
     }
 }
 
+function createJccOrder (from, txParams, password) {
+
+  return async (dispatch) => {
+    const jccutils = new Jccutils()
+    const jccInstance = await jccutils.getJccInstance()
+    //const seq = await jccInstance.getSequence(from)
+    //txParams.Sequence = seq.data.sequence
+    const inst = new JingchangWallet(JingchangWallet.get(), true, false)
+    let key = ''
+    console.log('from:'+from)
+    console.log('inst:')
+    console.dir(inst)
+    console.log('txParams:')
+    console.dir(txParams)
+    try {
+       key = await inst.getSecretWithAddress(password, from.address)
+    } catch (err) {
+      alert(err.message)
+      dispatch(actions.displayWarning(err.message))
+      return
+    }
+    const hosts = await jccutils.getExHosts()
+    console.log('hosts:'+hosts)
+    try {
+      JCCExchange.init(hosts, 443, true);
+      const hash = await JCCExchange.createOrder(txParams.address, key, txParams.amount, txParams.base, txParams.counter, txParams.sum, txParams.type, txParams.issuer);
+      console.log('order hash'+hash)
+      alert('交易成功')
+    } catch (error) {
+      alert(error)
+        console.log(error);
+    }
+    }
+}
+
 function updateSendTokenBalance ({
   selectedToken,
   tokenContract,
@@ -906,6 +953,41 @@ function updateSendCurrency (sendCur) {
   return {
     type: actions.UPDATE_SEND_CURRENCY,
     value: sendCur,
+  }
+}
+
+function updateCounter (counter) {
+  return {
+    type: actions.UPDATE_COUNTER,
+    value: counter,
+  }
+}
+
+function updateBase (base) {
+  return {
+    type: actions.UPDATE_BASE,
+    value: base,
+  }
+}
+
+function updateDirection (direction) {
+  return {
+    type: actions.UPDATE_DIRECTION,
+    value: direction,
+  }
+}
+
+function updateOrderPrice (price) {
+  return {
+    type: actions.UPDATE_ORDER_PRICE,
+    value: price
+  }
+}
+
+function updateOrderAmount (amount) {
+  return {
+    type: actions.UPDATE_ORDER_AMOUNT,
+    value: amount
   }
 }
 

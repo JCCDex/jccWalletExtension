@@ -1,7 +1,4 @@
 
-const {
-  multiplyCurrencies,
-} = require('./conversion-util')
 const Jccutils = require('./components/send/jccutils')
 
 const selectors = {
@@ -29,6 +26,7 @@ const selectors = {
   getNumberOfAccounts,
   getNumberOfTokens,
   getSelectedAddressTokens,
+  getSelectedAddressAllTokens,
 }
 
 module.exports = selectors
@@ -67,6 +65,18 @@ function getSelectedAddressTokens (state) {
     return selectedAddressTokens
   }
   }
+
+  function getSelectedAddressAllTokens (state) {
+    //  const selectedAddress = state.metamask.selectedAddress || Object.keys(getMetaMaskAccounts(state))[0]
+    const selectedAddress = state.metamask.selectedAddress
+    const accountsAllTokenBal = state.metamask.accountsAllTokenBal
+    const selectedAddressTokens = []
+    if (selectedAddress && accountsAllTokenBal[selectedAddress]) {
+      return accountsAllTokenBal[selectedAddress]
+    } else {
+      return selectedAddressTokens
+    }
+    }
 
 function getSelectedAddressTransaction (state) {
   const jccutils = new Jccutils()

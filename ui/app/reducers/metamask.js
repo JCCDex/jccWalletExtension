@@ -37,6 +37,15 @@ function reduceMetamask (state, action) {
       maxModeOn: false,
       toNickname: '',
     },
+    order: {
+      amount: '0',
+      direction: '',
+      price: '0',
+      counter: '',
+      base: '',
+      password: '',
+      from: '',
+    },
     coinOptions: {},
     useBlockie: false,
     featureFlags: {},
@@ -253,6 +262,38 @@ function reduceMetamask (state, action) {
         send: {
           ...metamaskState.send,
           sendCur: action.value,
+        },
+      })
+
+      case actions.UPDATE_COUNTER:
+      return extend(metamaskState, {
+        order: {
+          ...metamaskState.order,
+          counter: action.value,
+        },
+      })
+
+      case actions.UPDATE_DIRECTION:
+      return extend(metamaskState, {
+        order: {
+          ...metamaskState.order,
+          direction: action.value,
+        },
+      })
+
+      case actions.UPDATE_ORDER_AMOUNT:
+      return extend(metamaskState, {
+        order: {
+          ...metamaskState.order,
+          amount: action.value,
+        },
+      })
+
+      case actions.UPDATE_ORDER_PRICE:
+      return extend(metamaskState, {
+        order: {
+          ...metamaskState.order,
+          price: action.value,
         },
       })
 

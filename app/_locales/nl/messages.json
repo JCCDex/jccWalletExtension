@@ -773,7 +773,7 @@
     "message": "Zoek naar tokens of selecteer uit onze lijst met populaire tokens."
   },
   "tokenSymbol": {
-    "message": "Token Symbol"
+    "message": "币种"
   },
   "tokenWarning1": {
     "message": "Houd de tokens bij die je hebt gekocht met je JingtumMask-account. Als je tokens met een ander account hebt gekocht, worden die tokens hier niet weergegeven."

@@ -5,6 +5,7 @@ import MenuBar from '../menu-bar'
 import TransactionViewBalance from '../transaction-view-balance'
 import TransactionList from '../transaction-list'
 
+
 export default class TransactionView extends PureComponent {
   static contextTypes = {
     t: PropTypes.func,
@@ -21,6 +22,7 @@ export default class TransactionView extends PureComponent {
           <TransactionViewBalance />
         </div>
         <TransactionList />
+        
       </div>
     )
   }
