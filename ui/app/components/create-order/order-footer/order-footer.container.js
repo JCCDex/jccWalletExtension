@@ -62,8 +62,6 @@ function mapDispatchToProps (dispatch) {
        // port: port,
        // https: true,
       }
-      console.log('createJccOrder param:')
-      console.dir(txParams)
      // console.dir(state.metamask.tokens)
       dispatch(createJccOrder(from, txParams, password))
     },

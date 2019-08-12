@@ -33,8 +33,8 @@ export default class SeedPhrase extends PureComponent {
           <img
             className="app-header__metafox-logo app-header__metafox-logo--horizontal"
             src="/images/logo/swtclogo.png"
-          //  width={163}
-            height={30}
+            width={163}
+            height={50}
           />
           <img
             className="app-header__metafox-logo app-header__metafox-logo--icon"

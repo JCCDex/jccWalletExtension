@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TransactionListItem from '../transaction-list-item'
 const Jccutils = require('../../components/send/jccutils')
 import { Tabs } from 'antd'
-import { Table, Button, Input, Modal, Alert } from 'antd';
+import { Table, Button, Input, Modal, Alert, Progress } from 'antd';
 
 
 export default class TransactionList extends PureComponent {
@@ -45,6 +45,7 @@ export default class TransactionList extends PureComponent {
     successVisible: false,
     failVisible: false,
     failMessage: '',
+    percent: 0,
   }
 
   renderTransactions () { 
@@ -54,9 +55,9 @@ export default class TransactionList extends PureComponent {
     return (
       <div className="transaction-list__transactions">
         <div className="transaction-list__completed-transactions">
-          <div className="transaction-list__header">
+          {/* <div className="transaction-list__header">
             { t('history') }
-          </div>
+          </div> */}
           <div>
             <Tabs onChange={(key) => this.tabsChange(key)} defaultActiveKey="1">
             <TabPane tab="转账" key="1">
@@ -155,29 +156,56 @@ export default class TransactionList extends PureComponent {
         const trans = res.data
         let temp = []
         trans.map((ta,index) => {
-             // let timeToDate = new Date(ta.time*1000).toLocaleString()
-             // timeToDate = timeToDate.split("/").join('-');
               ta.key = index
               ta.pair = ta.pair.split("+")[0]
               ta.price = Number(ta.price).toFixed(4)
               ta.amount = Number(ta.amount).toFixed(4)
-             // ta.time = timeToDate
               temp.push(ta)   
         })
-        this.setState({ commissionTransaction: temp})
+        const sortedTemp = temp.sort(this.compare('sequence'))
+        this.setState({ commissionTransaction: sortedTemp})
       }
-     // console.dir(commissionTransaction)
     })
   }
 
+  getCancelCommissionOrder (selectedAddress) {
+    this.setState({ percent: 90})
+    const jccutils = new Jccutils()
+    jccutils.getOrders(selectedAddress).then((res) => {
+      if(res.result) {
+        const trans = res.data
+        let temp = []
+        trans.map((ta,index) => {
+              ta.key = index
+              ta.pair = ta.pair.split("+")[0]
+              ta.price = Number(ta.price).toFixed(4)
+              ta.amount = Number(ta.amount).toFixed(4)
+              temp.push(ta)   
+        })
+        console.log('temp:')
+        console.dir(temp)
+        const sortedTemp = temp.sort(this.compare('sequence'))
+        this.setState({ percent: 100})
+        this.setState({ commissionTransaction: sortedTemp})
+        
+      }
+    })
+  }
+
+  compare (property) {
+    return function(a,b) {
+      let value1 = a[property]
+      let value2 = b[property]
+      return value2 - value1
+    }
+  }
+
   renderTransaction (transactionGroup) {
-   // const { selectedToken, assetImages } = this.props
-   // const { transactions = [] } = transactionGroup
    let swtcscan = 'https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash='
    const columns = [
     {
       title: '交易时间',
-     // dataIndex: 'time',
+      dataIndex: 'time',
       key: 'time',
       render: (text, record) => (
         <span>
@@ -220,7 +248,7 @@ export default class TransactionList extends PureComponent {
      //   key={`${index}`}
      // />
      <div>
-     <Table size={'small'} scroll={{ x: 1000 }} dataSource={transactionGroup} columns={columns} />
+     <Table size={'small'} scroll={{ x: 1500 }} dataSource={transactionGroup} columns={columns} />
    </div>
     )
   }
@@ -251,7 +279,8 @@ export default class TransactionList extends PureComponent {
         title: 'Action',
         key: 'action',
         render: (text, record) => (
-          <Button type="link" onClick={this.showModal.bind(this,record)}>撤销</Button>
+          this.state.successVisible && this.state.sequence == record.sequence?<Progress type="circle" width={30} percent={this.state.percent} />:
+            <Button type="link" onClick={this.showModal.bind(this,record)}>撤销</Button>
         ),
       },
     ]
@@ -263,6 +292,8 @@ export default class TransactionList extends PureComponent {
             visible={this.state.modalVisible}
             onOk={this.cancelOrder}
             onCancel={this.handleCancel}
+            okText="确认"
+            cancelText="取消"
           >
             <Input.Password id="cancelPwd" addonBefore="密码" placeholder="input password" />
         </Modal>
@@ -322,14 +353,12 @@ export default class TransactionList extends PureComponent {
   }
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       modalVisible: false,
     })
   }
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       modalVisible: false,
     })
@@ -351,15 +380,16 @@ export default class TransactionList extends PureComponent {
         successVisible: true,
       })
     }else {
-      his.setState({
+      this.setState({
         failMessage: errorMsg,
         failVisible: true,
       })
     }
     this.setState({
       modalVisible: false,
+      percent: 50,
     })
-    setTimeout(() => this.getCommissionOrder(), 5000)
+    setTimeout(() => this.getCancelCommissionOrder(selectedAddress), 8000)
     }
 
   renderEmpty () {

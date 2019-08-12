@@ -75,7 +75,7 @@ export default class UnitInput extends PureComponent {
 
     return (
       <div
-      style={{width:"255px", height:"32px"}}
+      style={{width: '100%', height: '32px'}}
         //className={classnames('unit-input', { 'unit-input--error': error })}
         onClick={this.handleFocus}
       >
@@ -83,7 +83,7 @@ export default class UnitInput extends PureComponent {
           <div className="unit-input__input-container">
             <input
               type="number"
-              style={{width:"255px", height:"32px"}}
+              style={{width:"100%", height:"32px"}}
               //className="unit-input__input"
               value={value}
               placeholder={placeholder}

@@ -42,7 +42,7 @@ export default class OrderCounterRow extends Component {
         showError={inError}
         errorType={'currency'}
       >
-       <select style={{width: '250px', height: '32px'}}
+       <select style={{width: '100%', height: '32px'}}
                 value={this.state.counter}
                 onChange={this.onCounterChange}
               >

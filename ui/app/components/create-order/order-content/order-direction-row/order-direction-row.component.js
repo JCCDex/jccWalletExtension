@@ -65,7 +65,7 @@ export default class OrderDirectionRow extends Component {
         label={`${t('direction')}:`}
         showError={inError}
       >
-       <select style={{width: '250px', height: '32px'}}
+       <select style={{width: '100%', height: '32px'}}
                 value={this.state.direction}
                 onChange={this.onDirectionChange}
               >

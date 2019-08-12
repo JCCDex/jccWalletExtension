@@ -50,7 +50,7 @@ export default class SendCurrencyRow extends Component {
         showError={inError}
         errorType={'currency'}
       >
-       <select style={{width: '255px', height: '32px'}}
+       <select style={{width: '100%', height: '32px'}}
                 value={this.state.sendCur}
                 onChange={this.onCoinChange}
               >

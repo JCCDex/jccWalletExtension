@@ -832,9 +832,8 @@ function signTypedMsg (msgData) {
           alert(data.msg)
          // history.push(DEFAULT_ROUTE)
        //   history.go(0)
+       history.go(-1)
         } else {
-          console.log('send error:')
-          console.dir(data)
           alert(data.msg)
            dispatch(actions.displayWarning(data.msg))
         }
@@ -849,30 +848,20 @@ function createJccOrder (from, txParams, password) {
 
   return async (dispatch) => {
     const jccutils = new Jccutils()
-    const jccInstance = await jccutils.getJccInstance()
-    //const seq = await jccInstance.getSequence(from)
-    //txParams.Sequence = seq.data.sequence
     const inst = new JingchangWallet(JingchangWallet.get(), true, false)
     let key = ''
-    console.log('from:'+from)
-    console.log('inst:')
-    console.dir(inst)
-    console.log('txParams:')
-    console.dir(txParams)
     try {
        key = await inst.getSecretWithAddress(password, from.address)
     } catch (err) {
       alert(err.message)
-      dispatch(actions.displayWarning(err.message))
       return
     }
     const hosts = await jccutils.getExHosts()
-    console.log('hosts:'+hosts)
     try {
       JCCExchange.init(hosts, 443, true);
-      const hash = await JCCExchange.createOrder(txParams.address, key, txParams.amount, txParams.base, txParams.counter, txParams.sum, txParams.type, txParams.issuer);
-      console.log('order hash'+hash)
+      const hash = await JCCExchange.createOrder(txParams.address, key, txParams.amount, txParams.base, txParams.counter, txParams.sum, txParams.type, txParams.issuer)
       alert('交易成功')
+      history.go(-1)
     } catch (error) {
       alert(error)
         console.log(error);

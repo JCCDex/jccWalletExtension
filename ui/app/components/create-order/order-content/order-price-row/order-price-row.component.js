@@ -29,6 +29,7 @@ export default class OrderPriceRow extends Component {
 
     return (
       <Component
+        style={{width: '100%', height: '32px'}}
         onChange={newPrice => this.validatePrice(newPrice)}
         onBlur={newPrice => {
           this.updateOrderPrice(newPrice)

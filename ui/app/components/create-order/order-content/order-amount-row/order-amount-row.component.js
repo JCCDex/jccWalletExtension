@@ -19,7 +19,6 @@ export default class OrderAmountRow extends Component {
   }
 
   updateAmount (amount) {
-    console.log('amount:'+amount)
     const { updateOrderAmount } = this.props
     updateOrderAmount(amount)
   }
