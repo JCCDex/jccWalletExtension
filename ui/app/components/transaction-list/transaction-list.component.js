@@ -286,7 +286,7 @@ export default class TransactionList extends PureComponent {
     ]
      return (
        <div>
-        <Table dataSource={transactionGroup} columns={columns} />
+        <Table scroll={{ x: 450 }} dataSource={transactionGroup} columns={columns} />
         <Modal
             title="请输入密码"
             visible={this.state.modalVisible}
@@ -339,7 +339,7 @@ export default class TransactionList extends PureComponent {
     ]
      return (
        <div>
-        <Table dataSource={transactionGroup} columns={columns} />
+        <Table scroll={{ x: 600 }} dataSource={transactionGroup} columns={columns} />
       </div>
       
      )
