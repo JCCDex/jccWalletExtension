@@ -13,7 +13,6 @@ export default class TransactionList extends PureComponent {
 
   componentWillMount () {
     const { selectedAddress } = this.props
-    console.log('willMount')
     this.getCommissionOrder(selectedAddress)
     this.getHistoricPayments(selectedAddress)
     this.getHistoricTransactions(selectedAddress)
@@ -22,7 +21,6 @@ export default class TransactionList extends PureComponent {
   componentWillReceiveProps (nextProps) {
    
     if (this.props.selectedAddress !== nextProps.selectedAddress) {
-      console.log('nextProps.selectedAddress:'+nextProps.selectedAddress)
       this.getCommissionOrder(nextProps.selectedAddress)
       this.getHistoricPayments(nextProps.selectedAddress)
       this.getHistoricTransactions(nextProps.selectedAddress)
@@ -308,7 +306,6 @@ export default class TransactionList extends PureComponent {
    }
 
    passpwd(e) {
-    console.log(`checked = ${e.target.checked}`);
     if(e.target.checked){
 
     }

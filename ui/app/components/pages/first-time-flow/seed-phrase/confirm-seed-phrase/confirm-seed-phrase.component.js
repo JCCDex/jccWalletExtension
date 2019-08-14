@@ -75,7 +75,6 @@ export default class ConfirmSeedPhrase extends PureComponent {
   handleChange = event => {
     const { value: userInput } = event.target
     const value = userInput
-    console.log('user input key:' + value)
     this.setState({ selectedSeedWords: value })
   }
 

@@ -174,8 +174,6 @@ class AccountTracker {
     const accountsAllTokenBal = this.store.getState().accountsAllTokenBal
       addresses.forEach(async (address, index) => {
         const balArray = await jccutils.getBalance(address)
-        console.log('balArray:')
-        console.dir(balArray)
         //if (!accountsTokenBal[address]) {
           accountsTokenBal[address] = []
           accountsAllTokenBal[address] = []

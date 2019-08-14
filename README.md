@@ -1,6 +1,7 @@
 # JingtumMask Browser Extension
 
 本项目为井通公链SWTC的钱包插件，参考了以太坊的metamask（[https://github.com/MetaMask/metamask-extension]()）
+该项目接受了SWTC&MOAC开发者社区的资金支持，欢迎加入社区参与社区开发。QQ群：568285439
 
 ## Building locally
 
