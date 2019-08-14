@@ -38,7 +38,7 @@ export default class OrderCounterRow extends Component {
     const {t} = this.context
     return (
       <OrderRowWrapper
-        label={`${t('counter')}:`}
+        label={`${t('pair')}:`}
         showError={inError}
         errorType={'currency'}
       >

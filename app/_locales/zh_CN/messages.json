@@ -129,7 +129,10 @@
     "message": "MetaMask在加利福尼亚设计和制造。"
   },
   "buy": {
-    "message": "购买"
+    "message": "买入"
+  },
+  "sell": {
+    "message": "卖出"
   },
   "buyCoinbase": {
     "message": "在 Coinbase 上购买"
@@ -543,7 +546,7 @@
     "message": "消息"
   },
   "metamaskDescription": {
-    "message": "JingtumMask is a secure identity vault for Swtc."
+    "message": "带您进入井通公链和去中心化网络."
   },
   "metamaskSeedWords": {
     "message": "JingtumMask 助记词"
@@ -927,6 +930,9 @@
   "transfers": {
     "message": "交易"
   },
+  "transfer": {
+    "message": "转账"
+  },
   "troubleTokenBalances": {
     "message": "我们无法加载您的代币余额。你可以查看它们",
     "description": "Followed by a link (here) to view token balances"
@@ -987,7 +993,7 @@
     "message": "警告"
   },
   "welcome": {
-    "message": "欢迎使用 JingtumMask 测试版"
+    "message": "欢迎使用 JingtumMask"
   },
   "whatsThis": {
     "message": "这是什么？"
@@ -1002,52 +1008,55 @@
     "message": "你的私有助记词"
   },
   "happyToSeeYou": {
-    "message": "We’re happy to see you."
+    "message": "我们很高兴遇到您."
   },
   "getStarted": {
-    "message": "Get Started"
+    "message": "开始"
   },
   "newToMetaMask": {
-    "message": "New to JingtumMask?"
+    "message": "初次使用?"
   },
   "noAlreadyHaveSeed": {
-    "message": "No, I already have a secret key"
+    "message": "不，已经有一个keystore"
   },
   "importYourExisting": {
-    "message": "Import your existing wallet using a secret key"
+    "message": "使用您的keystore导入钱包"
   },
   "importWallet": {
-    "message": "Import Wallet"
+    "message": "导入钱包"
   },
   "letsGoSetUp": {
-    "message": "Yes, let’s get set up!"
+    "message": "是的, 开始创建!"
   },
   "thisWillCreate": {
-    "message": "This will create a new wallet and key store"
+    "message": "这将创建一个新钱包和keystore"
   },
   "createAWallet": {
-    "message": "Create a Wallet"
+    "message": "创建钱包"
+  },
+  "createPassword": {
+    "message": "创建密码"
   },
   "importAccountSeedPhrase": {
-    "message": "Import an Account with key store"
+    "message": "使用key store导入一个账号"
   },
   "congratulations": {
-    "message": "Congratulations"
+    "message": "恭喜"
   },
   "endOfFlowMessage1": {
-    "message": "You passed the test - keep your key store safe, it's your responsibility!"
+    "message": "导入成功 - 保证你的私钥安全是你自己的责任!"
   },
   "endOfFlowMessage2": {
-    "message": "Tips on storing it safely"
+    "message": "关于安全的存储私钥"
   },
   "endOfFlowMessage3": {
-    "message": "Save a backup in multiple places."
+    "message": "在多个地方保留备份."
   },
   "endOfFlowMessage4": {
-    "message": "Never share the phrase with anyone."
+    "message": "不要将私钥告诉任何人."
   },
   "endOfFlowMessage5": {
-    "message": "Be careful of phishing! JingtumMask will never spontaneously ask for your key store."
+    "message": "小心网络钓鱼! JingtumMask从不会向您索要key store."
   },
   "endOfFlowMessage6": {
     "message": "If you need to back your up key store again, you can find it in Settings -> Security."
@@ -1056,7 +1065,7 @@
     "message": "If you ever have questions or see something fishy, email support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "JingtumMask cannot recover your key store. Learn more."
+    "message": "JingtumMask不能恢复您的key store."
   },
   "copyTransactionId": {
     "message": "Copy Transaction ID"
@@ -1084,5 +1093,107 @@
   },
   "tokenSymbol": {
     "message": "代币"
+  },
+  "offer_bought": {
+    "message": "主动成交"
+  },
+  "offer_funded": {
+    "message": "被动成交"
+  },
+  "offer_partially_funded": {
+    "message": "部分成交 "
+  },
+  "offer_cancelled": {
+    "message": "取消挂单"
+  },
+  "offer_created": {
+    "message": "创建挂单"
+  },
+  "current_commission": {
+    "message": "当前委托"
+  },
+  "transaction_record": {
+    "message": "交易记录"
+  },
+  "transaction_time": {
+    "message": "交易时间"
+  },
+  "sender": {
+    "message": "发起方"
+  },
+  "receiver": {
+    "message": "交易对家"
+  },
+  "currency": {
+    "message": "币种"
+  },
+  "transaction_hash": {
+    "message": "交易hash"
+  },
+  "type": {
+    "message": "方向"
+  },
+  "pair": {
+    "message": "交易对"
+  },
+  "action": {
+    "message": "操作"
+  },
+  "inputPassword": {
+    "message": "请输入密码"
+  },
+  "transaction_status": {
+    "message": "交易状态"
+  },
+  "price_reference": {
+    "message": "价格参考"
+  },
+  "weidex": {
+    "message": "威链"
+  },
+  "jingtummask_will": {
+    "message": "JingtumMask .."
+  },
+  "never": {
+    "message": "从不"
+  },
+  "never1": {
+    "message": " 收集私钥，地址，交易，余额，哈希和其它任何个人信息"
+  },
+  "never2": {
+    "message": " 收集你的IP地址"
+  },
+  "never3": {
+    "message": " 为了利益销售数据"
+  },
+  "secretBackupPhrase": {
+    "message": "备份私钥"
+  },
+  "secretBackupPhraseDescription": {
+    "message": "备份您的私钥以便下次恢复你的账号."
+  },
+  "secretBackupPhraseWarning": {
+    "message": "警告: 不要丢失您的备份私钥,任何人拿到您的私钥可以拿走您的数字资产."
+  },
+  "clickToRevealSeed": {
+    "message": "点击这里显示私钥"
+  },
+  "tips": {
+    "message": "提示"
+  },
+  "storePhrase": {
+    "message": "保存这个私钥在密码管理器，比如 1Password."
+  },
+  "writePhrase": {
+    "message": "把这个私钥写在纸上并保存在安全的地方。如果需要更安全些，可以写在多张纸上，放在不同的地方。"
+  },
+  "confirmSecretBackupPhrase": {
+    "message": "确认您的私钥安全备份"
+  },
+  "selectEachPhrase": {
+    "message": "请确认私钥确保它是正确的."
+  },
+  "allDone": {
+    "message": "完成"
   }
 }

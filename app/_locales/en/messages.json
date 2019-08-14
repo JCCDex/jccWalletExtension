@@ -180,7 +180,10 @@
     "message": "JingtumMask is designed and built in California."
   },
   "buy": {
-    "message": "Buy"
+    "message": "buy"
+  },
+  "sell": {
+    "message": "sell"
   },
   "buyCoinbase": {
     "message": "Buy on Coinbase"
@@ -219,7 +222,7 @@
     "message": "Click on $1 to add them to your account"
   },
   "clickToRevealSeed": {
-    "message": "Click here to reveal secret words"
+    "message": "Click here to reveal secret key"
   },
   "close": {
     "message": "Close"
@@ -401,10 +404,10 @@
     "description": "Tells the user what coin they have selected to deposit with shapeshift"
   },
   "depositEth": {
-    "message": "Deposit Eth"
+    "message": "Deposit Swtc"
   },
   "depositEther": {
-    "message": "Deposit Ether"
+    "message": "Deposit Swtc"
   },
   "depositFiat": {
     "message": "Deposit with Fiat"
@@ -425,10 +428,10 @@
     "message": "Direct Deposit"
   },
   "directDepositEther": {
-    "message": "Directly Deposit Ether"
+    "message": "Directly Deposit Swtc"
   },
   "directDepositEtherExplainer": {
-    "message": "If you already have some Ether, the quickest way to get Ether in your new wallet by direct deposit."
+    "message": "If you already have some Swtc, the quickest way to get Swtc in your new wallet by direct deposit."
   },
   "done": {
     "message": "Done"
@@ -485,7 +488,7 @@
     "message": "If you ever have questions or see something fishy, email support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "JingtumMask cannot recover your key store. Learn more."
+    "message": "*JingtumMask cannot recover your key store."
   },
   "ensNameNotFound": {
     "message": "ENS name not found"
@@ -858,7 +861,7 @@
     "message": "Must select at least 1 token."
   },
   "needEtherInWallet": {
-    "message": "To interact with decentralized applications using JingtumMask, you’ll need Ether in your wallet."
+    "message": "To interact with decentralized applications using JingtumMask, you’ll need Swtc in your wallet."
   },
   "needImportFile": {
     "message": "You must select a file to import.",
@@ -1250,7 +1253,7 @@
     "message": "Send"
   },
   "CreateOrder": {
-    "message": "Create Order"
+    "message": "Order"
   },
   "sendAmount": {
     "message": "Send Amount"
@@ -1685,5 +1688,87 @@
   },
   "zeroGasPriceOnSpeedUpError": {
     "message":"Zero gas price on speed up"
+  },
+  "orderInSwtc": {
+    "message": "The order will be matched on the Jingtong public chain"
+  },
+  "offer_bought": {
+    "message": "offer_bought"
+  },
+  "offer_funded": {
+    "message": "offer_funded"
+  },
+  "offer_partially_funded": {
+    "message": "offer_partially_funded"
+  },
+  "offer_cancelled": {
+    "message": "offer_cancelled"
+  },
+  "offer_created": {
+    "message": "offer_created"
+  },
+  "memo": {
+    "message": "Memo"
+  },
+  "current_commission": {
+    "message": "Current Commission"
+  },
+  "transaction_record": {
+    "message": "Transaction Record"
+  },
+  "transaction_time": {
+    "message": "Transaction Time"
+  },
+  "sender": {
+    "message": "Sender"
+  },
+  "receiver": {
+    "message": "Receiver"
+  },
+  "currency": {
+    "message": "Currency"
+  },
+  "transaction_hash": {
+    "message": "Transaction Hash"
+  },
+  "type": {
+    "message": "Type"
+  },
+  "pair": {
+    "message": "Pair"
+  },
+  "price": {
+    "message": "Price"
+  },
+  "action": {
+    "message": "Action"
+  },
+  "inputPassword": {
+    "message": "Please Input Password"
+  },
+  "transaction_status": {
+    "message": "Transaction Status"
+  },
+  "price_reference": {
+    "message": "Price Reference"
+  },
+  "weidex": {
+    "message": "weidex"
+  },
+  "jingtummask_will": {
+    "message": "JingtumMask will.."
+  },
+  "nerver": {
+    "message": "Never"
+  },
+  "nerver1": {
+    "message": " collect keys, addresses, transactions, balances, hashes, or any personal information"
+  },
+  "nerver2": {
+    "message": " collect your full IP address"
+  },
+  "nerver3": {
+    "message": " sell data for profit. Ever!"
   }
+
 }

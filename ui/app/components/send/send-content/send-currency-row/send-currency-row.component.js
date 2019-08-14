@@ -46,7 +46,7 @@ export default class SendCurrencyRow extends Component {
    // accountsTokenBal.push({cur: 'SWT', val: 0})
     return (
       <SendRowWrapper
-        label={`${t('tokenSymbol')}:`}
+        label={`${t('currency')}:`}
         showError={inError}
         errorType={'currency'}
       >

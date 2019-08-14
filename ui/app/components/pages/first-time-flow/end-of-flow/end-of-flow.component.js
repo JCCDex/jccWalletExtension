@@ -55,7 +55,7 @@ export default class EndOfFlowScreen extends PureComponent {
           { '• ' + t('endOfFlowMessage5') }
         </div>
         <div className="first-time-flow__text-block end-of-flow__text-4">
-          *JingtumMask cannot recover your key store.
+          {t('endOfFlowMessage8')}
         </div>
         <Button
           type="confirm"
@@ -72,7 +72,7 @@ export default class EndOfFlowScreen extends PureComponent {
             history.push(DEFAULT_ROUTE)
           }}
         >
-          { 'All Done' }
+          {t('allDone')}
         </Button>
       </div>
     )

@@ -9,11 +9,13 @@ export default class MetaMetricsOptInModal extends Component {
 
   static contextTypes = {
     metricsEvent: PropTypes.func,
+    t: PropTypes.func,
   }
 
   render () {
     const { metricsEvent } = this.context
     const { hideModal } = this.props
+    const {t} = this.context
 
     return (
       <div className="metametrics-opt-in metametrics-opt-in-modal">
@@ -39,26 +41,26 @@ export default class MetaMetricsOptInModal extends Component {
             <div className="metametrics-opt-in__body">
              
               <div className="metametrics-opt-in__description">
-               JingtumMask will..
+                {t('jingtummask_will')}
               </div>
 
               <div className="metametrics-opt-in__committments">
                 <div className="metametrics-opt-in__row metametrics-opt-in__break-row">
                   <i className="fa fa-times" />
                   <div className="metametrics-opt-in__row-description">
-                    <span className="metametrics-opt-in__bold">Never</span> collect keys, addresses, transactions, balances, hashes, or any personal information
+                    <span className="metametrics-opt-in__bold">{t('never')}</span> {t('never1')}
                   </div>
                 </div>
                 <div className="metametrics-opt-in__row">
                   <i className="fa fa-times" />
                   <div className="metametrics-opt-in__row-description">
-                    <span className="metametrics-opt-in__bold">Never</span> collect your full IP address
+                    <span className="metametrics-opt-in__bold">{t('never')}</span> {t('never2')}
                   </div>
                 </div>
                 <div className="metametrics-opt-in__row">
                   <i className="fa fa-times" />
                   <div className="metametrics-opt-in__row-description">
-                    <span className="metametrics-opt-in__bold">Never</span> sell data for profit. Ever!
+                    <span className="metametrics-opt-in__bold">{t('never')}</span> {t('never3')}
                   </div>
                 </div>
               </div>

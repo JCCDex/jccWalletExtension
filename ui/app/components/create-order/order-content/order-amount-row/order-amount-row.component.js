@@ -43,7 +43,7 @@ export default class OrderAmountRow extends Component {
 
     return (
       <OrderRowWrapper
-        label={`${this.context.t('orderAmount')}:`}
+        label={`${this.context.t('amount')}:`}
         showError={inError}
         errorType={'amount'}
       >

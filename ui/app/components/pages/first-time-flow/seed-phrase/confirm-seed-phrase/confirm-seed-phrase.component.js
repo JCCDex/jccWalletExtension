@@ -115,24 +115,6 @@ export default class ConfirmSeedPhrase extends PureComponent {
            style={{width: '400px', height: '32px'}}
            onChange={this.handleChange}
          />
-          {
-            shuffledSeedWords.map((word, index) => {
-              const isSelected = index in selectedSeedWordsHash
-
-              return (
-                <div
-                  key={index}
-                  className={classnames(
-                    'confirm-seed-phrase__seed-word',
-                    'confirm-seed-phrase__seed-word--shuffled',
-                    { 'confirm-seed-phrase__seed-word--selected': isSelected }
-                  )}
-                >
-                  { word }
-                </div>
-              )
-            })
-          }
         </div>
         <Button
           type="confirm"

@@ -41,7 +41,7 @@ export default class SendMemoRow extends Component {
               id="memo"
               className="first-time-flow__input"
               value={this.state.memo}
-              style={{width:"100%", height:"32px"}}
+              style={{margin:"0 auto", width:"100%", height:"32px"}}
               onBlur={event => {
                 this.updateMemo(event.target.value)
               }}

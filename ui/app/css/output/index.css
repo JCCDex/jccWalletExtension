@@ -6491,10 +6491,10 @@ div.message-container > div:first-child {
   background-color: #fff;
   padding: 18px;
   margin-top: 36px;
-  max-width: 350px; }
+  max-width: 380px; }
 
 .reveal-seed-phrase__secret-words {
-  width: 310px;
+  width: 380px;
   font-size: 1.25rem;
   text-align: center; }
   .reveal-seed-phrase__secret-words--hidden {

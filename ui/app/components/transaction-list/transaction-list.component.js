@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TransactionListItem from '../transaction-list-item'
 const Jccutils = require('../../components/send/jccutils')
 import { Tabs } from 'antd'
-import { Table, Button, Input, Modal, Alert, Progress } from 'antd';
+import { Table, Button, Input, Modal, Alert, Progress, Checkbox } from 'antd';
 
 
 export default class TransactionList extends PureComponent {
@@ -13,6 +13,7 @@ export default class TransactionList extends PureComponent {
 
   componentWillMount () {
     const { selectedAddress } = this.props
+    console.log('willMount')
     this.getCommissionOrder(selectedAddress)
     this.getHistoricPayments(selectedAddress)
     this.getHistoricTransactions(selectedAddress)
@@ -60,19 +61,19 @@ export default class TransactionList extends PureComponent {
           </div> */}
           <div>
             <Tabs onChange={(key) => this.tabsChange(key)} defaultActiveKey="1">
-            <TabPane tab="转账" key="1">
+            <TabPane tab={t('transfer')} key="1">
             {
               this.state.completedTransactions.length > 0
                 ? this.renderTransaction(this.state.completedTransactions): this.renderEmpty()
             }
             </TabPane>
-            <TabPane tab="当前委托" key="2">
+            <TabPane tab={t('current_commission')} key="2">
             {
               this.state.commissionTransaction.length > 0
                 ? this.renderCommissionTransaction(this.state.commissionTransaction): this.renderEmpty()
             }
             </TabPane>
-            <TabPane tab="交易记录" key="3">
+            <TabPane tab={t('transaction_record')} key="3">
             {
               this.state.historyTransactions.length > 0
                 ? this.renderHistoryTransaction(this.state.historyTransactions): this.renderEmpty()
@@ -112,6 +113,7 @@ export default class TransactionList extends PureComponent {
 
   getHistoricTransactions (selectedAddress) {
     const jccutils = new Jccutils()
+    const { t } = this.context
     jccutils.getHistoricTransactions(selectedAddress).then((res) => {
       if (res.result) {
         const trans = res.data.transactions
@@ -121,21 +123,21 @@ export default class TransactionList extends PureComponent {
               timeToDate = timeToDate.split("/").join('-');
               let state = ta.status
               if(state == 'offer_bought'){
-                state = '主动成交'
+                state = t('offer_bought')
               }else if(state == 'offer_funded'){
-                state = '被动成交'
+                state = t('offer_funded')
               }else if(state == 'offer_partially_funded'){
-                state = '部分成交'
+                state = t('offer_partially_funded')
               }else if(state == 'offer_cancelled'){
-                state = '取消挂单'
+                state = t('offer_cancelled')
               }else if(state == 'offer_created'){
-                state = '创建挂单'
+                state = t('offer_created')
               }
               let type = ta.type
               if(type == 'buy'){
-                ta.type = '买入'
+                ta.type = t('buy')
               }else if(type == 'sell'){
-                ta.type = '卖出'
+                ta.type = t('sell')
               }
               ta.status = state
               ta.key = index
@@ -182,8 +184,6 @@ export default class TransactionList extends PureComponent {
               ta.amount = Number(ta.amount).toFixed(4)
               temp.push(ta)   
         })
-        console.log('temp:')
-        console.dir(temp)
         const sortedTemp = temp.sort(this.compare('sequence'))
         this.setState({ percent: 100})
         this.setState({ commissionTransaction: sortedTemp})
@@ -201,10 +201,11 @@ export default class TransactionList extends PureComponent {
   }
 
   renderTransaction (transactionGroup) {
+    const { t } = this.context
    let swtcscan = 'https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash='
    const columns = [
     {
-      title: '交易时间',
+      title: t('transaction_time'),
       dataIndex: 'time',
       key: 'time',
       render: (text, record) => (
@@ -216,27 +217,27 @@ export default class TransactionList extends PureComponent {
       ),
     },
     {
-      title: '发起方',
+      title: t('sender'),
       dataIndex: 'sender',
       key: 'sender',
     },
     {
-      title: '交易对家',
+      title: t('receiver'),
       dataIndex: 'receiver',
       key: 'receiver',
     },
     {
-      title: '币种',
+      title: t('currency'),
       dataIndex: 'currency',
       key: 'currency',
     },
     {
-      title: '数量',
+      title: t('amount'),
       dataIndex: 'amount',
       key: 'amount',
     },
     {
-      title: '交易hash',
+      title: t('transaction_hash'),
       dataIndex: 'hash',
       key: 'hash',
       render: (text, record) => <a href={swtcscan + text}>{text}</a>,
@@ -254,29 +255,30 @@ export default class TransactionList extends PureComponent {
   }
 
   renderCommissionTransaction (transactionGroup) {
+    const { t } = this.context
     const columns = [
       {
-        title: '方向',
+        title: t('type'),
         dataIndex: 'type',
         key: 'type',
       },
       {
-        title: '交易对',
+        title: t('pair'),
         dataIndex: 'pair',
         key: 'pair',
       },
       {
-        title: '价格',
+        title: t('price'),
         dataIndex: 'price',
         key: 'price',
       },
       {
-        title: '数量',
+        title: t('amount'),
         dataIndex: 'amount',
         key: 'amount',
       },
       {
-        title: 'Action',
+        title: t('action'),
         key: 'action',
         render: (text, record) => (
           this.state.successVisible && this.state.sequence == record.sequence?<Progress type="circle" width={30} percent={this.state.percent} />:
@@ -288,14 +290,15 @@ export default class TransactionList extends PureComponent {
        <div>
         <Table scroll={{ x: 450 }} dataSource={transactionGroup} columns={columns} />
         <Modal
-            title="请输入密码"
+            title={t('inputPassword')}
             visible={this.state.modalVisible}
             onOk={this.cancelOrder}
             onCancel={this.handleCancel}
-            okText="确认"
-            cancelText="取消"
+            okText={t('ok')}
+            cancelText={t('cancel')}
           >
-            <Input.Password id="cancelPwd" addonBefore="密码" placeholder="input password" />
+            <Input.Password id="cancelPwd" addonBefore={t('password')} placeholder={t('inputPassword')} />
+           {/*  <Checkbox onChange={passpwd}>15分钟内免输入密码</Checkbox> */}
         </Modal>
         {this.state.successVisible ? (<Alert message="撤销成功" closable="true" type="success" banner/>) : null }
         {this.state.failVisible ? (<Alert message={this.state.failMessage} colsable="true" type="error" banner/>) : null }
@@ -304,35 +307,42 @@ export default class TransactionList extends PureComponent {
      )
    }
 
+   passpwd(e) {
+    console.log(`checked = ${e.target.checked}`);
+    if(e.target.checked){
+
+    }
+   }
    renderHistoryTransaction (transactionGroup) {
+    const { t } = this.context
     const columns = [
       {
-        title: '交易时间',
+        title: t('transaction_time'),
         dataIndex: 'time',
         key: 'time',
       },
       {
-        title: '交易对',
+        title: t('pair'),
         dataIndex: 'pairs',
         key: 'pairs',
       },
       {
-        title: '方向',
+        title: t('type'),
         dataIndex: 'type',
         key: 'type',
       },
       {
-        title: '价格',
+        title: t('price'),
         dataIndex: 'price',
         key: 'price',
       },
       {
-        title: '数量',
+        title: t('amount'),
         dataIndex: 'amount',
         key: 'amount',
       },
       {
-        title: '交易状态',
+        title: t('transaction_status'),
         dataIndex: 'status',
         key: 'status',
       },
@@ -389,7 +399,7 @@ export default class TransactionList extends PureComponent {
       modalVisible: false,
       percent: 50,
     })
-    setTimeout(() => this.getCancelCommissionOrder(selectedAddress), 8000)
+    setTimeout(() => this.getCancelCommissionOrder(selectedAddress), 9000)
     }
 
   renderEmpty () {

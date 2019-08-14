@@ -51,7 +51,7 @@ export default class RevealSeedPhrase extends PureComponent {
     const { isShowingSeedPhrase } = this.state
 
     return (
-      <div className="reveal-seed-phrase__secret">
+      <div className="reveal-seed-phrase__secret" style={{width: "100%"}}>
         <div className={classnames(
           'reveal-seed-phrase__secret-words',
           { 'reveal-seed-phrase__secret-words--hidden': !isShowingSeedPhrase }

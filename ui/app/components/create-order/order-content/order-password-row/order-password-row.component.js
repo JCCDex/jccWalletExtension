@@ -41,7 +41,7 @@ export default class OrderPasswordRow extends Component {
               id="orderpassword"
               type="password"
              // className="first-time-flow__input"
-              style={{width:"100%", height:"23px"}}
+              style={{margin:"0 auto", width:"100%", height:"23px"}}
               value={this.state.password}
               onBlur={event => {
                 this.updatePassword(event.target.value)

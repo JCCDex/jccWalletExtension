@@ -62,7 +62,7 @@ export default class OrderDirectionRow extends Component {
     return (
       <div>
       <OrderRowWrapper
-        label={`${t('direction')}:`}
+        label={`${t('type')}:`}
         showError={inError}
       >
        <select style={{width: '100%', height: '32px'}}
@@ -77,7 +77,7 @@ export default class OrderDirectionRow extends Component {
                   </option>
               </select>
       </OrderRowWrapper>
-         <div style={{margin: '14.5px 18px 0px'}}>可用：{availableBal}</div>
+         <div style={{margin: '14.5px 18px 0px'}}>{t('available')}：{availableBal}</div>
          </div>
     )
   }

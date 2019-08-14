@@ -26,7 +26,6 @@ export default class OrderPriceRow extends Component {
   renderInput () {
     const { price } = this.props
     const Component = UserPreferencedCurrencyInput
-
     return (
       <Component
         style={{width: '100%', height: '32px'}}
@@ -40,7 +39,7 @@ export default class OrderPriceRow extends Component {
   }
 
   render () {
-
+    const {t} = this.context
     return (
       <div>
         <OrderRowWrapper
@@ -49,7 +48,7 @@ export default class OrderPriceRow extends Component {
         >
           { this.renderInput() }
         </OrderRowWrapper>
-        <div style={{margin: '14.5px 18px 0px'}}>价格参考：<a target='_blank' href='https://weidex.vip/#/trade'>威链</a></div>
+        <div style={{margin: '14.5px 18px 0px'}}>{t('price_reference')}：<a target='_blank' href='https://weidex.vip/#/trade'>{t('weidex')}</a></div>
       </div>
     )
   }
