@@ -972,7 +972,7 @@
     "description": "Using this exchange is limited to people inside the USA"
   },
   "usedByClients": {
-    "message": "仅用于导入weidex.vip的key store"
+    "message": "仅用于导入weidex.vip的keystore"
   },
   "useOldUI": {
     "message": "使用旧版 UI"
@@ -1195,5 +1195,14 @@
   },
   "allDone": {
     "message": "完成"
+  },
+  "account_not_activate": {
+    "message": " 账号未激活，需要转入35个swtc."
+  },
+  "confirmOrder": {
+    "message": "确认下单"
+  },
+  "confirmSend": {
+    "message": "确认发送"
   }
 }

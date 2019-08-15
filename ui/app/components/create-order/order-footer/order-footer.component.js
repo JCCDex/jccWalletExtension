@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PageContainerFooter from '../../page-container/page-container-footer'
 import { DEFAULT_ROUTE } from '../../../routes'
+import {  Descriptions,  Modal } from 'antd'
 
 export default class OrderFooter extends Component {
 
@@ -24,6 +25,7 @@ export default class OrderFooter extends Component {
 
   state = {
     sendErrorMsg: '',
+    modalVisible: false,
   }
 
   static contextTypes = {
@@ -46,8 +48,7 @@ export default class OrderFooter extends Component {
     return shouldBeDisabled
   }
 
-  onSubmit (event) {
-    event.preventDefault()
+  onSubmitOrder = () => {
     const {
       from,
       orderAmount,
@@ -55,7 +56,6 @@ export default class OrderFooter extends Component {
       orderPrice,
       counter,
       createJccOrder,
-      orderPassword,
     } = this.props
     const { metricsEvent } = this.context
     const password = document.getElementById('orderpassword').value
@@ -72,13 +72,40 @@ export default class OrderFooter extends Component {
       })
   }
 
+  cancelModal () {
+    this.setState({
+      modalVisible: true,
+    })
+  }
+
   render () {
+    const {t} = this.context
     return (
+      <div>
+      <Modal
+            title={t('confirmOrder')}
+            visible={this.state.modalVisible}
+            onOk={this.onSubmitOrder}
+            onCancel={() => this.setState({modalVisible: false})}
+            okText={t('ok')}
+            cancelText={t('cancel')}
+          >
+            <Descriptions column={1}>
+              <Descriptions.Item label={t('from')}>{this.props.from.address}</Descriptions.Item>
+              <Descriptions.Item label={t('pair')}>{this.props.counter}</Descriptions.Item>
+              <Descriptions.Item label={t('type')}>{this.props.orderDirection}</Descriptions.Item>
+              <Descriptions.Item label={t('amount')}>{this.props.orderAmount}</Descriptions.Item>
+              <Descriptions.Item label={t('price')}>{this.props.orderPrice}</Descriptions.Item>
+            </Descriptions>
+        </Modal>
       <PageContainerFooter
         onCancel={() => this.onCancel()}
-        onSubmit={e => this.onSubmit(e)}
+        onSubmit={() => this.setState({
+          modalVisible: true,
+        })}
         disabled={this.formShouldBeDisabled()}
       />
+      </div>
     )
   }
 

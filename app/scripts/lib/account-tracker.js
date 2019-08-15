@@ -203,6 +203,7 @@ class AccountTracker {
         accounts[address] = { address, balance }
       }
       })
+     
       this.store.updateState({ accounts })
       this.store.updateState({ accountsTokenBal })
       this.store.updateState({ accountsAllTokenBal })

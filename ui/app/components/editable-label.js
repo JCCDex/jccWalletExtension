@@ -15,7 +15,7 @@ class EditableLabel extends Component {
 
   handleSubmit () {
     const { value } = this.state
-
+    console.log('value:'+value)
     if (value === '') {
       return
     }

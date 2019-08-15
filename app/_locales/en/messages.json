@@ -1621,7 +1621,7 @@
     "description": "Using this exchange is limited to people inside the USA"
   },
   "usedByClients": {
-    "message": "Used by a variety of different clients"
+    "message": "only weidex.vip keystore"
   },
   "useOldUI": {
     "message": "Use old UI"
@@ -1769,6 +1769,15 @@
   },
   "nerver3": {
     "message": " sell data for profit. Ever!"
+  },
+  "account_not_activate": {
+    "message": " account not activated, need 35 swtc"
+  },
+  "confirmOrder": {
+    "message": "Confirm Order"
+  },
+  "confirmSend": {
+    "message": "Confirm Send"
   }
 
 }

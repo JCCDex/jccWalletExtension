@@ -21,7 +21,12 @@ export default class Balance extends PureComponent {
     showFiat: true,
   }
 
+  static contextTypes = {
+    t: PropTypes.func,
+  }
+
   renderBalance () {
+    const {t} = this.context
     const { account } = this.props
     const balanceValue = account && account.balance
     const formattedBalance = balanceValue
@@ -40,7 +45,7 @@ export default class Balance extends PureComponent {
       if(balanceValue == 0) {
         return (
           <div className="flex-column balance-display">   
-          <div>swtc余额为0,表示账号未激活，需要转入该账号35个swtc激活</div>   
+          <div>{t('account_not_activate')}</div>   
           <UserPreferencedCurrencyDisplay
             className="token-amount"
             value={balanceValue}

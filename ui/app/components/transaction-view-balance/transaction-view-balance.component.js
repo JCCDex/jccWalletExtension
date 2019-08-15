@@ -27,7 +27,6 @@ export default class TransactionViewBalance extends PureComponent {
 
   renderBalance () {
     const { selectedToken, balance, balanceIsCached } = this.props
-
     return selectedToken
       ? (
         <div className="transaction-view-balance__balance">

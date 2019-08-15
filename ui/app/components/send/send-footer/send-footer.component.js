@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PageContainerFooter from '../../page-container/page-container-footer'
 import { DEFAULT_ROUTE } from '../../../routes'
+import {  Descriptions,  Modal } from 'antd'
 
 export default class SendFooter extends Component {
 
@@ -32,6 +33,7 @@ export default class SendFooter extends Component {
 
   state = {
     sendErrorMsg: '',
+    modalVisible: false,
   }
 
   static contextTypes = {
@@ -44,8 +46,7 @@ export default class SendFooter extends Component {
     this.props.history.push(DEFAULT_ROUTE)
   }
 
-  onSubmit (event) {
-    event.preventDefault()
+  onSubmitSend = () => {
     const {
       amount,
       data,
@@ -113,12 +114,33 @@ export default class SendFooter extends Component {
   }
 
   render () {
+    const {t} = this.context
     return (
+      <div>
+      <Modal
+            title={t('confirmSend')}
+            visible={this.state.modalVisible}
+            onOk={this.onSubmitSend}
+            onCancel={() => this.setState({modalVisible: false})}
+            okText={t('ok')}
+            cancelText={t('cancel')}
+          >
+            <Descriptions column={1}>
+              <Descriptions.Item label={t('from')}>{this.props.from.address}</Descriptions.Item>
+              <Descriptions.Item label={t('to')}>{this.props.to}</Descriptions.Item>
+              <Descriptions.Item label={t('currency')}>{this.props.sendCur}</Descriptions.Item>
+              <Descriptions.Item label={t('amount')}>{this.props.amount}</Descriptions.Item>
+              <Descriptions.Item label={t('memo')}>{this.props.sendMemo}</Descriptions.Item>
+            </Descriptions>
+        </Modal>
       <PageContainerFooter
         onCancel={() => this.onCancel()}
-        onSubmit={e => this.onSubmit(e)}
+        onSubmit={() => this.setState({
+          modalVisible: true,
+        })}
         disabled={this.formShouldBeDisabled()}
       />
+      </div>
     )
   }
 

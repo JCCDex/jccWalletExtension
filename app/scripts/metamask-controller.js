@@ -196,7 +196,8 @@ module.exports = class MetamaskController extends EventEmitter {
       // PreferencesController
       setSelectedAddress: nodeify(preferencesController.setSelectedAddress, preferencesController),
       setCurrentAccountTab: nodeify(preferencesController.setCurrentAccountTab, preferencesController),
-      setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
+     // setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
+      setAccountLabel: nodeify(this.setAccountLabel,this),
       setFeatureFlag: nodeify(preferencesController.setFeatureFlag, preferencesController),
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
       completeOnboarding: nodeify(preferencesController.completeOnboarding, preferencesController),
@@ -230,6 +231,11 @@ module.exports = class MetamaskController extends EventEmitter {
    *
    * @returns {Object} vault
    */
+
+  async setAccountLabel(account, label) {
+    this.preferencesController.setAccountLabel(account, label)
+  }
+
   async createNewVaultAndKeychain (password) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {

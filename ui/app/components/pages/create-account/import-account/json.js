@@ -96,6 +96,7 @@ class JsonImportSubview extends Component {
       .then(({ selectedAddress }) => {
         if (selectedAddress) {
           history.push(DEFAULT_ROUTE)
+          history.go(0)
           this.context.metricsEvent({
             eventOpts: {
               category: 'Accounts',

@@ -1793,7 +1793,6 @@ function setAccountLabel (account, label) {
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
     log.debug(`background.setAccountLabel`)
-
     return new Promise((resolve, reject) => {
       background.setAccountLabel(account, label, (err) => {
         dispatch(actions.hideLoadingIndication())

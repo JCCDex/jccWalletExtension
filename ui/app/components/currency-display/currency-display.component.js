@@ -32,10 +32,10 @@ export default class CurrencyDisplay extends PureComponent {
         title={!hideTitle && title || null}
       >
         { prefixComponent }
-        <span className="currency-display-component__text">{ text }</span>
+        <span style={{fontSize: 'smaller'}}>{ text }</span>
         {
           suffix && (
-            <span className="currency-display-component__suffix">
+            <span style={{fontSize: 'smaller'}}>
               SWTC
             </span>
           )
