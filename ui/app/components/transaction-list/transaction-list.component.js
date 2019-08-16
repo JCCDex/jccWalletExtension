@@ -298,8 +298,8 @@ export default class TransactionList extends PureComponent {
             <Input.Password id="cancelPwd" addonBefore={t('password')} placeholder={t('inputPassword')} />
            {/*  <Checkbox onChange={passpwd}>15分钟内免输入密码</Checkbox> */}
         </Modal>
-        {this.state.successVisible ? (<Alert message="撤销成功" closable="true" type="success" banner/>) : null }
-        {this.state.failVisible ? (<Alert message={this.state.failMessage} colsable="true" type="error" banner/>) : null }
+        {this.state.successVisible ? (<Alert message="撤销成功" closable type="success" banner/>) : null }
+        {this.state.failVisible ? (<Alert message={this.state.failMessage} colsable type="error" banner/>) : null }
       </div>
       
      )
@@ -355,6 +355,8 @@ export default class TransactionList extends PureComponent {
    showModal = (record) => {
     this.setState({
       modalVisible: true,
+      failVisible: false,
+      successVisible: false,
       sequence: record.sequence,
     })
   }
@@ -380,7 +382,8 @@ export default class TransactionList extends PureComponent {
     try {
       hash = await jccutils.cancelOrder(selectedAddress,this.state.sequence,pwd)
     } catch (error) {
-      errorMsg = error
+      console.dir(error)
+      errorMsg = error.message
     }
     if (hash) {
       this.setState({
@@ -391,6 +394,8 @@ export default class TransactionList extends PureComponent {
         failMessage: errorMsg,
         failVisible: true,
       })
+     // alert(errorMsg)
+     // return 
     }
     this.setState({
       modalVisible: false,
