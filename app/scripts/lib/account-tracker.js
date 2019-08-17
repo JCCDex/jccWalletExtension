@@ -183,7 +183,7 @@ class AccountTracker {
           let bal = Number(balObj.value).toFixed(4)
           let freezed = Number(balObj.freezed).toFixed(4)
           if(freezed > 0) {
-            bal = bal + ' freezed:' + freezed
+            bal = bal + '\nfreezed:' + freezed
           }
           if (balObj.currency === 'SWT') {
             const balance = bal
