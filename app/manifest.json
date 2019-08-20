@@ -61,7 +61,6 @@
     "unlimitedStorage",
     "clipboardWrite",
     "http://localhost:8545/",
-    "activeTab",
     "webRequest",
     "notifications"
   ],
