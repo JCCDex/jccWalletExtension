@@ -11,7 +11,11 @@ class Jccutils {
   }
 
   async getBalance (address) {
-    const jcc = await this.jccInstance
+    let jcc = await this.jccInstance
+    if(!jcc.hosts){
+      this.jccInstance = this.getJccInstance()
+      jcc = await this.jccInstance
+    }
     const balResult = await jcc.getBalances(address)
     let bal = 0
     if (balResult.result === false || balResult.code === '3301') {
@@ -24,19 +28,31 @@ class Jccutils {
   }
 
   async getHistoricPayments (address, ledger, seq) {
-    const jcc = await this.jccInstance
+    let jcc = await this.jccInstance
+    if(!jcc.hosts){
+      this.jccInstance = this.getJccInstance()
+      jcc = await this.jccInstance
+    }
     const resutl = await jcc.getHistoricPayments(address)
     return resutl
   }
 
   async getHistoricTransactions (address, ledger, seq) {
-    const jcc = await this.jccInstance
+    let jcc = await this.jccInstance
+    if(!jcc.hosts){
+      this.jccInstance = this.getJccInstance()
+      jcc = await this.jccInstance
+    }
     const resutl = await jcc.getHistoricTransactions(address)
     return resutl
   }
 
   async getOrders (address) {
-    const jcc = await this.jccInstance
+    let jcc = await this.jccInstance
+    if(!jcc.hosts){
+      this.jccInstance = this.getJccInstance()
+      jcc = await this.jccInstance
+    }
     const resutl = await jcc.getOrders(address,1)
     return resutl
   }

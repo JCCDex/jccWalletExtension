@@ -1490,8 +1490,7 @@ button.btn-thin {
   width: 100%;
   overflow: hidden;
   resize: none;
-  padding: 9px 13px 8px;
-  text-transform: uppercase; }
+  padding: 9px 13px 8px; }
 
 .new-account-modal-wrapper {
   display: flex;

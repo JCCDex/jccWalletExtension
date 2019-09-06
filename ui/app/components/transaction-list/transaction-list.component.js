@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import TransactionListItem from '../transaction-list-item'
 const Jccutils = require('../../components/send/jccutils')
 import { Tabs } from 'antd'
 import { Table, Button, Input, Modal, Alert, Progress, Checkbox } from 'antd';
@@ -15,6 +14,7 @@ export default class TransactionList extends PureComponent {
     const { selectedAddress } = this.props
     this.getCommissionOrder(selectedAddress)
     this.getHistoricPayments(selectedAddress)
+    
     this.getHistoricTransactions(selectedAddress)
   }
  
