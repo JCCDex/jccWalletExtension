@@ -81,7 +81,6 @@ ExportPrivateKeyModal.prototype.renderPasswordLabel = function (privateKey) {
 
 ExportPrivateKeyModal.prototype.renderPasswordInput = function (privateKey) {
   const plainKey = privateKey 
-  console.log('plainKey:'+plainKey)
   return privateKey
     ? h(ReadOnlyInput, {
         wrapperClass: 'private-key-password-display-wrapper',
