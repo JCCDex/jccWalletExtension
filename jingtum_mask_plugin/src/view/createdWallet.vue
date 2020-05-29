@@ -4,9 +4,9 @@
         <div class="body_class">
            <div v-if="step==='one'">
              <div class="title">{{$t("message.home.text1")}}</div>
-             <div style="display:flex;flex-wrap:warp;width:100%;">
-                <div v-for="(word, index) in wordList" :key="index" >
-                  <div class="content" >{{word}}</div>
+             <div style="display:flex;flex-wrap:warp;">
+                <div v-for="(word, index) in wordList" :key="index"  class="content">
+                  <div  >{{word}}</div>
                 </div>
              </div>
            </div>
@@ -38,10 +38,19 @@ export default {
       bip39.setDefaultWordlist("chinese_simplified");
       //   生成助记词
       const memoic = bip39.generateMnemonic();
-      this.wordList = memoic;
+      this.wordList = this.getWordList(memoic);
       //   通过助记词生成秘钥
       const entry = bip39.mnemonicToEntropy(memoic);
       const secret = Wallet.KeyPair.addressCodec.encodeSeed(entry.slice(0, 16));
+    },
+    getWordList(list) {
+      let wordList = [];
+      for (let word of list) {
+        if (word !== " ") {
+          wordList.push(word);
+        }
+      }
+      return wordList;
     }
   }
 }
@@ -61,6 +70,7 @@ export default {
     height: 36px;
     line-height: 36px;
     width: 25%;
+    // width: 30px;
   }
 }
 </style>
