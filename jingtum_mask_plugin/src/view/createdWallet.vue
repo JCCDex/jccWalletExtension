@@ -15,8 +15,9 @@
 </template>
 <script>
 import commonHead from "../components/commonHead";
-// import { jtWallet } from "jcc_wallet";
-const { Wallet } = require("@swtc/wallet");
+import { Factory as AddressCodecFactory } from "@swtc/address-codec";
+// import { jtWallet, JingchangWallet } from "jcc_wallet";
+// const { Wallet } = require("@swtc/wallet");
 const bip39 = require("bip39");
 export default {
   data() {
@@ -30,18 +31,25 @@ export default {
     commonHead
   },
   created() {
-    this.init();
+    this.generateMnemonic();
   },
   methods: {
-    init() {
-      //  助力词改为简体中文词库
+    generateMnemonic() {
+      let secret;
+      //  助记词改为简体中文词库
       bip39.setDefaultWordlist("chinese_simplified");
-      //   生成助记词
-      const memoic = bip39.generateMnemonic();
-      this.wordList = this.getWordList(memoic);
-      //   通过助记词生成秘钥
-      const entry = bip39.mnemonicToEntropy(memoic);
-      const secret = Wallet.KeyPair.addressCodec.encodeSeed(entry.slice(0, 16));
+      //  生成助记词
+      try {
+        const mnemonic = bip39.generateMnemonic();
+        this.wordList = this.getWordList(mnemonic);
+        //  通过助记词生成秘钥
+        const entropy = bip39.mnemonicToEntropy(mnemonic); // 助记词得到熵
+        const addressCodec = AddressCodecFactory(); // param: chain or native token,default jingtum
+        secret = addressCodec.encodeSeed(entropy.slice(0, 16));
+      } catch (error) {
+        this.wordList = [];
+        secret = null
+      }
     },
     getWordList(list) {
       let wordList = [];
@@ -70,7 +78,6 @@ export default {
     height: 36px;
     line-height: 36px;
     width: 25%;
-    // width: 30px;
   }
 }
 </style>
