@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div style="margin-top:84px;">
+    <img src="../assets/logo.png" width="100px;" height="100px">
     <div class="homeText">{{this.$t("message.home.home_text")}}</div>
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
-    <button class="homeBtn">{{this.$t("message.home.create_wallet")}}</button>
-    <button class="homeBtn" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
+    <button class="homeBtn" @click="goTo('build')">{{this.$t("message.home.create_wallet")}}</button>
+    <button class="homeBtn" @click="goTo('import')" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
   </div>
 </template>
 
@@ -13,7 +14,17 @@ export default {
   data() {
     return {}
   },
-  methods: {}
+  methods: {
+    goTo(type) {
+      if (type === "build") {
+        this.$router.push({
+          name: "createdWallet"
+        })
+      } else {
+
+      }
+    }
+  }
 }
 </script>
 

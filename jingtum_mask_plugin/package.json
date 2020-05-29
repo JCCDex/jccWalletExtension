@@ -13,6 +13,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bip39": "^3.0.2",
+    "jcc_wallet": "^1.0.5",
     "vue": "^2.5.2",
     "vue-i18n": "^8.18.1",
     "vue-router": "^3.0.1"
