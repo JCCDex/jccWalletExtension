@@ -4,10 +4,29 @@
         <div class="body_class">
            <div v-if="step==='one'">
              <div class="title">{{$t("message.home.text1")}}</div>
-             <div style="width:100%;display: -webkit-flex;">
+             <div  class="parsent">
                 <div v-for="(word, index) in wordList" :key="index"  class="content">
-                  <div  >{{word}}</div>
+                  <div class="text">{{word}}</div>
                 </div>
+             </div>
+             <div class="buttom_div">
+               <button class="buttom" @click="goNext()">{{$t("message.home.buttomText")}}</button>
+             </div>
+           </div>
+           <div v-if="step==='two'">
+              <div class="title">{{$t("message.home.text2")}}</div>
+              <div class="area_div">
+                  <div class="content" v-for="(data,index) in currentList" :key="index">
+                    <div class="text">{{data.word}}</div>
+                  </div>
+              </div>
+              <div class="list_div">
+                  <div class="content" v-for="(data,index) in arrList" :key="index">
+                    <div :class="data.isClick?'click':'text'" @click="checkWord(data,index)" >{{data.word}}</div>
+                  </div>
+              </div>
+              <div class="buttom_div">
+               <button class="buttom" @click="goNext()">{{$t("message.home.nextText")}}</button>
              </div>
            </div>
         </div>
@@ -24,7 +43,11 @@ export default {
     return {
       step: "one",
       wallet: "",
-      wordList: []
+      wordList: [],
+      arrList: [],
+      currentList: [],
+      currentIndex: 0,
+      lastIndex: -1
     }
   },
   components: {
@@ -59,6 +82,51 @@ export default {
         }
       }
       return wordList;
+    },
+    checkWord(data, index) {
+      if (data.isClick) {
+        return;
+      }
+      let lastIndex = this.lastIndex;
+      let currentIndex = this.currentIndex;
+      let dataClass = {};
+      // 选择正确
+      if (data.word === this.wordList[this.currentIndex]) {
+        dataClass = { success: true, word: data.word };
+        this.currentIndex++;
+        this.lastIndex = -1;
+      } else {
+        dataClass = { success: false, word: data.word };
+        this.lastIndex = index;
+      }
+      // 显示选择的数据
+      this.currentList[currentIndex] = dataClass;
+      data = { isClick: true, word: data.word }; // isClick :是否已点击
+      this.arrList[index] = data; // 改变点击状态
+      if (lastIndex >= 0) {
+        let temporary = this.arrList[lastIndex];
+        temporary = { isClick: false, word: temporary.word };
+        this.arrList[lastIndex] = temporary;
+        // this.arrList.push(temporary);
+      }
+    },
+    // 打乱数组 
+    randomList() {
+      let list = this.wordList.slice();
+      let arr = [];
+      let length = list.length;
+      for (let i = 0; i < length; i++) {
+        let index = parseInt(Math.random() * list.length); // 生成 1~lenght 之间的随机数
+        let word = list[index];
+        let data = { isClick: false, word: word };
+        arr.push(data);
+        list.splice(index, 1); // 删除已使用数据
+      }
+      this.arrList = arr;
+    },
+    goNext() {
+      this.randomList();
+      this.step = "two";
     }
   }
 }
@@ -74,12 +142,99 @@ export default {
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
   }
-  .content {
-    height: 36px;
-    line-height: 36px;
-    width: 25%;
-    // display: -webkit-flex;
-    // -webkit-flex-wrap: row wrap;
+  .parsent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .content {
+      height: 36px;
+      line-height: 36px;
+      width: 23%;
+      margin-right: 2%;
+      margin-bottom: 10px;
+      background-color: #f1f3f9;
+      border-radius: 4px;
+      // display: -webkit-flex;
+      // -webkit-flex-wrap: row wrap;
+      .text {
+        color: #090909;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+    }
+  }
+  .buttom_div {
+    margin-top: 10px;
+    .buttom {
+      height: 48px;
+      width: 100%;
+      border-radius: 6px;
+      background-color: #366bf2;
+      font-size: 16px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #ffffff;
+      border: none;
+      outline: none;
+    }
+  }
+  .area_div {
+    width: 96%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f7f8fb;
+    padding-top: 10px;
+    padding-left: 4%;
+    height: 154px;
+    border-radius: 6px;
+    .content {
+      width: 21%;
+      margin-right: 3%;
+      height: 36px;
+      line-height: 36px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background-color: #f7f8fb;
+      border: 1px solid #7297f6;
+      .text {
+        color: #090909;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+    }
+  }
+  .list_div {
+    width: 96%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 30px;
+    padding-left: 4%;
+    .content {
+      width: 21%;
+      margin-right: 3%;
+      height: 36px;
+      line-height: 36px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background-color: #f7f8fb;
+      border: 1px solid #7297f6;
+      .text {
+        color: #090909;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+      .click {
+        background-color: #366bf2;
+        color: #ffffff;
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+    }
   }
 }
 </style>
