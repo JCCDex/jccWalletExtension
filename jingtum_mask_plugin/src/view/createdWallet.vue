@@ -27,7 +27,7 @@
                   </div>
               </div>
               <div class="buttom_div">
-               <button class="buttom" @click="goNext(false)">{{$t("message.home.nextText")}}</button>
+               <button class="buttom" @click="setPassword()">{{$t("message.home.nextText")}}</button>
              </div>
            </div>
         </div>
@@ -43,12 +43,12 @@ export default {
   data() {
     return {
       step: "one",
-      wallet: "",
+      secret: "",
       wordList: [],
       arrList: [],
       currentList: [],
       currentIndex: 0,
-      lastIndex: -1,
+      lastIndex: -1
       //   forCurrentList: [],
       //   forArrList: []
     }
@@ -102,6 +102,7 @@ export default {
         this.wordList = [];
         secret = null
       }
+      this.secret = secret;
     },
     getWordList(list) {
       let wordList = [];
@@ -154,7 +155,17 @@ export default {
       }
       this.arrList = [...arr];
     },
-
+    setPassword() {
+      if (this.currentIndex < 12) {
+        return;
+      }
+      this.$router.push({
+        name: "setPassword",
+        params: {
+          secret: this.secret
+        }
+      })
+    },
     goNext() {
       this.randomList();
       this.step = "two";

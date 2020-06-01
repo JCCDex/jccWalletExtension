@@ -15,6 +15,11 @@ export default new Router({
       path: '/view/createdWallet',
       name: 'createdWallet',
       component: _import("createdWallet")
+    },
+    {
+      path: '/view/setPassword',
+      name: 'setPassword',
+      component: _import("setPassword")
     }
   ]
 })
