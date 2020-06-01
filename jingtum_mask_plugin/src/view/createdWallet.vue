@@ -4,7 +4,7 @@
         <div class="body_class">
            <div v-if="step==='one'">
              <div class="title">{{$t("message.home.text1")}}</div>
-             <div style="display:flex;flex-wrap:warp;">
+             <div style="width:100%;display: -webkit-flex;">
                 <div v-for="(word, index) in wordList" :key="index"  class="content">
                   <div  >{{word}}</div>
                 </div>
@@ -78,6 +78,8 @@ export default {
     height: 36px;
     line-height: 36px;
     width: 25%;
+    // display: -webkit-flex;
+    // -webkit-flex-wrap: row wrap;
   }
 }
 </style>
