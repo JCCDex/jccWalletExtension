@@ -16,8 +16,9 @@
            <div v-if="step==='two'">
               <div class="title">{{$t("message.home.text2")}}</div>
               <div class="area_div">
-                  <div class="content" v-for="(data,index) in currentList" :key="index">
-                    <div class="text">{{data.word}}</div>
+                  <div :class="getClass(data)" class="content" v-for="(data,index) in currentList" :key="index">
+                    <div v-if="data.word" :class="'text'">{{data.word}}</div>
+                    <div v-else></div>
                   </div>
               </div>
               <div class="list_div">
@@ -26,7 +27,7 @@
                   </div>
               </div>
               <div class="buttom_div">
-               <button class="buttom" @click="goNext()">{{$t("message.home.nextText")}}</button>
+               <button class="buttom" @click="goNext(false)">{{$t("message.home.nextText")}}</button>
              </div>
            </div>
         </div>
@@ -47,7 +48,9 @@ export default {
       arrList: [],
       currentList: [],
       currentIndex: 0,
-      lastIndex: -1
+      lastIndex: -1,
+      //   forCurrentList: [],
+      //   forArrList: []
     }
   },
   components: {
@@ -55,8 +58,34 @@ export default {
   },
   created() {
     this.generateMnemonic();
+    this.setCurrentList();
+  },
+  watch: {
+    // currentList() {
+    //   this.forCurrentList = this.currentList;
+    // },
+    // arrList() {
+    //   this.forArrList = this.arrList;
+    // }
   },
   methods: {
+    getClass(data) {
+      if (data.word) {
+        if (data.success) {
+          return "common"
+        } else {
+          return "error"
+        }
+      } else {
+        return "nothing";
+      }
+    },
+    setCurrentList() {
+      for (let i = 0; i < 12; i++) {
+        let data = { success: false, word: "" };
+        this.currentList.push(data);
+      }
+    },
     generateMnemonic() {
       let secret;
       //  助记词改为简体中文词库
@@ -91,7 +120,7 @@ export default {
       let currentIndex = this.currentIndex;
       let dataClass = {};
       // 选择正确
-      if (data.word === this.wordList[this.currentIndex]) {
+      if (data.word === this.wordList[currentIndex]) {
         dataClass = { success: true, word: data.word };
         this.currentIndex++;
         this.lastIndex = -1;
@@ -109,6 +138,7 @@ export default {
         this.arrList[lastIndex] = temporary;
         // this.arrList.push(temporary);
       }
+      this.arrList = [...this.arrList]; // 刷新页面的数据
     },
     // 打乱数组 
     randomList() {
@@ -122,8 +152,9 @@ export default {
         arr.push(data);
         list.splice(index, 1); // 删除已使用数据
       }
-      this.arrList = arr;
+      this.arrList = [...arr];
     },
+
     goNext() {
       this.randomList();
       this.step = "two";
@@ -196,13 +227,21 @@ export default {
       margin-bottom: 10px;
       border-radius: 4px;
       background-color: #f7f8fb;
-      border: 1px solid #7297f6;
       .text {
         color: #090909;
         font-size: 16px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
       }
+    }
+    .error {
+      border: 1px solid red;
+    }
+    .common {
+      border: 1px solid #7297f6;
+    }
+    .nothing {
+      border: none;
     }
   }
   .list_div {
