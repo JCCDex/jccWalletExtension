@@ -25,7 +25,7 @@ const router = new Router({
       path: '/view/myWallet',
       name: 'myWallet',
       meta: {
-        needLogin: true
+        needLogin: false
       },
       component: _import("myWallet")
     }
