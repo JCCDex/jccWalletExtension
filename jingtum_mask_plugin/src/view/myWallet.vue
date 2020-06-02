@@ -116,6 +116,10 @@ export default {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
+    color: #ffffff;
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     background-color: #366bf2;
   }
 }
