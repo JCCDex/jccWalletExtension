@@ -5,11 +5,9 @@ import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
 import store from './store'
-import { Toast } from "vant"
 import { browser } from "./js/utils";
 
 Vue.use(VueI18n)
-Vue.use(Toast)
 
 Vue.config.productionTip = false
 

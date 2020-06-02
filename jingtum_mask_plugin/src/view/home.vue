@@ -53,6 +53,9 @@ export default {
         .then(() => {
           // Toast.success("成功");
           this.$store.dispatch("updateIsLogin", 1);
+          this.$router.push({
+            name: "myWallet"
+          });
         })
         .catch(error => {
           // Toast.fail(error);
