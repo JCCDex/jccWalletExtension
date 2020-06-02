@@ -36,9 +36,8 @@ export default {
     passInput
   },
   created() {
-    let secret = this.$route.query.secret || "sp8wj3g4WbptRbJ7QTXbTajUpvtzt";
+    let secret = this.$route.query.secret;
     this.secret = secret;
-    console.log(secret);
   },
   methods: {
     setPassData(password) {

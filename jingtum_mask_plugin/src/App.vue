@@ -6,6 +6,7 @@
 <script>
 import Lockr from "lockr";
 import { JingchangWallet } from "jcc_wallet";
+import { getUserBalances } from "./js/user";
 export default {
   name: "App",
   created() {
@@ -14,8 +15,12 @@ export default {
   components: {},
   methods: {
     init() {
+      // 处理钱包
       let jcWallet = JingchangWallet.get();
       this.$store.dispatch("updateJCWallet", jcWallet);
+      setTimeout(() => {
+        getUserBalances();
+      }, 50);
     }
   }
 };

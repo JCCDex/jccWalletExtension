@@ -31,6 +31,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("myWallet")
+    },
+    {
+      path: '/assets',
+      name: 'assets',
+      meta: {
+        needLogin: false
+      },
+      component: _import("assets")
     }
   ]
 })

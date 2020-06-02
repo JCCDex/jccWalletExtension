@@ -17,9 +17,9 @@
       </div>
     </div>
     <div class="assets_div">
-      <span class="num_class" >123456.78</span>
-      <span class="type_class">SWTC</span>
-    </div>
+         <span class="num_class" >{{currentAsset}}</span>
+         <span class="type_class">{{currentCoin}}</span>
+      </div>
   </div>
 </template>
 <script>
@@ -27,6 +27,7 @@ import titleLeft from "../images/titleLeft.png";
 import titleRight from "../images/titleRight.png";
 import jingChang from "../images/jingChang.png";
 import mainmenu from "@/components/mainMenu";
+import Lockr from "lockr";
 export default {
   name: "myWallet",
   data() {
@@ -52,6 +53,23 @@ export default {
         }
       }
       return address;
+    },
+    currentCoin() {
+      let coin = Lockr.get("currentCoin") || "SWTC";
+      return coin;
+    },
+    balance() {
+      return this.$store.getters.balance;
+    },
+    currentAsset() {
+      let coin = this.currentCoin;
+      let balance = this.balance;
+      let asset = balance[`${coin}`];
+      let total = 0;
+      if (asset) {
+        total = asset.total;
+      }
+      return total;
     }
   },
   methods: {
@@ -59,6 +77,11 @@ export default {
       let startStr = address.substring(0, 4);
       let endStr = address.substring(address.length - 6, address.length);
       return startStr + "******" + endStr;
+    },
+    goAssets() {
+      this.$router.push({
+        name: "assets"
+      });
     }
   }
 };
@@ -123,6 +146,10 @@ export default {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
+    color: #ffffff;
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     background-color: #366bf2;
   }
 }
