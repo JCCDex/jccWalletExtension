@@ -51,6 +51,9 @@ export default {
       inst.getSecretWithType(password, "swt").then(() => {
         // Toast.success("成功");
         this.$store.dispatch("updateIsLogin", 1);
+        this.$router.push({
+          name: "myWallet"
+        })
       }).catch(error => {
         // Toast.fail(error);
       })
