@@ -5,7 +5,9 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     isLogin: NOT_LOGIN,
-    jcWallet: ""
+    jcWallet: "",
+    currentCurrency: "",
+    currentWallet: ""
   },
   mutations: {
     SET_LOGIN_STATUS(state, isLogin) {
