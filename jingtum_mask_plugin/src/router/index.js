@@ -15,17 +15,17 @@ const router = new Router({
       component: _import("home")
     },
     {
-      path: '/view/createdWallet',
+      path: '/createdWallet',
       name: 'createdWallet',
       component: _import("createdWallet")
     },
     {
-      path: '/view/setPassword',
+      path: '/setPassword',
       name: 'setPassword',
       component: _import("setPassword")
     },
     {
-      path: '/view/myWallet',
+      path: '/myWallet',
       name: 'myWallet',
       meta: {
         needLogin: false
