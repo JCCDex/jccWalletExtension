@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/view/index'
+
 const _import = file => () => import('@/view/' + file + '.vue')
 
 Vue.use(Router)
@@ -8,8 +8,11 @@ const router = new Router({
 
   routes: [{
       path: '/',
-      name: 'index',
-      component: index
+      redirect: 'home'
+    }, {
+      path: '/home',
+      name: 'home',
+      component: _import("home")
     },
     {
       path: '/view/createdWallet',
