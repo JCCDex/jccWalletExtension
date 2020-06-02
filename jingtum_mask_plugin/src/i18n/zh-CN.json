@@ -7,6 +7,15 @@
     "text1": "请按次序抄写下面12个汉字，我们将在下一步验证。",
     "text2": "请按上一步次序将下面12个汉字依次填入输入框。",
     "buttomText": "已抄写助记词，下一步",
-    "nextText": "下一步"
+    "nextText": "下一步",
+    "setPassword": "设置钱包密码",
+    "passwordText": "钱包密码一旦丢失将无法找回，请务必牢记。",
+    "passwordText2": "请设置钱包密码",
+    "passwordText3": "请输入钱包密码",
+    "rePasswordText": "请确认钱包密码",
+    "passwordNull": "密码不能为空",
+    "passwordError": "钱包密码为8-64位字母数字组合",
+    "repasswordError": "两次输入的密码不相同",
+    "sureText": "确认"
   }
 }

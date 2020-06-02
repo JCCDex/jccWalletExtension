@@ -161,7 +161,7 @@ export default {
       }
       this.$router.push({
         name: "setPassword",
-        params: {
+        query: {
           secret: this.secret
         }
       })
@@ -246,7 +246,7 @@ export default {
       }
     }
     .error {
-      border: 1px solid red;
+      border: 1px solid #ff573d;
     }
     .common {
       border: 1px solid #7297f6;

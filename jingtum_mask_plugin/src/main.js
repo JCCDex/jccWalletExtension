@@ -4,9 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
+import store from './store'
+import { Toast } from "vant"
 import { browser } from "./js/utils";
 
 Vue.use(VueI18n)
+Vue.use(Toast)
 
 Vue.config.productionTip = false
 
@@ -33,6 +36,7 @@ const i18n = new VueI18n({
 new Vue({
   el: '#app',
   router,
+  store,
   i18n,
   components: { App },
   template: '<App/>'
