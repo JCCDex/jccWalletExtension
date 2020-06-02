@@ -9,6 +9,7 @@
 <script>
 import Lockr from "lockr";
 import { JingchangWallet } from "jcc_wallet";
+import { getUserBalances } from "./js/user"
 // import vueAlert from "./components/vueAlert"
 export default {
   name: 'App',
@@ -20,8 +21,12 @@ export default {
   },
   methods: {
     init() {
+      // 处理钱包
       let jcWallet = JingchangWallet.get();
       this.$store.dispatch("updateJCWallet", jcWallet);
+      setTimeout(() => {
+        getUserBalances();
+      }, 50)
     }
   }
 }

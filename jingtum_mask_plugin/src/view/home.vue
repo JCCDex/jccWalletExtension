@@ -22,11 +22,11 @@ import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
 // import { Toast } from "vant";
 export default {
-  name: 'index',
+  name: "index",
   data() {
     return {
       password: ""
-    }
+    };
   },
   computed: {
     jcWallet() {
@@ -48,27 +48,29 @@ export default {
       let password = this.password;
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
-      inst.getSecretWithType(password, "swt").then(() => {
-        // Toast.success("成功");
-        this.$store.dispatch("updateIsLogin", 1);
-        this.$router.push({
-          name: "myWallet"
+      inst
+        .getSecretWithType(password, "swt")
+        .then(() => {
+          // Toast.success("成功");
+          this.$store.dispatch("updateIsLogin", 1);
+          this.$router.push({
+            name: "myWallet"
+          });
         })
-      }).catch(error => {
-        // Toast.fail(error);
-      })
+        .catch(error => {
+          // Toast.fail(error);
+        });
     },
     goTo(type) {
       if (type === "build") {
         this.$router.push({
           name: "createdWallet"
-        })
+        });
       } else {
-
       }
     }
   }
-}
+};
 </script>
 
 <style scoped >

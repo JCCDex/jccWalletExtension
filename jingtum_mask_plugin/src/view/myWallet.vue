@@ -2,7 +2,7 @@
   <div>
     <div class="title_class">
       <div class="left">
-        <img :src="titleLeft" style="width:26px;" />
+        <img :src="titleLeft" @click="goAssets()" style="width:26px;" />
       </div>
       <div class="middle">
         <div class="name">{{$t("message.home.walletName")}}</div>
@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="assets_div">
-         <span class="num_class" >123456.78</span>
-         <span class="type_class">SWTC</span>
+         <span class="num_class" >{{currentAsset}}</span>
+         <span class="type_class">{{currentCoin}}</span>
       </div>
   </div>
 </template>
@@ -27,6 +27,7 @@
 import titleLeft from "../images/titleLeft.png";
 import titleRight from "../images/titleRight.png";
 import jingChang from "../images/jingChang.png";
+import Lockr from "lockr";
 export default {
   data() {
     return {
@@ -47,13 +48,35 @@ export default {
         }
       }
       return address;
-    }
+    },
+    currentCoin() {
+      let coin = Lockr.get("currentCoin") || "SWTC";
+      return coin;
+    },
+    balance() {
+      return this.$store.getters.balance;
+    },
+    currentAsset() {
+      let coin = this.currentCoin;
+      let balance = this.balance;
+      let asset = balance[`${coin}`];
+      let total = 0;
+      if (asset) {
+        total = asset.total;
+      }
+      return total;
+    },
   },
   methods: {
     getAddressStr(address) {
       let startStr = address.substring(0, 4);
       let endStr = address.substring(address.length - 6, address.length);
       return startStr + "******" + endStr;
+    },
+    goAssets() {
+      this.$router.push({
+        name: "assets"
+      })
     }
   }
 }
