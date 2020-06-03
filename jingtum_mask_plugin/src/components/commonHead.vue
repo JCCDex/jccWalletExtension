@@ -3,7 +3,7 @@
       <div v-if="showLeft" class="left">11</div>
       <div class="center" :style="getStyle()">{{titleText}}</div>
       <div class="right">
-          <img :src="closeImg" style="width:16px;" />
+          <img :src="closeImg" @click="goBack" style="width:16px;" />
       </div>
     </div>
 </template>
@@ -28,6 +28,9 @@ export default {
         str = str + "left;padding-left:20px;width:80%;";
       }
       return str;
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   }
 }

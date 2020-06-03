@@ -1,7 +1,7 @@
 <template>
   <div id="myWallet">
     <div class="title_class">
-      <img :src="titleLeft" style="width:26px;height:26px;" />
+      <img :src="titleLeft" @click="goAssets" style="width:26px;height:26px; cursor: pointer;" />
       <div class="middle">
         <div class="name">{{$t("message.home.walletName")}}</div>
         <div class="address">{{getAddressStr(swtAddress)}}</div>
@@ -55,7 +55,7 @@ export default {
       return address;
     },
     currentCoin() {
-      let coin = Lockr.get("currentCoin") || "SWTC";
+      let coin = Lockr.get("assetName") || "SWTC";
       return coin;
     },
     balance() {

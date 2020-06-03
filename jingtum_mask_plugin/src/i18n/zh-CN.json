@@ -17,6 +17,8 @@
     "passwordError": "钱包密码为8-64位字母数字组合",
     "repasswordError": "两次输入的密码不相同",
     "sureText": "确认",
-    "walletName": "付款钱包"
+    "walletName": "付款钱包",
+    "checkAsset": "资产切换",
+    "assetFrozen": "冻结"
   }
 }

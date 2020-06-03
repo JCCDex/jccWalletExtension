@@ -28,6 +28,9 @@ export const getUserBalances = async (fn) => {
       if (coin.indexOf('J') === 0) {
         coin = coin.substring(1, coin.length);
       }
+      if (coin === "CNY") {
+        coin = 'CNT'
+      }
       let valueNum = new BigNumber(value);
       let frozenNum = new BigNumber(frozen);
       let total = parseFloat(valueNum.plus(frozenNum)) || 0;
