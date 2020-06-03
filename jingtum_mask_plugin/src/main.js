@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
 import store from './store'
+import VueClipboard from 'vue-clipboard2'
 import { browser } from "./js/utils";
 
-Vue.use(VueI18n)
+Vue.use(VueI18n);
+Vue.use(VueClipboard);
 
 Vue.config.productionTip = false
 

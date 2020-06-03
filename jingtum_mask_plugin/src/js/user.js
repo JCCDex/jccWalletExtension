@@ -11,13 +11,7 @@ export const getUserBalances = async (fn) => {
       wallets = store.getters.jcWallet.wallets;
     }
   }
-  let address = ""
-  for (let wallet of wallets) {
-    if (wallet.type === "swt") {
-      address = wallet.address;
-      break;
-    }
-  }
+  //   let address = store.getters.swtAddress;
   const instExplorer = new JcExplorer(getExplorerHost());
   let res = await instExplorer.getBalances(getUUID(), "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6");
   if (res.result) {

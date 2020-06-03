@@ -39,6 +39,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("assets")
+    },
+    {
+      path: '/lookWallet',
+      name: 'lookWallet',
+      meta: {
+        needLogin: false
+      },
+      component: _import("lookWallet")
     }
   ]
 })

@@ -17,9 +17,17 @@
       </div>
     </div>
     <div class="assets_div">
-         <span class="num_class" >{{currentAsset}}</span>
-         <span class="type_class">{{currentCoin}}</span>
+      <span class="num_class" >{{currentAsset}}</span>
+      <span class="type_class">{{currentCoin}}</span>
+    </div>
+    <div class="button_div">
+      <div class="left">
+        <button class="button_left" @click="goTo('lookWallet')" >{{$t("message.home.buttonText")}}</button>
       </div>
+      <div class="right">
+        <button class="button_right" @click="goTo('transfer')" >{{$t("message.home.tranferText")}}</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -43,15 +51,7 @@ export default {
   },
   computed: {
     swtAddress() {
-      let jcWallet = this.$store.getters.jcWallet;
-      let wallets = jcWallet.wallets;
-      let address = "";
-      for (let wallet of wallets) {
-        if (wallet.type === "swt") {
-          address = wallet.address;
-          break;
-        }
-      }
+      let address = this.$store.getters.swtAddress;
       return address;
     },
     currentCoin() {
@@ -82,6 +82,12 @@ export default {
       this.$router.push({
         name: "assets"
       });
+    },
+    goTo(type) {
+      let name = `${type}`;
+      this.$router.push({
+        name: name
+      })
     }
   }
 };
@@ -165,5 +171,47 @@ export default {
 }
 .transitionShowMenu {
   top: 0px;
+}
+.button_div {
+  display: flex;
+  margin-top: 30px;
+  .left {
+    width: 50%;
+    padding-left: 20px;
+    text-align: left;
+    .button_left {
+      height: 48px;
+      line-height: 48px;
+      color: #ffffff;
+      background-color: #05c2c2;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      outline: none;
+      border: none;
+      border-inline: none;
+      width: 80%;
+    }
+  }
+  .right {
+    width: 50%;
+    padding-right: 20px;
+    text-align: right;
+    .button_right {
+      height: 48px;
+      line-height: 48px;
+      color: #ffffff;
+      background-color: #4484fe;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      outline: none;
+      border: none;
+      border-inline: none;
+      width: 80%;
+    }
+  }
 }
 </style>

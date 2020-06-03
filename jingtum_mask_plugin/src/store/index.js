@@ -6,8 +6,7 @@ const store = new Vuex.Store({
   state: {
     isLogin: NOT_LOGIN,
     jcWallet: "",
-    currentCurrency: "",
-    currentWallet: "",
+    swtAddress: "",
     balance: ""
   },
   mutations: {
@@ -19,6 +18,9 @@ const store = new Vuex.Store({
     },
     SET_BALANCE(state, balance) {
       Vue.set(state, 'balance', balance);
+    },
+    SET_SWTADDRESS(state, swtAddress) {
+      Vue.set(state, 'swtAddress', swtAddress);
     }
   },
   actions: {
@@ -30,12 +32,16 @@ const store = new Vuex.Store({
     }, jcWallet) => commit('SET_JCWALLET', jcWallet),
     updateBalance: ({
       commit
-    }, balance) => commit('SET_BALANCE', balance)
+    }, balance) => commit('SET_BALANCE', balance),
+    updateSwtAddress: ({
+      commit
+    }, swtAddress) => commit('SET_SWTADDRESS', swtAddress)
   },
   getters: {
     isLogin: state => state.isLogin,
     jcWallet: state => state.jcWallet,
-    balance: state => state.balance
+    balance: state => state.balance,
+    swtAddress: state => state.swtAddress
   }
 });
 

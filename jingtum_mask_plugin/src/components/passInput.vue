@@ -25,7 +25,7 @@ export default {
   },
   props: {
     passData: { type: String, default: "" }, // 对比的密码值，默认为空
-    textMsg: { type: String, default: "" }, // 
+    textMsg: { type: String, default: "" }, // input 框 placeholder 内容
   },
   created() {
     setTimeout(() => {

@@ -48,18 +48,15 @@ export default {
       let password = this.password;
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
-      inst
-        .getSecretWithType(password, "swt")
-        .then(() => {
-          // Toast.success("成功");
-          this.$store.dispatch("updateIsLogin", 1);
-          this.$router.push({
-            name: "myWallet"
-          });
-        })
-        .catch(error => {
-          // Toast.fail(error);
+      inst.getSecretWithType(password, "swt").then(() => {
+        // Toast.success("成功");
+        this.$store.dispatch("updateIsLogin", 1);
+        this.$router.push({
+          name: "myWallet"
         });
+      }).catch(error => {
+        // Toast.fail(error);
+      });
     },
     goTo(type) {
       if (type === "build") {
