@@ -15,6 +15,7 @@
   "dependencies": {
     "bignumber.js": "^7.2.1",
     "bip39": "^3.0.2",
+    "jcc_exchange": "^3.1.13",
     "jcc_rpc": "^0.2.9",
     "jcc_wallet": "^1.0.5",
     "vant": "^2.8.4",

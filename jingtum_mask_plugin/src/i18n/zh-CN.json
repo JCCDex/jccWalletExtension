@@ -30,6 +30,8 @@
     "copyError": "复制失败",
     "createdSuccess": "新建钱包成功",
     "loginSuccess": "登录成功",
-    "passwordWrong": "密码错误"
+    "passwordWrong": "密码错误",
+    "transferText": "转账",
+    "walletText": "钱包"
   }
 }

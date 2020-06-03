@@ -47,6 +47,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("lookWallet")
+    },
+    {
+      path: '/transfer',
+      name: 'transfer',
+      meta: {
+        needLogin: false
+      },
+      component: _import("transfer")
     }
   ]
 })
@@ -56,7 +64,7 @@ router.beforeEach((to, from, next) => {
     if (logined) {
       next();
     } else {
-      next("/index");
+      next("/home");
     }
   } else {
     next();
