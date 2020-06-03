@@ -25,6 +25,11 @@
     "tranferText": "转账",
     "lookWallet": "查看账户",
     "addressText": "钱包地址",
-    "secretText": "钱包秘钥"
+    "secretText": "钱包秘钥",
+    "copySuccess": "复制成功",
+    "copyError": "复制失败",
+    "createdSuccess": "新建钱包成功",
+    "loginSuccess": "登录成功",
+    "passwordWrong": "密码错误"
   }
 }

@@ -20,7 +20,8 @@
 <script>
 import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
-// import { Toast } from "vant";
+import { Toast } from "vant";
+import { getError } from "../js/utils"
 export default {
   name: "index",
   data() {
@@ -49,13 +50,13 @@ export default {
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
       inst.getSecretWithType(password, "swt").then(() => {
-        // Toast.success("成功");
+        Toast.success(this.$t("message.home.loginSuccess"));
         this.$store.dispatch("updateIsLogin", 1);
         this.$router.push({
           name: "myWallet"
         });
       }).catch(error => {
-        // Toast.fail(error);
+        Toast.fail(this.$t(getError(error.toString())));
       });
     },
     goTo(type) {

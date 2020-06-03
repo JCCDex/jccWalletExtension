@@ -50,6 +50,7 @@ import editName from "../components/editName";
 import passInput from "../components/passInput";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { JingchangWallet } from "jcc_wallet";
+import { Toast } from 'vant';
 export default {
   data() {
     return {
@@ -81,10 +82,10 @@ export default {
       this.password = password;
     },
     onCopy() {
-
+      Toast.success(this.$t("message.home.copySuccess"));
     },
     onError() {
-
+      Toast.fail(this.$t("message.home.copyError"));
     },
     showSecret() {
       if (this.$refs.password.isValid()) {

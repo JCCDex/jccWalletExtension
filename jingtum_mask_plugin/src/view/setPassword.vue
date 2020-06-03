@@ -23,6 +23,7 @@ import commonHead from "../components/commonHead";
 import passwordImg from "../images/passwordImg.png";
 import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
+import { Toast } from 'vant';
 export default {
   data() {
     return {
@@ -62,6 +63,9 @@ export default {
           }
         }
         this.$store.dispatch("updateSwtAddress", address);
+        Toast.success(this.$t("message.home.createSuccess"))
+      }).catch((error) => {
+        Toast.fail(error);
       })
       this.$router.push({
         name: "myWallet"
