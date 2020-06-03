@@ -53,6 +53,15 @@ export default {
       JingchangWallet.generate(this.password, this.secret).then((jcWallet) => {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        let wallets = jcWallet.wallets;
+        let address = "";
+        for (let wallet of wallets) {
+          if (wallet.type === "swt" && wallet.default) {
+            address = wallet.address;
+            break;
+          }
+        }
+        this.$store.dispatch("updateSwtAddress", address);
       })
       this.$router.push({
         name: "myWallet"

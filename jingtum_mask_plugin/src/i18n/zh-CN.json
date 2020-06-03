@@ -12,6 +12,7 @@
     "passwordText": "钱包密码一旦丢失将无法找回，请务必牢记。",
     "passwordText2": "请设置钱包密码",
     "passwordText3": "请输入钱包密码",
+    "passwordText4": "请输入当前钱包密码",
     "rePasswordText": "请确认钱包密码",
     "passwordNull": "密码不能为空",
     "passwordError": "钱包密码为8-64位字母数字组合",
@@ -19,6 +20,11 @@
     "sureText": "确认",
     "walletName": "付款钱包",
     "checkAsset": "资产切换",
-    "assetFrozen": "冻结"
+    "assetFrozen": "冻结",
+    "buttonText": "收款",
+    "tranferText": "转账",
+    "lookWallet": "查看账户",
+    "addressText": "钱包地址",
+    "secretText": "钱包秘钥"
   }
 }
