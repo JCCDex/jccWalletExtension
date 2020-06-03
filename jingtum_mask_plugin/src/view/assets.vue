@@ -2,22 +2,23 @@
   <div>
     <commonHead :titleText="$t('message.home.checkAsset')"></commonHead>
     <div class="body_class">
-       <div v-for="assetName in Object.keys(balance)" :key="assetName" class="content">
-         <div class="one">
-           <span class="coin">{{assetName}}</span>
+       <div v-for="assetName in Object.keys(balance)" :key="assetName" class="content" @click="checkAsset(assetName)">
+         <div style="text-align:left;">
+           <span class="coinTitle">{{assetName}}</span>
          </div>
-         <div class="two">
-           <div class="left">{{balance[assetName].total}}</div>
-           <div class="middle">
+         <div class="assetWrap">
+           <div class="total">{{balance[assetName].total}}</div>
+           <div class="freeze">
                <span>{{$t("message.home.assetFrozen")}}:</span>
                <span>{{balance[assetName].frozen}}</span>
            </div>
-           <div class="right">
-               <img v-if="currentName!==assetName" :src="defaultImg" @click="checkAsset(assetName)" style="width:18px;" />
-               <img v-if="currentName===assetName" :src="defaultImg2" @click="checkAsset(assetName)" style="width:18px;" />
+           <div class="selectIcon">
+              <img v-if="currentName!==assetName" :src="defaultImg" style="width:18px;" />
+              <img v-if="currentName===assetName" :src="defaultImg2" style="width:18px;" />
            </div>
          </div>
        </div>
+       <van-dialog v-model="show" title="标题" show-cancel-button></van-dialog>
     </div>
   </div>
 </template>
@@ -25,17 +26,20 @@
 import commonHead from "../components/commonHead";
 import defaultImg from "../images/defaultImg.png";
 import defaultImg2 from "../images/defaultImg2.png";
+import { Dialog } from "vant";
 import Lockr from "lockr";
 export default {
   data() {
     return {
       defaultImg,
       defaultImg2,
-      currentName: "SWTC"
-    }
+      currentName: "SWTC",
+      show: true
+    };
   },
   components: {
-    commonHead
+    commonHead,
+    [Dialog.Component.name]: Dialog.Component
   },
   computed: {
     balance() {
@@ -53,7 +57,7 @@ export default {
       Lockr.set("assetName", this.currentName);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .body_class {
@@ -63,36 +67,33 @@ export default {
     padding-top: 10px;
     background-color: #eff3fc;
     border-radius: 6px;
-    .one {
-      text-align: left;
-      .coin {
-        width: 70px;
-        height: 20px;
-        line-height: 20px;
-        padding: 0 10px;
-        border-radius: 0 16px 16px 0;
-        background-color: #366bf2;
-      }
+    .coinTitle {
+      width: 70px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 10px;
+      border-radius: 0 16px 16px 0;
+      background-color: #366bf2;
+      color: #fff;
     }
-    .two {
+    .assetWrap {
       display: flex;
       padding: 10px 10px;
       color: #222325;
       font-size: 16px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      .left {
-        width: 50%;
+      .total {
+        width: 55%;
         text-align: left;
       }
-      .middle {
-        width: 40%;
+      .freeze {
+        width: 35%;
         text-align: left;
       }
-      .right {
+      .selectIcon {
         width: 10%;
         text-align: right;
-        // padding-right: 10px;
       }
     }
   }

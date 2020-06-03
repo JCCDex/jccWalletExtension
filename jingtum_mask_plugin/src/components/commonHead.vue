@@ -13,11 +13,11 @@ export default {
   data() {
     return {
       closeImg
-    }
+    };
   },
   props: {
     showLeft: { type: Boolean, default: false }, //是否显示返回箭头
-    titleText: { type: String, require: true }, //标题文字
+    titleText: { type: String, require: true } //标题文字
   },
   methods: {
     getStyle() {
@@ -33,13 +33,12 @@ export default {
       this.$router.go(-1);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .head_class {
   display: flex;
   background-color: #eaf0fd;
-  border-radius: 8px 8px 0 0;
   height: 60px;
   line-height: 60px;
   .left {
