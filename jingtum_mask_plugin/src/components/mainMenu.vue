@@ -24,6 +24,9 @@
         </li>
       </ul>
     </div>
+    <div v-if="showDialog" class="showDialog">
+      <passDialog @deleteWallet="deleteWallet" :titleText="titleText" @closeDialog="closeDialog"></passDialog>
+    </div>
     <img v-show="isScroll" :src="rightArrowIcon" class="tipHidden">
   </div>
 </template>
@@ -42,6 +45,7 @@ export default {
       delIcon,
       rightArrowIcon,
       isScroll: false,
+      showDialog: false,
       selectedAccount: "Account1",
       jwallets: {
         swtc1: {
