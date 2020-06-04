@@ -26,5 +26,13 @@
     "lookWallet": "查看账户",
     "addressText": "钱包地址",
     "secretText": "钱包秘钥"
+  },
+  "menu": {
+    "wallet": "钱包",
+    "createdWallet": "创建钱包",
+    "importWallet": "导入钱包",
+    "clearWallet": "清除所有钱包",
+    "setting": "设置",
+    "quit": "退出"
   }
 }

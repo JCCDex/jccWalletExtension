@@ -48,7 +48,7 @@ export default {
     }
   },
   created() {
-    let assetName = Lockr.get("assetName") || "SWTC";
+    let assetName = Lockr.get("assetName") || this.currentName;
     this.currentName = assetName;
   },
   methods: {
