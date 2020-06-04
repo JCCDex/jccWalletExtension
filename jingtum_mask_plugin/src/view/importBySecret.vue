@@ -1,6 +1,6 @@
 <template>
     <div>
-    <commonHead :titleText="$t('message.home.importText')"></commonHead>
+    <commonHead :titleText="$t('message.menu.importWallet')"></commonHead>
     <div class="body">
       <div class="title">
         <div class="name">{{$t('message.home.addressName')}}:</div>
@@ -25,14 +25,14 @@ import commonHead from "../components/commonHead";
 import passInput from "../components/passInput";
 import editName from "../components/editName";
 import { jtWallet, JingchangWallet } from "jcc_wallet";
-import { Toast } from 'vant';
+import { Toast } from "vant";
 export default {
   data() {
     return {
       memoName: "SWTC",
       password: "",
       secret: ""
-    }
+    };
   },
   components: {
     commonHead,
@@ -73,15 +73,18 @@ export default {
       let secret = this.secret;
       let password = this.password;
       let getAddress = jtWallet.getAddress;
-      inst.importSecret(secret, password, "swt", getAddress).then((jcWallet) => {
-        jcWallet = this.getJcWallet(jcWallet);
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-        Toast.success(this.$t("message.home.importSuccess"));
-        this.$router.push({ name: "myWallet" });
-      }).catch((error) => {
-        Toast.fail(error.toString());
-      });
+      inst
+        .importSecret(secret, password, "swt", getAddress)
+        .then(jcWallet => {
+          jcWallet = this.getJcWallet(jcWallet);
+          JingchangWallet.save(jcWallet);
+          this.$store.dispatch("updateJCWallet", jcWallet);
+          Toast.success(this.$t("message.home.importSuccess"));
+          this.$router.push({ name: "myWallet" });
+        })
+        .catch(error => {
+          Toast.fail(error.toString());
+        });
     },
     getJcWallet(jcWallet) {
       let wallets = jcWallet.wallets;
@@ -97,7 +100,7 @@ export default {
       return jcWallet;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .body {

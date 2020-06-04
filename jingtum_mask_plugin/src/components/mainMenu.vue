@@ -18,7 +18,7 @@
       </div>
       <!-- Menu List -->
       <ul class="menuList">
-        <li v-for="(item1,idx) in menuList" :key="idx" @click="JumpTo()">
+        <li v-for="(item1,idx) in menuList" :key="idx" @click="JumpTo(item1.url)">
           <span>{{item1.name}}</span>
           <img :src="rightArrowIcon" style="width:10px;height:16px;">
         </li>
@@ -36,6 +36,10 @@ import selectedIcon from "@/images/selectedIcon.png";
 import eyesIcon from "@/images/eyes.png";
 import delIcon from "@/images/delIcon.png";
 import rightArrowIcon from "@/images/rightArrow.png";
+import Lockr from "lockr";
+import { JingchangWallet } from "jcc_wallet";
+import passDialog from "./passDialog";
+import { Toast } from "vant";
 export default {
   name: "mainMenu",
   data() {
@@ -46,6 +50,15 @@ export default {
       rightArrowIcon,
       isScroll: false,
       showDialog: false,
+      titleText: "",
+      deleteAddress: "",
+      menuList: [
+        { name: this.$t("message.menu.createdWallet"), url: "createdWallet" },
+        { name: this.$t("message.menu.importWallet"), url: "importBySecret" },
+        { name: this.$t("message.menu.clearWallet"), url: "" },
+        { name: this.$t("message.menu.setting"), url: "" },
+        { name: this.$t("message.menu.quit"), url: "" }
+      ],
       selectedAccount: "Account1",
       jwallets: {
         swtc1: {
@@ -63,14 +76,7 @@ export default {
           currency: "SWTC",
           balance: "123123.1231"
         }
-      },
-      menuList: [
-        { name: this.$t("message.menu.createdWallet"), link: "" },
-        { name: this.$t("message.menu.importWallet"), link: "" },
-        { name: this.$t("message.menu.clearWallet"), link: "" },
-        { name: this.$t("message.menu.setting"), link: "" },
-        { name: this.$t("message.menu.quit"), link: "" }
-      ]
+      }
     };
   },
   mounted() {
@@ -88,8 +94,37 @@ export default {
         this.$refs.warp.scrollHeight - this.$refs.warp.offsetHeight - scroll >
         40;
     },
+    showPassDialog(wallet) {
+      let memoName = wallet.memoName;
+      this.deleteAddress = wallet.address;
+      let text = this.$t("message.home.deleteWalletText") + memoName;
+      this.titleText = text;
+      this.showDialog = true;
+    },
+    closeDialog() {
+      this.showDialog = false;
+    },
+    deleteWallet() {
+      let jcWallet = this.jcWallet;
+      let inst = new JingchangWallet(jcWallet);
+      let address = this.deleteAddress;
+      inst.removeWalletWithAddress(address).then(jcWallet => {
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        Toast.success(this.$t("message.home.deleteSuccess"));
+        this.showDialog = false;
+      });
+    },
+    setDefaultWallet(address) {
+      let jcWallet = this.jcWallet;
+      let inst = new JingchangWallet(jcWallet);
+      inst.setDefaultWallet(address).then(jcWallet => {
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+      });
+    },
     JumpTo(url) {
-      this.$router.push(url);
+      this.$router.push({ name: url });
     },
     selectWallet(idx) {
       this.selectedAccount = this.jwallets[idx].name;
