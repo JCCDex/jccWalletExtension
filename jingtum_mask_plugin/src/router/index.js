@@ -15,9 +15,9 @@ const router = new Router({
       component: _import("home")
     },
     {
-      path: '/createdWallet',
-      name: 'createdWallet',
-      component: _import("createdWallet")
+      path: '/newWallet',
+      name: 'newWallet',
+      component: _import("newWallet")
     },
     {
       path: '/setPassword',
@@ -55,7 +55,24 @@ const router = new Router({
         needLogin: false
       },
       component: _import("transfer")
+    },
+    {
+      path: '/createdWallet',
+      name: 'createdWallet',
+      meta: {
+        needLogin: false
+      },
+      component: _import("createdWallet")
+    },
+    {
+      path: '/importBySecret',
+      name: 'importBySecret',
+      meta: {
+        needLogin: false
+      },
+      component: _import("importBySecret")
     }
+
   ]
 })
 router.beforeEach((to, from, next) => {

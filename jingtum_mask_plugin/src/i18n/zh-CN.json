@@ -18,6 +18,7 @@
     "passwordError": "钱包密码为8-64位字母数字组合",
     "repasswordError": "两次输入的密码不相同",
     "sureText": "确认",
+    "cancelText": "取消",
     "walletName": "付款钱包",
     "checkAsset": "资产切换",
     "assetFrozen": "冻结",
@@ -26,12 +27,24 @@
     "lookWallet": "查看账户",
     "addressText": "钱包地址",
     "secretText": "钱包秘钥",
+    "addressName": "钱包名称",
     "copySuccess": "复制成功",
     "copyError": "复制失败",
     "createdSuccess": "新建钱包成功",
     "loginSuccess": "登录成功",
     "passwordWrong": "密码错误",
     "transferText": "转账",
-    "walletText": "钱包"
+    "walletText": "钱包",
+    "createdText": "创建钱包",
+    "importText": "导入钱包",
+    "removeAll": "清除所有钱包",
+    "setUp": "设置",
+    "exit": "退出",
+    "secretError": "秘钥格式不正确",
+    "secretNull": "秘钥不能为空",
+    "setSecretText": "请输入SWTC钱包密钥",
+    "importSuccess": "导入成功",
+    "deleteWalletText": "确认删除钱包",
+    "deleteSuccess": "删除钱包成功"
   }
 }

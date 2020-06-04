@@ -48,8 +48,6 @@ export const bin2hex = function(b) {
   return o
 }
 export const getError = function(msg) {
-  //   let str = error.toString();
-  console.log(msg);
   let mapMsg = new Map([
     ["Error: password is wrong", "message.home.passwordWrong"]
   ]);

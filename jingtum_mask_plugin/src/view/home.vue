@@ -4,7 +4,7 @@
     <div class="homeText">{{this.$t("message.home.home_text")}}</div>
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
     <div v-if="!jcWallet" class="input_div">
-      <button class="homeBtn" @click="goTo('build')">{{this.$t("message.home.create_wallet")}}</button>
+      <button class="homeBtn" @click="goTo('newWallet')">{{this.$t("message.home.create_wallet")}}</button>
       <button class="homeBtn" @click="goTo('import')" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
     </div>
     <div v-else>
@@ -59,13 +59,8 @@ export default {
         Toast.fail(this.$t(getError(error.toString())));
       });
     },
-    goTo(type) {
-      if (type === "build") {
-        this.$router.push({
-          name: "createdWallet"
-        });
-      } else {
-      }
+    goTo(name) {
+      this.$router.push({ name });
     }
   }
 };

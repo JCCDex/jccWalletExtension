@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div v-if="!isEdit">
+        <div class="memoName" v-if="!isEdit" :style="'text-align:'+titleAlign+';'">
             <span>{{memoName}}</span>
             <span style="padding-left:5px;">
                 <img :src="editImg" @click="editName()" :style="'width:'+widthData+'px'" />
             </span>
         </div>
         <div v-if="isEdit">
-          <input v-model="walletName" class="input_class" :style="getStyle()" ref="walletName" @blur="saveName" />
+          <input v-model="walletName" class="input_class" :style="getStyle()" ref="walletName" @blur="setMemoName()" />
         </div>
     </div>
 </template>
@@ -24,31 +24,9 @@ export default {
   },
   props: {
     heightData: { type: String, default: "32" }, // 编辑框高度
-    widthData: { type: String, default: "12" } // 编辑图标宽度
-  },
-  computed: {
-    memoName() {
-      let name = this.wallet.memoName || "SWTC";
-      return name;
-    },
-    wallet() {
-      let currentWallet = ""
-      let jcWallet = this.$store.getters.jcWallet;
-      let wallets = jcWallet.wallets;
-      for (let wallet of wallets) {
-        if (wallet.type === "swt" && wallet.default) {
-          currentWallet = wallet;
-          break;
-        }
-      }
-      return currentWallet;
-    },
-    jcWallet() {
-      return this.$store.getters.jcWallet;
-    },
-    address() {
-      return this.wallet.address;
-    }
+    widthData: { type: String, default: "12" }, // 编辑图标宽度
+    memoName: { type: String, require: true }, // 钱包地址
+    titleAlign: { type: String, default: "center" } // 标题位置
   },
   methods: {
     editName() {
@@ -65,21 +43,10 @@ export default {
       let str = "height:" + height + "px;";
       return str;
     },
-    saveName() {
+    setMemoName() {
       this.isEdit = false
       let memoName = this.walletName;
-      let jcWallet = this.jcWallet;
-      let wallets = jcWallet.wallets;
-      let list = [];
-      for (let wallet of wallets) {
-        if (wallet.address === this.address) {
-          wallet.memoName = memoName;
-        }
-        list.push(wallet);
-      }
-      jcWallet.wallets = list;
-      JingchangWallet.save(jcWallet);
-      this.$store.dispatch("updateJCWallet", jcWallet);
+      this.$emit("setMemoName", memoName);
     }
   }
 }
@@ -91,6 +58,15 @@ export default {
   border-inline: none;
   outline: none;
   padding-left: 10px;
+  color: #3e424c;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  border: 1px solid #366bf2;
+  border-radius: 4px;
+}
+.memoName {
+  font-size: 16px;
   color: #3e424c;
   font-size: 16px;
   font-family: PingFangSC-Regular, PingFang SC;

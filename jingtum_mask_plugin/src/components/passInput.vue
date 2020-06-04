@@ -1,18 +1,19 @@
 <template>
     <div>
         <div class="div_class">
-            <input v-model="password.data" @change="setPassData" @focus="password.isFocus=true" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
+            <input v-model="password.data" @change="setPassData" :style="getInputStyle()" @focus="password.isFocus=true" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
             <div class="eye_class">
                 <img v-if="isOpen" :src="eyeOpen" @click="checkType" style="width:20px;" />
                 <img v-else :src="eyeClose" @click="checkType" style="width:20px;" />
             </div>
-            <div class="error_class">{{passwordError}}</div>
+            <div class="error_class">{{errorText}}</div>
         </div>
     </div>
 </template>
 <script>
 import eyeOpen from "../images/eyeOpen.png";
 import eyeClose from "../images/eyeClose.png";
+import { jtWallet } from "jcc_wallet";
 export default {
   data() {
     return {
@@ -26,6 +27,8 @@ export default {
   props: {
     passData: { type: String, default: "" }, // 对比的密码值，默认为空
     textMsg: { type: String, default: "" }, // input 框 placeholder 内容
+    borderColor: { type: String, default: "#366bf2" }, // 输入框边框颜色
+    isSecret: { type: Boolean, default: false }, // 是否是秘钥输入框
   },
   created() {
     setTimeout(() => {
@@ -53,6 +56,27 @@ export default {
         }
       }
       return errorText;
+    },
+    secretError() {
+      let errorText = "";
+      if (this.password.data) {
+        if (!jtWallet.isValidSecret(this.password.data)) {
+          errorText = this.$t("message.home.secretError");
+        }
+      } else {
+        // 判断是否点击输入框
+        if (this.password.isFocus) {
+          errorText = this.$t("message.home.secretNull");
+        }
+      }
+      return errorText;
+    },
+    errorText() {
+      if (this.isSecret) {
+        return this.secretError;
+      } else {
+        return this.passwordError;
+      }
     }
   },
   methods: {
@@ -73,6 +97,11 @@ export default {
     },
     checkType() {
       this.isOpen = !this.isOpen;
+    },
+    getInputStyle() {
+      let str = "border: 1px solid ";
+      str = str + this.borderColor + ";";
+      return str;
     },
     // 密码格式验证
     passwordRules(pass) {
@@ -95,7 +124,7 @@ export default {
     width: 96%;
     height: 44px;
     border-radius: 6px;
-    border: 1px solid #366bf2;
+    // border: 1px solid #366bf2;
     padding-left: 10px;
     border-inline: none;
     outline: none;

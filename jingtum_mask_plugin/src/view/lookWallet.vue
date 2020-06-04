@@ -3,7 +3,7 @@
      <div class="head">
         <div class="left">{{$t("message.home.lookWallet")}}</div>
         <div class="middle">
-          <editName></editName>
+          <editName :memoName="memoName" @setMemoName="setMemoName"></editName>
         </div>
         <div class="right">
           <img :src="closeImg" @click="goBack" style="width:16px;" />
@@ -58,7 +58,9 @@ export default {
       copyImg,
       isShowSecret: false,
       password: "",
-      secret: ""
+      secret: "",
+      address: "",
+      memoName: ""
     }
   },
   components: {
@@ -66,8 +68,25 @@ export default {
     VueQRCodeComponent,
     passInput
   },
+  created() {
+    let address = this.$route.query.address;
+    this.address = address || this.swtAddress;
+    this.memoName = this.wallet.memoName || "SWTC";
+  },
   computed: {
-    address() {
+    wallet() {
+      let currentWallet = ""
+      let jcWallet = this.$store.getters.jcWallet;
+      let wallets = jcWallet.wallets;
+      for (let wallet of wallets) {
+        if (wallet.address === this.address) {
+          currentWallet = wallet;
+          break;
+        }
+      }
+      return currentWallet;
+    },
+    swtAddress() {
       return this.$store.getters.swtAddress;
     },
     jcWallet() {
@@ -75,6 +94,21 @@ export default {
     }
   },
   methods: {
+    setMemoName(memoName) {
+      this.memoName = memoName;
+      let jcWallet = this.jcWallet;
+      let wallets = jcWallet.wallets;
+      let list = [];
+      for (let wallet of wallets) {
+        if (wallet.address === this.address) {
+          wallet.memoName = memoName;
+        }
+        list.push(wallet);
+      }
+      jcWallet.wallets = list;
+      JingchangWallet.save(jcWallet);
+      this.$store.dispatch("updateJCWallet", jcWallet);
+    },
     goBack() {
       this.$router.go(-1);
     },
