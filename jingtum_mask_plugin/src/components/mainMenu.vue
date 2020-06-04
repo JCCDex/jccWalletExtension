@@ -1,239 +1,198 @@
 
 <template>
-  <div id="menu">
-    <div class="body_class">
-      <div class="walletText">{{$t("message.home.walletText")}}</div>
-      <!-- 钱包列表 -->
-      <div class="walletList" >
-        <div v-for="wallet in wallets" class="content" @click="setDefaultWallet(wallet.address)" :style="getWalletStyle(wallet)" :key="wallet.memoName">
-          <div class="select">
-            <img v-if="wallet.default" :src="selectedWallet" style="width:20px;" />
-          </div>
-          <div class="wallet">
-            <div class="name">{{wallet.memoName || "SWTC"}}</div>
-            <div class="asset">{{getAsset()}}</div>
-          </div>
-          <div class="lookWallet">
-             <img :src="lookWalletImg" @click.stop="goTo('lookWallet',wallet.address)" style="width:18px;cursor: pointer;" />
-          </div>
-          <div class="lookWallet">
-             <img :src="deleteWalletImg" @click.stop="showPassDialog(wallet)" style="width:18px;cursor: pointer;" />
-          </div>
+  <div id="mainMenu">
+    <div ref="warp" @scroll="scrolled" style="height:100%;width:100%;overflowY:scroll;">
+      <!-- Title -->
+      <div class="title">{{$t("message.menu.wallet")}}</div>
+      <!-- swtc wallet List -->
+      <div v-for="(item,index) in jwallets" :key="index" @click="selectWallet(index)" class="payWallets" :class="{'selectedWallet':item.name === selectedAccount,'unselectedWallet':item.name!== selectedAccount}">
+        <div class="showAccount">
+          <img v-show="item.name === selectedAccount" :src="selectedIcon" class="selectedIcon">
+          <p>{{item.name}}</p>
+          <p style="color:#D0D4DD;fontSize:14px">{{`${item.balance}:${item.currency}`}}</p>
+        </div>
+        <div class="operateWallet">
+          <img :src="eyesIcon">
+          <img :src="delIcon" style="marginLeft:15px;">
         </div>
       </div>
-      <!-- 菜单列表 -->
-      <div class="menuList">
-        <div v-for="(menu ,index) in menuList" :key="index" @click="goTo(menu.url)" class="menuClass">
-           <div>{{menu.name}}</div>
-           <div>
-             <img :src="arrowRight" style="height:16px;" />
-           </div>
-        </div>
-      </div>
+      <!-- Menu List -->
+      <ul class="menuList">
+        <li v-for="(item1,idx) in menuList" :key="idx" @click="JumpTo()">
+          <span>{{item1.name}}</span>
+          <img :src="rightArrowIcon" style="width:10px;height:16px;">
+        </li>
+      </ul>
     </div>
-    <div v-if="showDialog" class="showDialog">
-      <passDialog @deleteWallet="deleteWallet" :titleText="titleText" @closeDialog="closeDialog"></passDialog>
-    </div>
+    <img v-show="isScroll" :src="rightArrowIcon" class="tipHidden">
   </div>
 </template>
 
 <script>
-import selectedWallet from "../images/selectedWallet.png";
-import lookWalletImg from "../images/lookWalletImg.png";
-import deleteWalletImg from "../images/deleteWalletImg.png";
-import arrowRight from "../images/arrowRight.png";
-import Lockr from "lockr";
-import { JingchangWallet } from "jcc_wallet";
-import passDialog from "./passDialog";
-import { Toast } from "vant";
+import selectedIcon from "@/images/selectedIcon.png";
+import eyesIcon from "@/images/eyes.png";
+import delIcon from "@/images/delIcon.png";
+import rightArrowIcon from "@/images/rightArrow.png";
 export default {
+  name: "mainMenu",
   data() {
     return {
-      selectedWallet,
-      lookWalletImg,
-      deleteWalletImg,
-      arrowRight,
-      menuList: [],
-      showDialog: false,
-      titleText: "",
-      deleteAddress: ""
-    }
-  },
-  created() {
-    this.init();
-  },
-  components: {
-    passDialog
-  },
-  computed: {
-    wallets() {
-      let jcWallet = this.$store.getters.jcWallet;
-      let wallets = jcWallet.wallets;
-      let list = [];
-      for (let wallet of wallets) {
-        if (wallet.type === "swt") {
-          list.push(wallet);
+      selectedIcon,
+      eyesIcon,
+      delIcon,
+      rightArrowIcon,
+      isScroll: false,
+      selectedAccount: "Account1",
+      jwallets: {
+        swtc1: {
+          name: "Account1",
+          currency: "SWTC",
+          balance: "123123.1231"
+        },
+        swtc2: {
+          name: "Account2",
+          currency: "SWTC",
+          balance: "123123.1231"
+        },
+        swtc3: {
+          name: "Account3",
+          currency: "SWTC",
+          balance: "123123.1231"
         }
-      }
-      return list;
-    },
-    jcWallet() {
-      return this.$store.getters.jcWallet;
-    },
-    balance() {
-      return this.$store.getters.balance;
-    },
-    assetName() {
-      let coin = Lockr.get("assetName") || "SWTC";
-      return coin;
-    }
-  },
-  methods: {
-    init() {
-      this.menuList = [
-        {
-          name: this.$t("message.home.createdText"),
-          url: "createdWallet"
-        },
-        {
-          name: this.$t("message.home.importText"),
-          url: "importBySecret"
-        },
-        {
-          name: this.$t("message.home.removeAll"),
-          url: ""
-        },
-        {
-          name: this.$t("message.home.setUp"),
-          url: ""
-        },
-        {
-          name: this.$t("message.home.exit"),
-          url: ""
-        }
+      },
+      menuList: [
+        { name: this.$t("message.menu.createdWallet"), link: "" },
+        { name: this.$t("message.menu.importWallet"), link: "" },
+        { name: this.$t("message.menu.clearWallet"), link: "" },
+        { name: this.$t("message.menu.setting"), link: "" },
+        { name: this.$t("message.menu.quit"), link: "" }
       ]
+    };
+  },
+  mounted() {
+    this.checkScroll();
+  },
+  computed: {},
+  methods: {
+    checkScroll() {
+      this.isScroll =
+        this.$refs.warp.scrollHeight - this.$refs.warp.offsetHeight > 40;
     },
-    showPassDialog(wallet) {
-      let memoName = wallet.memoName;
-      this.deleteAddress = wallet.address;
-      let text = this.$t("message.home.deleteWalletText") + memoName;
-      this.titleText = text;
-      this.showDialog = true;
+    scrolled() {
+      let scroll = this.$refs.warp.scrollTop;
+      this.isScroll =
+        this.$refs.warp.scrollHeight - this.$refs.warp.offsetHeight - scroll >
+        40;
     },
-    closeDialog() {
-      this.showDialog = false;
+    JumpTo(url) {
+      this.$router.push(url);
     },
-    deleteWallet() {
-      let jcWallet = this.jcWallet;
-      let inst = new JingchangWallet(jcWallet);
-      let address = this.deleteAddress;
-      inst.removeWalletWithAddress(address).then((jcWallet) => {
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-        Toast.success(this.$t("message.home.deleteSuccess"))
-        this.showDialog = false;
-      })
-    },
-    setDefaultWallet(address) {
-      let jcWallet = this.jcWallet;
-      let inst = new JingchangWallet(jcWallet);
-      inst.setDefaultWallet(address).then((jcWallet) => {
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-      })
-    },
-    goTo(name, address) {
-      this.$router.push({
-        name,
-        query: {
-          address
-        }
-      })
-    },
-    getAsset() {
-      let str = this.assetName;
-      let total = this.balance[str];
-      let count = 0;
-      if (total) {
-        count = total.total;
-      }
-      str = count + " " + str;
-      return str;
-    },
-    getWalletStyle(wallet) {
-      let str = ""
-      if (wallet.default) {
-        str = str + "background-color:#6E6E75";
-      }
-      return str;
+    selectWallet(idx) {
+      this.selectedAccount = this.jwallets[idx].name;
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
-#menu {
+#mainMenu {
+  position: relative;
   background: #151618;
   color: #ffffff;
   width: 100%;
   height: 100%;
   border-radius: 10px;
+  text-align: left;
+  font-size: 16px;
 }
-.body_class {
-  .walletText {
-    padding: 20px 20px 0;
-    color: #ffffff;
-    font-size: 16px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    text-align: left;
-    padding-bottom: 20px;
+.title {
+  padding: 15px 20px;
+  border-bottom: 1px solid #60636a;
+}
+.payWallets {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.selectedWallet {
+  background: #6e6e75;
+}
+.unselectedWallet {
+  &:hover {
+    background: #6e6e7570;
   }
-  .walletList {
-    .content {
-      display: flex;
-      padding: 10px 20px 10px;
-      border-bottom: 1px solid #60636a;
-      border-top: 1px solid #60636a;
-      .select {
-        text-align: left;
-        width: 10%;
-      }
-      .wallet {
-        width: 70%;
-        .name {
-          text-align: left;
-          //   padding-left: 10px;
-          font-size: 16px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #ffffff;
-        }
-        .asset {
-          color: #d0d4dd;
-          font-size: 14px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          text-align: left;
-        }
-      }
-      .lookWallet {
-        width: 10%;
-        margin-top: 10px;
-      }
+}
+.showAccount {
+  position: relative;
+  width: 60%;
+  padding: 0 10px 0 36px;
+  p {
+    margin: 0;
+    padding: 2px;
+  }
+  .selectedIcon {
+    width: 18px;
+    height: 12px;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    border: 1px dashed #888888;
+  }
+}
+
+.operateWallet {
+  box-sizing: border-box;
+  width: 40%;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  img {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    transition: 200ms;
+    &:hover {
+      transform: scale(1.1);
     }
   }
-  .menuList {
-    padding: 0 20px;
-    .menuClass {
-      height: 50px;
-      line-height: 50px;
-      display: flex;
-      justify-content: space-between;
-      color: #ffffff;
-      font-size: 16px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
+}
+
+.menuList {
+  box-sizing: border-box;
+  width: 100%;
+  list-style: none;
+  border-top: 1px solid #60636a;
+  padding: 0;
+  margin: 0;
+  li {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background: #6e6e7570;
     }
+  }
+}
+
+.tipHidden {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: rotate(90deg);
+  opacity: 0.8;
+  animation: 800ms hiddenTip linear forwards alternate infinite;
+}
+@keyframes hiddenTip {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 0.3;
   }
 }
 </style>

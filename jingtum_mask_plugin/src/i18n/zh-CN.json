@@ -35,16 +35,20 @@
     "passwordWrong": "密码错误",
     "transferText": "转账",
     "walletText": "钱包",
-    "createdText": "创建钱包",
-    "importText": "导入钱包",
-    "removeAll": "清除所有钱包",
-    "setUp": "设置",
-    "exit": "退出",
     "secretError": "秘钥格式不正确",
     "secretNull": "秘钥不能为空",
     "setSecretText": "请输入SWTC钱包密钥",
     "importSuccess": "导入成功",
     "deleteWalletText": "确认删除钱包",
     "deleteSuccess": "删除钱包成功"
+
+  },
+  "menu": {
+    "wallet": "钱包",
+    "createdWallet": "创建钱包",
+    "importWallet": "导入钱包",
+    "clearWallet": "清除所有钱包",
+    "setting": "设置",
+    "quit": "退出"
   }
 }

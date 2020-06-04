@@ -1,6 +1,6 @@
 <template>
   <div>
-      <commonHead :titleText="$t('message.home.createdText')"></commonHead>
+      <commonHead :titleText="$t('message.menu.createdWallet')"></commonHead>
       <div class="body">
         <div class="name">
           <div class="title">{{$t("message.home.addressName")}}:</div>
@@ -20,7 +20,7 @@ export default {
     return {
       wallet: "",
       memoName: "SWTC"
-    }
+    };
   },
   components: {
     commonHead,
@@ -32,12 +32,15 @@ export default {
   methods: {
     init() {
       this.wallet = jtWallet.createWallet();
-      while (!jtWallet.isValidAddress(this.wallet.address) || !jtWallet.isValidSecret(this.wallet.secret)) {
+      while (
+        !jtWallet.isValidAddress(this.wallet.address) ||
+        !jtWallet.isValidSecret(this.wallet.secret)
+      ) {
         this.wallet = jtWallet.createWallet();
       }
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .body {
