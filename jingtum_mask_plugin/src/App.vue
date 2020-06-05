@@ -18,20 +18,21 @@ export default {
       // 处理钱包
       let jcWallet = JingchangWallet.get();
       this.$store.dispatch("updateJCWallet", jcWallet);
-      let wallets = jcWallet.wallets;
-      let address = "";
-      for (let wallet of wallets) {
-        if (wallet.type === "swt" && wallet.default) {
-          address = wallet.address;
-          break;
+      if (jcWallet && Array.isArray(jcWallet.wallets) && jcWallet.wallets.length > 0) {
+        let address = "";
+        let wallets = jcWallet.wallets;
+        for (let wallet of wallets) {
+          if (wallet.type === "swt" && wallet.default) {
+            address = wallet.address;
+            break;
+          }
         }
+        this.$store.dispatch("updateSwtAddress", address);
+        setTimeout(() => {
+          getUserBalances();
+        }, 50);
       }
-      this.$store.dispatch("updateSwtAddress", address);
-      setTimeout(() => {
-        getUserBalances();
-      }, 50);
-    },
-
+    }
   }
 };
 </script>

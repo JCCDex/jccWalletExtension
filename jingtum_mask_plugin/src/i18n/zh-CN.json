@@ -41,6 +41,7 @@
     "importSuccess": "导入成功",
     "createSuccess": "创建成功",
     "deleteWalletText": "确认删除钱包",
+    "deleteAllText": "确认清除所有钱包",
     "deleteSuccess": "删除钱包成功"
   },
   "menu": {

@@ -5,7 +5,7 @@
       <!-- Title -->
       <div class="title">{{$t("message.menu.wallet")}}</div>
       <!-- swtc wallet List -->
-      <div v-for="(wallet,index) in wallets" :key="index" @click="selectWallet(index)" class="payWallets" :class="{'selectedWallet':wallet.default,'unselectedWallet':!wallet.default}">
+      <div v-for="(wallet,index) in wallets" :key="index" @click="setDefaultWallet(wallet)" class="payWallets" :class="{'selectedWallet':wallet.default,'unselectedWallet':!wallet.default}">
         <div class="showAccount">
           <img v-show="wallet.default" :src="selectedIcon" class="selectedIcon">
           <p>{{wallet.memoName}}</p>
@@ -117,7 +117,7 @@ export default {
     },
     closeDialog() {
       this.showDialog = false;
-      this.this.deleteAddress = "";
+      this.deleteAddress = "";
       this.titleText = "";
     },
     deleteWallet() {
@@ -130,11 +130,33 @@ export default {
         Toast.success(this.$t("message.home.deleteSuccess"));
         this.closeDialog();
       });
+      if (this.removeAll) {
+        // 删除所有钱包
+        jcWallet = {};
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        Toast.success(this.$t("message.home.deleteSuccess"));
+        setTimeout(() => {
+          this.$router.push({
+            name: "home"
+          });
+        }, 0);
+      } else {
+        // 删除指定钱包
+        let address = this.deleteAddress;
+        inst.removeWalletWithAddress(address).then(jcWallet => {
+          JingchangWallet.save(jcWallet);
+          this.$store.dispatch("updateJCWallet", jcWallet);
+          Toast.success(this.$t("message.home.deleteSuccess"));
+          this.showDialog = false;
+        });
+      }
     },
-    setDefaultWallet(address) {
+    setDefaultWallet(wallet) {
+      if (wallet.default) return;
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
-      inst.setDefaultWallet(address).then(jcWallet => {
+      inst.setDefaultWallet(wallet.address).then(jcWallet => {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
       });
@@ -149,8 +171,7 @@ export default {
     },
     JumpTo(url) {
       this.$router.push({ name: url });
-    },
-    selectWallet(idx) {}
+    }
   }
 };
 </script>

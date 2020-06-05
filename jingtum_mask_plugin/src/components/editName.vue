@@ -25,7 +25,7 @@ export default {
   props: {
     heightData: { type: String, default: "32" }, // 编辑框高度
     widthData: { type: String, default: "12" }, // 编辑图标宽度
-    memoName: { type: String, require: true }, // 钱包地址
+    memoName: { type: String, require: true }, // 钱包备注名称
     titleAlign: { type: String, default: "center" } // 标题位置
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .input_class {
-  width: 100%;
+  width: 94%;
   border: none;
   border-inline: none;
   outline: none;
