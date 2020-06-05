@@ -13,7 +13,7 @@
         </div>
         <div class="operateWallet">
           <img :src="eyesIcon" @click.stop="lookWallet('lookWallet',wallet.address)" >
-          <img :src="delIcon" @click.stop="showPassDialog(wallet)" style="marginLeft:15px;">
+          <img :src="delIcon" @click.stop="toDelWallet(wallet)" style="marginLeft:15px;">
         </div>
       </div>
       <!-- Menu List -->
@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div v-if="showDialog" class="showDialog">
-      <passDialog @deleteWallet="deleteWallet" :titleText="titleText" @closeDialog="closeDialog"></passDialog>
+      <passDialog @deleteWallet="deleteWallet" :titleText="titleText" :deleteAllWallets="deleteAllWallets" @closeDialog="closeDialog"></passDialog>
     </div>
     <img v-show="isScroll" :src="rightArrowIcon" class="tipHidden">
   </div>
@@ -52,14 +52,14 @@ export default {
       showDialog: false,
       titleText: "",
       deleteAddress: "",
+      deleteAllWallets: false,
       menuList: [
         { name: this.$t("message.menu.createdWallet"), url: "createdWallet" },
         { name: this.$t("message.menu.importWallet"), url: "importBySecret" },
-        { name: this.$t("message.menu.clearWallet"), url: "" },
+        { name: this.$t("message.menu.clearWallet"), url: "clearAllWallet" },
         { name: this.$t("message.menu.setting"), url: "setting" },
         { name: this.$t("message.menu.quit"), url: "" }
       ]
-      // selectedAccount: ""
     };
   },
   components: { passDialog },
@@ -109,13 +109,15 @@ export default {
     getbalance() {
       return 1123123.123123;
     },
-    showPassDialog(wallet) {
+    toDelWallet(wallet) {
+      this.deleteAllWallets = false;
       this.deleteAddress = wallet.address;
       this.titleText =
         this.$t("message.home.deleteWalletText") + wallet.memoName;
       this.showDialog = true;
     },
     closeDialog() {
+      this.deleteAllWallets = false;
       this.showDialog = false;
       this.deleteAddress = "";
       this.titleText = "";
@@ -123,15 +125,27 @@ export default {
     deleteWallet(isDelAll = false) {
       let jcWallet = this.jcWallet;
       let wallets = jcWallet.wallets;
-      let inst = new JingchangWallet(jcWallet);
       let address = this.deleteAddress;
-      let wallet = wallets.find(w => w.address === address);
-      const index = wallets.findIndex(w => w.address === wallet.address);
-      const isDefault = wallet.default;
-      wallets.splice(index, 1);
-      if (isDefault) {
-        console.log("wallet=", wallets[0]);
+      let wallet = [];
+      if (
+        isDelAll &&
+        this.deleteAllWallets &&
+        this.deleteAllWallets === "clearAllWallet"
+      ) {
+        jcWallet = "";
+      } else if (this.deleteAddress) {
+        wallet = wallets.find(w => w.address === address);
+        const index = wallets.findIndex(w => w.address === wallet.address);
+        const isDefault = wallet.default;
+        wallets.splice(index, 1);
+        if (wallets.length <= 0) {
+          jcWallet = "";
+        } else if (isDefault && wallets.length > 0) {
+          wallets[0].default = true;
+        }
       }
+      JingchangWallet.save(jcWallet);
+      this.$store.dispatch("updateJCWallet", jcWallet);
       this.closeDialog();
     },
     setDefaultWallet(wallet) {
@@ -152,7 +166,13 @@ export default {
       });
     },
     JumpTo(url) {
-      this.$router.push({ name: url });
+      if (url === "clearAllWallet") {
+        this.deleteAllWallets = url;
+        this.titleText = this.$t("message.home.deleteAllText");
+        this.showDialog = true;
+      } else {
+        this.$router.push({ name: url });
+      }
     }
   }
 };

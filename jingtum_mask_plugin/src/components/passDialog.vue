@@ -5,6 +5,7 @@
      <div>
         <passInput ref="password" @setPassData="setPassData" :borderColor="'#D9DCE5'" :textMsg="$t('message.home.passwordText3')"></passInput>
      </div>
+     <p class="delAllTip" v-if="deleteAllWallets && deleteAllWallets === 'clearAllWallet'">{{$t("message.menu.comfirmDelAllWallet")}}</p>
      <div class="buttonClass">
         <div class="cancel">
          <button @click="cancel" >{{$t('message.home.cancelText')}}</button>
@@ -28,7 +29,8 @@ export default {
     };
   },
   props: {
-    titleText: { type: String, require: true } // 标题文字
+    titleText: { type: String, require: true }, // 标题文字
+    deleteAllWallets: { default: false }
   },
   components: {
     passInput
@@ -55,7 +57,14 @@ export default {
       inst
         .getSecretWithType(password, "swt")
         .then(() => {
-          this.$emit("deleteWallet");
+          let isDelAll = false;
+          if (
+            this.deleteAllWallets &&
+            this.deleteAllWallets === "clearAllWallet"
+          ) {
+            isDelAll = this.deleteAllWallets;
+          }
+          this.$emit("deleteWallet", isDelAll);
         })
         .catch(error => {
           Toast.fail(this.$t(getError(error.toString())));
@@ -122,5 +131,12 @@ export default {
       }
     }
   }
+}
+.delAllTip {
+  position: relative;
+  top: -16px;
+  margin-bottom: 5px;
+  color: #f51d15;
+  text-align: justify;
 }
 </style>
