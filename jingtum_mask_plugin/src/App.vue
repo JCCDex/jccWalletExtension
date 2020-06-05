@@ -16,9 +16,13 @@ export default {
   methods: {
     init() {
       // 处理钱包
-      let jcWallet = JingchangWallet.get();
+      let jcWallet = JingchangWallet.get() || "";
       this.$store.dispatch("updateJCWallet", jcWallet);
-      if (jcWallet && Array.isArray(jcWallet.wallets) && jcWallet.wallets.length > 0) {
+      if (
+        jcWallet &&
+        Array.isArray(jcWallet.wallets) &&
+        jcWallet.wallets.length > 0
+      ) {
         let address = "";
         let wallets = jcWallet.wallets;
         for (let wallet of wallets) {

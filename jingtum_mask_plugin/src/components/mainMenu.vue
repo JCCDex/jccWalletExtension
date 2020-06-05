@@ -58,34 +58,33 @@ export default {
         { name: this.$t("message.menu.clearWallet"), url: "" },
         { name: this.$t("message.menu.setting"), url: "setting" },
         { name: this.$t("message.menu.quit"), url: "" }
-      ],
-      selectedAccount: "Account1"
+      ]
+      // selectedAccount: ""
     };
   },
   components: { passDialog },
   mounted() {
     this.checkScroll();
-    console.log(this.wallets);
+    console.log("jcWallet", this.jcWallet);
   },
   computed: {
     wallets() {
       let jcWallet = this.jcWallet;
-      let wallets = jcWallet.wallets;
+      let wallets = jcWallet.wallets || [];
       let list = [];
-      for (let i = 0; i < wallets.length; i++) {
-        if (wallets[i].type === "swt") {
-          if (!wallets[i].memoName) {
-            wallets[i].memoName = `Account${i + 1}`;
+      if (Array.isArray(wallets) && wallets.length > 0) {
+        for (let i = 0; i < wallets.length; i++) {
+          if (wallets[i].type === "swt") {
+            if (!wallets[i].memoName) {
+              wallets[i].memoName = `Account${i + 1}`;
+            }
+            list.push(wallets[i]);
           }
-          if (wallets[i].default) {
-            this.selectedAccount = wallets[i].memoName;
-          }
-          list.push(wallets[i]);
         }
+        jcWallet.wallets = list;
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
       }
-      jcWallet.wallets = list;
-      JingchangWallet.save(jcWallet);
-      this.$store.dispatch("updateJCWallet", jcWallet);
       return list;
     },
     jcWallet() {
@@ -121,37 +120,19 @@ export default {
       this.deleteAddress = "";
       this.titleText = "";
     },
-    deleteWallet() {
+    deleteWallet(isDelAll = false) {
       let jcWallet = this.jcWallet;
+      let wallets = jcWallet.wallets;
       let inst = new JingchangWallet(jcWallet);
       let address = this.deleteAddress;
-      inst.removeWalletWithAddress(address).then(jcWallet => {
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-        Toast.success(this.$t("message.home.deleteSuccess"));
-        this.closeDialog();
-      });
-      if (this.removeAll) {
-        // 删除所有钱包
-        jcWallet = {};
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-        Toast.success(this.$t("message.home.deleteSuccess"));
-        setTimeout(() => {
-          this.$router.push({
-            name: "home"
-          });
-        }, 0);
-      } else {
-        // 删除指定钱包
-        let address = this.deleteAddress;
-        inst.removeWalletWithAddress(address).then(jcWallet => {
-          JingchangWallet.save(jcWallet);
-          this.$store.dispatch("updateJCWallet", jcWallet);
-          Toast.success(this.$t("message.home.deleteSuccess"));
-          this.showDialog = false;
-        });
+      let wallet = wallets.find(w => w.address === address);
+      const index = wallets.findIndex(w => w.address === wallet.address);
+      const isDefault = wallet.default;
+      wallets.splice(index, 1);
+      if (isDefault) {
+        console.log("wallet=", wallets[0]);
       }
+      this.closeDialog();
     },
     setDefaultWallet(wallet) {
       if (wallet.default) return;
