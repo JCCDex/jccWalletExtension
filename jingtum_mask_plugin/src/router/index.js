@@ -79,6 +79,22 @@ const router = new Router({
         needLogin: false
       },
       component: _import("setting")
+    },
+    {
+      path: '/contacts',
+      name: 'contacts',
+      meta: {
+        needLogin: false
+      },
+      component: _import("contacts")
+    },
+    {
+      path: '/addContact',
+      name: 'addContact',
+      meta: {
+        needLogin: false
+      },
+      component: _import("addContact")
     }
   ]
 })

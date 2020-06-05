@@ -2,7 +2,7 @@
   <div>
     <commonHead :titleText="$t('message.menu.setting')"></commonHead>
     <div>
-      <div v-for="(data,index) in settingList" :key="index" class="menuList">
+      <div v-for="(data,index) in settingList" :key="index" @click="goTo(data.url)" class="menuList">
         <div class="name">{{data.name}}</div>
         <div class="image">
             <img :src="rightArrowIcon" style="width:10px;" />
@@ -35,7 +35,7 @@ export default {
           url: ""
         }, {
           name: this.$t("message.setting.contacts"),
-          url: ""
+          url: "contacts"
         },
         {
           name: this.$t("message.setting.authorization"),
@@ -52,6 +52,9 @@ export default {
           url: ""
         }
       ]
+    },
+    goTo(name) {
+      this.$router.push({ name })
     }
   }
 }

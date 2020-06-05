@@ -1,0 +1,157 @@
+<template>
+  <div>
+    <commonHead :showLeft="true" :titleText="$t('message.setting.addContact')"></commonHead>
+    <div class="nameClass">
+      <input ref="nameInput" v-model="memoName.name" @focus="memoName.isFocus=true;" :placeholder="$t('message.setting.contactName')"/>
+      <div class="errorText">{{nameErrorText}}</div>
+    </div>
+    <div class="addressClass">
+      <input ref="addressInput" v-model="address.value" @focus="address.isFocus=true;" :placeholder="$t('message.setting.contactAddress')"/>
+      <div class="errorText">{{addressErrorText}}</div>
+    </div>
+    <div class="buttonClass">
+      <div class="cancel">
+          <button @click.stop="">{{$t("message.home.cancelText")}}</button>
+      </div>
+       <div class="sure">
+          <button @click.stop="addNewContact()">{{$t("message.home.sureText")}}</button>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import commonHead from "../components/commonHead";
+import { jtWallet } from "jcc_wallet";
+export default {
+  data() {
+    return {
+      memoName: { name: "", isFocus: false },
+      address: { value: "", isFocus: false }
+    }
+  },
+  components: {
+    commonHead
+  },
+  computed: {
+    nameErrorText() {
+      let errorText = "";
+      if (!this.memoName.name && this.memoName.isFocus) {
+        errorText = this.$t("message.setting.contactNull");
+      }
+      return errorText;
+    },
+    addressErrorText() {
+      let errorText = "";
+      if (this.address.value) {
+        if (!this.isValidAddress(this.address.value)) {
+          errorText = this.$t("message.setting.addressError");
+        }
+      } else {
+        if (this.address.isFocus) {
+          errorText = this.$t("message.setting.addressNull")
+        }
+      }
+      return errorText;
+    }
+  },
+  methods: {
+    isValidAddress(address) {
+      return jtWallet.isValidAddress(address)
+    },
+    addNewContact() {
+      this.$refs.nameInput.focus();
+      if (this.nameErrorText) {
+        return;
+      }
+      this.$refs.addressInput.focus();
+      if (this.addressErrorText) {
+        return;
+      }
+
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.nameClass {
+  padding: 30px 30px 0 20px;
+  input {
+    border: 1px solid #d9dce5;
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+    border-radius: 8px;
+    padding-left: 10px;
+    outline: none;
+    color: #a5a8b2;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+  }
+}
+.addressClass {
+  padding: 0 30px 30px 20px;
+  input {
+    border: 1px solid #d9dce5;
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+    border-radius: 8px;
+    padding-left: 10px;
+    outline: none;
+    color: #a5a8b2;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+  }
+}
+.errorText {
+  text-align: left;
+  padding-left: 10px;
+  color: #f74645;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  height: 30px;
+  line-height: 30px;
+}
+.buttonClass {
+  display: flex;
+  .cancel {
+    width: 50%;
+    padding-left: 20px;
+    text-align: left;
+    button {
+      width: 80%;
+      height: 48px;
+      line-height: 48px;
+      background-color: #bdc3d0;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+    }
+  }
+  .sure {
+    width: 50%;
+    padding-right: 20px;
+    text-align: right;
+    button {
+      width: 80%;
+      height: 48px;
+      line-height: 48px;
+      background-color: #366bf2;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+    }
+  }
+}
+</style>

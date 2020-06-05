@@ -1,6 +1,8 @@
 <template>
     <div class="head_class">
-      <div v-if="showLeft" class="left">11</div>
+      <div v-if="showLeft" @click.stop="goBack()" class="left">
+         <img :src="arrowLeft" style="height:18px;" />
+      </div>
       <div class="center" :style="getStyle()">{{titleText}}</div>
       <div class="right">
           <img :src="closeImg" @click="goBack" style="width:16px;" />
@@ -9,10 +11,12 @@
 </template>
 <script>
 import closeImg from "../images/closeImg.png";
+import arrowLeft from "../images/arrowLeft.png";
 export default {
   data() {
     return {
-      closeImg
+      closeImg,
+      arrowLeft
     };
   },
   props: {
@@ -23,9 +27,9 @@ export default {
     getStyle() {
       let str = "text-align:";
       if (this.showLeft) {
-        str = str + "center;width:70%;";
+        str = str + "left;padding-left:10px;width:80%;";
       } else {
-        str = str + "left;padding-left:20px;width:80%;";
+        str = str + "left;padding-left:20px;width:85%;";
       }
       return str;
     },
@@ -42,7 +46,10 @@ export default {
   height: 60px;
   line-height: 60px;
   .left {
-    width: 15%;
+    width: 5%;
+    margin-top: 3px;
+    text-align: left;
+    padding-left: 20px;
   }
   .center {
     color: #343436;
