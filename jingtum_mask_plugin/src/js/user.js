@@ -27,9 +27,10 @@ export const getUserBalances = async (fn) => {
       }
       let valueNum = new BigNumber(value);
       let frozenNum = new BigNumber(frozen);
-      let total = parseFloat(valueNum.plus(frozenNum)) || 0;
+      let total = value;
+      value = valueNum.minus(frozenNum).toString();
       if (total > 0) {
-        balance[`${coin}`] = { value, frozen, total };
+        balance[`${coin}`] = { value, frozen, total }; // total:总资产  value:可用资产  frozen:冻结资产
       }
     }
     store.dispatch("updateBalance", balance);

@@ -45,6 +45,7 @@
     "setSecretText": "请输入SWTC钱包密钥",
     "importSuccess": "导入成功",
     "deleteWalletText": "确认删除钱包",
+    "deleteAllText": "确认清除所有钱包",
     "deleteSuccess": "删除钱包成功"
   }
 }

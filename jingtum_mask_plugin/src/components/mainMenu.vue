@@ -56,7 +56,8 @@ export default {
       menuList: [],
       showDialog: false,
       titleText: "",
-      deleteAddress: ""
+      deleteAddress: "",
+      removeAll: false
     }
   },
   created() {
@@ -101,7 +102,7 @@ export default {
         },
         {
           name: this.$t("message.home.removeAll"),
-          url: ""
+          url: "removeAll"
         },
         {
           name: this.$t("message.home.setUp"),
@@ -126,13 +127,27 @@ export default {
     deleteWallet() {
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
-      let address = this.deleteAddress;
-      inst.removeWalletWithAddress(address).then((jcWallet) => {
+      if (this.removeAll) {
+        // 删除所有钱包
+        jcWallet = {};
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
         Toast.success(this.$t("message.home.deleteSuccess"))
-        this.showDialog = false;
-      })
+        setTimeout(() => {
+          this.$router.push({
+            name: "home"
+          })
+        }, 0)
+      } else {
+        // 删除指定钱包
+        let address = this.deleteAddress;
+        inst.removeWalletWithAddress(address).then((jcWallet) => {
+          JingchangWallet.save(jcWallet);
+          this.$store.dispatch("updateJCWallet", jcWallet);
+          Toast.success(this.$t("message.home.deleteSuccess"))
+          this.showDialog = false;
+        })
+      }
     },
     setDefaultWallet(address) {
       let jcWallet = this.jcWallet;
@@ -140,9 +155,16 @@ export default {
       inst.setDefaultWallet(address).then((jcWallet) => {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        this.$store.dispatch("updateSwtAddress", address);
       })
     },
     goTo(name, address) {
+      if (name === "removeAll") {
+        this.showDialog = true;
+        this.titleText = this.$t("message.home.deleteAllText");
+        this.removeAll = true;
+        return;
+      }
       this.$router.push({
         name,
         query: {
