@@ -51,5 +51,13 @@
     "clearWallet": "清除所有钱包",
     "setting": "设置",
     "quit": "退出"
+  },
+  "setting": {
+    "changePassword": "修改密码",
+    "contacts": "联系人管理",
+    "authorization": "授权管理",
+    "nodeSetting": "节点设置",
+    "showWords": "显示助记词",
+    "aboutUs": "关于"
   }
 }

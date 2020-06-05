@@ -56,7 +56,7 @@ export default {
         { name: this.$t("message.menu.createdWallet"), url: "createdWallet" },
         { name: this.$t("message.menu.importWallet"), url: "importBySecret" },
         { name: this.$t("message.menu.clearWallet"), url: "" },
-        { name: this.$t("message.menu.setting"), url: "" },
+        { name: this.$t("message.menu.setting"), url: "setting" },
         { name: this.$t("message.menu.quit"), url: "" }
       ],
       selectedAccount: "Account1"

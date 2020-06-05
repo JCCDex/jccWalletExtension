@@ -71,8 +71,15 @@ const router = new Router({
         needLogin: false
       },
       component: _import("importBySecret")
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      meta: {
+        needLogin: false
+      },
+      component: _import("setting")
     }
-
   ]
 })
 router.beforeEach((to, from, next) => {
