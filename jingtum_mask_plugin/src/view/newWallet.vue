@@ -37,7 +37,7 @@
 import commonHead from "../components/commonHead";
 import { Factory as AddressCodecFactory } from "@swtc/address-codec";
 // import { jtWallet, JingchangWallet } from "jcc_wallet";
-// const { Wallet } = require("@swtc/wallet");
+const { Wallet } = require("@swtc/wallet");
 const bip39 = require("bip39");
 const bip32 = require("bip32");
 export default {
@@ -89,7 +89,7 @@ export default {
       try {
         const mnemonic = bip39.generateMnemonic();
         this.wordList = this.getWordList(mnemonic);
-        const seed = bip39.mnemonicToSeedSync(mnemonic)
+        // const seed = bip39.mnemonicToSeedSync(mnemonic)
         //  通过助记词生成秘钥
         const entropy = bip39.mnemonicToEntropy(mnemonic); // 助记词得到熵
         const addressCodec = AddressCodecFactory(); // param: chain or native token,default jingtum
