@@ -112,7 +112,8 @@ export default {
     },
     showPassDialog(wallet) {
       this.deleteAddress = wallet.address;
-      this.titleText = this.$t("message.home.deleteWalletText") + wallet.name;
+      this.titleText =
+        this.$t("message.home.deleteWalletText") + wallet.memoName;
       this.showDialog = true;
     },
     closeDialog() {
