@@ -5,15 +5,15 @@
       <!-- Title -->
       <div class="title">{{$t("message.menu.wallet")}}</div>
       <!-- swtc wallet List -->
-      <div v-for="(item,index) in jwallets" :key="index" @click="selectWallet(index)" class="payWallets" :class="{'selectedWallet':item.name === selectedAccount,'unselectedWallet':item.name!== selectedAccount}">
+      <div v-for="(wallet,index) in wallets" :key="index" @click="selectWallet(index)" class="payWallets" :class="{'selectedWallet':wallet.default,'unselectedWallet':!wallet.default}">
         <div class="showAccount">
-          <img v-show="item.name === selectedAccount" :src="selectedIcon" class="selectedIcon">
-          <p>{{item.name}}</p>
-          <p style="color:#D0D4DD;fontSize:14px">{{`${item.balance}:${item.currency}`}}</p>
+          <img v-show="wallet.default" :src="selectedIcon" class="selectedIcon">
+          <p>{{wallet.memoName}}</p>
+          <p style="color:#D0D4DD;fontSize:14px">{{`${getbalance(wallet.address)} ${assetName}`}}</p>
         </div>
         <div class="operateWallet">
-          <img :src="eyesIcon">
-          <img :src="delIcon" style="marginLeft:15px;">
+          <img :src="eyesIcon" @click.stop="lookWallet('lookWallet',wallet.address)" >
+          <img :src="delIcon" @click.stop="showPassDialog(wallet)" style="marginLeft:15px;">
         </div>
       </div>
       <!-- Menu List -->
@@ -59,30 +59,43 @@ export default {
         { name: this.$t("message.menu.setting"), url: "" },
         { name: this.$t("message.menu.quit"), url: "" }
       ],
-      selectedAccount: "Account1",
-      jwallets: {
-        swtc1: {
-          name: "Account1",
-          currency: "SWTC",
-          balance: "123123.1231"
-        },
-        swtc2: {
-          name: "Account2",
-          currency: "SWTC",
-          balance: "123123.1231"
-        },
-        swtc3: {
-          name: "Account3",
-          currency: "SWTC",
-          balance: "123123.1231"
-        }
-      }
+      selectedAccount: "Account1"
     };
   },
+  components: { passDialog },
   mounted() {
     this.checkScroll();
+    console.log(this.wallets);
   },
-  computed: {},
+  computed: {
+    wallets() {
+      let jcWallet = this.jcWallet;
+      let wallets = jcWallet.wallets;
+      let list = [];
+      for (let i = 0; i < wallets.length; i++) {
+        if (wallets[i].type === "swt") {
+          if (!wallets[i].memoName) {
+            wallets[i].memoName = `Account${i + 1}`;
+          }
+          if (wallets[i].default) {
+            this.selectedAccount = wallets[i].memoName;
+          }
+          list.push(wallets[i]);
+        }
+      }
+      jcWallet.wallets = list;
+      JingchangWallet.save(jcWallet);
+      this.$store.dispatch("updateJCWallet", jcWallet);
+      return list;
+    },
+    jcWallet() {
+      return this.$store.getters.jcWallet;
+    },
+    assetName() {
+      let coin = Lockr.get("assetName") || "SWTC";
+      return coin;
+    }
+  },
   methods: {
     checkScroll() {
       this.isScroll =
@@ -94,15 +107,18 @@ export default {
         this.$refs.warp.scrollHeight - this.$refs.warp.offsetHeight - scroll >
         40;
     },
+    getbalance() {
+      return 1123123.123123;
+    },
     showPassDialog(wallet) {
-      let memoName = wallet.memoName;
       this.deleteAddress = wallet.address;
-      let text = this.$t("message.home.deleteWalletText") + memoName;
-      this.titleText = text;
+      this.titleText = this.$t("message.home.deleteWalletText") + wallet.name;
       this.showDialog = true;
     },
     closeDialog() {
       this.showDialog = false;
+      this.this.deleteAddress = "";
+      this.titleText = "";
     },
     deleteWallet() {
       let jcWallet = this.jcWallet;
@@ -112,7 +128,7 @@ export default {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
         Toast.success(this.$t("message.home.deleteSuccess"));
-        this.showDialog = false;
+        this.closeDialog();
       });
     },
     setDefaultWallet(address) {
@@ -123,12 +139,18 @@ export default {
         this.$store.dispatch("updateJCWallet", jcWallet);
       });
     },
+    lookWallet(name, address) {
+      this.$router.push({
+        name,
+        query: {
+          address
+        }
+      });
+    },
     JumpTo(url) {
       this.$router.push({ name: url });
     },
-    selectWallet(idx) {
-      this.selectedAccount = this.jwallets[idx].name;
-    }
+    selectWallet(idx) {}
   }
 };
 </script>

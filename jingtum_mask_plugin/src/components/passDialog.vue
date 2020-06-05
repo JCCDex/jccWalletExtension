@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       //   titleText: "确认删除钱包Account 1"
-    }
+    };
   },
   props: {
     titleText: { type: String, require: true } // 标题文字
@@ -52,14 +52,17 @@ export default {
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
       let password = this.password;
-      inst.getSecretWithType(password, "swt").then(() => {
-        this.$emit("deleteWallet");
-      }).catch(error => {
-        Toast.fail(this.$t(getError(error.toString())));
-      });
+      inst
+        .getSecretWithType(password, "swt")
+        .then(() => {
+          this.$emit("deleteWallet");
+        })
+        .catch(error => {
+          Toast.fail(this.$t(getError(error.toString())));
+        });
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .dialogClass {
