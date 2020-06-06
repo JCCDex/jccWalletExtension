@@ -47,6 +47,20 @@ export const bin2hex = function(b) {
   }
   return o
 }
+export const isEmptyObject = (obj) => {
+  if (JSON.stringify(obj) === "{}") {
+    return true
+  }
+  return false
+}
+
+export const isEmptyString = (str) => {
+  if (typeof str === "undefined" || str === null || str === "") {
+    return true;
+  }
+  return false;
+}
+
 export const getError = function(msg) {
   let mapMsg = new Map([
     ["Error: password is wrong", "message.home.passwordWrong"]

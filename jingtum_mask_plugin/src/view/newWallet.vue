@@ -177,6 +177,7 @@ export default {
     text-align: left;
     color: #222325;
     font-size: 16px;
+    text-align: justify;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
   }

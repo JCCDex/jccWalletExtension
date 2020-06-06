@@ -3,7 +3,7 @@
     <img src="../assets/logo.png" width="100px;" height="100px">
     <div class="homeText">{{this.$t("message.home.home_text")}}</div>
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
-    <div v-if="!jcWallet" class="input_div">
+    <div v-if="noJcWallet" class="input_div">
       <button class="homeBtn" @click="goTo('newWallet')">{{this.$t("message.home.create_wallet")}}</button>
       <button class="homeBtn" @click="goTo('import')" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
     </div>
@@ -21,7 +21,7 @@
 import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
 import { Toast } from "vant";
-import { getError } from "../js/utils"
+import { getError } from "js/utils"
 export default {
   name: "index",
   data() {
@@ -33,6 +33,9 @@ export default {
     jcWallet() {
       let jcWallet = this.$store.getters.jcWallet;
       return jcWallet;
+    },
+    noJcWallet() {
+      return !JingchangWallet.isValid(this.jcWallet)
     }
   },
   components: {

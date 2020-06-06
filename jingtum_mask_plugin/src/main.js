@@ -7,6 +7,7 @@ import VueI18n from 'vue-i18n'
 import store from './store'
 import VueClipboard from 'vue-clipboard2'
 import { browser } from "./js/utils";
+import 'vant/lib/index.css';
 
 Vue.use(VueI18n);
 Vue.use(VueClipboard);

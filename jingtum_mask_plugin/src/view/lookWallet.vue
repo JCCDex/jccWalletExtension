@@ -26,7 +26,7 @@
           <passInput @setPassData="setPassData" ref="password" :textMsg="$t('message.home.passwordText4')"></passInput>
          </div>
          <div class="button_div">
-          <button class="button" @click="showSecret()">{{$t("message.home.sureText")}}</button>
+          <button class="view_secret_btn"  @click="showSecret()">{{$t("message.home.sureText")}}</button>
          </div>
      </div>
      <div v-if="isShowSecret" class="address_div">
@@ -202,7 +202,7 @@ export default {
 }
 .button_div {
   text-align: center;
-  .button {
+  .view_secret_btn {
     width: 94%;
     background-color: #366bf2;
     height: 48px;

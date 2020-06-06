@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-import Lockr from "lockr";
+// import Lockr from "lockr";
+import { getUserBalances } from "js/user";
 import { JingchangWallet } from "jcc_wallet";
-import { getUserBalances } from "./js/user";
 export default {
   name: "App",
   created() {
@@ -15,23 +15,7 @@ export default {
   components: {},
   methods: {
     init() {
-      // 处理钱包
-      let jcWallet = JingchangWallet.get() || "";
-      this.$store.dispatch("updateJCWallet", jcWallet);
-      if (
-        jcWallet &&
-        Array.isArray(jcWallet.wallets) &&
-        jcWallet.wallets.length > 0
-      ) {
-        let address = "";
-        let wallets = jcWallet.wallets;
-        for (let wallet of wallets) {
-          if (wallet.type === "swt" && wallet.default) {
-            address = wallet.address;
-            break;
-          }
-        }
-        this.$store.dispatch("updateSwtAddress", address);
+      if (JingchangWallet.isValid(this.$store.getters.jcWallet)) {
         setTimeout(() => {
           getUserBalances();
         }, 50);
@@ -40,7 +24,8 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+@import "src/style/override-vant.scss";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

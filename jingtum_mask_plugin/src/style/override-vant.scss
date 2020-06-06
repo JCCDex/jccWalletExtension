@@ -1,0 +1,11 @@
+.van-toast {
+  .van-icon-success:before {
+    content: "\F0C8";
+    color: #11ce66;
+  }
+
+  .van-icon-fail:before {
+    content: "\F056";
+    color: #f37028;
+  }
+}

@@ -3,17 +3,17 @@
       <commonHead :titleText="$t('message.home.setPassword')"></commonHead>
       <div class="body_class">
         <div class="title_class">
-          <div class="left"><img :src="passwordImg" style="width:16px;"/></div>
-          <div class="right">{{$t('message.home.passwordText')}}</div>
+          <div class="noteImg"><img :src="passwordImg" style="width:16px;"/></div>
+          <div class="noteText">{{$t('message.home.passwordText')}}</div>
         </div>
         <div>
           <passInput ref="password" @setPassData="setPassData" ></passInput>
         </div>
         <div>
-          <passInput ref="rePassword" :passData="password"></passInput>
+          <passInput ref="rePassword" :passData="password" :textMsg="$t('message.home.rePasswordText')"></passInput>
         </div>
         <div class="button_div">
-          <button class="button" @click="goNext()" >{{$t('message.home.sureText')}}</button>
+          <button class="next_btn" @click="goNext()" >{{$t('message.home.sureText')}}</button>
         </div>
       </div>
     </div>
@@ -54,15 +54,6 @@ export default {
       JingchangWallet.generate(this.password, this.secret).then((jcWallet) => {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
-        let wallets = jcWallet.wallets;
-        let address = "";
-        for (let wallet of wallets) {
-          if (wallet.type === "swt" && wallet.default) {
-            address = wallet.address;
-            break;
-          }
-        }
-        this.$store.dispatch("updateSwtAddress", address);
         Toast.success(this.$t("message.home.createSuccess"))
       }).catch((error) => {
         Toast.fail(error);
@@ -79,13 +70,13 @@ export default {
   padding: 20px;
   .title_class {
     display: flex;
-    .left {
+    .noteImg {
       width: 5%;
       text-align: left;
       margin-top: 2px;
       padding-bottom: 20px;
     }
-    .right {
+    .noteText {
       width: 95%;
       padding-left: 5px;
       text-align: left;
@@ -96,7 +87,7 @@ export default {
     }
   }
   .button_div {
-    .button {
+    .next_btn {
       background-color: #366bf2;
       width: 100%;
       height: 48px;
@@ -104,6 +95,7 @@ export default {
       border-radius: 6px;
       text-align: center;
       outline: none;
+      border: none;
       color: #ffffff;
       font-size: 16px;
       font-family: PingFangSC-Regular, PingFang SC;
