@@ -11,7 +11,7 @@
     </div>
     <div class="buttonClass">
       <div class="cancel">
-          <button @click.stop="">{{$t("message.home.cancelText")}}</button>
+          <button @click.stop="reset()">{{$t("message.home.cancelText")}}</button>
       </div>
        <div class="sure">
           <button @click.stop="addNewContact()">{{$t("message.home.sureText")}}</button>
@@ -21,7 +21,9 @@
 </template>
 <script>
 import commonHead from "../components/commonHead";
+import Lockr from "lockr";
 import { jtWallet } from "jcc_wallet";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -67,7 +69,24 @@ export default {
       if (this.addressErrorText) {
         return;
       }
-
+      let data = { name: this.memoName.name, address: this.address.value };
+      let list = Lockr.get("contactList") || [];
+      if (Array.isArray(list) && list.length > 0) {
+        for (let value of list) {
+          if (value.address === data.address) {
+            Toast.fail(this.$t("message.setting.contactExist"));
+            return;
+          }
+        }
+      }
+      list.push(data);
+      Lockr.set("contactList", list);
+      Toast.success(this.$t("message.setting.addSuccess"))
+      this.reset();
+    },
+    reset() {
+      this.memoName = { name: "", isFocus: false };
+      this.address = { value: "", isFocus: false }
     }
   }
 }
