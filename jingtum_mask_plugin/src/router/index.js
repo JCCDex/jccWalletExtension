@@ -104,6 +104,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("addContact")
+    },
+    {
+      path: '/nodeSetting',
+      name: 'nodeSetting',
+      meta: {
+        needLogin: false
+      },
+      component: _import("nodeSetting")
     }
   ]
 })

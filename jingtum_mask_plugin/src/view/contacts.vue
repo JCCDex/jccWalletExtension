@@ -16,7 +16,7 @@
        <div class="address">
           <div class="value">{{contact.address}}</div>
           <div class="image">
-            <img :src="deleteImg" style="width:16px;" @click.stop="deleteContact(contact.address)" />
+            <img :src="deleteImg" style="width:16px;" @click.stop="deleteContact(contact)" />
           </div>
        </div>
       </div>
@@ -29,6 +29,7 @@ import contactsImg from "../images/contactsImg.png";
 import deleteImg from "../images/deleteImg.png";
 import Lockr from "lockr";
 import { Toast } from 'vant';
+import { Dialog } from 'vant';
 export default {
   data() {
     return {
@@ -52,17 +53,24 @@ export default {
       let name = "addContact";
       this.$router.push({ name });
     },
-    deleteContact(address) {
-      let list = [];
-      let array = this.contactList;
-      for (let data of array) {
-        if (data.address !== address) {
-          list.push(data);
+    deleteContact(contact) {
+      let msg = this.$t("message.setting.deleteText", { name: contact.name })
+      Dialog.confirm({
+        title: '',
+        message: msg,
+      }).then(() => {
+        let list = [];
+        let array = this.contactList;
+        for (let data of array) {
+          if (data.address !== address) {
+            list.push(data);
+          }
         }
-      }
-      this.contactList = list;
-      Lockr.set("contactList", list);
-      Toast.success(this.$t("message.setting.deleteSuccess"));
+        this.contactList = list;
+        Lockr.set("contactList", list);
+      }).catch(() => {
+        // on cancel
+      });
     }
   }
 }

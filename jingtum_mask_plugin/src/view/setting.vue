@@ -42,7 +42,7 @@ export default {
           url: ""
         }, {
           name: this.$t("message.setting.nodeSetting"),
-          url: ""
+          url: "nodeSetting"
         },
         {
           name: this.$t("message.setting.showWords"),

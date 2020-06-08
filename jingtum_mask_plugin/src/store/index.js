@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { JingchangWallet } from "jcc_wallet";
 const NOT_LOGIN = 0;
+const jcNodes = process.env.jcNodes;
 Vue.use(Vuex);
 
 const getAddress = (jcWallet, type = "swt") => {
@@ -18,7 +19,8 @@ const store = new Vuex.Store({
   state: {
     isLogin: NOT_LOGIN,
     jcWallet: JingchangWallet.get() || {},
-    balance: ""
+    balance: "",
+    currentNode: jcNodes[0] || {}
   },
   mutations: {
     SET_LOGIN_STATUS(state, isLogin) {
@@ -33,6 +35,9 @@ const store = new Vuex.Store({
     },
     SET_BALANCE(state, balance) {
       Vue.set(state, 'balance', balance);
+    },
+    SET_CURRENTNODE(state, currentNode) {
+      Vue.set(state, 'currentNode', currentNode);
     }
   },
   actions: {
@@ -44,7 +49,10 @@ const store = new Vuex.Store({
     }, jcWallet) => commit('SET_JCWALLET', jcWallet),
     updateBalance: ({
       commit
-    }, balance) => commit('SET_BALANCE', balance)
+    }, balance) => commit('SET_BALANCE', balance),
+    updateCurrentNode: ({
+      commit
+    }, currentNode) => commit('SET_CURRENTNODE', currentNode)
   },
   getters: {
     isLogin: state => state.isLogin,
@@ -53,7 +61,8 @@ const store = new Vuex.Store({
     swtAddress(state) {
       const address = getAddress(state.jcWallet, 'swt');
       return address || "";
-    }
+    },
+    currentNode: state => state.currentNode
   }
 });
 

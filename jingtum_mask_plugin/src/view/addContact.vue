@@ -96,6 +96,7 @@ export default {
   padding: 30px 30px 0 20px;
   input {
     border: 1px solid #d9dce5;
+    color: 090909;
     height: 48px;
     line-height: 48px;
     width: 100%;
@@ -122,6 +123,7 @@ export default {
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
+    color: 090909;
   }
 }
 .errorText {

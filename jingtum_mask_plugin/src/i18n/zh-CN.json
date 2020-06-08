@@ -70,6 +70,9 @@
     "addressError": "钱包地址不合法",
     "contactExist": "联系人地址已存在",
     "addSuccess": "新增联系人成功",
-    "deleteSuccess": "删除成功"
+    "deleteSuccess": "删除成功",
+    "deleteText": "确认删除联系人{name}",
+    "addNodeText": "添加自定义节点",
+    "inputText": "请输入您所信任的自定义节点地址"
   }
 }
