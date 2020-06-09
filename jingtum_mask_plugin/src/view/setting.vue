@@ -39,7 +39,7 @@ export default {
         },
         {
           name: this.$t("message.setting.authorization"),
-          url: ""
+          url: "authorization"
         }, {
           name: this.$t("message.setting.nodeSetting"),
           url: "nodeSetting"

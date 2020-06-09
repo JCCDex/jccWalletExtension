@@ -42,8 +42,7 @@ import commonHead from "../components/commonHead";
 import currentNodeImg from "../images/currentNode.png";
 import deleteImg from "../images/deleteImg.png";
 import Lockr from "lockr";
-import { Toast } from "vant";
-import { Dialog } from 'vant';
+import { Toast, Dialog } from "vant";
 import { findCurrentNode } from "../js/utils";
 const jcNodes = process.env.jcNodes;
 export default {

@@ -65,7 +65,6 @@ export default {
   components: { passDialog },
   mounted() {
     this.checkScroll();
-    console.log("jcWallet", this.jcWallet);
   },
   computed: {
     wallets() {

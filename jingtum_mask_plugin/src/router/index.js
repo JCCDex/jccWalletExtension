@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from "../store"
 
 const _import = file => () => import('@/view/' + file + '.vue')
 
@@ -112,6 +113,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("nodeSetting")
+    },
+    {
+      path: '/authorization',
+      name: 'authorization',
+      meta: {
+        needLogin: false
+      },
+      component: _import("authorization")
     }
   ]
 })

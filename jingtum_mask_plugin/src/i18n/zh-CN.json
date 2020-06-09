@@ -78,6 +78,12 @@
     "customNode": "自定义节点",
     "nodeExist": "该节点已存在",
     "addNodeSuccess": "新节点添加成功",
-    "deleteNodeText": "确认删除自定义节点{url}"
+    "deleteNodeText": "确认删除自定义节点{url}",
+    "addAuthorization": "添加授权站点",
+    "authorizationText": "请输入您所愿意授权的站点地址",
+    "authorizaExist": "该授权节点已存在",
+    "authorizaSuccess": "新授权节点添加成功",
+    "authorizaList": "已授权列表",
+    "deleteAuthioriza": "确认删除授权站点{url}"
   }
 }
