@@ -68,3 +68,25 @@ export const getError = function(msg) {
   let errorMsg = mapMsg.get(msg);
   return errorMsg
 }
+
+export const findCurrentNode = (nodeList) => {
+  let currentNode = "";
+  let defaultList = nodeList.defaultList || [];
+  if (Array.isArray(defaultList) && defaultList.length > 0) {
+    currentNode = defaultList[0].value; // 默认当前节点
+    for (let custom of defaultList) {
+      if (custom.isCurrentNode) {
+        currentNode = custom.value;
+      }
+    }
+  }
+  let customList = nodeList.customList || [];
+  if (Array.isArray(customList) && customList.length > 0) {
+    for (let custom of customList) {
+      if (custom.isCurrentNode) {
+        currentNode = custom.value;
+      }
+    }
+  }
+  return currentNode;
+}

@@ -73,6 +73,11 @@
     "deleteSuccess": "删除成功",
     "deleteText": "确认删除联系人{name}",
     "addNodeText": "添加自定义节点",
-    "inputText": "请输入您所信任的自定义节点地址"
+    "inputText": "请输入您所信任的自定义节点地址",
+    "defaultNode": "默认节点",
+    "customNode": "自定义节点",
+    "nodeExist": "该节点已存在",
+    "addNodeSuccess": "新节点添加成功",
+    "deleteNodeText": "确认删除自定义节点{url}"
   }
 }

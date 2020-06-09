@@ -60,13 +60,13 @@ export default {
         message: msg,
       }).then(() => {
         let list = [];
-        let array = this.contactList;
+        let array = [...this.contactList];
         for (let data of array) {
-          if (data.address !== address) {
+          if (data.address !== contact.address) {
             list.push(data);
           }
         }
-        this.contactList = list;
+        this.contactList = [...list];
         Lockr.set("contactList", list);
       }).catch(() => {
         // on cancel

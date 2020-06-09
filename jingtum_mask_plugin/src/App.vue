@@ -4,23 +4,11 @@
   </div>
 </template>
 <script>
-// import Lockr from "lockr";
-import { getUserBalances } from "js/user";
-import { JingchangWallet } from "jcc_wallet";
+import { getConfigs } from "./js/config";
 export default {
   name: "App",
   created() {
-    this.init();
-  },
-  components: {},
-  methods: {
-    init() {
-      if (JingchangWallet.isValid(this.$store.getters.jcWallet)) {
-        setTimeout(() => {
-          getUserBalances();
-        }, 50);
-      }
-    }
+    getConfigs(); // 初始化相关数据
   }
 };
 </script>
