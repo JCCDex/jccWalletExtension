@@ -55,14 +55,7 @@ export default {
       let inst = new JingchangWallet(jcWallet);
       let password = this.password;
       inst.getSecretWithType(password, "swt").then(() => {
-        let isDelAll = false;
-        if (
-          this.deleteAllWallets &&
-          this.deleteAllWallets === "clearAllWallet"
-        ) {
-          isDelAll = this.deleteAllWallets;
-        }
-        this.$emit("deleteWallet", isDelAll);
+        this.$emit("deleteWallet", this.deleteAllWallets);
       }).catch(error => {
         Toast.fail(this.$t(getError(error.toString())));
       });

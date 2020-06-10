@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
+import commonHead from "../../components/commonHead";
 import Lockr from "lockr";
 import { jtWallet } from "jcc_wallet";
 import { Toast } from "vant";

@@ -16,8 +16,8 @@
   </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
-import logo from "../assets/logo.png";
+import commonHead from "../../components/commonHead";
+import logo from "../../assets/logo.png";
 export default {
   data() {
     return {

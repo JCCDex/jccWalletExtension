@@ -73,18 +73,15 @@ export default {
       let secret = this.secret;
       let password = this.password;
       let getAddress = jtWallet.getAddress;
-      inst
-        .importSecret(secret, password, "swt", getAddress)
-        .then(jcWallet => {
-          jcWallet = this.getJcWallet(jcWallet);
-          JingchangWallet.save(jcWallet);
-          this.$store.dispatch("updateJCWallet", jcWallet);
-          Toast.success(this.$t("message.home.importSuccess"));
-          this.$router.push({ name: "myWallet" });
-        })
-        .catch(error => {
-          Toast.fail(error.toString());
-        });
+      inst.importSecret(secret, password, "swt", getAddress).then(jcWallet => {
+        jcWallet = this.getJcWallet(jcWallet);
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        Toast.success(this.$t("message.home.importSuccess"));
+        this.$router.push({ name: "myWallet" });
+      }).catch(error => {
+        Toast.fail(error.toString());
+      });
     },
     getJcWallet(jcWallet) {
       let wallets = jcWallet.wallets;

@@ -109,7 +109,7 @@ export default {
     },
     isValid() {
       this.password.isFocus = true;
-      if (this.passwordError) {
+      if (this.errorText) {
         return true;
       } else {
         return false;

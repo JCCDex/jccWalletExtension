@@ -1,6 +1,6 @@
 <template>
     <div>
-        <commonHead :titleText="$t('message.home.create_wallet')"></commonHead>
+        <commonHead :titleText="titleText"></commonHead>
         <div class="body_class">
            <div v-if="step==='one'">
              <div class="title">{{$t("message.home.text1")}}</div>
@@ -30,16 +30,20 @@
                <button class="buttom" @click="setPassword()">{{$t("message.home.nextText")}}</button>
              </div>
            </div>
+           <div v-if ="step ==='three'">
+             <setPassword @createdSuccess="createdSuccess"></setPassword>
+           </div>
         </div>
     </div>
 </template>
 <script>
 import commonHead from "../components/commonHead";
-import { Factory as AddressCodecFactory } from "@swtc/address-codec";
-// import { jtWallet, JingchangWallet } from "jcc_wallet";
-const { Wallet } = require("@swtc/wallet");
-const bip39 = require("bip39");
-const bip32 = require("bip32");
+import setPassword from "../components/setPassword";
+import { JingchangWallet } from "jcc_wallet";
+import { Toast } from 'vant';
+import { createdWallet } from "../js/user";
+import { saveMnemonicData } from "../js/utils";
+// import Lockr from "lockr";
 export default {
   data() {
     return {
@@ -47,23 +51,46 @@ export default {
       secret: "",
       wordList: [],
       arrList: [],
+      titleText: "",
       currentList: [],
       currentIndex: 0,
-      lastIndex: -1
-      //   forCurrentList: [],
-      //   forArrList: []
+      lastIndex: -1,
+      mnemonicData: ""
     }
   },
   components: {
-    commonHead
+    commonHead,
+    setPassword
   },
   created() {
-    this.generateMnemonic();
+    this.init();
     this.setCurrentList();
   },
   watch: {
   },
   methods: {
+    init() {
+      this.titleText = this.$t('message.home.create_wallet');
+      let data = createdWallet();
+      this.mnemonicData = data;
+      this.wordList = this.getWordList(data.mnemonic);
+      this.secret = data.privateKey;
+      //   this.step = "three";
+    },
+    createdSuccess(password) {
+      JingchangWallet.generate(password, this.secret).then((jcWallet) => {
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        this.password = password;
+        saveMnemonicData(this.mnemonicData, password); // 存储助记词相关信息
+        Toast.success(this.$t("message.home.createSuccess"))
+        this.$router.push({
+          name: "myWallet"
+        })
+      }).catch((error) => {
+        Toast.fail(error);
+      })
+    },
     getClass(data) {
       if (data.word) {
         if (data.success) {
@@ -80,25 +107,6 @@ export default {
         let data = { success: false, word: "" };
         this.currentList.push(data);
       }
-    },
-    generateMnemonic() {
-      let secret;
-      //  助记词改为简体中文词库
-      bip39.setDefaultWordlist("chinese_simplified");
-      //  生成助记词
-      try {
-        const mnemonic = bip39.generateMnemonic();
-        this.wordList = this.getWordList(mnemonic);
-        // const seed = bip39.mnemonicToSeedSync(mnemonic)
-        //  通过助记词生成秘钥
-        const entropy = bip39.mnemonicToEntropy(mnemonic); // 助记词得到熵
-        const addressCodec = AddressCodecFactory(); // param: chain or native token,default jingtum
-        secret = addressCodec.encodeSeed(entropy.slice(0, 16));
-      } catch (error) {
-        this.wordList = [];
-        secret = null
-      }
-      this.secret = secret;
     },
     getWordList(list) {
       let wordList = [];
@@ -155,12 +163,8 @@ export default {
       if (this.currentIndex < 12) {
         return;
       }
-      this.$router.push({
-        name: "setPassword",
-        query: {
-          secret: this.secret
-        }
-      })
+      this.titleText = this.$t("message.home.setPassword");
+      this.step = "three";
     },
     goNext() {
       this.randomList();

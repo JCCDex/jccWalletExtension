@@ -38,12 +38,12 @@
     </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
-import currentNodeImg from "../images/currentNode.png";
-import deleteImg from "../images/deleteImg.png";
+import commonHead from "../../components/commonHead";
+import currentNodeImg from "../../images/currentNode.png";
+import deleteImg from "../../images/deleteImg.png";
 import Lockr from "lockr";
 import { Toast, Dialog } from "vant";
-import { findCurrentNode } from "../js/utils";
+import { findCurrentNode } from "../../js/utils";
 const jcNodes = process.env.jcNodes;
 export default {
   data() {
@@ -53,7 +53,6 @@ export default {
       customList: [],
       currentNodeImg,
       deleteImg
-      //   currentNode: ""
     }
   },
   components: {

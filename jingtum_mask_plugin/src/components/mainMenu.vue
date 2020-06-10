@@ -9,7 +9,7 @@
         <div class="showAccount">
           <img v-show="wallet.default" :src="selectedIcon" class="selectedIcon">
           <p>{{wallet.memoName}}</p>
-          <p style="color:#D0D4DD;fontSize:14px">{{`${getbalance(wallet.address)} ${assetName}`}}</p>
+          <!-- <p style="color:#D0D4DD;fontSize:14px">{{`${getbalance(wallet.address)} ${assetName}`}}</p> -->
         </div>
         <div class="operateWallet">
           <img :src="eyesIcon" @click.stop="lookWallet('lookWallet',wallet.address)" >
@@ -111,8 +111,7 @@ export default {
     toDelWallet(wallet) {
       this.deleteAllWallets = false;
       this.deleteAddress = wallet.address;
-      this.titleText =
-        this.$t("message.home.deleteWalletText") + wallet.memoName;
+      this.titleText = this.$t("message.home.deleteWalletText") + wallet.memoName;
       this.showDialog = true;
     },
     closeDialog() {
@@ -121,18 +120,14 @@ export default {
       this.deleteAddress = "";
       this.titleText = "";
     },
-    deleteWallet(isDelAll = false) {
+    deleteWallet() {
       let jcWallet = this.jcWallet;
       let wallets = jcWallet.wallets;
       let address = this.deleteAddress;
       let wallet = [];
-      if (
-        isDelAll &&
-        this.deleteAllWallets &&
-        this.deleteAllWallets === "clearAllWallet"
-      ) {
+      if (this.deleteAllWallets) {
         jcWallet = "";
-      } else if (this.deleteAddress) {
+      } else {
         wallet = wallets.find(w => w.address === address);
         const index = wallets.findIndex(w => w.address === wallet.address);
         const isDefault = wallet.default;
@@ -196,7 +191,9 @@ export default {
   box-sizing: border-box;
   display: flex;
   width: 100%;
-  padding: 10px 20px;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 20px;
   cursor: pointer;
 }
 .selectedWallet {
@@ -219,7 +216,7 @@ export default {
     width: 18px;
     height: 12px;
     position: absolute;
-    top: 5px;
+    top: 23px;
     left: 0;
     border: 1px dashed #888888;
   }

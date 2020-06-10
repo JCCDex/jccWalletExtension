@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
+import commonHead from "../../components/commonHead";
 import rightArrowIcon from "@/images/rightArrow.png";
 export default {
   data() {

@@ -24,9 +24,9 @@
   </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
-import contactsImg from "../images/contactsImg.png";
-import deleteImg from "../images/deleteImg.png";
+import commonHead from "../../components/commonHead";
+import contactsImg from "../../images/contactsImg.png";
+import deleteImg from "../../images/deleteImg.png";
 import Lockr from "lockr";
 import { Toast, dialog } from 'vant';
 export default {

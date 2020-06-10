@@ -1,8 +1,13 @@
 import { getExplorerHost } from "./api"
-import { getUUID } from "./utils"
+import { getUUID, encrypt, decrypt } from "./utils"
 import store from "store";
 import { ExplorerFactory } from "jcc_rpc";
 import { BigNumber } from 'bignumber.js';
+import Lockr from "lockr";
+// import { jtWallet } from "jcc_wallet";
+const { Wallet } = require("@swtc/wallet");
+const bip39 = require("bip39");
+const bip32 = require("bip32");
 export const getUserBalances = async (fn) => {
   let balance = {};
   // const address = store.getters.swtAddress;
@@ -36,5 +41,36 @@ export const getUserBalances = async (fn) => {
       }
     }
     store.dispatch("updateBalance", balance);
+  }
+}
+
+export const createdWallet = (mnemonic = "") => {
+  bip39.setDefaultWordlist("chinese_simplified");
+  try {
+    if (!mnemonic) {
+      //  生成助记词
+      mnemonic = bip39.generateMnemonic();
+      console.log(mnemonic);
+    }
+    const seed = bip39.mnemonicToSeedSync(mnemonic);
+    //  通过助记词生成私钥
+    const b32 = bip32.fromSeed(seed)
+    let countKey = Lockr.get("countKey") || "";
+    if (!countKey) {
+      countKey = "0";
+    } else {
+      countKey = parseInt(countKey) + 1 + "";
+    }
+    let pathUrl = "m/44'/315'/0'/0/" + countKey;
+    const privateKey = b32.derivePath(pathUrl).privateKey.toString("hex");
+    let data = {
+      mnemonic,
+      privateKey,
+      countKey,
+      pathUrl
+    }
+    return data
+  } catch (error) {
+    return {}
   }
 }

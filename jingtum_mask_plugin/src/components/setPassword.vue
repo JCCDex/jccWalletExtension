@@ -1,6 +1,5 @@
 <template>
     <div>
-      <commonHead :titleText="$t('message.home.setPassword')"></commonHead>
       <div class="body_class">
         <div class="title_class">
           <div class="noteImg"><img :src="passwordImg" style="width:16px;"/></div>
@@ -13,61 +12,47 @@
           <passInput ref="rePassword" :passData="password" :textMsg="$t('message.home.rePasswordText')"></passInput>
         </div>
         <div class="button_div">
-          <button class="next_btn" @click="goNext()" >{{$t('message.home.sureText')}}</button>
+          <button class="next_btn" @click="createdSuccess()" >{{$t('message.home.sureText')}}</button>
         </div>
       </div>
     </div>
 </template>
 <script>
-import commonHead from "../components/commonHead";
 import passwordImg from "../images/passwordImg.png";
-import passInput from "../components/passInput";
-import { JingchangWallet } from "jcc_wallet";
-import { Toast } from 'vant';
+import passInput from "./passInput";
 export default {
   data() {
     return {
-      secret: "",
+      //   secret: "",
       password: "",
       passwordImg
     }
   },
   components: {
-    commonHead,
     passInput
   },
   created() {
-    let secret = this.$route.query.secret;
-    this.secret = secret;
+    // let secret = this.$route.query.secret;
+    // this.secret = secret;
   },
   methods: {
     setPassData(password) {
       this.password = password;
     },
-    goNext() {
+    createdSuccess() {
       if (this.$refs.password.isValid()) {
         return;
       }
       if (this.$refs.rePassword.isValid()) {
         return;
       }
-      JingchangWallet.generate(this.password, this.secret).then((jcWallet) => {
-        JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateJCWallet", jcWallet);
-        Toast.success(this.$t("message.home.createSuccess"))
-      }).catch((error) => {
-        Toast.fail(error);
-      })
-      this.$router.push({
-        name: "myWallet"
-      })
+      this.$emit("createdSuccess", this.password);
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .body_class {
-  padding: 20px;
   .title_class {
     display: flex;
     .noteImg {

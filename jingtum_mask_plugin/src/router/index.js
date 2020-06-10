@@ -26,14 +26,14 @@ const router = new Router({
       },
       component: _import("newWallet")
     },
-    {
-      path: '/setPassword',
-      name: 'setPassword',
-      meta: {
-        needLogin: false
-      },
-      component: _import("setPassword")
-    },
+    // {
+    //   path: '/setPassword',
+    //   name: 'setPassword',
+    //   meta: {
+    //     needLogin: false
+    //   },
+    //   component: _import("setPassword")
+    // },
     {
       path: '/myWallet',
       name: 'myWallet',
@@ -83,52 +83,52 @@ const router = new Router({
       component: _import("importBySecret")
     },
     {
-      path: '/setting',
+      path: '/setting/index',
       name: 'setting',
       meta: {
         needLogin: false
       },
-      component: _import("setting")
+      component: _import("setting/index")
     },
     {
-      path: '/contacts',
+      path: '/setting/contacts',
       name: 'contacts',
       meta: {
         needLogin: false
       },
-      component: _import("contacts")
+      component: _import("setting/contacts")
     },
     {
-      path: '/addContact',
+      path: '/setting/addContact',
       name: 'addContact',
       meta: {
         needLogin: false
       },
-      component: _import("addContact")
+      component: _import("setting/addContact")
     },
     {
-      path: '/nodeSetting',
+      path: '/setting/nodeSetting',
       name: 'nodeSetting',
       meta: {
         needLogin: false
       },
-      component: _import("nodeSetting")
+      component: _import("setting/nodeSetting")
     },
     {
-      path: '/authorization',
+      path: '/setting/authorization',
       name: 'authorization',
       meta: {
         needLogin: false
       },
-      component: _import("authorization")
+      component: _import("setting/authorization")
     },
     {
-      path: '/aboutUs',
+      path: '/setting/aboutUs',
       name: 'aboutUs',
       meta: {
         needLogin: false
       },
-      component: _import("aboutUs")
+      component: _import("setting/aboutUs")
     }
   ]
 })
