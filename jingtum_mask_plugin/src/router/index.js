@@ -121,6 +121,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("authorization")
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      meta: {
+        needLogin: false
+      },
+      component: _import("aboutUs")
     }
   ]
 })

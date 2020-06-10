@@ -49,7 +49,7 @@ export default {
           url: ""
         }, {
           name: this.$t("message.setting.aboutUs"),
-          url: ""
+          url: "aboutUs"
         }
       ]
     },

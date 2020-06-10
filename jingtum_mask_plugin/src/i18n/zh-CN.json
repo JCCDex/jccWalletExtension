@@ -84,6 +84,11 @@
     "authorizaExist": "该授权节点已存在",
     "authorizaSuccess": "新授权节点添加成功",
     "authorizaList": "已授权列表",
-    "deleteAuthioriza": "确认删除授权站点{url}"
+    "deleteAuthioriza": "确认删除授权站点{url}",
+    "version": "版本",
+    "linkText": "链接",
+    "policy": "隐私政策",
+    "terms": "使用条款",
+    "contactUs": "联系我们"
   }
 }
