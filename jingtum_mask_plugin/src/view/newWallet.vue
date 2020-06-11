@@ -43,6 +43,7 @@ import { JingchangWallet } from "jcc_wallet";
 import { Toast } from 'vant';
 import { createdWallet } from "../js/user";
 import { saveMnemonicData } from "../js/utils";
+import bus from "../js/bus";
 // import Lockr from "lockr";
 export default {
   data() {
@@ -75,7 +76,6 @@ export default {
       this.mnemonicData = data;
       this.wordList = this.getWordList(data.mnemonic);
       this.secret = data.privateKey;
-      //   this.step = "three";
     },
     createdSuccess(password) {
       JingchangWallet.generate(password, this.secret).then((jcWallet) => {
@@ -83,6 +83,7 @@ export default {
         this.$store.dispatch("updateJCWallet", jcWallet);
         this.password = password;
         saveMnemonicData(this.mnemonicData, password); // 存储助记词相关信息
+        bus.$emit("savePassword", password);
         Toast.success(this.$t("message.home.createSuccess"))
         this.$router.push({
           name: "myWallet"

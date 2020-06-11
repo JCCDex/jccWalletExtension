@@ -38,6 +38,7 @@ import delIcon from "@/images/delIcon.png";
 import rightArrowIcon from "@/images/rightArrow.png";
 import Lockr from "lockr";
 import { JingchangWallet } from "jcc_wallet";
+import { delPathByAddress } from "../js/utils";
 import passDialog from "./passDialog";
 import { Toast } from "vant";
 export default {
@@ -53,6 +54,7 @@ export default {
       titleText: "",
       deleteAddress: "",
       deleteAllWallets: false,
+      //   showLoading: false,
       menuList: [
         { name: this.$t("message.menu.createdWallet"), url: "createdWallet" },
         { name: this.$t("message.menu.importWallet"), url: "importBySecret" },
@@ -124,12 +126,13 @@ export default {
       let jcWallet = this.jcWallet;
       let wallets = jcWallet.wallets;
       let address = this.deleteAddress;
-      let wallet = [];
+      let wallet = "";
       if (this.deleteAllWallets) {
         jcWallet = "";
+        delPathByAddress();
       } else {
         wallet = wallets.find(w => w.address === address);
-        const index = wallets.findIndex(w => w.address === wallet.address);
+        const index = wallets.findIndex(w => w.address === address);
         const isDefault = wallet.default;
         wallets.splice(index, 1);
         if (wallets.length <= 0) {
@@ -137,6 +140,7 @@ export default {
         } else if (isDefault && wallets.length > 0) {
           wallets[0].default = true;
         }
+        delPathByAddress(address); // 删除对应的派生路径
       }
       JingchangWallet.save(jcWallet);
       this.$store.dispatch("updateJCWallet", jcWallet);

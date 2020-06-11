@@ -1,11 +1,9 @@
 import { getExplorerHost } from "./api"
-import { getUUID, encrypt, decrypt } from "./utils"
+import { getUUID } from "./utils"
 import store from "store";
 import { ExplorerFactory } from "jcc_rpc";
 import { BigNumber } from 'bignumber.js';
 import Lockr from "lockr";
-// import { jtWallet } from "jcc_wallet";
-const { Wallet } = require("@swtc/wallet");
 const bip39 = require("bip39");
 const bip32 = require("bip32");
 export const getUserBalances = async (fn) => {
@@ -55,7 +53,8 @@ export const createdWallet = (mnemonic = "") => {
     const seed = bip39.mnemonicToSeedSync(mnemonic);
     //  通过助记词生成私钥
     const b32 = bip32.fromSeed(seed)
-    let countKey = Lockr.get("countKey") || "";
+    let mnemonicData = Lockr.get("mnemonicData") || "";
+    let countKey = mnemonicData.currentCountKey || "";
     if (!countKey) {
       countKey = "0";
     } else {
