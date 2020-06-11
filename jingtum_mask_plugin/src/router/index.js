@@ -137,6 +137,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("setting/changePassword")
+    },
+    {
+      path: '/setting/showMnemonic',
+      name: 'showMnemonic',
+      meta: {
+        needLogin: false
+      },
+      component: _import("setting/showMnemonic")
     }
   ]
 })

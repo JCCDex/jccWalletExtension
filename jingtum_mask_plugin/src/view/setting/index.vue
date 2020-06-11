@@ -46,7 +46,7 @@ export default {
         },
         {
           name: this.$t("message.setting.showWords"),
-          url: ""
+          url: "showMnemonic"
         }, {
           name: this.$t("message.setting.aboutUs"),
           url: "aboutUs"

@@ -54,7 +54,6 @@ export default {
       titleText: "",
       deleteAddress: "",
       deleteAllWallets: false,
-      //   showLoading: false,
       menuList: [
         { name: this.$t("message.menu.createdWallet"), url: "createdWallet" },
         { name: this.$t("message.menu.importWallet"), url: "importBySecret" },

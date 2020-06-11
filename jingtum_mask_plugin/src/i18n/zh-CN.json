@@ -93,6 +93,9 @@
     "oldPassword": "请输入原钱包密码",
     "newPassword": "请设置新的钱包密码",
     "rePassword": "请确认新的钱包密码",
-    "changeSuccess": "密码修改成功"
+    "changeSuccess": "密码修改成功",
+    "wordText": "如果您更换浏览器或计算机，则需要使用此助记词访问您的账户。请将它们保存在安全秘密的地方。",
+    "passText": "请输入钱包密码显示助记词",
+    "showMnenonicText": "您的钱包助记词"
   }
 }
