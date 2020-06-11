@@ -139,12 +139,19 @@ export default {
           jcWallet = "";
         } else if (isDefault && wallets.length > 0) {
           wallets[0].default = true;
+          this.$store.dispatch("updateDefAddress", wallets[0].address);
         }
         delPathByAddress(address); // 删除对应的派生路径
       }
-      JingchangWallet.save(jcWallet);
-      this.$store.dispatch("updateJCWallet", jcWallet);
-      this.closeDialog();
+      if (!jcWallet) {
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        this.$router.push({ name: "home" });
+      } else {
+        JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateJCWallet", jcWallet);
+        this.closeDialog();
+      }
     },
     setDefaultWallet(wallet) {
       if (wallet.default) return;
@@ -152,6 +159,7 @@ export default {
       let inst = new JingchangWallet(jcWallet);
       inst.setDefaultWallet(wallet.address).then(jcWallet => {
         JingchangWallet.save(jcWallet);
+        this.$store.dispatch("updateDefAddress", wallet.address);
         this.$store.dispatch("updateJCWallet", jcWallet);
       });
     },

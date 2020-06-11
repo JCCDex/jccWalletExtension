@@ -29,7 +29,20 @@ export const getConfigs = () => {
       if (!currentNode) {
         store.dispatch("updateCurrentNode", currentNode); // 更新当前节点
       }
-
+      let jcWallet = JingchangWallet.get() || "";
+      let wallets = jcWallet.wallets;
+      let address = "";
+      if (Array.isArray(wallets) && wallets.length > 0) {
+        for (let wallet of wallets) {
+          if (wallet.default) {
+            address = wallet.address;
+            break;
+          }
+        }
+      }
+      if (!address) {
+        store.dispatch("updateDefAddress", address); // 更新默认钱包
+      }
     }, 50);
   }
 }

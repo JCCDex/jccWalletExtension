@@ -22,6 +22,7 @@ import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
 import { Toast } from "vant";
 import { getError } from "js/utils"
+import bus from "../js/bus";
 export default {
   name: "index",
   data() {
@@ -55,6 +56,7 @@ export default {
       inst.getSecretWithType(password, "swt").then(() => {
         Toast.success(this.$t("message.home.loginSuccess"));
         this.$store.dispatch("updateIsLogin", 1);
+        bus.$emit("savePassword", password);
         this.$router.push({
           name: "myWallet"
         });

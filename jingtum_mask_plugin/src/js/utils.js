@@ -66,6 +66,9 @@ export const isEmptyString = (str) => {
 }
 
 export const getError = function(msg) {
+  if (typeof msg !== String) {
+    msg = msg.toString();
+  }
   let mapMsg = new Map([
     ["Error: password is wrong", "message.home.passwordWrong"]
   ]);

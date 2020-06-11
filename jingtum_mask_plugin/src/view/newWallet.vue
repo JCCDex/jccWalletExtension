@@ -81,6 +81,8 @@ export default {
       JingchangWallet.generate(password, this.secret).then((jcWallet) => {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        let address = jcwallet.wallets[0].address;
+        this.$store.dispatch("updateDefAddress", address);
         this.password = password;
         saveMnemonicData(this.mnemonicData, password); // 存储助记词相关信息
         bus.$emit("savePassword", password);

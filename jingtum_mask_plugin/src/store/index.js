@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     isLogin: NOT_LOGIN,
     jcWallet: JingchangWallet.get() || {},
     balance: "",
-    currentNode: jcNodes[0] || {}
+    currentNode: jcNodes[0] || {},
+    defAddress: ""
   },
   mutations: {
     SET_LOGIN_STATUS(state, isLogin) {
@@ -38,6 +39,9 @@ const store = new Vuex.Store({
     },
     SET_CURRENTNODE(state, currentNode) {
       Vue.set(state, 'currentNode', currentNode);
+    },
+    SET_DEFADDRESS(state, defAddress) {
+      Vue.set(state, 'defAddress', defAddress);
     }
   },
   actions: {
@@ -52,7 +56,10 @@ const store = new Vuex.Store({
     }, balance) => commit('SET_BALANCE', balance),
     updateCurrentNode: ({
       commit
-    }, currentNode) => commit('SET_CURRENTNODE', currentNode)
+    }, currentNode) => commit('SET_CURRENTNODE', currentNode),
+    updateDefAddress: ({
+      commit
+    }, defAddress) => commit('SET_DEFADDRESS', defAddress)
   },
   getters: {
     isLogin: state => state.isLogin,
@@ -62,7 +69,8 @@ const store = new Vuex.Store({
       const address = getAddress(state.jcWallet, 'swt');
       return address || "";
     },
-    currentNode: state => state.currentNode
+    currentNode: state => state.currentNode,
+    defAddress: state => state.defAddress
   }
 });
 

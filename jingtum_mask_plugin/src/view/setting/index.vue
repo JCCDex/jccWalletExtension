@@ -32,7 +32,7 @@ export default {
       this.settingList = [
         {
           name: this.$t("message.setting.changePassword"),
-          url: ""
+          url: "changePassword"
         }, {
           name: this.$t("message.setting.contacts"),
           url: "contacts"

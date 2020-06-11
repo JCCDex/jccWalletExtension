@@ -129,6 +129,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("setting/aboutUs")
+    },
+    {
+      path: '/setting/changePassword',
+      name: 'changePassword',
+      meta: {
+        needLogin: false
+      },
+      component: _import("setting/changePassword")
     }
   ]
 })
