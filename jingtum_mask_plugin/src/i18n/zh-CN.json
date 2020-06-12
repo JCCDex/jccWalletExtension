@@ -26,7 +26,7 @@
     "tranferText": "转账",
     "lookWallet": "查看账户",
     "addressText": "钱包地址",
-    "secretText": "钱包秘钥",
+    "secretText": "钱包私钥",
     "addressName": "钱包名称",
     "copySuccess": "复制成功",
     "copyError": "复制失败",
@@ -35,8 +35,8 @@
     "passwordWrong": "密码错误",
     "transferText": "转账",
     "walletText": "钱包",
-    "secretError": "秘钥格式不正确",
-    "secretNull": "秘钥不能为空",
+    "secretError": "私钥格式不正确",
+    "secretNull": "私钥不能为空",
     "setSecretText": "请输入SWTC钱包密钥",
     "importSuccess": "导入成功",
     "createSuccess": "创建成功",
@@ -49,7 +49,7 @@
     "createdWallet": "创建钱包",
     "importWallet": "导入钱包",
     "clearWallet": "清除所有钱包",
-    "comfirmDelAllWallet": "注意！这将会清除您在本插件中所有的swtc钱包！建议清除之前抄写好这些钱包的秘钥或秘钥路径。您确定要清除所有swtc钱包吗？",
+    "comfirmDelAllWallet": "注意！这将会清除您在本插件中所有的swtc钱包！建议清除之前抄写好这些钱包的私钥或私钥路径。您确定要清除所有swtc钱包吗？",
     "setting": "设置",
     "quit": "退出"
   },
@@ -96,6 +96,14 @@
     "changeSuccess": "密码修改成功",
     "wordText": "如果您更换浏览器或计算机，则需要使用此助记词访问您的账户。请将它们保存在安全秘密的地方。",
     "passText": "请输入钱包密码显示助记词",
-    "showMnenonicText": "您的钱包助记词"
+    "showMnenonicText": "您的钱包助记词",
+    "copyMnenonic": "复制助记词",
+    "exportMnenonic": "导出CSV文件",
+    "exportSuccess": "导出成功"
+  },
+  "importText": {
+    "titleText": "请在下面输入框内输入助记词",
+    "errorText": "请输入完整的助记词",
+    "errorText2": "输入的助记词不合法"
   }
 }

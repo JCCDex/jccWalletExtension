@@ -145,6 +145,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("setting/showMnemonic")
+    },
+    {
+      path: '/importByMnenonic',
+      name: 'importByMnenonic',
+      meta: {
+        needLogin: false
+      },
+      component: _import("importByMnenonic")
     }
   ]
 })

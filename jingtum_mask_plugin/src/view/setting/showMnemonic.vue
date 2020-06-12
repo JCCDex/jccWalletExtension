@@ -21,11 +21,20 @@
         <div class="wordClass">
           <div v-for="(word,index) in wordList" class="songClass" :key="index">{{word}}</div>
         </div>
-        <!-- <div class="buttonClass">
+        <div class="buttonClass">
           <div class="copyClass">
-             <button></button>
+             <button v-clipboard:copy="wordsStr" v-clipboard:success="onCopy" v-clipboard:error="onError" >
+                 <img :src="copyButton" style="width:14px;" />
+                 <span>{{$t("message.setting.copyMnenonic")}}</span>
+             </button>
           </div>
-        </div> -->
+          <div class="exportClass">
+             <button @click.stop="exportFile()" >
+                 <img :src="exportImg" style="width:14px;" />
+                 <span>{{$t("message.setting.exportMnenonic")}}</span>
+             </button>
+          </div>
+        </div>
      </div>
    </div>
   </div>
@@ -33,19 +42,24 @@
 <script>
 import commonHead from "../../components/commonHead";
 import bellImg from "../../images/bellImg.png";
+import copyButton from "../../images/copyButton.png";
+import exportImg from "../../images/exportImg.png";
 import passInput from "../../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
 import { decrypt } from "jcc_wallet/lib/util";
 import { getError } from "../../js/utils";
 import { Toast } from "vant";
 import Lockr from "lockr";
+import { exportToText } from "jcc_file";
 export default {
   data() {
     return {
       bellImg,
-      showWords: true,
+      copyButton,
+      exportImg,
+      showWords: false,
       password: "",
-      wordList: ["我", "我", "我", "我", "我", "我", "我", "我", "我", "我", "我", "我"]
+      wordList: []
     }
   },
   components: {
@@ -55,9 +69,25 @@ export default {
   computed: {
     jcWallet() {
       return this.$store.getters.jcWallet;
+    },
+    wordsStr() {
+      let wordList = this.wordList;
+      let str = "";
+      if (Array.isArray(wordList) && wordList.length > 0) {
+        for (let word of wordList) {
+          str = str + word;
+        }
+      }
+      return str;
     }
   },
   methods: {
+    onCopy() {
+      Toast.success(this.$t("message.home.copySuccess"));
+    },
+    onError() {
+      Toast.fail(this.$t("message.home.copyError"));
+    },
     setPassData(password) {
       this.password = password;
     },
@@ -71,20 +101,22 @@ export default {
       inst.getSecretWithType(password, "swt").then(() => {
         let mnemonicData = Lockr.get("mnemonicData");
         let mnemonic = decrypt(password, mnemonicData);
-        this.wordList = this.getWords(mnemonic);
+        this.wordList = mnemonic.split(" ");
         this.showWords = true;
       }).catch((error) => {
         Toast.fail(this.$t(getError(error)));
       })
     },
-    getWords(mnemonic) {
-      let list = [];
-      for (let data of mnemonic) {
-        if (!data) {
-          list.push(data);
-        }
+    exportFile() {
+      if (!this.wordsStr) {
+        return;
       }
-      return list;
+      let text = this.wordsStr;
+      exportToText(text, "CSV").then(() => {
+        Toast.success(this.$t("message.setting.exportSuccess"));
+      }).catch((error) => {
+        Toast.fail(this.$t(getError(error)));
+      })
     }
   }
 }
@@ -149,7 +181,38 @@ export default {
   }
   .buttonClass {
     display: flex;
+    padding-top: 20px;
     .copyClass {
+      width: 50%;
+      text-align: left;
+      button {
+        background-color: #05c2c2;
+        border-radius: 6px;
+        border: none;
+        height: 48px;
+        line-height: 48px;
+        width: 95%;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #ffffff;
+      }
+    }
+    .exportClass {
+      width: 50%;
+      text-align: right;
+      button {
+        background-color: #4484fe;
+        border-radius: 6px;
+        border: none;
+        height: 48px;
+        line-height: 48px;
+        width: 95%;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #ffffff;
+      }
     }
   }
 }

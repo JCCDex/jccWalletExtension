@@ -98,26 +98,6 @@ export const findCurrentNode = (nodeList) => {
   return currentNode;
 }
 
-// // 解密
-// export const decrypt = (password, encryptData) => {
-//   if (isEmptyObject(encryptData) || isEmptyObject(encryptData.crypto) || isEmptyObject(encryptData.crypto.kdfparams)) {
-//     throw new Error(KEYSTORE_IS_INVALID);
-//   }
-//   const iv = Buffer.from(encryptData.crypto.iv, "hex");
-//   const kdfparams = encryptData.crypto.kdfparams;
-//   const derivedKey = scrypt(Buffer.from(password), Buffer.from(kdfparams.salt, "hex"), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen);
-//   const ciphertext = Buffer.from(encryptData.ciphertext, "hex");
-//   const mac = createKeccakHash("keccak256")
-//     .update(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
-//     .digest();
-//   if (mac.toString("hex") !== encryptData.mac) {
-//     throw new Error(PASSWORD_IS_WRONG);
-//   }
-//   const decipher = crypto.createDecipheriv("aes-128-ctr", derivedKey.slice(0, 16), iv);
-//   const seed = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
-//   return seed.toString();
-// }
-
 // 存储助记词信息
 export const saveMnemonicData = (data, password) => {
   let mnemonic = data.mnemonic; // 助记词
@@ -130,6 +110,7 @@ export const saveMnemonicData = (data, password) => {
   Lockr.set("mnemonicData", mnemonicData); // 存储助记词相关信息
 }
 
+// 更新助记词存储数据
 export const updateMnemonicData = (data) => {
   let mnemonicData = Lockr.get("mnemonicData");
   if (data.privateKey && data.pathUrl) {
@@ -150,7 +131,7 @@ export const delPathByAddress = (address = "") => {
   if (!isEmptyObject(mnemonicData)) {
     let pathList = mnemonicData.pathList;
     let list = {};
-    if (address) { // 传入 address  为空时，删除所有路径
+    if (address) { // 传入 address 为空时，删除所有路径
       for (let key in pathList) {
         if (key !== address) {
           list[`${key}`] = pathList[`${key}`];

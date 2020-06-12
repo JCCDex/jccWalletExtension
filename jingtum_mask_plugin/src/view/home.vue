@@ -5,7 +5,7 @@
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
     <div v-if="noJcWallet" class="input_div">
       <button class="homeBtn" @click="goTo('newWallet')">{{this.$t("message.home.create_wallet")}}</button>
-      <button class="homeBtn" @click="goTo('import')" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
+      <button class="homeBtn" @click="goTo('importByMnenonic')" style="background:#00BD91;">{{this.$t("message.home.import_wallet")}}</button>
     </div>
     <div v-else>
       <div class="input_div">

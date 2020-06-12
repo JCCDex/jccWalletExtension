@@ -36,6 +36,7 @@ import titleRight from "../images/titleRight.png";
 import jingChang from "../images/jingChang.png";
 import mainmenu from "@/components/mainMenu";
 import Lockr from "lockr";
+import { getUserBalances } from "../js/user";
 export default {
   name: "myWallet",
   data() {
@@ -48,6 +49,9 @@ export default {
   },
   components: {
     mainmenu
+  },
+  created() {
+    getUserBalances();
   },
   computed: {
     swtAddress() {
