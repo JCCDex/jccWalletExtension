@@ -75,8 +75,9 @@ export default {
       let str = "";
       if (Array.isArray(wordList) && wordList.length > 0) {
         for (let word of wordList) {
-          str = str + word;
+          str = str + word + " ";
         }
+        str = str.trim();
       }
       return str;
     }

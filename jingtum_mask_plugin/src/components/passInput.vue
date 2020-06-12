@@ -27,7 +27,7 @@ export default {
   props: {
     passData: { type: String, default: "" }, // 对比的密码值，默认为空
     textMsg: { type: String, default: "" }, // input 框 placeholder 内容
-    borderColor: { type: String, default: "#366bf2" }, // 输入框边框颜色
+    borderColor: { type: String, default: "#D9DCE5" }, // 输入框边框颜色
     isSecret: { type: Boolean, default: false }, // 是否是秘钥输入框
   },
   created() {
