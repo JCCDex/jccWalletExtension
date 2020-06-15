@@ -105,5 +105,17 @@
     "titleText": "请在下面输入框内输入助记词",
     "errorText": "请输入完整的助记词",
     "errorText2": "输入的助记词不合法"
+  },
+  "transfer": {
+    "addressPlaceholder": "请输入对方钱包地址",
+    "coinText": "币种",
+    "coinPlaceholder": "请选择币种",
+    "coinNull": "币种不能为空",
+    "amountText": "数量",
+    "amountError": "请输入正确的数量",
+    "amountPlaceholder": "转账数量",
+    "memoText": "备注",
+    "memoPlaceholder": "备注（选填）",
+    "passwordText": "钱包密码"
   }
 }

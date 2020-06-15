@@ -121,11 +121,11 @@ export default {
 <style lang="scss" scoped>
 .div_class {
   .input_class {
-    width: 96%;
+    width: 84%;
     height: 44px;
     border-radius: 6px;
-    // border: 1px solid #366bf2;
-    padding-left: 10px;
+    padding-left: 4%;
+    padding-right: 12%;
     border-inline: none;
     outline: none;
     color: #090909;
@@ -136,7 +136,7 @@ export default {
   .eye_class {
     margin-top: -33px;
     text-align: right;
-    padding-right: 10px;
+    padding-right: 4px;
   }
   .error_class {
     color: #f74645;

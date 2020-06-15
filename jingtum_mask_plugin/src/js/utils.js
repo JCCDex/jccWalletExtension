@@ -76,6 +76,7 @@ export const getError = function(msg) {
   return errorMsg
 }
 
+// 查询当前节点
 export const findCurrentNode = (nodeList) => {
   let currentNode = "";
   let defaultList = nodeList.defaultList || [];

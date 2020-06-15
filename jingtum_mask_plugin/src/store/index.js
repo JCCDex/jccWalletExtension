@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     isLogin: NOT_LOGIN,
     jcWallet: JingchangWallet.get() || {},
     balance: "",
+    coins: [],
     currentNode: jcNodes[0] || {},
     defAddress: ""
   },
@@ -36,6 +37,9 @@ const store = new Vuex.Store({
     },
     SET_BALANCE(state, balance) {
       Vue.set(state, 'balance', balance);
+    },
+    SET_COINS(state, coins) {
+      Vue.set(state, 'coins', coins);
     },
     SET_CURRENTNODE(state, currentNode) {
       Vue.set(state, 'currentNode', currentNode);
@@ -54,6 +58,9 @@ const store = new Vuex.Store({
     updateBalance: ({
       commit
     }, balance) => commit('SET_BALANCE', balance),
+    updateCoins: ({
+      commit
+    }, coins) => commit('SET_COINS', coins),
     updateCurrentNode: ({
       commit
     }, currentNode) => commit('SET_CURRENTNODE', currentNode),
@@ -70,7 +77,8 @@ const store = new Vuex.Store({
       return address || "";
     },
     currentNode: state => state.currentNode,
-    defAddress: state => state.defAddress
+    defAddress: state => state.defAddress,
+    coins: state => state.coins
   }
 });
 

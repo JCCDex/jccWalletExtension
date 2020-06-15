@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="closeDialog()">
     <router-view/>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
     obtainPassword() {
       let password = this.passwrod;
       bus.$emit("setPassword", password);
+    },
+    closeDialog() {
+      bus.$emit("closeDialog");
     }
   }
 };

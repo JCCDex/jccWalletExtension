@@ -15,6 +15,7 @@
     <div v-if="step==='two'" class="setPassword">
       <setPassword @createdSuccess="createdSuccess"></setPassword>
     </div>
+    <!-- <van-loading v-show="showLoading" type="spinner" color="#1989fa" /> -->
   </div>
 </template>
 <script>
@@ -33,7 +34,8 @@ export default {
       wordList: [],
       currentIndex: 0,
       mnemonicData: "",
-      step: "one"
+      step: "one",
+      //   showLoading: false
     }
   },
   components: {
@@ -100,6 +102,7 @@ export default {
       }
     },
     goNext() {
+      //   this.showLoading = true;
       let mnemonic = "";
       let flag = true;
       for (let word of this.wordList) {
@@ -117,11 +120,14 @@ export default {
         if (isValid) {
           let data = createdWallet(mnemonic);
           this.mnemonicData = data;
+          //   this.showLoading = false;
           this.step = "two";
         } else {
+          //   this.showLoading = false;
           Toast.fail(this.$t("message.importText.errorText2"));
         }
       } else {
+        // this.showLoading = false;
         Toast.fail(this.$t("message.importText.errorText"));
       }
     }

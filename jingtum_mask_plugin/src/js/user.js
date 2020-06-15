@@ -8,6 +8,7 @@ const bip39 = require("bip39");
 const bip32 = require("bip32");
 export const getUserBalances = async (fn) => {
   let balance = {};
+  let coins = [];
   // const address = store.getters.swtAddress;
   // console.log("address", address)
   // let wallets = store.getters.jcWallet.wallets;
@@ -26,6 +27,7 @@ export const getUserBalances = async (fn) => {
         continue;
       }
       let coin = key.split("_")[0];
+      let coinData = { value: coin };
       if (coin.indexOf('J') === 0) {
         coin = coin.substring(1, coin.length);
       }
@@ -36,8 +38,11 @@ export const getUserBalances = async (fn) => {
       const available = new BigNumber(value).minus(frozen).toString(10);
       if (new BigNumber(value).gt(0)) {
         balance[`${coin}`] = { available, frozen, total }; // total:总资产  available:可用资产  frozen:冻结资产
+        coinData.name = coin;
+        coins.push(coinData); // 保存币种
       }
     }
+    store.dispatch("updateCoins", coins);
     store.dispatch("updateBalance", balance);
   }
 }
