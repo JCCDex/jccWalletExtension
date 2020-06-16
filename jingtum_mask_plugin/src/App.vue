@@ -17,10 +17,12 @@ export default {
     getConfigs(); // 初始化相关数据
     bus.$on("savePassword", this.updatePassword);
     bus.$on("obtainPassword", this.obtainPassword);
+    bus.$on("goClose", this.closeDialog);
   },
   beforeDestroy() {
     bus.$off("savePassword", this.updatePassword);
     bus.$off("obtainPassword", this.obtainPassword);
+    bus.$off("goClose", this.closeDialog);
   },
   methods: {
     // 保存密码
@@ -32,8 +34,8 @@ export default {
       let password = this.passwrod;
       bus.$emit("setPassword", password);
     },
-    closeDialog() {
-      bus.$emit("closeDialog");
+    closeDialog(name) {
+      bus.$emit("closeDialog", name);
     }
   }
 };

@@ -40,7 +40,7 @@ export const getConfigs = () => {
           }
         }
       }
-      if (!address) {
+      if (address) {
         store.dispatch("updateDefAddress", address); // 更新默认钱包
       }
     }, 50);

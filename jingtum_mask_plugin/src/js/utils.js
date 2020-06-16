@@ -143,3 +143,27 @@ export const delPathByAddress = (address = "") => {
     Lockr.set("mnemonicData", mnemonicData);
   }
 }
+
+// 查询钱包是否冻结
+export const walletFrozen = async (wallet) => {
+  const inst = new JcExplorer(getExplorerHost());
+  // 查询最近100条记录，用于判断钱包是否冻结
+  let res = await inst.getHistory(getUUID(), wallet, 0, 100);
+  // 默认钱包未冻结
+  res.frozen = true;
+  if (res.result) {
+    let list = res.data.list;
+    // let type = 1;
+    for (let item of list) {
+      // 判断是否被动成交
+      if (item.type !== "OfferAffect") {
+        // 判断是否冻结
+        if (item.type === "SetBlackListP") {
+          res.frozen = false;
+        }
+        break;
+      }
+    }
+  }
+  return res;
+}

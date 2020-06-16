@@ -2,6 +2,20 @@
   <div>
     <commonHead :titleText="$t('message.home.transferText')"></commonHead>
     <div class="bodyClass">
+        <div class="content" style="padding-bottom:25px;">
+            <div class="name">{{$t("message.home.walletName")}}:</div>
+            <div class="value">
+              <input ref="address" @click.stop="toShowWalletList" :readonly="true" v-model="myAddress.name" />
+              <div class="checkCoin">
+               <img :src="checkCoin" @click.stop="toShowWalletList" style="width:12px;" />
+              </div>
+              <div class="walletList" v-if="showWalletList">
+                <div v-for="wallet in wallets" :key="wallet.address" @click.stop="checkMyAddress(wallet)" class="walletClass" :style="getStyle(wallet.address,'myWallet')">
+                    {{getAddressStr(wallet.address,wallet.memoName)}}
+                </div>
+              </div>
+            </div>
+      </div>
       <div class="content">
         <div class="name">{{$t("message.home.addressText")}}:</div>
         <div class="value">
@@ -15,9 +29,9 @@
       <div class="content">
         <div class="name">{{$t("message.transfer.coinText")}}:</div>
         <div class="value">
-          <input ref="token" :readonly="true"  :placeholder="$t('message.transfer.coinPlaceholder')" v-model="form.token.name" />
+          <input ref="token" :readonly="true" @click.stop="toShowCoins"  :placeholder="$t('message.transfer.coinPlaceholder')" v-model="form.token.name" />
           <div class="checkCoin">
-            <img :src="checkCoin" @click.stop="showCoins=!showCoins;" style="width:12px;" />
+            <img :src="checkCoin" @click.stop="toShowCoins" style="width:12px;" />
           </div>
           <div v-if="showCoins" class="coinClass">
             <div class="body" :style="getStyle(coin.value,'token')" @click.stop="checkCoins(coin)" v-for="coin in coins" :key="coin.value">{{coin.name}}</div>
@@ -42,11 +56,11 @@
       <div class="content">
         <div class="name">{{$t("message.transfer.passwordText")}}:</div>
         <div class="valueCommon" >
-          <passInput :textMsg="$t('message.home.passwordText4')" @setPassData="setPassData" style="width:98%;"></passInput>
+          <passInput ref="password" :textMsg="$t('message.home.passwordText4')" @setPassData="setPassData" style="width:98%;"></passInput>
         </div>
       </div>
       <div class="buttonClass">
-        <button>{{$t("message.home.sureText")}}</button>
+        <button @click="submitOrder()">{{$t("message.home.sureText")}}</button>
       </div>
     </div>
     <div v-if="showContact" class="contactClass">
@@ -63,18 +77,27 @@
         </div>
       </div>
     </div>
-    <div v-if="showContact" class="coverClass"></div>
+    <div v-if="showContact || loading" class="coverClass">
+        <div v-if="loading" style="margin-top:75%">
+          <van-loading   type="spinner" color="#6EFEFF" :size="50"></van-loading>
+        </div>
+    </div>
   </div>
 </template>
 <script>
 import commonHead from "../components/commonHead";
-import { jtWallet } from "jcc_wallet";
+import { jtWallet, JingchangWallet } from "jcc_wallet";
+import { JcExplorer } from "jcc_rpc";
 import passInput from "../components/passInput";
 import checkContact from "../images/contactsImg.png";
 import closeImg from "../images/closeImg.png";
 import checkCoin from "../images/checkCoin.png";
 import Lockr from "lockr";
 import bus from "../js/bus";
+import { getError, getUUID } from "../js/utils";
+import { Loading } from "vant";
+import Vue from 'vue'
+Vue.use(Loading);
 export default {
   data() {
     return {
@@ -90,7 +113,10 @@ export default {
       checkCoin,
       showContact: false,
       showCoins: false,
-      contactList: []
+      loading: false,
+      showWalletList: false,
+      contactList: [],
+      myAddress: { name: "", value: "" }
     }
   },
   components: {
@@ -98,6 +124,23 @@ export default {
     passInput
   },
   computed: {
+    address() {
+      let address = this.$store.getters.defAddress;
+      let data = { value: address };
+      let wallets = this.wallets || [];
+      let memoName = "";
+      for (let wallet of wallets) {
+        if (wallet.address === address) {
+          memoName = wallet.memoName;
+        }
+      }
+      let name = this.getAddressStr(address, memoName);
+      data.name = name;
+      return data;
+    },
+    wallets() {
+      return this.jcWallet.wallets || [];
+    },
     addressError() {
       let errorText = "";
       let address = this.form.address.value;
@@ -133,6 +176,9 @@ export default {
     },
     coins() {
       return this.$store.getters.coins;
+    },
+    jcWallet() {
+      return this.$store.getters.jcWallet;
     }
   },
   created() {
@@ -143,22 +189,60 @@ export default {
     bus.$off("closeDialog", this.closeDialog);
   },
   methods: {
-    closeDialog() {
-      this.showCoins = false;
+    toShowWalletList() {
+      this.showWalletList = !this.showWalletList;
+      bus.$emit("goClose", "myWallet");
+    },
+    toShowCoins() {
+      this.showCoins = !this.showCoins;
+      bus.$emit("goClose", "coins")
+    },
+    closeDialog(name) {
+      if (name !== "coins") {
+        this.showCoins = false;
+      }
+      if (name !== "myWallet") {
+        this.showWalletList = false;
+      }
+    },
+    checkMyAddress(wallet) {
+      let address = wallet.address;
+      let memoName = wallet.memoName;
+      let name = this.getAddressStr(address, memoName);
+      this.myAddress = { name, value: address };
+      this.showWalletList = false;
+      bus.$emit("goClose", "myWallet");
     },
     init() {
       let contactList = Lockr.get("contactList") || [];
       this.contactList = [...contactList];
+      this.myAddress = this.address;
     },
     setPassData(password) {
       this.form.password = password;
     },
+    getAddressStr(address, memoName = "") {
+      let str = "";
+      if (address) {
+        str = address.substring(0, 4) + "******" + address.substring(address.length - 4, address.length);
+      }
+      if (memoName) {
+        str = memoName + ": " + str;
+      }
+      return str;
+    },
     checkAddress(address) {
       this.form.address.value = address;
       this.showContact = false;
+      bus.$emit("goClose", "coins");
     },
     getStyle(data, type) {
-      let value = this.form[`${type}`].value;
+      let value = "";
+      if (type === "myWallet") {
+        value = this.myAddress.value;
+      } else {
+        value = this.form[`${type}`].value;
+      }
       let background = "";
       if (value === data) {
         background = "background-color:#EFF3FC;"
@@ -169,6 +253,68 @@ export default {
       this.form.token.value = coin.value;
       this.form.token.name = coin.name;
       this.showCoins = false;
+    },
+    // 判断钱包是否激活
+    getActive(address) {
+      return new Promise(async (resolve, reject) => {
+        const inst = new JcExplorer(getExplorerHost());
+        let res = await inst.getBalances(getUUID(), address);
+        if (res.code >= 0) {
+          return resolve(res.code);
+        }
+      });
+    },
+    async isValidFrozen(text, address) {
+      let res = await walletFrozen(address);
+      let flag = true;
+      // 判断转出钱包是否冻结；
+      if (res.result) {
+        if (!res.frozen) {
+          this.$message({
+            type: "error",
+            message: text
+          })
+          flag = false;
+        }
+      } else {
+        this.$message({
+          type: "error",
+          message: this.$t(getError(res.msg))
+        })
+        flag = false;
+      }
+      return flag;
+    },
+    submitOrder() {
+      let valid = this.formValidate();
+      if (valid) {
+        return;
+      }
+      this.validPassword();
+
+    },
+    validPassword() {
+      let password = this.form.password.value;
+      let jcWallet = this.jcWallet;
+      let inst = new JingchangWallet(jcWallet);
+      inst.getSecretWithType(password, "swt").then(() => {
+
+      })
+    },
+    // 验证必填输入框信息
+    formValidate() {
+      if (this.$refs.address.focus()) {
+        return true
+      } else if (!this.form.token.value) {
+        this.form.token.isFocus = true;
+        return true;
+      } else if (this.$refs.amount.focus()) {
+        return true;
+      } else if (this.$refs.password.isValid()) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
@@ -218,6 +364,23 @@ export default {
           font-size: 16px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+      .walletList {
+        position: absolute;
+        width: 65%;
+        margin-top: 5px;
+        max-height: 200px;
+        background-color: #ffffff;
+        z-index: 5000;
+        border-radius: 6px;
+        border: 1px solid #366bf2;
+        overflow-y: scroll;
+        .walletClass {
+          padding-left: 10px;
+          text-align: left;
           height: 40px;
           line-height: 40px;
         }
@@ -325,7 +488,7 @@ export default {
 .coverClass {
   width: 100%;
   height: 100%;
-  opacity: 0.6;
+  opacity: 0.7;
   position: absolute;
   top: 0;
   left: 0;
