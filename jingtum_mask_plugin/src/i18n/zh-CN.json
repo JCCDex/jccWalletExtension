@@ -123,5 +123,13 @@
     "addressActive": "转入钱包未激活",
     "transferSuccess": "转账成功",
     "searchFail": "查询失败，请转入浏览器手动查询"
+  },
+  "history": {
+    "title": "历史记录",
+    "nameOne": "委托",
+    "nameTwo": "撤单",
+    "nameThree": "转账",
+    "nameFour": "收款",
+    "nameFive": "未知类型"
   }
 }

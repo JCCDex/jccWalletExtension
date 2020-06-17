@@ -6,19 +6,15 @@ import { BigNumber } from 'bignumber.js';
 import Lockr from "lockr";
 const bip39 = require("bip39");
 const bip32 = require("bip32");
-export const getUserBalances = async (fn) => {
+export const getUserBalances = async (address = "") => {
   let balance = {};
   let coins = [];
-  // const address = store.getters.swtAddress;
-  // console.log("address", address)
-  // let wallets = store.getters.jcWallet.wallets;
-  // if (!wallets) {
-  //   for (let i = 0; i < 3; i++) {
-  //     wallets = store.getters.jcWallet.wallets;
-  //   }
-  // }
+  if (!address) {
+    address = store.getters.defAddress;
+  }
+  address = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
   const instExplorer = ExplorerFactory.init(getExplorerHost());
-  const res = await instExplorer.getBalances(getUUID(), 'jHXA8QvnogEw3exos7V2t3UXZmDWhDgHQT');
+  const res = await instExplorer.getBalances(getUUID(), address);
   if (res.result) {
     const { data } = res;
     for (const key in data) {

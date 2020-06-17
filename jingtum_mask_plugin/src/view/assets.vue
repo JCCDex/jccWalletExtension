@@ -18,7 +18,6 @@
            </div>
          </div>
        </div>
-       <van-dialog v-model="show" title="标题" show-cancel-button></van-dialog>
     </div>
   </div>
 </template>
@@ -26,7 +25,6 @@
 import commonHead from "../components/commonHead";
 import defaultImg from "../images/defaultImg.png";
 import defaultImg2 from "../images/defaultImg2.png";
-import { Dialog } from "vant";
 import Lockr from "lockr";
 export default {
   data() {
@@ -38,8 +36,7 @@ export default {
     };
   },
   components: {
-    commonHead,
-    [Dialog.Component.name]: Dialog.Component
+    commonHead
   },
   computed: {
     balance() {

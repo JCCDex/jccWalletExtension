@@ -4,7 +4,7 @@
       <img :src="titleLeft" @click="goAssets" style="width:26px;height:26px; cursor: pointer;" />
       <div class="middle">
         <div class="name">{{$t("message.home.walletName")}}</div>
-        <div class="address">{{getAddressStr(swtAddress)}}</div>
+        <div class="address">{{getAddressStr(address)}}</div>
       </div>
       <img :src="titleRight" style="width:26px;height:18px;" @click="showMenu=!showMenu" />
     </div>
@@ -28,15 +28,53 @@
         <button class="button_right" @click="goTo('transfer')" >{{$t("message.home.tranferText")}}</button>
       </div>
     </div>
+    <div class="history">
+      <div class="title">{{$t("message.history.title")}}</div>
+      <div v-for="(data,index) in dataList" :key="index" class="content">
+        <div class="bodyOne" @click="seeMore(index)">
+          <div class="timeClass">
+              <div>{{getTime(data.time,3)}}</div>
+              <div>
+                <img :src="arrowDown" v-if="currentIndex===index"  style="width:13px;" />
+                <img :src="arrowUp" v-if="currentIndex!==index"  style="width:13px;" />
+             </div>
+          </div>
+          <div class="typeOne">
+            <div class="name">{{getDataName(data.type)}}</div>
+            <div class="value">
+              <span v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
+                  <span :style="getStyle(data.type)">{{data.takerPays.value}}</span>
+                  <span>{{getCoinName(data.takerPays.currency)}}</span>
+                  <img :src="takerTo" style="width:14px;padding-bottom:3px;" />
+                  <span :style="getStyle(data.type)">{{data.takerGets.value}}</span>
+                  <span>{{getCoinName(data.takerGets.currency)}}</span>
+              </span>
+              <span v-if="data.type==='Receive' || data.type==='Send'">
+                  <span v-if="data.type==='Send'" :style="getStyle(data.type)">{{"-"}}</span>
+                  <span v-if="data.type==='Receive'" :style="getStyle(data.type)">{{"+"}}</span>
+                  <span :style="getStyle(data.type)">{{data.amount.value}}</span>
+                  <span>{{getCoinName(data.amount.currency)}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import titleLeft from "../images/titleLeft.png";
 import titleRight from "../images/titleRight.png";
 import jingChang from "../images/jingChang.png";
+import arrowUp from "../images/arrowUp.png";
+import arrowDown from "../images/arrowDown.png";
+import takerTo from "../images/takerTo.png";
 import mainmenu from "@/components/mainMenu";
 import Lockr from "lockr";
 import { getUserBalances } from "../js/user";
+import { JcExplorer } from "jcc_rpc";
+import { getExplorerHost } from "../js/api";
+import { getUUID, formatTime } from "../js/utils";
 export default {
   name: "myWallet",
   data() {
@@ -44,7 +82,12 @@ export default {
       titleLeft,
       titleRight,
       jingChang,
-      showMenu: false
+      arrowDown,
+      arrowUp,
+      takerTo,
+      showMenu: false,
+      dataList: [],
+      currentIndex: -1
     };
   },
   components: {
@@ -52,10 +95,11 @@ export default {
   },
   created() {
     getUserBalances();
+    this.getTransHistory(0);
   },
   computed: {
-    swtAddress() {
-      let address = this.$store.getters.swtAddress;
+    address() {
+      let address = this.$store.getters.defAddress;
       return address;
     },
     currentCoin() {
@@ -74,9 +118,69 @@ export default {
         total = asset.total;
       }
       return total;
+    },
+    coins() {
+      return this.$store.getters.coins;
     }
   },
   methods: {
+    seeMore(index) {
+      if (this.currentIndex === index) {
+        this.currentIndex = -1;
+      } else {
+        this.currentIndex = index;
+      }
+    },
+    getCoinName(value) {
+      if (value === "SWTC") {
+        return value;
+      }
+      let name = value;
+      let coins = this.coins;
+      for (let coin of coins) {
+        if (coin.value === value) {
+          name = coin.name;
+          break;
+        }
+      }
+      return name;
+    },
+    getStyle(type) {
+      let str = "color:";
+      if (type === "OfferCreate") {
+        str = str + "#07C5F2;";
+      }
+      if (type === "OfferCancel") {
+        str = str + "#FF8213;";
+      }
+      if (type === "Send") {
+        str = str + "#F24746;";
+      }
+      if (type === "Receive") {
+        str = str + "#05C2C2;";
+      }
+      return str;
+    },
+    getTime(time, status) {
+      time = (time + 946684800) * 1000;
+      return formatTime(time, status);
+    },
+    getDataName(type) {
+      let name = this.$t("message.history.nameFive");
+      if (type === "OfferCreate") {
+        name = this.$t("message.history.nameOne");
+      }
+      if (type === "OfferCancel") {
+        name = this.$t("message.history.nameTwo");
+      }
+      if (type === "Send") {
+        name = this.$t("message.history.nameThree");
+      }
+      if (type === "Receive") {
+        name = this.$t("message.history.nameFour");
+      }
+      return name;
+    },
     getAddressStr(address) {
       let startStr = address.substring(0, 4);
       let endStr = address.substring(address.length - 6, address.length);
@@ -92,6 +196,18 @@ export default {
       this.$router.push({
         name: name
       })
+    },
+    async  getTransHistory(page = 0) {
+      const inst = new JcExplorer(getExplorerHost());
+      //   let wallet = this.address;
+      let wallet = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
+      let size = 20;
+      let optionParams = {};
+      let res = await inst.getHistory(getUUID(), wallet, page, size, optionParams);
+      if (res.result) {
+        console.log(res.data.list);
+        this.dataList = res.data.list;
+      }
     }
   }
 };
@@ -106,7 +222,7 @@ export default {
 }
 .title_class {
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -215,6 +331,48 @@ export default {
       border: none;
       border-inline: none;
       width: 80%;
+    }
+  }
+}
+.history {
+  padding-top: 20px;
+  height: 500px;
+  .title {
+    padding-left: 20px;
+    text-align: left;
+  }
+  .content {
+    // padding: 0 20px;
+    border-bottom: 1px solid #dae0ed;
+    .bodyOne {
+      padding: 0 20px;
+      background-color: #f6f7f9;
+      .timeClass {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 5px;
+        color: #3e4045;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+      }
+      .typeOne {
+        display: flex;
+        color: #3e4045;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        text-align: left;
+        .name {
+          width: 20%;
+        }
+        .value {
+          width: 80%;
+          height: 30px;
+          line-height: 30px;
+          white-space: nowrap;
+        }
+      }
     }
   }
 }
