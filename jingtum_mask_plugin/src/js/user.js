@@ -28,6 +28,9 @@ export const getUserBalances = async (fn) => {
       }
       let coin = key.split("_")[0];
       let coinData = { value: coin };
+      if (coin === "SWTC") {
+        coinData.value = "SWT";
+      }
       if (coin.indexOf('J') === 0) {
         coin = coin.substring(1, coin.length);
       }

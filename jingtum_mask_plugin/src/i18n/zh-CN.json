@@ -116,6 +116,12 @@
     "amountPlaceholder": "转账数量",
     "memoText": "备注",
     "memoPlaceholder": "备注（选填）",
-    "passwordText": "钱包密码"
+    "passwordText": "钱包密码",
+    "walletFrozen": "转出钱包已冻结",
+    "addressFrozen": "转入钱包已冻结",
+    "walletActive": "转出钱包未激活",
+    "addressActive": "转入钱包未激活",
+    "transferSuccess": "转账成功",
+    "searchFail": "查询失败，请转入浏览器手动查询"
   }
 }

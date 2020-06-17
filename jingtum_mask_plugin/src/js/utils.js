@@ -1,5 +1,7 @@
 import { encrypt } from "jcc_wallet/lib/util";
 import { jtWallet } from "jcc_wallet";
+import { JcExplorer } from 'jcc_rpc';
+import { getExplorerHost } from "./api";
 import Lockr from "lockr";
 
 export const browser = {
@@ -72,7 +74,7 @@ export const getError = function(msg) {
   let mapMsg = new Map([
     ["Error: password is wrong", "message.home.passwordWrong"]
   ]);
-  let errorMsg = mapMsg.get(msg);
+  let errorMsg = mapMsg.get(msg) || msg;
   return errorMsg
 }
 

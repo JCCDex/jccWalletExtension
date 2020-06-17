@@ -87,15 +87,17 @@
 <script>
 import commonHead from "../components/commonHead";
 import { jtWallet, JingchangWallet } from "jcc_wallet";
-import { JcExplorer } from "jcc_rpc";
+import JCCExchange from "jcc_exchange";
+import { ExplorerFactory, JcExplorer } from "jcc_rpc";
 import passInput from "../components/passInput";
 import checkContact from "../images/contactsImg.png";
 import closeImg from "../images/closeImg.png";
 import checkCoin from "../images/checkCoin.png";
 import Lockr from "lockr";
 import bus from "../js/bus";
-import { getError, getUUID } from "../js/utils";
-import { Loading } from "vant";
+import { getError, getUUID, walletFrozen } from "../js/utils";
+import { getExplorerHost } from "../js/api";
+import { Loading, Toast } from "vant";
 import Vue from 'vue'
 Vue.use(Loading);
 export default {
@@ -116,7 +118,8 @@ export default {
       loading: false,
       showWalletList: false,
       contactList: [],
-      myAddress: { name: "", value: "" }
+      myAddress: { name: "", value: "" },
+      tranferCount: 1
     }
   },
   components: {
@@ -254,52 +257,142 @@ export default {
       this.form.token.name = coin.name;
       this.showCoins = false;
     },
+    isValidFrozen(address) {
+      return new Promise(async (resolve, reject) => {
+        let res = await walletFrozen(address);
+        let flag = true;
+        if (res.result) {
+          if (!res.frozen) {
+            flag = false;
+          }
+        } else {
+          flag = false;
+        }
+        return resolve(flag);
+      });
+    },
+    async  submitOrder() {
+      this.loading = true;
+      let valid = this.formValidate();
+      if (valid) {
+        this.loading = false;
+        return;
+      }
+      let password = this.form.password;
+      let address = this.myAddress.value;
+      let to = this.form.address.value;
+      let currency = this.form.token.value;
+      let amount = this.form.amount.value;
+      let memo = this.form.memo.value;
+      let jcWallet = this.jcWallet;
+      let urls = process.env.jcNodes;;
+      let inst = new JingchangWallet(jcWallet);
+      let isFrozen = false;
+      let isActive = false;
+      inst.getSecretWithAddress(password, address).then((secret) => {
+        // 判断双方钱包是否激活
+        this.addressActive(address, to).then(() => {
+          // 判断钱包是否冻结
+          this.isValidAddress(address, to).then(() => {
+            JCCExchange.init(urls);
+            JCCExchange.transfer(address, secret, amount, memo, to, currency).then((hash) => {
+              setTimeout(() => {
+                this.searchHash(hash);
+              }, 1000 * 10);
+            }).catch(error => {
+              this.loading = false;
+              this.form.password = "";
+              Toast.fail(error.message);
+            })
+          }).catch((error) => {
+            this.loading = false;
+            this.form.password = "";
+            Toast.fail(error);
+          })
+        }).catch((error) => {
+          this.loading = false;
+          this.form.password = "";
+          Toast.fail(error);
+        });
+      }).catch((error) => {
+        this.loading = false;
+        this.form.password = "";
+        Toast.fail(this.$t(getError(error)));
+      })
+
+    },
+    async searchHash(hash) {
+      const inst = new JcExplorer(getExplorerHost());
+      let res = await inst.orderDetail(getUUID(), hash);
+      if (res.result && res.data && res.data.succ === "tesSUCCESS") {
+        Toast.success(this.$t("message.transfer.transferSuccess"));
+        this.form.password = "";
+        this.tranferCount = 1;
+        this.loading = false;
+      } else {
+        // 查询失败重复查询3次
+        if (this.tranferCount < 3) {
+          setTimeout(() => {
+            this.searchHash(hash);
+          }, 1500);
+          this.tranferCount++;
+        } else {
+          this.tranferCount = 1;
+          this.loading = false;
+          Toast.fail(this.$t("message.transfer.searchFail"));
+        }
+      }
+    },
+    // 判断钱包是否冻结
+    isValidAddress(wallet, address) {
+      return new Promise(async (resolve, reject) => {
+        let isFrozen = await this.isValidFrozen(wallet);
+        if (!isFrozen) {
+          reject(this.$t("message.transfer.walletFrozen"))
+        } else {
+          let isFrozen2 = await this.isValidFrozen(address);
+          if (!isFrozen2) {
+            reject(this.$t("message.transfer.addressFrozen"));
+          } else {
+            resolve(true);
+          }
+        }
+      })
+    },
+    addressActive(wallet, address) {
+      return new Promise(async (resolve, reject) => {
+        let code = await this.getActive(wallet);
+        if (code === "2004") {
+          //   Toast.fail(this.$t("message.transfer.walletActive"));
+          return reject(this.$t("message.transfer.walletActive"));
+        } else {
+          //   判断转入币种是否是  swt
+          let token = this.form.token.value;
+          let amount = this.form.amount.value;
+          if (token === "SWTC" && amount >= 35) {
+            return resolve(true);
+          } else {
+            // 判断转入钱包是否激活
+            let code2 = await this.getActive(address);
+            if (code2 === "2004") {
+              //   Toast.fail(this.$t("message.transfer.addressActive"));
+              return reject(this.$t("message.transfer.addressActive"));
+            } else {
+              return resolve(true);
+            }
+          }
+        }
+      });
+    },
     // 判断钱包是否激活
     getActive(address) {
       return new Promise(async (resolve, reject) => {
-        const inst = new JcExplorer(getExplorerHost());
-        let res = await inst.getBalances(getUUID(), address);
+        const instExplorer = ExplorerFactory.init(getExplorerHost());
+        const res = await instExplorer.getBalances(getUUID(), address);
         if (res.code >= 0) {
           return resolve(res.code);
         }
       });
-    },
-    async isValidFrozen(text, address) {
-      let res = await walletFrozen(address);
-      let flag = true;
-      // 判断转出钱包是否冻结；
-      if (res.result) {
-        if (!res.frozen) {
-          this.$message({
-            type: "error",
-            message: text
-          })
-          flag = false;
-        }
-      } else {
-        this.$message({
-          type: "error",
-          message: this.$t(getError(res.msg))
-        })
-        flag = false;
-      }
-      return flag;
-    },
-    submitOrder() {
-      let valid = this.formValidate();
-      if (valid) {
-        return;
-      }
-      this.validPassword();
-
-    },
-    validPassword() {
-      let password = this.form.password.value;
-      let jcWallet = this.jcWallet;
-      let inst = new JingchangWallet(jcWallet);
-      inst.getSecretWithType(password, "swt").then(() => {
-
-      })
     },
     // 验证必填输入框信息
     formValidate() {
