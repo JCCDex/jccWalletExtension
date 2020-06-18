@@ -264,6 +264,7 @@ export default {
     padding-top: 30px;
     padding-left: 4%;
     .content {
+      user-select: none;
       width: 21%;
       margin-right: 3%;
       height: 36px;

@@ -54,7 +54,7 @@ export default {
     },
     deleteContact(contact) {
       let msg = this.$t("message.setting.deleteText", { name: contact.name })
-      Dialog.confirm({
+      dialog.confirm({
         title: '',
         message: msg,
       }).then(() => {

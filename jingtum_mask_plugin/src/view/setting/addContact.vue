@@ -82,7 +82,7 @@ export default {
       list.push(data);
       Lockr.set("contactList", list);
       Toast.success(this.$t("message.setting.addSuccess"))
-      this.reset();
+      this.$router.go(-1);
     },
     reset() {
       this.memoName = { name: "", isFocus: false };

@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       wallet: "",
-      memoName: "SWTC",
+      memoName: "Account",
       password: "",
       copyImg,
       mnemonicData: ''
@@ -68,6 +68,10 @@ export default {
   methods: {
     init() {
       bus.$emit("obtainPassword");
+      let mnemonicData = Lockr.get("mnemonicData") || {};
+      let key = mnemonicData.currentCountKey || "1";
+      key = parseInt(key) + 1;
+      this.memoName = this.memoName + key;
     },
     setMemoName(memoName) {
       this.memoName = memoName;

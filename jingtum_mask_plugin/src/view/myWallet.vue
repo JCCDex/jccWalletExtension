@@ -9,7 +9,7 @@
       <img :src="titleRight" style="width:26px;height:18px;" @click="showMenu=!showMenu" />
     </div>
     <div class="mainMenus" :class="{'transitionShowMenu':showMenu}">
-      <mainmenu></mainmenu>
+      <mainmenu @setShowMenu="setShowMenu"></mainmenu>
     </div>
     <div class="image_div">
       <div>
@@ -127,8 +127,7 @@ export default {
     mainmenu
   },
   created() {
-    getUserBalances();
-    this.getTransHistory(0);
+    this.init();
   },
   computed: {
     address() {
@@ -136,7 +135,7 @@ export default {
       return address;
     },
     currentCoin() {
-      let coin = Lockr.get("assetName") || "SWTC";
+      let coin = this.$store.getters.assetName;
       return coin;
     },
     balance() {
@@ -157,6 +156,14 @@ export default {
     }
   },
   methods: {
+    init() {
+      getUserBalances();
+      this.getTransHistory(0);
+    },
+    setShowMenu() {
+      this.init();
+      this.showMenu = false;
+    },
     searchByHash(hash) {
       let url = "https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash=" + hash;
       window.open(url);
@@ -315,7 +322,6 @@ export default {
       let optionParams = {};
       let res = await inst.getHistory(getUUID(), wallet, page, size, optionParams);
       if (res.result) {
-        console.log(res.data.list);
         this.dataList = res.data.list;
       }
     }

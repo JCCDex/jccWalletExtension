@@ -42,7 +42,7 @@
       <div class="content">
         <div class="name">{{$t("message.transfer.amountText")}}:</div>
         <div class="valueCommon">
-          <input ref="amount" type="number" @focus="form.amount.isFocus=true;"  :placeholder="$t('message.transfer.amountPlaceholder')" v-model="form.amount.value" />
+          <input ref="amount" type="number" @focus="form.amount.isFocus=true;"  :placeholder="placeholderAmount" v-model="form.amount.value" />
         </div>
       </div>
       <div class="error">{{amountError}}</div>
@@ -96,6 +96,7 @@ import checkCoin from "../images/checkCoin.png";
 import Lockr from "lockr";
 import bus from "../js/bus";
 import { getError, getUUID, walletFrozen } from "../js/utils";
+import { getUserBalances } from "../js/user";
 import { getExplorerHost } from "../js/api";
 import { Loading, Toast } from "vant";
 import Vue from 'vue'
@@ -127,6 +128,16 @@ export default {
     passInput
   },
   computed: {
+    placeholderAmount() {
+      let coin = this.form.token.name;
+      let str = this.$t('message.transfer.amountPlaceholder');
+      if (coin) {
+        let available = this.available;
+        let amount = available + " " + coin;
+        str = this.$t('message.transfer.ableAmount', { amount });
+      }
+      return str;
+    },
     address() {
       let address = this.$store.getters.defAddress;
       let data = { value: address };
@@ -178,10 +189,38 @@ export default {
       return errorText;
     },
     coins() {
-      return this.$store.getters.coins;
+      if (this.isDefAddress) {
+        return this.$store.getters.coins;
+      } else {
+        return this.$store.getters.currentCoins;
+      }
     },
     jcWallet() {
       return this.$store.getters.jcWallet;
+    },
+    isDefAddress() {
+      let myAddress = this.myAddress.value;
+      let address = this.address.value;
+      if (myAddress === address) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    available() {
+      let amount = 0;
+      let coin = this.form.token.name;
+      let balance = {};
+      if (this.isDefAddress) {
+        balance = this.$store.getters.balance || {}; // 默认钱包资产
+      } else {
+        balance = this.$store.getters.currentBalance || {}; // 所选钱包资产
+      }
+      if (coin) {
+        let coinAble = balance[`${coin}`] || {};
+        amount = coinAble.available || 0;
+      }
+      return amount;
     }
   },
   created() {
@@ -210,6 +249,7 @@ export default {
     },
     checkMyAddress(wallet) {
       let address = wallet.address;
+      getUserBalances(address); // 更新资产和币种
       let memoName = wallet.memoName;
       let name = this.getAddressStr(address, memoName);
       this.myAddress = { name, value: address };
@@ -220,6 +260,9 @@ export default {
       let contactList = Lockr.get("contactList") || [];
       this.contactList = [...contactList];
       this.myAddress = this.address;
+      setTimeout(() => {
+        getUserBalances(); // 获取资产和币种
+      }, 50)
     },
     setPassData(password) {
       this.form.password = password;

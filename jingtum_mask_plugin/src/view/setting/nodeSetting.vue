@@ -21,7 +21,7 @@
              </div>
           </div>
           <div class="defaultClass" >
-              <div class="title">{{$t("message.setting.defaultNode")}}</div>
+              <div class="title">{{$t("message.setting.customNode")}}</div>
               <div  class="content" style="background-color:#EEF7F5;" >
                   <div v-for="(node,index) in customList" @click.stop="setCurrentNode(node.value)" class="listClass" :key="index" :style="getStyle(index,true)">
                     <div style="width:6%;">
@@ -159,14 +159,16 @@ export default {
     },
     editCurrentNode(node, dataList) { // 修改当前节点
       let list = [];
-      for (let data of dataList) {
-        if (data.isCurrentNode) {
-          data.isCurrentNode = false;
+      if (Array.isArray(dataList) && dataList.length > 0) {
+        for (let data of dataList) {
+          if (data.isCurrentNode) {
+            data.isCurrentNode = false;
+          }
+          if (data.value === node) {
+            data.isCurrentNode = true;
+          }
+          list.push(data);
         }
-        if (data.value === node) {
-          data.isCurrentNode = true;
-        }
-        list.push(data);
       }
       return list;
     },

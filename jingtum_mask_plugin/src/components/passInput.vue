@@ -105,7 +105,7 @@ export default {
     },
     // 密码格式验证
     passwordRules(pass) {
-      return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*^[^ |^*|^'|^"]+$).{8,64}$/.test(pass);
+      return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*^[^ |^*|^'|^"]+$).{8,64}$/.test(pass);
     },
     isValid() {
       this.password.isFocus = true;

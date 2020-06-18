@@ -23,7 +23,7 @@
      </div>
      <div v-if="!isShowSecret">
          <div class="input_div">
-          <passInput @setPassData="setPassData" ref="password" :textMsg="$t('message.home.passwordText4')"></passInput>
+          <passInput @setPassData="setPassData" ref="password" :textMsg="$t('message.home.passwordText5')"></passInput>
          </div>
          <div class="button_div">
           <button class="view_secret_btn"  @click="showSecret()">{{$t("message.home.sureText")}}</button>

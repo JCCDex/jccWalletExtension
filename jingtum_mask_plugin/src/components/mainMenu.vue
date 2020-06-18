@@ -8,7 +8,8 @@
       <div v-for="(wallet,index) in wallets" :key="index" @click="setDefaultWallet(wallet)" class="payWallets" :class="{'selectedWallet':wallet.default,'unselectedWallet':!wallet.default}">
         <div class="showAccount">
           <img v-show="wallet.default" :src="selectedIcon" class="selectedIcon">
-          <p>{{wallet.memoName}}</p>
+          <span>{{wallet.memoName}}</span>
+          <img :src="importWallet" style="width:14px;padding-left:10px;" v-if="showOther(wallet.address)" />
           <!-- <p style="color:#D0D4DD;fontSize:14px">{{`${getbalance(wallet.address)} ${assetName}`}}</p> -->
         </div>
         <div class="operateWallet">
@@ -34,6 +35,7 @@
 <script>
 import selectedIcon from "@/images/selectedIcon.png";
 import eyesIcon from "@/images/eyes.png";
+import importWallet from "@/images/importWallet.png";
 import delIcon from "@/images/delIcon.png";
 import rightArrowIcon from "@/images/rightArrow.png";
 import Lockr from "lockr";
@@ -49,6 +51,7 @@ export default {
       eyesIcon,
       delIcon,
       rightArrowIcon,
+      importWallet,
       isScroll: false,
       showDialog: false,
       titleText: "",
@@ -59,7 +62,7 @@ export default {
         { name: this.$t("message.menu.importWallet"), url: "importBySecret" },
         { name: this.$t("message.menu.clearWallet"), url: "clearAllWallet" },
         { name: this.$t("message.menu.setting"), url: "setting" },
-        { name: this.$t("message.menu.quit"), url: "" }
+        { name: this.$t("message.menu.quit"), url: "home" }
       ]
     };
   },
@@ -91,11 +94,26 @@ export default {
       return this.$store.getters.jcWallet;
     },
     assetName() {
-      let coin = Lockr.get("assetName") || "SWTC";
+      let coin = this.$store.getters.assetName;
       return coin;
     }
   },
   methods: {
+    setShowMenu() {
+      this.$emit("setShowMenu");
+    },
+    showOther(address) {
+      let mnemonicData = Lockr.get("mnemonicData") || {};
+      let dataList = mnemonicData.pathList || [];
+      let flag = true;
+      for (let key of Object.keys(dataList)) {
+        if (key === address) {
+          flag = false;
+          break;
+        }
+      }
+      return flag;
+    },
     checkScroll() {
       this.isScroll =
         this.$refs.warp.scrollHeight - this.$refs.warp.offsetHeight > 40;
@@ -153,13 +171,18 @@ export default {
       }
     },
     setDefaultWallet(wallet) {
-      if (wallet.default) return;
+      if (wallet.default) {
+        return;
+      }
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet);
       inst.setDefaultWallet(wallet.address).then(jcWallet => {
         JingchangWallet.save(jcWallet);
-        this.$store.dispatch("updateDefAddress", wallet.address);
-        this.$store.dispatch("updateJCWallet", jcWallet);
+        this.$store.dispatch("updateDefAddress", wallet.address); // 更新默认钱包
+        this.$store.dispatch("updateJCWallet", jcWallet); // 更新钱包信息
+        Lockr.set("assetName", "SWTC"); // 存储默认币种
+        this.$store.dispatch("updateAssetName", "SWTC"); // 更新默认币种
+        this.setShowMenu(); // 返回主页面
       });
     },
     lookWallet(name, address) {

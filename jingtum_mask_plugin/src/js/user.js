@@ -9,12 +9,13 @@ const bip32 = require("bip32");
 export const getUserBalances = async (address = "") => {
   let balance = {};
   let coins = [];
-  if (!address) {
-    address = store.getters.defAddress;
+  let currentAddress = store.getters.defAddress;
+  if (address) {
+    currentAddress = address;
   }
-  address = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
+  //   address = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
   const instExplorer = ExplorerFactory.init(getExplorerHost());
-  const res = await instExplorer.getBalances(getUUID(), address);
+  const res = await instExplorer.getBalances(getUUID(), currentAddress);
   if (res.result) {
     const { data } = res;
     for (const key in data) {
@@ -41,6 +42,11 @@ export const getUserBalances = async (address = "") => {
         coins.push(coinData); // 保存币种
       }
     }
+  }
+  if (address && address !== store.getters.defAddress) {
+    store.dispatch("updateCurrentCoins", coins);
+    store.dispatch("updateCurrentBalance", balance);
+  } else {
     store.dispatch("updateCoins", coins);
     store.dispatch("updateBalance", balance);
   }

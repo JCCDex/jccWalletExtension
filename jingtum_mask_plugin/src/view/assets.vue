@@ -52,6 +52,8 @@ export default {
     checkAsset(assetName) {
       this.currentName = assetName;
       Lockr.set("assetName", this.currentName);
+      this.$store.dispatch("updateAssetName", assetName);
+      this.$router.go(-1);
     }
   }
 };

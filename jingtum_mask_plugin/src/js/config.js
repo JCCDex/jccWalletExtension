@@ -43,6 +43,8 @@ export const getConfigs = () => {
       if (address) {
         store.dispatch("updateDefAddress", address); // 更新默认钱包
       }
+      let assetName = Lockr.get("assetName") || "SWTC";
+      store.dispatch("updateAssetName", assetName);
     }, 50);
   }
 }

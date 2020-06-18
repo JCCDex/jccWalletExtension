@@ -20,9 +20,12 @@ const store = new Vuex.Store({
     isLogin: NOT_LOGIN,
     jcWallet: JingchangWallet.get() || {},
     balance: "",
+    currentBalance: "",
     coins: [],
+    currentCoins: [],
     currentNode: jcNodes[0] || {},
-    defAddress: ""
+    defAddress: "",
+    assetName: "SWTC"
   },
   mutations: {
     SET_LOGIN_STATUS(state, isLogin) {
@@ -38,14 +41,23 @@ const store = new Vuex.Store({
     SET_BALANCE(state, balance) {
       Vue.set(state, 'balance', balance);
     },
+    SET_CURRENTBALANCE(state, currentBalance) {
+      Vue.set(state, 'currentBalance', currentBalance);
+    },
     SET_COINS(state, coins) {
       Vue.set(state, 'coins', coins);
+    },
+    SET_CURRENTCOINS(state, currentCoins) {
+      Vue.set(state, 'currentCoins', currentCoins);
     },
     SET_CURRENTNODE(state, currentNode) {
       Vue.set(state, 'currentNode', currentNode);
     },
     SET_DEFADDRESS(state, defAddress) {
       Vue.set(state, 'defAddress', defAddress);
+    },
+    SET_ASSETNAME(state, assetName) {
+      Vue.set(state, 'assetName', assetName);
     }
   },
   actions: {
@@ -58,27 +70,39 @@ const store = new Vuex.Store({
     updateBalance: ({
       commit
     }, balance) => commit('SET_BALANCE', balance),
+    updateCurrentBalance: ({
+      commit
+    }, currentBalance) => commit('SET_CURRENTBALANCE', currentBalance),
     updateCoins: ({
       commit
     }, coins) => commit('SET_COINS', coins),
+    updateCurrentCoins: ({
+      commit
+    }, currentCoins) => commit('SET_CURRENTCOINS', currentCoins),
     updateCurrentNode: ({
       commit
     }, currentNode) => commit('SET_CURRENTNODE', currentNode),
     updateDefAddress: ({
       commit
-    }, defAddress) => commit('SET_DEFADDRESS', defAddress)
+    }, defAddress) => commit('SET_DEFADDRESS', defAddress),
+    updateAssetName: ({
+      commit
+    }, assetName) => commit('SET_ASSETNAME', assetName)
   },
   getters: {
     isLogin: state => state.isLogin,
     jcWallet: state => state.jcWallet,
     balance: state => state.balance,
+    currentBalance: state => state.currentBalance,
     swtAddress(state) {
       const address = getAddress(state.jcWallet, 'swt');
       return address || "";
     },
     currentNode: state => state.currentNode,
     defAddress: state => state.defAddress,
-    coins: state => state.coins
+    coins: state => state.coins,
+    currentCoins: state => state.currentCoins,
+    assetName: state => state.assetName
   }
 });
 
