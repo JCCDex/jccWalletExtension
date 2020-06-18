@@ -130,6 +130,18 @@
     "nameTwo": "撤单",
     "nameThree": "转账",
     "nameFour": "收款",
-    "nameFive": "未知类型"
+    "nameFive": "未知类型",
+    "bussineType": "交易方向",
+    "price": "委托价格",
+    "transaction": "交易对家",
+    "hash": "交易哈希",
+    "gas": "手续费",
+    "rate": "费率",
+    "address": "平台账号",
+    "status": "多签名状态",
+    "buy": "买入",
+    "sell": "卖出",
+    "send": "支付",
+    "receive": "收到"
   }
 }

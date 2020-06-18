@@ -43,11 +43,11 @@
             <div class="name">{{getDataName(data.type)}}</div>
             <div class="value">
               <span v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
-                  <span :style="getStyle(data.type)">{{data.takerPays.value}}</span>
-                  <span>{{getCoinName(data.takerPays.currency)}}</span>
-                  <img :src="takerTo" style="width:14px;padding-bottom:3px;" />
                   <span :style="getStyle(data.type)">{{data.takerGets.value}}</span>
                   <span>{{getCoinName(data.takerGets.currency)}}</span>
+                  <img :src="takerTo" style="width:14px;padding-bottom:3px;" />
+                  <span :style="getStyle(data.type)">{{data.takerPays.value}}</span>
+                  <span>{{getCoinName(data.takerPays.currency)}}</span>
               </span>
               <span v-if="data.type==='Receive' || data.type==='Send'">
                   <span v-if="data.type==='Send'" :style="getStyle(data.type)">{{"-"}}</span>
@@ -58,6 +58,36 @@
             </div>
           </div>
         </div>
+        <div class="bodyTwo" v-if="currentIndex===index">
+             <div class="content" v-if="findType(data.type)">
+                 <div class="name" >{{$t("message.history.bussineType")}}</div>
+                 <div :style="getColor(data.type,data.flag)">{{getType(data.type,data.flag)}}</div>
+             </div>
+             <div class="content" v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
+                 <div class="name" >{{$t("message.history.price")}}</div>
+                 <div class="value">{{getPrice(data)}}</div>
+             </div>
+             <div class="content" v-if="data.type==='Send' || data.type==='Receive'">
+                 <div class="name" >{{$t("message.history.transaction")}}</div>
+                 <div class="value">{{getDataStr(data.account)}}</div>
+             </div>
+             <div class="content" v-if="findType(data.type)">
+                 <div class="name" >{{$t("message.history.hash")}}</div>
+                 <div class="value" style="cursor: pointer;" @click.stop="searchByHash(data.hash)">{{getDataStr(data.hash)}}</div>
+             </div>
+             <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                 <div class="name" >{{$t("message.history.gas")}}</div>
+                 <div class="value">{{getBrokerage(data.brokerage)}}</div>
+             </div>
+             <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                 <div class="name" >{{$t("message.history.rate")}}</div>
+                 <div class="value">{{getRate(data.brokerage)}}</div>
+             </div>
+              <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                 <div class="name" >{{$t("message.history.address")}}</div>
+                 <div class="value">{{getDataStr(data.brokerage.platform)}}</div>
+             </div>
+          </div>
       </div>
     </div>
   </div>
@@ -75,6 +105,7 @@ import { getUserBalances } from "../js/user";
 import { JcExplorer } from "jcc_rpc";
 import { getExplorerHost } from "../js/api";
 import { getUUID, formatTime } from "../js/utils";
+import { BigNumber } from 'bignumber.js';
 export default {
   name: "myWallet",
   data() {
@@ -87,7 +118,9 @@ export default {
       takerTo,
       showMenu: false,
       dataList: [],
-      currentIndex: -1
+      currentIndex: -1,
+      converData: {},
+      typeList: ["OfferCreate", "Receive", "Send", "OfferCancel", "OfferAffect"]
     };
   },
   components: {
@@ -124,6 +157,83 @@ export default {
     }
   },
   methods: {
+    searchByHash(hash) {
+      let url = "https://swtcscan.jccdex.cn/#/trade/tradeDetail/?hash=" + hash;
+      window.open(url);
+    },
+    getBrokerage(data) {
+      let str = data.value + " " + this.getCoinName(data.currency);
+      return str;
+    },
+    getRate(data) {
+      let num = new BigNumber(data.num);
+      let den = new BigNumber(data.den);
+      let count = num.div(den).times(new BigNumber(1000)).toString();
+      count = count + "‰";
+      return count;
+    },
+    getDataStr(value) {
+      let str = value.substring(0, 5) + "..." + value.substring(value.length - 4, value.length);
+      return str;
+    },
+    getPrice(data) {
+      let takerGet = data.takerGets.value;
+      let takerPay = data.takerPays.value;
+      let str = ""
+      let coinValue = ""
+      if (data.flag === 2) {
+        str = BigNumber(takerPay).div(BigNumber(takerGet)).toString()
+        coinValue = this.getCoinName(data.takerPays.currency);
+      } else {
+        str = BigNumber(takerGet).div(BigNumber(takerPay)).toString()
+        coinValue = this.getCoinName(data.takerGets.currency);
+      }
+      str = str + " " + coinValue;
+      return str;
+    },
+    getType(type, flag = 0) {
+      if (type === "Send") {
+        return this.$t("message.history.send");
+      } else if (type === "Receive") {
+        return this.$t("message.history.receive");
+      } else {
+        if (flag === 1) {
+          return this.$t("message.history.buy");
+        } else if (flag === 2) {
+          return this.$t("message.history.sell");
+        } else {
+          return this.$t("message.history.nameFive");
+        }
+      }
+    },
+    getColor(type, flag) {
+      let str = "color:";
+      if (type === "Send") {
+        str = str + "#E86D00;";
+      } else if (type === "Receive") {
+        str = str + "#00A3E8;";
+      } else {
+        if (flag === 1) {
+          str = str + "#FF301A;";
+        } else if (flag === 2) {
+          str = str + "#18C79E;";
+        } else {
+          str = str + "#3E4045;";
+        }
+      }
+      return str;
+    },
+    findType(type) {
+      let list = this.typeList;
+      let flag = false;
+      for (let data of list) {
+        if (data === type) {
+          flag = true;
+          break;
+        }
+      }
+      return flag;
+    },
     seeMore(index) {
       if (this.currentIndex === index) {
         this.currentIndex = -1;
@@ -339,14 +449,18 @@ export default {
   height: 500px;
   .title {
     padding-left: 20px;
+    padding-bottom: 10px;
     text-align: left;
+    color: #767a83;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
   }
   .content {
-    // padding: 0 20px;
-    border-bottom: 1px solid #dae0ed;
     .bodyOne {
       padding: 0 20px;
       background-color: #f6f7f9;
+      border-bottom: 1px solid #dae0ed;
       .timeClass {
         display: flex;
         justify-content: space-between;
@@ -371,6 +485,28 @@ export default {
           height: 30px;
           line-height: 30px;
           white-space: nowrap;
+        }
+      }
+    }
+    .bodyTwo {
+      background-color: #edf4fa;
+      border-bottom: 1px solid #dae0ed;
+      padding: 10px 20px;
+      .content {
+        display: flex;
+        height: 30px;
+        line-height: 30px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        text-align: left;
+        .name {
+          width: 30%;
+          color: #3e4045;
+        }
+        .vlaue {
+          width: 70%;
+          color: #56595e;
         }
       }
     }
