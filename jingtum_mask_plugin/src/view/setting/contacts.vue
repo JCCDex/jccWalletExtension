@@ -10,7 +10,7 @@
       </div>
       <div class="text">{{$t("message.setting.contactText")}}</div>
     </div>
-    <div class="contactClass">
+    <div v-if="contactList.length>0" class="contactClass">
       <div v-for ="(contact ,index) in contactList" :key="index" class="content" > 
        <div class="name">{{contact.name}}</div>
        <div class="address">
@@ -21,18 +21,24 @@
        </div>
       </div>
     </div>
+    <div v-else class="noDataClass">
+        <img :src="noContact" />
+        <div>{{$t("message.history.noContact")}}</div>
+    </div>
   </div>
 </template>
 <script>
 import commonHead from "../../components/commonHead";
 import contactsImg from "../../images/contactsImg.png";
 import deleteImg from "../../images/deleteImg.png";
+import noContact from "../../images/noContact.png";
 import Lockr from "lockr";
 import { Toast, dialog } from 'vant';
 export default {
   data() {
     return {
       contactsImg,
+      noContact,
       contactList: [],
       deleteImg
     }
@@ -136,6 +142,22 @@ export default {
         margin-top: 3px;
       }
     }
+  }
+}
+.noDataClass {
+  text-align: center;
+  color: #8a98b6;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  padding-top: 40%;
+  position: absolute;
+  background-color: #eff3fc;
+  width: 96%;
+  height: 44%;
+  margin: 2%;
+  img {
+    width: 160px;
   }
 }
 </style>

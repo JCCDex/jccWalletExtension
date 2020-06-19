@@ -17,6 +17,7 @@ export const getUserBalances = async (address = "") => {
   const instExplorer = ExplorerFactory.init(getExplorerHost());
   const res = await instExplorer.getBalances(getUUID(), currentAddress);
   if (res.result) {
+    store.dispatch("updateIsActive", true); // 更新钱包激活状态
     const { data } = res;
     for (const key in data) {
       const { value, frozen } = data[key];
@@ -42,6 +43,8 @@ export const getUserBalances = async (address = "") => {
         coins.push(coinData); // 保存币种
       }
     }
+  } else {
+    store.dispatch("updateIsActive", false); // 更新钱包激活状态
   }
   if (address && address !== store.getters.defAddress) {
     store.dispatch("updateCurrentCoins", coins);

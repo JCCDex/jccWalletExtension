@@ -25,7 +25,8 @@ const store = new Vuex.Store({
     currentCoins: [],
     currentNode: jcNodes[0] || {},
     defAddress: "",
-    assetName: "SWTC"
+    assetName: "SWTC",
+    isActive: false
   },
   mutations: {
     SET_LOGIN_STATUS(state, isLogin) {
@@ -58,6 +59,9 @@ const store = new Vuex.Store({
     },
     SET_ASSETNAME(state, assetName) {
       Vue.set(state, 'assetName', assetName);
+    },
+    SET_ISACTIVE(state, isActive) {
+      Vue.set(state, 'isActive', isActive);
     }
   },
   actions: {
@@ -87,7 +91,10 @@ const store = new Vuex.Store({
     }, defAddress) => commit('SET_DEFADDRESS', defAddress),
     updateAssetName: ({
       commit
-    }, assetName) => commit('SET_ASSETNAME', assetName)
+    }, assetName) => commit('SET_ASSETNAME', assetName),
+    updateIsActive: ({
+      commit
+    }, isActive) => commit('SET_ISACTIVE', isActive)
   },
   getters: {
     isLogin: state => state.isLogin,
@@ -102,7 +109,8 @@ const store = new Vuex.Store({
     defAddress: state => state.defAddress,
     coins: state => state.coins,
     currentCoins: state => state.currentCoins,
-    assetName: state => state.assetName
+    assetName: state => state.assetName,
+    isActive: state => state.isActive
   }
 });
 

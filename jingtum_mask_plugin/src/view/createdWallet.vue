@@ -70,7 +70,7 @@ export default {
       bus.$emit("obtainPassword");
       let mnemonicData = Lockr.get("mnemonicData") || {};
       let key = mnemonicData.currentCountKey || "1";
-      key = parseInt(key) + 1;
+      key = parseInt(key) + 2;
       this.memoName = this.memoName + key;
     },
     setMemoName(memoName) {

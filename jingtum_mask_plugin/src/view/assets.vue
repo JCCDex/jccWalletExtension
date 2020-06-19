@@ -1,7 +1,8 @@
 <template>
   <div>
     <commonHead :titleText="$t('message.home.checkAsset')"></commonHead>
-    <div class="body_class">
+    <div v-if="!noData" class="body_class">
+     <div>
        <div v-for="assetName in Object.keys(balance)" :key="assetName" class="content" @click="checkAsset(assetName)">
          <div style="text-align:left;">
            <span class="coinTitle">{{assetName}}</span>
@@ -18,6 +19,11 @@
            </div>
          </div>
        </div>
+     </div>
+    </div>
+    <div v-else class="noDataClass">
+      <img :src="noAsset" />
+      <div>{{$t("message.history.noAsset")}}</div>
     </div>
   </div>
 </template>
@@ -25,12 +31,15 @@
 import commonHead from "../components/commonHead";
 import defaultImg from "../images/defaultImg.png";
 import defaultImg2 from "../images/defaultImg2.png";
+import noAsset from "../images/noAsset.png";
+import { isEmptyObject } from "../js/utils";
 import Lockr from "lockr";
 export default {
   data() {
     return {
       defaultImg,
       defaultImg2,
+      noAsset,
       currentName: "SWTC",
       show: true
     };
@@ -42,6 +51,9 @@ export default {
     balance() {
       let balance = this.$store.getters.balance;
       return balance;
+    },
+    noData() {
+      return isEmptyObject(this.balance);
     }
   },
   created() {
@@ -95,6 +107,22 @@ export default {
         text-align: right;
       }
     }
+  }
+}
+.noDataClass {
+  text-align: center;
+  color: #8a98b6;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  position: absolute;
+  height: 88%;
+  width: 96%;
+  margin: 2%;
+  background-color: #eff3fc;
+  img {
+    width: 160px;
+    margin-top: 50%;
   }
 }
 </style>

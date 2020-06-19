@@ -4,9 +4,14 @@
       <img :src="titleLeft" @click="goAssets" style="width:26px;height:26px; cursor: pointer;" />
       <div class="middle">
         <div class="name">{{$t("message.home.walletName")}}</div>
-        <div class="address">{{getAddressStr(address)}}</div>
+        <div class="address">
+            <div class="text">{{getAddressStr(address)}}</div>
+            <div v-if="!isActive" class="image">
+              <img :src="activeImg" style="width:12px;" :title="$t('message.history.noActive')"/>
+            </div>
+        </div>
       </div>
-      <img :src="titleRight" style="width:26px;height:18px;" @click="showMenu=!showMenu" />
+      <img :src="titleRight" style="width:26px;height:18px;cursor: pointer;" @click="showMenu=!showMenu" />
     </div>
     <div class="mainMenus" :class="{'transitionShowMenu':showMenu}">
       <mainmenu @setShowMenu="setShowMenu"></mainmenu>
@@ -30,64 +35,70 @@
     </div>
     <div class="history">
       <div class="title">{{$t("message.history.title")}}</div>
-      <div v-for="(data,index) in dataList" :key="index" class="content">
-        <div class="bodyOne" @click="seeMore(index)">
-          <div class="timeClass">
-              <div>{{getTime(data.time,3)}}</div>
-              <div>
-                <img :src="arrowDown" v-if="currentIndex===index"  style="width:13px;" />
-                <img :src="arrowUp" v-if="currentIndex!==index"  style="width:13px;" />
-             </div>
-          </div>
-          <div class="typeOne">
-            <div class="name">{{getDataName(data.type)}}</div>
-            <div class="value">
-              <span v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
-                  <span :style="getStyle(data.type)">{{data.takerGets.value}}</span>
-                  <span>{{getCoinName(data.takerGets.currency)}}</span>
-                  <img :src="takerTo" style="width:14px;padding-bottom:3px;" />
-                  <span :style="getStyle(data.type)">{{data.takerPays.value}}</span>
-                  <span>{{getCoinName(data.takerPays.currency)}}</span>
-              </span>
-              <span v-if="data.type==='Receive' || data.type==='Send'">
-                  <span v-if="data.type==='Send'" :style="getStyle(data.type)">{{"-"}}</span>
-                  <span v-if="data.type==='Receive'" :style="getStyle(data.type)">{{"+"}}</span>
-                  <span :style="getStyle(data.type)">{{data.amount.value}}</span>
-                  <span>{{getCoinName(data.amount.currency)}}</span>
-              </span>
+      <div v-if="!noHistoryData">
+        <div v-for="(data,index) in dataList" :key="index" class="content"  >
+            <div class="bodyOne" @click="seeMore(index)">
+            <div class="timeClass">
+                <div>{{getTime(data.time,3)}}</div>
+                <div>
+                    <img :src="arrowDown" v-if="currentIndex===index"  style="width:13px;" />
+                    <img :src="arrowUp" v-if="currentIndex!==index"  style="width:13px;" />
+                </div>
             </div>
-          </div>
+            <div class="typeOne">
+                <div class="name">{{getDataName(data.type)}}</div>
+                <div class="value">
+                <span v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
+                    <span :style="getStyle(data.type)">{{data.takerGets.value}}</span>
+                    <span>{{getCoinName(data.takerGets.currency)}}</span>
+                    <img :src="takerTo" style="width:14px;padding-bottom:3px;" />
+                    <span :style="getStyle(data.type)">{{data.takerPays.value}}</span>
+                    <span>{{getCoinName(data.takerPays.currency)}}</span>
+                </span>
+                <span v-if="data.type==='Receive' || data.type==='Send'">
+                    <span v-if="data.type==='Send'" :style="getStyle(data.type)">{{"-"}}</span>
+                    <span v-if="data.type==='Receive'" :style="getStyle(data.type)">{{"+"}}</span>
+                    <span :style="getStyle(data.type)">{{data.amount.value}}</span>
+                    <span>{{getCoinName(data.amount.currency)}}</span>
+                </span>
+                </div>
+            </div>
+            </div>
+            <div class="bodyTwo" v-if="currentIndex===index">
+                <div class="content" v-if="findType(data.type)">
+                    <div class="name" >{{$t("message.history.bussineType")}}</div>
+                    <div :style="getColor(data.type,data.flag)">{{getType(data.type,data.flag)}}</div>
+                </div>
+                <div class="content" v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
+                    <div class="name" >{{$t("message.history.price")}}</div>
+                    <div class="value">{{getPrice(data)}}</div>
+                </div>
+                <div class="content" v-if="data.type==='Send' || data.type==='Receive'">
+                    <div class="name" >{{$t("message.history.transaction")}}</div>
+                    <div class="value">{{getDataStr(data.account)}}</div>
+                </div>
+                <div class="content" v-if="findType(data.type)">
+                    <div class="name" >{{$t("message.history.hash")}}</div>
+                    <div class="value" style="cursor: pointer;" @click.stop="searchByHash(data.hash)">{{getDataStr(data.hash)}}</div>
+                </div>
+                <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                    <div class="name" >{{$t("message.history.gas")}}</div>
+                    <div class="value">{{getBrokerage(data.brokerage)}}</div>
+                </div>
+                <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                    <div class="name" >{{$t("message.history.rate")}}</div>
+                    <div class="value">{{getRate(data.brokerage)}}</div>
+                </div>
+                <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
+                    <div class="name" >{{$t("message.history.address")}}</div>
+                    <div class="value">{{getDataStr(data.brokerage.platform)}}</div>
+                </div>
+            </div>
         </div>
-        <div class="bodyTwo" v-if="currentIndex===index">
-             <div class="content" v-if="findType(data.type)">
-                 <div class="name" >{{$t("message.history.bussineType")}}</div>
-                 <div :style="getColor(data.type,data.flag)">{{getType(data.type,data.flag)}}</div>
-             </div>
-             <div class="content" v-if="data.type==='OfferCancel' || data.type==='OfferCreate'">
-                 <div class="name" >{{$t("message.history.price")}}</div>
-                 <div class="value">{{getPrice(data)}}</div>
-             </div>
-             <div class="content" v-if="data.type==='Send' || data.type==='Receive'">
-                 <div class="name" >{{$t("message.history.transaction")}}</div>
-                 <div class="value">{{getDataStr(data.account)}}</div>
-             </div>
-             <div class="content" v-if="findType(data.type)">
-                 <div class="name" >{{$t("message.history.hash")}}</div>
-                 <div class="value" style="cursor: pointer;" @click.stop="searchByHash(data.hash)">{{getDataStr(data.hash)}}</div>
-             </div>
-             <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
-                 <div class="name" >{{$t("message.history.gas")}}</div>
-                 <div class="value">{{getBrokerage(data.brokerage)}}</div>
-             </div>
-             <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
-                 <div class="name" >{{$t("message.history.rate")}}</div>
-                 <div class="value">{{getRate(data.brokerage)}}</div>
-             </div>
-              <div class="content" v-if="data.type==='OfferCreate' && data.takerPaysMatch">
-                 <div class="name" >{{$t("message.history.address")}}</div>
-                 <div class="value">{{getDataStr(data.brokerage.platform)}}</div>
-             </div>
-          </div>
+      </div>
+      <div v-else class="noDataClass">
+         <img :src="noHistory"  />
+         <div>{{$t("message.history.noData")}}</div>
       </div>
     </div>
   </div>
@@ -96,10 +107,12 @@
 import titleLeft from "../images/titleLeft.png";
 import titleRight from "../images/titleRight.png";
 import jingChang from "../images/jingChang.png";
+import noHistory from "../images/noHistory.png";
 import arrowUp from "../images/arrowUp.png";
 import arrowDown from "../images/arrowDown.png";
 import takerTo from "../images/takerTo.png";
 import mainmenu from "@/components/mainMenu";
+import activeImg from "@/images/activeImg.png";
 import Lockr from "lockr";
 import { getUserBalances } from "../js/user";
 import { JcExplorer } from "jcc_rpc";
@@ -115,7 +128,9 @@ export default {
       jingChang,
       arrowDown,
       arrowUp,
+      noHistory,
       takerTo,
+      activeImg,
       showMenu: false,
       dataList: [],
       currentIndex: -1,
@@ -130,6 +145,13 @@ export default {
     this.init();
   },
   computed: {
+    isActive() {
+      let isActive = this.$store.getters.isActive;
+      return isActive;
+    },
+    noHistoryData() {
+      return this.dataList.length > 0 ? false : true;
+    },
     address() {
       let address = this.$store.getters.defAddress;
       return address;
@@ -157,7 +179,9 @@ export default {
   },
   methods: {
     init() {
-      getUserBalances();
+      setTimeout(() => {
+        getUserBalances();
+      }, 50)
       this.getTransHistory(0);
     },
     setShowMenu() {
@@ -316,8 +340,8 @@ export default {
     },
     async  getTransHistory(page = 0) {
       const inst = new JcExplorer(getExplorerHost());
-      //   let wallet = this.address;
-      let wallet = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
+      let wallet = this.address;
+      //   let wallet = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
       let size = 20;
       let optionParams = {};
       let res = await inst.getHistory(getUUID(), wallet, page, size, optionParams);
@@ -366,6 +390,11 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
+      display: flex;
+      .image {
+        padding-top: 3px;
+        padding-left: 10px;
+      }
     }
   }
 }
@@ -416,6 +445,7 @@ export default {
     padding-left: 20px;
     text-align: left;
     .button_left {
+      cursor: pointer;
       height: 48px;
       line-height: 48px;
       color: #ffffff;
@@ -436,6 +466,7 @@ export default {
     text-align: right;
     .button_right {
       height: 48px;
+      cursor: pointer;
       line-height: 48px;
       color: #ffffff;
       background-color: #4484fe;
@@ -452,7 +483,7 @@ export default {
 }
 .history {
   padding-top: 20px;
-  height: 500px;
+  //   height: 500px;
   .title {
     padding-left: 20px;
     padding-bottom: 10px;
@@ -462,9 +493,23 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
   }
+  .noDataClass {
+    padding-top: 40px;
+    text-align: center;
+    background-color: #f6f7f9;
+    height: 280px;
+    color: #8a98b6;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    img {
+      width: 84px;
+    }
+  }
   .content {
     .bodyOne {
       padding: 0 20px;
+      cursor: pointer;
       background-color: #f6f7f9;
       border-bottom: 1px solid #dae0ed;
       .timeClass {

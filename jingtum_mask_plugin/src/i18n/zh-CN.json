@@ -144,6 +144,10 @@
     "buy": "买入",
     "sell": "卖出",
     "send": "支付",
-    "receive": "收到"
+    "receive": "收到",
+    "noActive": "未激活",
+    "noData": "暂无数据",
+    "noAsset": "暂无资产",
+    "noContact": "暂无收款人"
   }
 }
