@@ -91,6 +91,10 @@ export default {
         }
       }
     },
+    reset() {
+      this.password.data = "";
+      this.password.isFocus = false;
+    },
     setPassData() {
       let password = this.password.data;
       this.$emit("setPassData", password);

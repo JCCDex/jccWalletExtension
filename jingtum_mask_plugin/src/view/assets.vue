@@ -2,7 +2,6 @@
   <div>
     <commonHead :titleText="$t('message.home.checkAsset')"></commonHead>
     <div v-if="!noData" class="body_class">
-     <div>
        <div v-for="assetName in Object.keys(balance)" :key="assetName" class="content" @click="checkAsset(assetName)">
          <div style="text-align:left;">
            <span class="coinTitle">{{assetName}}</span>
@@ -19,7 +18,6 @@
            </div>
          </div>
        </div>
-     </div>
     </div>
     <div v-else class="noDataClass">
       <img :src="noAsset" />

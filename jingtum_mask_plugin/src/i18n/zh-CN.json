@@ -100,7 +100,8 @@
     "showMnenonicText": "您的钱包助记词",
     "copyMnenonic": "复制助记词",
     "exportMnenonic": "导出CSV文件",
-    "exportSuccess": "导出成功"
+    "exportSuccess": "导出成功",
+    "noAsset": "该钱包无资产"
   },
   "importText": {
     "titleText": "请在下面输入框内输入助记词",

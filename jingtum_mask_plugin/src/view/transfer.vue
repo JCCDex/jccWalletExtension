@@ -77,15 +77,14 @@
         </div>
       </div>
     </div>
-    <div v-if="showContact || loading" class="coverClass">
-        <div v-if="loading" style="margin-top:75%">
-          <van-loading   type="spinner" color="#6EFEFF" :size="50"></van-loading>
-        </div>
+    <div v-if="showContact || showLoading" class="coverClass">
+      <loading v-if="showLoading"></loading>
     </div>
   </div>
 </template>
 <script>
 import commonHead from "../components/commonHead";
+import loading from "../components/loading";
 import { jtWallet, JingchangWallet } from "jcc_wallet";
 import JCCExchange from "jcc_exchange";
 import { ExplorerFactory, JcExplorer } from "jcc_rpc";
@@ -98,9 +97,7 @@ import bus from "../js/bus";
 import { getError, getUUID, walletFrozen } from "../js/utils";
 import { getUserBalances } from "../js/user";
 import { getExplorerHost } from "../js/api";
-import { Loading, Toast } from "vant";
-import Vue from 'vue'
-Vue.use(Loading);
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -116,7 +113,7 @@ export default {
       checkCoin,
       showContact: false,
       showCoins: false,
-      loading: false,
+      showLoading: false,
       showWalletList: false,
       contactList: [],
       myAddress: { name: "", value: "" },
@@ -125,7 +122,8 @@ export default {
   },
   components: {
     commonHead,
-    passInput
+    passInput,
+    loading
   },
   computed: {
     placeholderAmount() {
@@ -236,7 +234,12 @@ export default {
       bus.$emit("goClose", "myWallet");
     },
     toShowCoins() {
-      this.showCoins = !this.showCoins;
+      let length = this.coins.length;
+      if (length > 0) {
+        this.showCoins = !this.showCoins;
+      } else {
+        Toast.fail(this.$t("message.setting.noAsset"));
+      }
       bus.$emit("goClose", "coins")
     },
     closeDialog(name) {
@@ -315,10 +318,10 @@ export default {
       });
     },
     async  submitOrder() {
-      this.loading = true;
+      this.showLoading = true;
       let valid = this.formValidate();
       if (valid) {
-        this.loading = false;
+        this.showLoading = false;
         return;
       }
       let password = this.form.password;
@@ -343,23 +346,23 @@ export default {
                 this.searchHash(hash);
               }, 1000 * 10);
             }).catch(error => {
-              this.loading = false;
-              this.form.password = "";
+              this.showLoading = false;
+              this.$refs.password.reset();
               Toast.fail(error.message);
             })
           }).catch((error) => {
-            this.loading = false;
-            this.form.password = "";
+            this.showLoading = false;
+            this.$refs.password.reset();
             Toast.fail(error);
           })
         }).catch((error) => {
-          this.loading = false;
-          this.form.password = "";
+          this.showLoading = false;
+          this.$refs.password.reset();
           Toast.fail(error);
         });
       }).catch((error) => {
-        this.loading = false;
-        this.form.password = "";
+        this.showLoading = false;
+        this.$refs.password.reset();
         Toast.fail(this.$t(getError(error)));
       })
 
@@ -369,9 +372,9 @@ export default {
       let res = await inst.orderDetail(getUUID(), hash);
       if (res.result && res.data && res.data.succ === "tesSUCCESS") {
         Toast.success(this.$t("message.transfer.transferSuccess"));
-        this.form.password = "";
+        this.$refs.password.reset();
         this.tranferCount = 1;
-        this.loading = false;
+        this.showLoading = false;
       } else {
         // 查询失败重复查询3次
         if (this.tranferCount < 3) {
@@ -380,8 +383,9 @@ export default {
           }, 1500);
           this.tranferCount++;
         } else {
+          this.$refs.password.reset();
           this.tranferCount = 1;
-          this.loading = false;
+          this.showLoading = false;
           Toast.fail(this.$t("message.transfer.searchFail"));
         }
       }
