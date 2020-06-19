@@ -95,6 +95,9 @@
                 </div>
             </div>
         </div>
+        <div class="seeMoreHistory" @click.stop="getTransHistory">
+            {{$t("message.history.addMore")}}
+        </div>
       </div>
       <div v-else class="noDataClass">
          <img :src="noHistory"  />
@@ -119,6 +122,7 @@ import { JcExplorer } from "jcc_rpc";
 import { getExplorerHost } from "../js/api";
 import { getUUID, formatTime } from "../js/utils";
 import { BigNumber } from 'bignumber.js';
+import { Toast } from 'vant';
 export default {
   name: "myWallet",
   data() {
@@ -135,6 +139,7 @@ export default {
       dataList: [],
       currentIndex: -1,
       converData: {},
+      current: { page: 0, total: 0, count: 0 },
       typeList: ["OfferCreate", "Receive", "Send", "OfferCancel", "OfferAffect"]
     };
   },
@@ -181,10 +186,12 @@ export default {
     init() {
       setTimeout(() => {
         getUserBalances();
+        this.getTransHistory();
       }, 50)
-      this.getTransHistory(0);
     },
     setShowMenu() {
+      this.current = { page: 0, total: 0, count: 0 };
+      this.dataList = [];
       this.init();
       this.showMenu = false;
     },
@@ -338,7 +345,12 @@ export default {
         name: name
       })
     },
-    async  getTransHistory(page = 0) {
+    async  getTransHistory() {
+      if (this.current.total <= this.current.count && this.current.total !== 0) {
+        Toast.fail(this.$t("message.history.noMoreData"));
+        return;
+      }
+      let page = this.currentPage || 0;
       const inst = new JcExplorer(getExplorerHost());
       let wallet = this.address;
       //   let wallet = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
@@ -346,7 +358,11 @@ export default {
       let optionParams = {};
       let res = await inst.getHistory(getUUID(), wallet, page, size, optionParams);
       if (res.result) {
-        this.dataList = res.data.list;
+        let list = res.data.list;
+        this.current.total = res.data.count;
+        this.current.count = this.current.page * size + list.length;
+        this.dataList = [...this.dataList, ...list];
+        this.current.page = this.current.page + 1;;
       }
     }
   }
@@ -436,6 +452,7 @@ export default {
 }
 .transitionShowMenu {
   top: 0px;
+  position: fixed;
 }
 .button_div {
   display: flex;
@@ -562,5 +579,14 @@ export default {
       }
     }
   }
+}
+.seeMoreHistory {
+  color: #4484fe;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  height: 36px;
+  line-height: 36px;
+  cursor: pointer;
 }
 </style>

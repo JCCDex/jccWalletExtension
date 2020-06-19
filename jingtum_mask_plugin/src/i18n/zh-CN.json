@@ -149,6 +149,8 @@
     "noActive": "未激活",
     "noData": "暂无数据",
     "noAsset": "暂无资产",
-    "noContact": "暂无收款人"
+    "noContact": "暂无收款人",
+    "addMore": "点击加载更多",
+    "noMoreData": "没有更多数据"
   }
 }
