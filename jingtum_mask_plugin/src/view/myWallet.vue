@@ -140,6 +140,7 @@ export default {
       currentIndex: -1,
       converData: {},
       current: { page: 0, total: 0, count: 0 },
+      myTime: "",
       typeList: ["OfferCreate", "Receive", "Send", "OfferCancel", "OfferAffect"]
     };
   },
@@ -148,6 +149,12 @@ export default {
   },
   created() {
     this.init();
+    this.myTime = setInterval(() => {
+      getUserBalances();
+    }, 1000 * 10); // 十秒更新一次资产
+  },
+  beforeDestroy() {
+    clearInterval(this.myTime);
   },
   computed: {
     isActive() {

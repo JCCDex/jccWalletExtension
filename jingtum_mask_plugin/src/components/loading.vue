@@ -1,7 +1,7 @@
 <template>
     <div id="loading">
       <div class="mask"></div>
-      <div class="content">
+      <div  v-if="showAnimation" class="content">
         <ul class="loadingIcon">
           <li class="load"></li>
         </ul>
@@ -13,6 +13,7 @@
 export default {
   name: "loading",
   props: {
+    showAnimation: { type: Boolean, default: true } // 是否显示动画圆圈
     // title: { type: String, default: "抢购中，请勿刷新或关闭页面" }, // 传入标题文字
     // textColor: { type: String, default: "#00ccea" }, // 传入标题字体颜色
     // bgColor: { type: String, default: "#00ccea" } // 传入标题框背景颜色
@@ -20,8 +21,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// @import "src/styles/base.scss";
-// @import "src/styles/variables.scss";
 #loading {
   position: fixed;
   z-index: 5000;
@@ -30,7 +29,6 @@ export default {
   top: 0;
   left: 0;
   color: #00ccea;
-  //   @include font-dpr($base-mini-font-size);
   font-size: 24px;
   .mask {
     position: absolute;
@@ -83,7 +81,7 @@ export default {
     }
     // .loadingText {
     //   text-align: center;
-    //   font-size: 0.26rem;
+    //   font-size: 26px;
     // }
   }
 }

@@ -225,7 +225,7 @@ export default {
     this.init();
     bus.$on("closeDialog", this.closeDialog);
   },
-  beforDestroy() {
+  beforeDestroy() {
     bus.$off("closeDialog", this.closeDialog);
   },
   methods: {

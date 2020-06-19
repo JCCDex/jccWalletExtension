@@ -33,6 +33,7 @@ import defaultImg from "../images/defaultImg.png";
 import defaultImg2 from "../images/defaultImg2.png";
 import noAsset from "../images/noAsset.png";
 import { isEmptyObject } from "../js/utils";
+import { getUserBalances } from "@/js/user";
 import Lockr from "lockr";
 export default {
   data() {
@@ -41,7 +42,8 @@ export default {
       defaultImg2,
       noAsset,
       currentName: "SWTC",
-      show: true
+      show: true,
+      myTime: ""
     };
   },
   components: {
@@ -59,13 +61,19 @@ export default {
   created() {
     let assetName = Lockr.get("assetName") || this.currentName;
     this.currentName = assetName;
+    this.myTime = setInterval(() => {
+      getUserBalances();
+    }, 1000 * 10); // 十秒更新一次资产
+  },
+  beforeDestroy() {
+    clearInterval(this.myTime);
   },
   methods: {
     checkAsset(assetName) {
       this.currentName = assetName;
       Lockr.set("assetName", this.currentName);
       this.$store.dispatch("updateAssetName", assetName);
-      this.$router.go(-1);
+      this.$router.push({ name: "myWallet" });
     }
   }
 };

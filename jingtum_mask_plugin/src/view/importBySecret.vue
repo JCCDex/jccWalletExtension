@@ -15,7 +15,7 @@
         <passInput ref="password" :textMsg="$t('message.home.passwordText4')" @setPassData="setPassData"></passInput>
       </div>
       <div class="buttonClass">
-          <button @click="importWallet()" >{{$t('message.home.sureText')}}</button>
+        <button @click="importWallet()" >{{$t('message.home.sureText')}}</button>
       </div>
     </div>
     </div>
@@ -75,8 +75,10 @@ export default {
       let getAddress = jtWallet.getAddress;
       inst.importSecret(secret, password, "swt", getAddress).then(jcWallet => {
         jcWallet = this.getJcWallet(jcWallet);
+        let address = this.address;
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        this.$store.dispatch("updateDefAddress", address); // 更新默认钱包
         Toast.success(this.$t("message.home.importSuccess"));
         this.$router.push({ name: "myWallet" });
       }).catch(error => {
@@ -90,6 +92,9 @@ export default {
       for (let wallet of wallets) {
         if (wallet.address === address) {
           wallet.memoName = this.memoName;
+          wallet.default = true;
+        } else {
+          wallet.default = false;
         }
         list.push(wallet);
       }

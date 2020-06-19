@@ -26,7 +26,7 @@
           <button @click.stop="saveWallet()">{{$t("message.home.sureText")}}</button>
         </div>
       </div>
-      <loading v-if="showLoading"></loading>
+      <loading v-if="showLoading" :showAnimation="false"></loading>
   </div>
 </template>
 <script>
@@ -101,12 +101,14 @@ export default {
       let jcWallet = this.jcWallet;
       let inst = new JingchangWallet(jcWallet, true); // 不是默认钱包
       let secret = this.wallet.secret;
+      let address = this.wallet.address;
       let password = this.password;
       let getAddress = jtWallet.getAddress;
       inst.importSecret(secret, password, "swt", getAddress).then(jcWallet => {
         jcWallet = this.getJcWallet(jcWallet);
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        this.$store.dispatch("updateDefAddress", address); // 更新默认钱包
         let data = this.mnemonicData;
         updateMnemonicData(data); // 更新 mnemonicData ;
         this.$router.push({ name: "myWallet" });
@@ -123,15 +125,18 @@ export default {
       for (let wallet of wallets) {
         if (wallet.address === address) {
           wallet.memoName = this.memoName;
+          wallet.default = true; // 新建钱包设置为默认钱包
+        } else {
+          wallet.default = false; // 其他钱包设置为非默认钱包
         }
         list.push(wallet);
       }
       jcWallet.wallets = list;
       return jcWallet;
+    },
+    obtainPassword(password) {
+      this.password = password;
     }
-    // obtainPassword(password) {
-    //   this.password = password;
-    // }
   }
 };
 </script>
