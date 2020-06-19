@@ -1,6 +1,7 @@
 
 <template>
   <div id="mainMenu">
+    <div>
     <div ref="warp" @scroll="scrolled" style="height:100%;width:100%;overflowY:scroll;">
       <!-- Title -->
       <div class="title">{{$t("message.menu.wallet")}}</div>
@@ -29,6 +30,7 @@
       <passDialog @deleteWallet="deleteWallet" :titleText="titleText" :deleteAllWallets="deleteAllWallets" @closeDialog="closeDialog"></passDialog>
     </div>
     <img v-show="isScroll" :src="rightArrowIcon" class="tipHidden">
+   </div>
   </div>
 </template>
 
@@ -216,6 +218,7 @@ export default {
   border-radius: 10px;
   text-align: left;
   font-size: 16px;
+  overflow: scroll;
 }
 .title {
   padding: 15px 20px;
