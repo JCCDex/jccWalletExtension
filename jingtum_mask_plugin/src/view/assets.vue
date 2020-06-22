@@ -1,7 +1,8 @@
 <template>
   <div id="assetID">
-    <div>
-    <commonHead :titleText="$t('message.home.checkAsset')"></commonHead>
+    <div style="width:100%;position:absolute;top:0;left:0;">
+      <commonHead :titleText="$t('message.home.checkAsset')"></commonHead>
+    </div>
     <div v-if="!noData" class="body_class">
        <div v-for="assetName in Object.keys(balance)" :key="assetName" class="content" @click="checkAsset(assetName)">
          <div style="text-align:left;">
@@ -23,7 +24,6 @@
     <div v-else class="noDataClass">
       <img :src="noAsset" />
       <div>{{$t("message.history.noAsset")}}</div>
-    </div>
     </div>
   </div>
 </template>
@@ -80,7 +80,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 #assetID {
-  overflow: scroll;
+  box-sizing: border-box;
+  padding-top: 60px;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
 }
 .body_class {
   padding: 0 20px 20px;

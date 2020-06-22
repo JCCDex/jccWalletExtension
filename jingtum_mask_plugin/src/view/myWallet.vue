@@ -121,8 +121,8 @@ import { getUserBalances } from "../js/user";
 import { JcExplorer } from "jcc_rpc";
 import { getExplorerHost } from "../js/api";
 import { getUUID, formatTime } from "../js/utils";
-import { BigNumber } from 'bignumber.js';
-import { Toast } from 'vant';
+import { BigNumber } from "bignumber.js";
+import { Toast } from "vant";
 export default {
   name: "myWallet",
   data() {
@@ -194,7 +194,7 @@ export default {
       setTimeout(() => {
         getUserBalances();
         this.getTransHistory();
-      }, 50)
+      }, 50);
     },
     setShowMenu() {
       this.current = { page: 0, total: 0, count: 0 };
@@ -213,24 +213,34 @@ export default {
     getRate(data) {
       let num = new BigNumber(data.num);
       let den = new BigNumber(data.den);
-      let count = num.div(den).times(new BigNumber(1000)).toString();
+      let count = num
+        .div(den)
+        .times(new BigNumber(1000))
+        .toString();
       count = count + "‰";
       return count;
     },
     getDataStr(value) {
-      let str = value.substring(0, 5) + "..." + value.substring(value.length - 4, value.length);
+      let str =
+        value.substring(0, 5) +
+        "..." +
+        value.substring(value.length - 4, value.length);
       return str;
     },
     getPrice(data) {
       let takerGet = data.takerGets.value;
       let takerPay = data.takerPays.value;
-      let str = ""
-      let coinValue = ""
+      let str = "";
+      let coinValue = "";
       if (data.flag === 2) {
-        str = BigNumber(takerPay).div(BigNumber(takerGet)).toString()
+        str = BigNumber(takerPay)
+          .div(BigNumber(takerGet))
+          .toString();
         coinValue = this.getCoinName(data.takerPays.currency);
       } else {
-        str = BigNumber(takerGet).div(BigNumber(takerPay)).toString()
+        str = BigNumber(takerGet)
+          .div(BigNumber(takerPay))
+          .toString();
         coinValue = this.getCoinName(data.takerGets.currency);
       }
       str = str + " " + coinValue;
@@ -350,10 +360,13 @@ export default {
       let name = `${type}`;
       this.$router.push({
         name: name
-      })
+      });
     },
-    async  getTransHistory() {
-      if (this.current.total <= this.current.count && this.current.total !== 0) {
+    async getTransHistory() {
+      if (
+        this.current.total <= this.current.count &&
+        this.current.total !== 0
+      ) {
         Toast.fail(this.$t("message.history.noMoreData"));
         return;
       }
@@ -363,13 +376,19 @@ export default {
       //   let wallet = "jpid2UCZuTQbWPzGy67wzFet6p5hkFuXb6";
       let size = 20;
       let optionParams = {};
-      let res = await inst.getHistory(getUUID(), wallet, page, size, optionParams);
+      let res = await inst.getHistory(
+        getUUID(),
+        wallet,
+        page,
+        size,
+        optionParams
+      );
       if (res.result) {
         let list = res.data.list;
         this.current.total = res.data.count;
         this.current.count = this.current.page * size + list.length;
         this.dataList = [...this.dataList, ...list];
-        this.current.page = this.current.page + 1;;
+        this.current.page = this.current.page + 1;
       }
     }
   }
@@ -378,14 +397,14 @@ export default {
 <style lang="scss" scoped>
 #myWallet {
   box-sizing: border-box;
-  padding-top: 80px;
+  padding-top: 60px;
   width: 100%;
   height: 100%;
-  position: relative;
+  overflow-y: scroll;
 }
 .title_class {
   box-sizing: border-box;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -459,7 +478,6 @@ export default {
 }
 .transitionShowMenu {
   top: 0px;
-  position: fixed;
 }
 .button_div {
   display: flex;
@@ -507,7 +525,6 @@ export default {
 }
 .history {
   padding-top: 20px;
-  //   height: 500px;
   .title {
     padding-left: 20px;
     padding-bottom: 10px;
