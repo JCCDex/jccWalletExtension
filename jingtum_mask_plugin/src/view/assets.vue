@@ -79,6 +79,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#assetID::-webkit-scrollbar {
+  display: none; /*隐藏滚动条*/
+}
 #assetID {
   box-sizing: border-box;
   padding-top: 60px;

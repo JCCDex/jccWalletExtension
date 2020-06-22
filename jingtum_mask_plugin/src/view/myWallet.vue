@@ -402,6 +402,9 @@ export default {
   height: 100%;
   overflow-y: scroll;
 }
+#myWallet::-webkit-scrollbar {
+  display: none; /*隐藏滚动条*/
+}
 .title_class {
   box-sizing: border-box;
   position: absolute;
