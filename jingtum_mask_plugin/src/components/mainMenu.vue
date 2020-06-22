@@ -220,6 +220,9 @@ export default {
   font-size: 16px;
   overflow: scroll;
 }
+#mainMenu::-webkit-scrollbar {
+  display: none; /*隐藏滚动条*/
+}
 .title {
   padding: 15px 20px;
   border-bottom: 1px solid #60636a;
