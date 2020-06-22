@@ -28,6 +28,7 @@
     "lookWallet": "查看账户",
     "addressText": "钱包地址",
     "secretText": "钱包密钥或私钥",
+    "privateText": "钱包私钥",
     "addressName": "钱包名称",
     "copySuccess": "复制成功",
     "copyError": "复制失败",

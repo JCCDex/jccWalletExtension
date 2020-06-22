@@ -2,7 +2,7 @@
 <template>
   <div id="mainMenu">
     <div>
-    <div ref="warp" @scroll="scrolled" style="height:100%;width:100%;overflowY:scroll;">
+    <div ref="warp" @scroll="scrolled" class="warp" style="height:100%;width:100%;overflow-y:scroll;">
       <!-- Title -->
       <div class="title">{{$t("message.menu.wallet")}}</div>
       <!-- swtc wallet List -->
@@ -218,9 +218,12 @@ export default {
   border-radius: 10px;
   text-align: left;
   font-size: 16px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 #mainMenu::-webkit-scrollbar {
+  display: none; /*隐藏滚动条*/
+}
+.warp::-webkit-scrollbar {
   display: none; /*隐藏滚动条*/
 }
 .title {

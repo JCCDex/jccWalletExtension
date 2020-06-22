@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="styleClass">
-          <div class="title">{{$t("message.home.secretText")}}:</div>
+          <div class="title">{{$t("message.home.privateText")}}:</div>
           <div class="value">{{wallet.secret}}</div>
           <div class="image" >
             <img :src="copyImg" v-clipboard:copy="wallet.secret" v-clipboard:success="onCopy" v-clipboard:error="onError" style="width:18px;"/>
@@ -26,12 +26,12 @@
           <button @click.stop="saveWallet()">{{$t("message.home.sureText")}}</button>
         </div>
       </div>
-      <loading v-if="showLoading" :showAnimation="false"></loading>
+      <!-- <loading v-if="showLoading" :showAnimation="false"></loading> -->
   </div>
 </template>
 <script>
 import commonHead from "../components/commonHead";
-import loading from "../components/loading";
+// import loading from "../components/loading";
 import editName from "../components/editName";
 import copyImg from "../images/copyImg.png";
 import { jtWallet, JingchangWallet } from "jcc_wallet";
@@ -48,14 +48,14 @@ export default {
       memoName: "Account",
       password: "",
       copyImg,
-      mnemonicData: '',
-      showLoading: true
+      mnemonicData: ''
+      //   showLoading: false
     };
   },
   components: {
     commonHead,
-    editName,
-    loading
+    editName
+    // loading
   },
   created() {
     bus.$on("setPassword", this.createdWallet);
@@ -95,7 +95,7 @@ export default {
       let data = createdWallet(mnemonic);
       this.mnemonicData = data;
       this.wallet = { address: jtWallet.getAddress(data.privateKey), secret: data.privateKey };
-      this.showLoading = false; // 关闭loading
+      //   this.showLoading = false; // 关闭loading
     },
     saveWallet() {
       let jcWallet = this.jcWallet;
