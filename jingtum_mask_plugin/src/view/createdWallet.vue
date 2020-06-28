@@ -26,21 +26,24 @@
           <button @click.stop="saveWallet()">{{$t("message.home.sureText")}}</button>
         </div>
       </div>
-      <!-- <loading v-if="showLoading" :showAnimation="false"></loading> -->
+      <div v-if="showLoading" class="loadingClass">
+       <van-loading class="loading" type="spinner" color="#1989fa" />
+      </div>
   </div>
 </template>
 <script>
 import commonHead from "../components/commonHead";
-// import loading from "../components/loading";
 import editName from "../components/editName";
 import copyImg from "../images/copyImg.png";
 import { jtWallet, JingchangWallet } from "jcc_wallet";
 import { decrypt } from "jcc_wallet/lib/util";
 import { updateMnemonicData } from "../js/utils";
 import { createdWallet } from "../js/user";
-import { Toast } from "vant";
+import { Toast, Loading } from "vant";
 import bus from "../js/bus";
 import Lockr from "lockr";
+import Vue from 'vue';
+Vue.use(Loading);
 export default {
   data() {
     return {
@@ -48,14 +51,13 @@ export default {
       memoName: "Account",
       password: "",
       copyImg,
-      mnemonicData: ''
-      //   showLoading: false
+      mnemonicData: '',
+      showLoading: true
     };
   },
   components: {
     commonHead,
     editName
-    // loading
   },
   created() {
     bus.$on("setPassword", this.createdWallet);
@@ -95,7 +97,7 @@ export default {
       let data = createdWallet(mnemonic);
       this.mnemonicData = data;
       this.wallet = { address: jtWallet.getAddress(data.privateKey), secret: data.privateKey };
-      //   this.showLoading = false; // 关闭loading
+      this.showLoading = false; // 关闭loading
     },
     saveWallet() {
       let jcWallet = this.jcWallet;
@@ -182,6 +184,18 @@ export default {
       font-weight: 400;
       color: #ffffff;
     }
+  }
+}
+.loadingClass {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.8;
+  .loading {
+    margin-top: 50%;
   }
 }
 </style>
