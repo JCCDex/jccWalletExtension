@@ -5,7 +5,7 @@
       </div>
       <div class="center" :style="getStyle()">{{titleText}}</div>
       <div class="right">
-          <img :src="closeImg" @click="closeWindow()" style="width:16px;" />
+          <img :src="closeImg" @click="goTo()" style="width:16px;" />
       </div>
     </div>
 </template>
@@ -36,8 +36,8 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    closeWindow() {
-      window.parent.close()
+    goTo() {
+      this.$router.push({ name: "myWallet" });
     }
   }
 };

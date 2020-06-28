@@ -6,7 +6,7 @@
           <editName :memoName="memoName" @setMemoName="setMemoName"></editName>
         </div>
         <div class="right">
-          <img :src="closeImg" @click="goBack" style="width:16px;" />
+          <img :src="closeImg" @click="goTo" style="width:16px;" />
         </div>
      </div>
      <div class="address_div">
@@ -94,6 +94,9 @@ export default {
     }
   },
   methods: {
+    goTo() {
+      this.$router.push({ name: "myWallet" });
+    },
     setMemoName(memoName) {
       this.memoName = memoName;
       let jcWallet = this.jcWallet;
