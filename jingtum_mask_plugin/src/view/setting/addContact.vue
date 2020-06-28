@@ -2,11 +2,11 @@
   <div>
     <commonHead :showLeft="true" :titleText="$t('message.setting.addContact')"></commonHead>
     <div class="nameClass">
-      <input ref="nameInput" v-model="memoName.name" @focus="memoName.isFocus=true;" :placeholder="$t('message.setting.contactName')"/>
+      <input ref="nameInput" v-model="memoName.name" @focus="clicked('name')" @blur="memoName.showBorder=false;" :style="getStyle('name')" :placeholder="$t('message.setting.contactName')"/>
       <div class="errorText">{{nameErrorText}}</div>
     </div>
     <div class="addressClass">
-      <input ref="addressInput" v-model="address.value" @focus="address.isFocus=true;" :placeholder="$t('message.setting.contactAddress')"/>
+      <input ref="addressInput" v-model="address.value" @focus="clicked('address')" @blur="address.showBorder=false;" :style="getStyle('address')" :placeholder="$t('message.setting.contactAddress')"/>
       <div class="errorText">{{addressErrorText}}</div>
     </div>
     <div class="buttonClass">
@@ -27,8 +27,8 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      memoName: { name: "", isFocus: false },
-      address: { value: "", isFocus: false }
+      memoName: { name: "", isFocus: false, showBorder: false },
+      address: { value: "", isFocus: false, showBorder: false }
     }
   },
   components: {
@@ -57,6 +57,28 @@ export default {
     }
   },
   methods: {
+    clicked(type) {
+      if (type === "name") {
+        this.memoName.isFocus = true;
+        this.memoName.showBorder = true;
+      } else {
+        this.address.isFocus = true;
+        this.address.showBorder = true;
+      }
+    },
+    getStyle(type) {
+      let str = "";
+      if (type === "name") {
+        if (this.memoName.showBorder) {
+          str = "border:1px solid #366BF2;"
+        }
+      } else {
+        if (this.address.showBorder) {
+          str = "border:1px solid #366BF2;"
+        }
+      }
+      return str;
+    },
     isValidAddress(address) {
       return jtWallet.isValidAddress(address)
     },
@@ -96,14 +118,13 @@ export default {
   padding: 30px 30px 0 20px;
   input {
     border: 1px solid #d9dce5;
-    color: 090909;
     height: 48px;
     line-height: 48px;
     width: 100%;
     border-radius: 8px;
     padding-left: 10px;
     outline: none;
-    color: #a5a8b2;
+    color: #090909;
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
@@ -119,11 +140,10 @@ export default {
     border-radius: 8px;
     padding-left: 10px;
     outline: none;
-    color: #a5a8b2;
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: 090909;
+    color: #090909;
   }
 }
 .errorText {

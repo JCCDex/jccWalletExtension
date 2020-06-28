@@ -1,6 +1,6 @@
 <template>
   <div style="margin-top:84px;">
-    <img src="../assets/logo.png" width="100px;" height="100px">
+    <img src="../assets/logo.png" width="110px;" height="110px">
     <div class="homeText">{{this.$t("message.home.home_text")}}</div>
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
     <div v-if="noJcWallet" class="input_div">
@@ -88,7 +88,7 @@ export default {
   border-radius: 6px;
   display: inline-block;
   box-sizing: border-box;
-  margin: 0 0 20px;
+  margin: 0 0 30px;
   padding: 0 20px;
   line-height: 54px;
   text-align: center;

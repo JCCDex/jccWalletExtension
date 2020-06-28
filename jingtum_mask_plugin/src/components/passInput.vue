@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="div_class">
-            <input v-model="password.data" @change="setPassData" :style="getInputStyle()" @focus="password.isFocus=true" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
+            <input v-model="password.data" @change="setPassData" :style="password.showBorder?'border:1px solid #366BF2;':''" @focus="clicked()" @blur="password.showBorder=false;" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
             <div class="eye_class">
                 <img v-if="isOpen" :src="eyeOpen" @click="checkType" style="width:20px;" />
                 <img v-else :src="eyeClose" @click="checkType" style="width:20px;" />
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       passwordText: "",
-      password: { data: "", isFocus: false },
+      password: { data: "", isFocus: false, showBorder: false },
       isOpen: false,
       eyeClose,
       eyeOpen
@@ -27,7 +27,7 @@ export default {
   props: {
     passData: { type: String, default: "" }, // 对比的密码值，默认为空
     textMsg: { type: String, default: "" }, // input 框 placeholder 内容
-    borderColor: { type: String, default: "#D9DCE5" }, // 输入框边框颜色
+    // borderColor: { type: String, default: "#D9DCE5" }, // 输入框边框颜色
     isSecret: { type: Boolean, default: false }, // 是否是秘钥输入框
   },
   created() {
@@ -80,6 +80,10 @@ export default {
     }
   },
   methods: {
+    clicked() {
+      this.password.isFocus = true;
+      this.password.showBorder = true;
+    },
     init() {
       if (this.textMsg) {
         this.passwordText = this.textMsg;
@@ -136,6 +140,7 @@ export default {
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
+    border: 1px solid #d9dce5;
   }
   .eye_class {
     margin-top: -33px;

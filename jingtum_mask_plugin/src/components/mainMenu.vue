@@ -149,6 +149,7 @@ export default {
       if (this.deleteAllWallets) {
         jcWallet = "";
         delPathByAddress();
+        Lockr.set("mnemonicData", {}); // 清除助记词信息
       } else {
         wallet = wallets.find(w => w.address === address);
         const index = wallets.findIndex(w => w.address === address);
@@ -165,6 +166,7 @@ export default {
       if (!jcWallet) {
         JingchangWallet.save(jcWallet);
         this.$store.dispatch("updateJCWallet", jcWallet);
+        Lockr.set("mnemonicData", {}); // 清除助记词信息
         this.$router.push({ name: "home" });
       } else {
         JingchangWallet.save(jcWallet);

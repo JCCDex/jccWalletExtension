@@ -4,7 +4,7 @@
         <div class="bodyClass">
           <div class="titleClass">{{$t("message.setting.addAuthorization")}}</div>
           <div class="inputClass">
-            <input v-model="authorization" :placeholder='$t("message.setting.authorizationText")' />
+            <input v-model="authorization" @focus="showBorder=true;" @blur="showBorder=false;" :style="showBorder?'border:1px solid #366BF2;':''" :placeholder='$t("message.setting.authorizationText")' />
           </div>
           <div class="buttonClass">
              <button @click.stop="addAuthorization()" >{{$t("message.home.sureText")}}</button>
@@ -33,7 +33,8 @@ export default {
     return {
       authorization: "",
       authorizaList: "",
-      deleteImg
+      deleteImg,
+      showBorder: false
     }
   },
   components: {
@@ -120,6 +121,7 @@ export default {
       outline: none;
       border-radius: 6px;
       border: 1px solid #d9dce5;
+      color: #090909;
     }
   }
   .buttonClass {

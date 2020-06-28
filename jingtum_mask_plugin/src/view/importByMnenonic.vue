@@ -34,7 +34,7 @@ export default {
       wordList: [],
       currentIndex: 0,
       mnemonicData: "",
-      step: "one",
+      step: "one"
       //   showLoading: false
     }
   },
@@ -44,7 +44,7 @@ export default {
   },
   created() {
     this.init();
-    console.log("萨 速 触 断 末 汤 晚 巨 炒 棚 涌 山");
+    // console.log("萨 速 触 断 末 汤 晚 巨 炒 棚 涌 山");
   },
   computed: {
     titleText() {
@@ -74,6 +74,7 @@ export default {
         this.$store.dispatch("updateDefAddress", address);
         saveMnemonicData(this.mnemonicData, password); // 存储助记词相关信息
         bus.$emit("savePassword", password);
+        this.$store.dispatch("updateIsLogin", 1); // 修改登录状态
         Toast.success(this.$t("message.home.importSuccess"));
         this.$router.push({
           name: "myWallet"

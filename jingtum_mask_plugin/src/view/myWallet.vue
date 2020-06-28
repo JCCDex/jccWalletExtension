@@ -3,7 +3,7 @@
     <div class="title_class">
       <img :src="titleLeft" @click="goAssets" style="width:26px;height:26px; cursor: pointer;" />
       <div class="middle">
-        <div class="name">{{$t("message.home.walletName")}}</div>
+        <div class="name">{{memoName}}</div>
         <div class="address">
             <div class="text">{{getAddressStr(address)}}</div>
             <div v-if="!isActive" class="image">
@@ -41,8 +41,8 @@
             <div class="timeClass">
                 <div>{{getTime(data.time,3)}}</div>
                 <div>
-                    <img :src="arrowDown" v-if="currentIndex===index"  style="width:13px;" />
-                    <img :src="arrowUp" v-if="currentIndex!==index"  style="width:13px;" />
+                    <img :src="arrowDown" v-if="currentIndex!==index"  style="width:13px;" />
+                    <img :src="arrowUp" v-if="currentIndex===index"  style="width:13px;" />
                 </div>
             </div>
             <div class="typeOne">
@@ -167,6 +167,19 @@ export default {
     address() {
       let address = this.$store.getters.defAddress;
       return address;
+    },
+    memoName() {
+      let address = this.$store.getters.defAddress;
+      let jcWallet = this.$store.getters.jcWallet || {};
+      let wallets = jcWallet.wallets || [];
+      let memoName = "Account1";
+      for (let wallet of wallets) {
+        if (wallet.address === address) {
+          memoName = wallet.memoName;
+          break;
+        }
+      }
+      return memoName;
     },
     currentCoin() {
       let coin = this.$store.getters.assetName;

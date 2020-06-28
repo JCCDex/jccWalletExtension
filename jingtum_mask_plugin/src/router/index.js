@@ -38,7 +38,7 @@ const router = new Router({
       path: '/myWallet',
       name: 'myWallet',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("myWallet")
     },
@@ -46,7 +46,7 @@ const router = new Router({
       path: '/assets',
       name: 'assets',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("assets")
     },
@@ -54,7 +54,7 @@ const router = new Router({
       path: '/lookWallet',
       name: 'lookWallet',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("lookWallet")
     },
@@ -62,7 +62,7 @@ const router = new Router({
       path: '/transfer',
       name: 'transfer',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("transfer")
     },
@@ -70,7 +70,7 @@ const router = new Router({
       path: '/createdWallet',
       name: 'createdWallet',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("createdWallet")
     },
@@ -78,7 +78,7 @@ const router = new Router({
       path: '/importBySecret',
       name: 'importBySecret',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("importBySecret")
     },
@@ -86,7 +86,7 @@ const router = new Router({
       path: '/setting/index',
       name: 'setting',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/index")
     },
@@ -94,7 +94,7 @@ const router = new Router({
       path: '/setting/contacts',
       name: 'contacts',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/contacts")
     },
@@ -102,7 +102,7 @@ const router = new Router({
       path: '/setting/addContact',
       name: 'addContact',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/addContact")
     },
@@ -110,7 +110,7 @@ const router = new Router({
       path: '/setting/nodeSetting',
       name: 'nodeSetting',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/nodeSetting")
     },
@@ -118,7 +118,7 @@ const router = new Router({
       path: '/setting/authorization',
       name: 'authorization',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/authorization")
     },
@@ -126,7 +126,7 @@ const router = new Router({
       path: '/setting/aboutUs',
       name: 'aboutUs',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/aboutUs")
     },
@@ -134,7 +134,7 @@ const router = new Router({
       path: '/setting/changePassword',
       name: 'changePassword',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/changePassword")
     },
@@ -142,7 +142,7 @@ const router = new Router({
       path: '/setting/showMnemonic',
       name: 'showMnemonic',
       meta: {
-        needLogin: false
+        needLogin: true
       },
       component: _import("setting/showMnemonic")
     },

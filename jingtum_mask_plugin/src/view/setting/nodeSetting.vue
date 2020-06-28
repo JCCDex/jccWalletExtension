@@ -4,7 +4,7 @@
       <div class="bodyClass">
           <div class="title">{{$t("message.setting.addNodeText")}}</div>
           <div class="inputClass">
-              <input v-model="addNewNode" :placeholder="$t('message.setting.inputText')" />
+              <input v-model="addNewNode" @focus="showBorder=true;" @blur="showBorder=false;" :style="showBorder?'border:1px solid #366BF2;':''" :placeholder="$t('message.setting.inputText')" />
           </div>
           <div class="buttonClass">
               <button @click.stop="addNodes()">{{$t("message.home.sureText")}}</button>
@@ -52,7 +52,8 @@ export default {
       defaultList: [],
       customList: [],
       currentNodeImg,
-      deleteImg
+      deleteImg,
+      showBorder: false
     }
   },
   components: {
