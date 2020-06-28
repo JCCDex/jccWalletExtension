@@ -3,8 +3,8 @@
         <div class="div_class">
             <input v-model="password.data" @change="setPassData" :style="password.showBorder?'border:1px solid #366BF2;':''" @focus="clicked()" @blur="password.showBorder=false;" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
             <div class="eye_class">
-                <img v-if="isOpen" :src="eyeOpen" @click="checkType" style="width:20px;" />
-                <img v-else :src="eyeClose" @click="checkType" style="width:20px;" />
+                <img v-if="isOpen" :src="eyeOpen" @click="checkType" style="width:20px;height:10px;" />
+                <img v-else :src="eyeClose" @click="checkType" style="width:20px;height:10px;" />
             </div>
             <div class="error_class">{{errorText}}</div>
         </div>
@@ -143,7 +143,7 @@ export default {
     border: 1px solid #d9dce5;
   }
   .eye_class {
-    margin-top: -33px;
+    margin-top: -30px;
     text-align: right;
     padding-right: 4px;
   }
