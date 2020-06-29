@@ -416,7 +416,7 @@ export default {
           //   判断转入币种是否是  swt
           let token = this.form.token.value;
           let amount = this.form.amount.value;
-          if (token === "SWTC" && amount >= 35) {
+          if (token === "SWT" && amount >= 35) {
             return resolve(true);
           } else {
             // 判断转入钱包是否激活
