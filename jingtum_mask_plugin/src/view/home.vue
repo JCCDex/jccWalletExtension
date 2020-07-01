@@ -10,7 +10,7 @@
         <img :src="arrowUp" v-if="showLanguage" />
       </div>
       <div class="choose" v-if="showLanguage">
-        <div v-for="item in languages" :key="item.name" @click="chooseLanguage(item)" :class="langType===item.name?'checked':''">{{item.value}}</div>
+        <div v-for="item in languages" :key="item.name" @click="chooseLanguage(item)" :class="langType===item.name?'checked':'common'">{{item.value}}</div>
       </div>
     </div>
     <img src="../assets/logo.png" width="110px;" height="110px">
@@ -173,14 +173,20 @@ export default {
     position: absolute;
     width: 100px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-    left: 68%;
+    left: 66%;
     // float: right;
-    margin-top: 10px;
+    margin-top: 16px;
     border-radius: 8px;
     padding: 4px 0;
     text-align: center;
     .checked {
       background-color: #d7e1fc;
+      height: 30px;
+      line-height: 30px;
+    }
+    .common {
+      height: 30px;
+      line-height: 30px;
     }
     // border: 1px solid #000000;
   }
