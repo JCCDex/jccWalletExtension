@@ -1,6 +1,6 @@
 <template>
     <div>
-        <commonHead :titleText="titleText"></commonHead>
+        <commonHead :titleText="titleText" :closeWindow="'home'"></commonHead>
         <div class="body_class">
            <div v-if="step==='one'">
              <div class="title">{{$t("message.home.text1")}}</div>
@@ -70,7 +70,8 @@ export default {
   methods: {
     init() {
       this.titleText = this.$t('message.home.create_wallet');
-      let data = createdWallet();
+      let lang = this.$i18n.locale;
+      let data = createdWallet("", lang);
       this.mnemonicData = data;
       this.wordList = this.getWordList(data.mnemonic);
       this.secret = data.privateKey;
@@ -84,6 +85,7 @@ export default {
         this.password = password;
         saveMnemonicData(this.mnemonicData, password); // 存储助记词相关信息
         bus.$emit("savePassword", password);
+        this.$store.dispatch("updateIsLogin", 1); // 更新登录状态
         Toast.success(this.$t("message.home.createSuccess"))
         this.$router.push({
           name: "myWallet"
@@ -111,11 +113,7 @@ export default {
     },
     getWordList(list) {
       let wordList = [];
-      for (let word of list) {
-        if (word !== " ") {
-          wordList.push(word);
-        }
-      }
+      wordList = list.split(" ");
       return wordList;
     },
     checkWord(data, index) {

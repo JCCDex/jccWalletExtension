@@ -1,11 +1,16 @@
 <template>
   <div>
-    <commonHead :titleText="titleText" ></commonHead>
+    <commonHead :titleText="titleText" :closeWindow="'home'" ></commonHead>
     <div v-if="step==='one'" class="bodyClass">
       <div class="titleClass">{{$t('message.importText.titleText')}}</div>
-      <div class="content">
+      <div class="content" v-if="isChinese">
          <div v-for="(word,index) in wordList" :key="index" class="inputClass" >
-            <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputValue()"  type="text"   v-model="word.value" />
+           <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputZH()"  type="text"   v-model="word.value" />
+         </div>
+      </div>
+      <div class="content" v-if="!isChinese">
+         <div v-for="(word,index) in wordList" :key="index" class="inputClass" >
+           <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputEN()"  type="text" @blur="inputSuccess(index)"  v-model="word.value" />
          </div>
       </div>
       <div class="buttonClass">
@@ -35,7 +40,6 @@ export default {
       currentIndex: 0,
       mnemonicData: "",
       step: "one"
-      //   showLoading: false
     }
   },
   components: {
@@ -53,6 +57,14 @@ export default {
       } else {
         return this.$t("message.home.setPassword");
       }
+    },
+    isChinese() {
+      let lang = this.$i18n.locale;
+      if (lang === "zh") {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -63,7 +75,6 @@ export default {
         wordList.push(data);
       }
       this.wordList = [...wordList];
-      bip39.setDefaultWordlist("chinese_simplified"); // 设置助记词默认类型
     },
     createdSuccess(password) {
       let secret = this.mnemonicData.privateKey;
@@ -83,7 +94,13 @@ export default {
         Toast.fail(this.$t(getError(error)));
       })
     },
-    inputValue() {
+    inputEN() {
+      let index = this.currentIndex;
+      let value = this.wordList[index].value;
+      value = value.replace(/[^a-z]/g, ''); // 内容过滤，只允许输入中文
+      this.wordList[index].value = value;
+    },
+    inputZH() {
       let index = this.currentIndex;
       let value = this.wordList[index].value;
       value = value.replace(/[^\u4e00-\u9fa5]/g, ''); // 内容过滤，只允许输入中文
@@ -102,8 +119,15 @@ export default {
         this.wordList[index].sucess = false;
       }
     },
+    inputSuccess(index) {
+      let value = this.wordList[index].value;
+      if (value) {
+        this.wordList[index].sucess = true;
+      } else {
+        this.wordList[index].sucess = false;
+      }
+    },
     goNext() {
-      //   this.showLoading = true;
       let mnemonic = "";
       let flag = true;
       for (let word of this.wordList) {
@@ -117,18 +141,21 @@ export default {
       }
       mnemonic = mnemonic.trim();
       if (flag) {
+        let lang = this.$i18n.locale;
+        if (lang === "zh") {
+          bip39.setDefaultWordlist("chinese_simplified"); // 设置助记词默认类型
+        } else {
+          bip39.setDefaultWordlist("english");
+        }
         let isValid = bip39.validateMnemonic(mnemonic.toString());
         if (isValid) {
-          let data = createdWallet(mnemonic);
+          let data = createdWallet(mnemonic, lang);
           this.mnemonicData = data;
-          //   this.showLoading = false;
           this.step = "two";
         } else {
-          //   this.showLoading = false;
           Toast.fail(this.$t("message.importText.errorText2"));
         }
       } else {
-        // this.showLoading = false;
         Toast.fail(this.$t("message.importText.errorText"));
       }
     }

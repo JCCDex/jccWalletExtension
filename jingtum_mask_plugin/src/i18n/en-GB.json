@@ -27,6 +27,7 @@
     "lookWallet": "View Account",
     "addressText": "wallet address",
     "secretText": "wallet privateKey",
+    "privateText": "wallet privateKey",
     "addressName": "wallet name",
     "copySuccess": "copy success",
     "copyError": "copy failed",
@@ -42,7 +43,8 @@
     "createSuccess": "create success",
     "deleteWalletText": "confirm delete wallet",
     "deleteAllText": "confirm clear all wallets",
-    "deleteSuccess": "delete wallet success"
+    "deleteSuccess": "delete wallet success",
+    "language": "Language settings"
   },
   "menu": {
     "wallet": "Wallet",
@@ -148,6 +150,8 @@
     "noActive": "Not active",
     "noData": "No data available",
     "noAsset": "No assets at present",
-    "noContact": "No payee"
+    "noContact": "No payee",
+    "addMore": "Click to load more",
+    "noMoreData": "There is no more data"
   }
 }

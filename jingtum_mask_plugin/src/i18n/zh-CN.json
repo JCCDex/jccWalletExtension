@@ -44,7 +44,8 @@
     "createSuccess": "创建成功",
     "deleteWalletText": "确认删除钱包",
     "deleteAllText": "确认清除所有钱包",
-    "deleteSuccess": "删除钱包成功"
+    "deleteSuccess": "删除钱包成功",
+    "language": "语言设置"
   },
   "menu": {
     "wallet": "钱包",

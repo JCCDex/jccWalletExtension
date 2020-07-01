@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="div_class">
-            <input v-model="password.data" @change="setPassData" :style="password.showBorder?'border:1px solid #366BF2;':''" @focus="clicked()" @blur="password.showBorder=false;" :type="isOpen?'':'password'" :placeholder="passwordText" class="input_class" />
+            <input v-model="password.data" @change="setPassData" :style="password.showBorder?'border:1px solid #366BF2;':''" @focus="clicked()" @blur="password.showBorder=false;" :type="isOpen?'':'password'" :placeholder="textMsg" class="input_class" />
             <div class="eye_class">
                 <img v-if="isOpen" :src="eyeOpen" @click="checkType" style="width:20px;height:10px;" />
                 <img v-else :src="eyeClose" @click="checkType" style="width:20px;height:10px;" />
@@ -29,11 +29,6 @@ export default {
     textMsg: { type: String, default: "" }, // input 框 placeholder 内容
     // borderColor: { type: String, default: "#D9DCE5" }, // 输入框边框颜色
     isSecret: { type: Boolean, default: false }, // 是否是秘钥输入框
-  },
-  created() {
-    setTimeout(() => {
-      this.init();
-    }, 50)
   },
   computed: {
     passwordError() {
@@ -83,17 +78,6 @@ export default {
     clicked() {
       this.password.isFocus = true;
       this.password.showBorder = true;
-    },
-    init() {
-      if (this.textMsg) {
-        this.passwordText = this.textMsg;
-      } else {
-        if (!this.passData) {
-          this.passwordText = this.$t("message.home.passwordText2");
-        } else {
-          this.passwordText = this.$t("message.home.rePasswordText");
-        }
-      }
     },
     reset() {
       this.password.data = "";

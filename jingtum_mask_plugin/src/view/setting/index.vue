@@ -36,21 +36,22 @@ export default {
         }, {
           name: this.$t("message.setting.contacts"),
           url: "contacts"
-        },
-        {
+        }, {
           name: this.$t("message.setting.authorization"),
           url: "authorization"
         }, {
           name: this.$t("message.setting.nodeSetting"),
           url: "nodeSetting"
-        },
-        {
+        }, {
           name: this.$t("message.setting.showWords"),
           url: "showMnemonic"
         }, {
+          name: this.$t("message.home.language"),
+          url: "language"
+        }, {
           name: this.$t("message.setting.aboutUs"),
           url: "aboutUs"
-        }
+        },
       ]
     },
     goTo(name) {

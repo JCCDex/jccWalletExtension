@@ -6,7 +6,7 @@
           <div class="noteText">{{$t('message.home.passwordText')}}</div>
         </div>
         <div>
-          <passInput ref="password" @setPassData="setPassData" ></passInput>
+          <passInput ref="password" :textMsg="$t('message.home.passwordText2')" @setPassData="setPassData" ></passInput>
         </div>
         <div>
           <passInput ref="rePassword" :passData="password" :textMsg="$t('message.home.rePasswordText')"></passInput>

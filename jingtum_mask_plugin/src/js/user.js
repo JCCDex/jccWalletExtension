@@ -55,8 +55,12 @@ export const getUserBalances = async (address = "") => {
   }
 }
 
-export const createdWallet = (mnemonic = "") => {
-  bip39.setDefaultWordlist("chinese_simplified");
+export const createdWallet = (mnemonic = "", lang = "en") => {
+  if (lang === "zh") {
+    bip39.setDefaultWordlist("chinese_simplified");
+  } else {
+    bip39.setDefaultWordlist("english");
+  }
   try {
     if (!mnemonic) {
       //  生成助记词
@@ -65,7 +69,7 @@ export const createdWallet = (mnemonic = "") => {
     }
     const seed = bip39.mnemonicToSeedSync(mnemonic);
     //  通过助记词生成私钥
-    const b32 = bip32.fromSeed(seed)
+    const b32 = bip32.fromSeed(seed);
     let mnemonicData = Lockr.get("mnemonicData") || "";
     let countKey = mnemonicData.currentCountKey || "";
     if (!countKey) {

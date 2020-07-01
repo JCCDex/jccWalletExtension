@@ -94,7 +94,8 @@ export default {
       this.password = password;
       let mnemonicData = Lockr.get("mnemonicData");
       let mnemonic = decrypt(password, mnemonicData);
-      let data = createdWallet(mnemonic);
+      let lang = this.$i18n.locale;
+      let data = createdWallet(mnemonic, lang);
       this.mnemonicData = data;
       this.wallet = { address: jtWallet.getAddress(data.privateKey), secret: data.privateKey };
       this.showLoading = false; // 关闭loading

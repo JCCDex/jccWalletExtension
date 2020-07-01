@@ -5,7 +5,7 @@
       </div>
       <div class="center" :style="getStyle()">{{titleText}}</div>
       <div class="right">
-          <img :src="closeImg" @click="goTo()" style="width:16px;" />
+        <img :src="closeImg" @click="goTo()" style="width:16px;" />
       </div>
     </div>
 </template>
@@ -21,7 +21,8 @@ export default {
   },
   props: {
     showLeft: { type: Boolean, default: false }, //是否显示返回箭头
-    titleText: { type: String, require: true } //标题文字
+    titleText: { type: String, require: true }, //标题文字,
+    closeWindow: { type: String, default: "myWallet" }
   },
   methods: {
     getStyle() {
@@ -37,7 +38,8 @@ export default {
       this.$router.go(-1);
     },
     goTo() {
-      this.$router.push({ name: "myWallet" });
+      let name = this.closeWindow;
+      this.$router.push({ name });
     }
   }
 };

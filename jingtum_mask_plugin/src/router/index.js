@@ -153,6 +153,14 @@ const router = new Router({
         needLogin: false
       },
       component: _import("importByMnenonic")
+    },
+    {
+      path: '/setting/language',
+      name: 'language',
+      meta: {
+        needLogin: true
+      },
+      component: _import("setting/language")
     }
   ]
 })

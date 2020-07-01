@@ -1,5 +1,18 @@
 <template>
-  <div style="margin-top:84px;">
+  <div style="margin-top:20px;">
+    <div class="languageClass" @click.stop="showLanguage=!showLanguage;" >
+      <input v-model="language" />
+      <div class="leftImage">
+        <img :src="languageImg"  />
+      </div>
+      <div class="rightImage">
+        <img :src="arrowDown" v-if="!showLanguage" />
+        <img :src="arrowUp" v-if="showLanguage" />
+      </div>
+      <div class="choose" v-if="showLanguage">
+        <div v-for="item in languages" :key="item.name" @click="chooseLanguage(item)" :class="langType===item.name?'checked':''">{{item.value}}</div>
+      </div>
+    </div>
     <img src="../assets/logo.png" width="110px;" height="110px">
     <div class="homeText">{{this.$t("message.home.home_text")}}</div>
     <div style="font-size:26px;color:#2538D1;margin-bottom:30px;">{{this.$t("message.home.mark_text")}}</div>
@@ -9,10 +22,10 @@
     </div>
     <div v-else>
       <div class="input_div">
-         <passInput ref="password" :textMsg="$t('message.home.passwordText3')" @setPassData="setPassData" ></passInput>
+         <passInput ref="password" :textMsg="this.$t('message.home.passwordText3')" @setPassData="setPassData" ></passInput>
       </div>
       <div class="input_div">
-        <button class="homeBtn" @click="goLogin" >{{$t('message.home.sureText')}}</button>
+        <button class="homeBtn" @click="goLogin" >{{this.$t('message.home.sureText')}}</button>
       </div>
     </div>
   </div>
@@ -22,12 +35,20 @@ import passInput from "../components/passInput";
 import { JingchangWallet } from "jcc_wallet";
 import { Toast } from "vant";
 import { getError } from "js/utils"
+import languageImg from "@/images/language.png";
+import arrowDown from "@/images/arrowDown.png";
+import arrowUp from "@/images/arrowUp.png";
 import bus from "../js/bus";
 export default {
   name: "index",
   data() {
     return {
-      password: ""
+      password: "",
+      languageImg,
+      arrowDown,
+      arrowUp,
+      showLanguage: false,
+      languages: [{ name: "zh", value: "中文" }, { name: "en", value: "English" }],
     };
   },
   computed: {
@@ -37,12 +58,28 @@ export default {
     },
     noJcWallet() {
       return !JingchangWallet.isValid(this.jcWallet)
+    },
+    langType() {
+      let lang = this.$i18n.locale;
+      return lang;
+    },
+    language() {
+      let lang = this.$i18n.locale;
+      if (lang === "zh") {
+        return "中文";
+      } else {
+        return "English";
+      }
     }
   },
   components: {
     passInput
   },
   methods: {
+    chooseLanguage(item) {
+      this.$i18n.locale = item.name;
+      localStorage.setItem("languageType", this.$i18n.locale);
+    },
     setPassData(password) {
       this.password = password;
     },
@@ -71,7 +108,7 @@ export default {
 };
 </script>
 
-<style scoped >
+<style lang="scss" scoped >
 .homeText {
   font-size: 32px;
   font-weight: 600;
@@ -100,5 +137,52 @@ export default {
 .input_div {
   padding-left: 5%;
   width: 90%;
+}
+.languageClass {
+  cursor: pointer;
+  text-align: right;
+  padding-right: 20px;
+  margin-bottom: 30px;
+  input {
+    padding-left: 30px;
+    width: 70px;
+    height: 30px;
+    border-radius: 15px;
+    border-inline: none;
+    border: 1px solid #366bf2;
+  }
+  .leftImage {
+    position: relative;
+    text-align: right;
+    margin-right: 80px;
+    margin-top: -25px;
+    img {
+      width: 16px;
+    }
+  }
+  .rightImage {
+    position: relative;
+    text-align: right;
+    margin-right: 6px;
+    margin-top: -25px;
+    img {
+      width: 12px;
+    }
+  }
+  .choose {
+    position: absolute;
+    width: 100px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    left: 68%;
+    // float: right;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 4px 0;
+    text-align: center;
+    .checked {
+      background-color: #d7e1fc;
+    }
+    // border: 1px solid #000000;
+  }
 }
 </style>

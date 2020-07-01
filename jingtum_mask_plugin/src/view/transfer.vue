@@ -331,7 +331,7 @@ export default {
       let amount = this.form.amount.value;
       let memo = this.form.memo.value;
       let jcWallet = this.jcWallet;
-      let urls = process.env.jcNodes;;
+      let urls = this.$store.getters.currentNode || process.env.jcNodes;
       let inst = new JingchangWallet(jcWallet);
       let isFrozen = false;
       let isActive = false;
