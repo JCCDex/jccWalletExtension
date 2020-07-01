@@ -3,16 +3,16 @@
     <commonHead :titleText="titleText" :closeWindow="'home'" ></commonHead>
     <div v-if="step==='one'" class="bodyClass">
       <div class="titleClass">{{$t('message.importText.titleText')}}</div>
-      <div class="content" v-if="isChinese">
+      <div class="content">
          <div v-for="(word,index) in wordList" :key="index" class="inputClass" >
-           <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputZH()"  type="text"   v-model="word.value" />
+           <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputValue()" @blur="inputSuccess(index)"  type="text"   v-model="word.value" />
          </div>
       </div>
-      <div class="content" v-if="!isChinese">
+      <!-- <div class="content" v-if="!isChinese">
          <div v-for="(word,index) in wordList" :key="index" class="inputClass" >
            <input :id="`input${index}`" @focus="currentIndex=index;" @input="inputEN()"  type="text" @blur="inputSuccess(index)"  v-model="word.value" />
          </div>
-      </div>
+      </div> -->
       <div class="buttonClass">
         <button @click.stop="goNext()">{{$t('message.home.nextText')}}</button>
       </div>
@@ -94,31 +94,32 @@ export default {
         Toast.fail(this.$t(getError(error)));
       })
     },
-    inputEN() {
+    inputValue() {
       let index = this.currentIndex;
       let value = this.wordList[index].value;
-      value = value.replace(/[^a-z]/g, ''); // 内容过滤，只允许输入中文
+      value = value.replace(/[^\u4e00-\u9fa5a-z]/g, ''); // 内容过滤，只允许输入中文
       this.wordList[index].value = value;
+      console.log(this.wordList);
     },
-    inputZH() {
-      let index = this.currentIndex;
-      let value = this.wordList[index].value;
-      value = value.replace(/[^\u4e00-\u9fa5]/g, ''); // 内容过滤，只允许输入中文
-      if (value.length > 1) {
-        value = value.substring(0, 1);
-      }
-      this.wordList[index].value = value;
-      let str = /^[\u4e00-\u9fa5]+$/; // 汉字正则
-      if (value.length === 1 && str.test(value)) {
-        // 输入成功，下一个输入框获取焦点
-        if (index < 11) {
-          document.getElementById(`input${index + 1}`).focus();
-        }
-        this.wordList[index].sucess = true;
-      } else {
-        this.wordList[index].sucess = false;
-      }
-    },
+    // inputZH() {
+    //   let index = this.currentIndex;
+    //   let value = this.wordList[index].value;
+    //   value = value.replace(/[^\u4e00-\u9fa5]/g, ''); // 内容过滤，只允许输入中文
+    //   if (value.length > 1) {
+    //     value = value.substring(0, 1);
+    //   }
+    //   this.wordList[index].value = value;
+    //   let str = /^[\u4e00-\u9fa5]+$/; // 汉字正则
+    //   if (value.length === 1 && str.test(value)) {
+    //     // 输入成功，下一个输入框获取焦点
+    //     if (index < 11) {
+    //       document.getElementById(`input${index + 1}`).focus();
+    //     }
+    //     this.wordList[index].sucess = true;
+    //   } else {
+    //     this.wordList[index].sucess = false;
+    //   }
+    // },
     inputSuccess(index) {
       let value = this.wordList[index].value;
       if (value) {
@@ -140,13 +141,18 @@ export default {
         }
       }
       mnemonic = mnemonic.trim();
+      let str = mnemonic.substring(0, 1);
+      let lang = "zh";
+      //   let pattenEN = new RegExp("^[a-z]+$");
+      let pattenZH = new RegExp(/^[\u4e00-\u9fa5]+$/);
+      if (pattenZH.test(str)) {
+        bip39.setDefaultWordlist("chinese_simplified"); // 设置助记词默认类型
+        lang = "zh";
+      } else {
+        bip39.setDefaultWordlist("english");
+        lang = "en";
+      }
       if (flag) {
-        let lang = this.$i18n.locale;
-        if (lang === "zh") {
-          bip39.setDefaultWordlist("chinese_simplified"); // 设置助记词默认类型
-        } else {
-          bip39.setDefaultWordlist("english");
-        }
         let isValid = bip39.validateMnemonic(mnemonic.toString());
         if (isValid) {
           let data = createdWallet(mnemonic, lang);
