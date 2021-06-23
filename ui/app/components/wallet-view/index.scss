@@ -1,0 +1,319 @@
+.wallet-view {
+    display: flex;
+    flex-direction: column;
+    flex: 32 1 32%;
+    z-index: 200;
+    position: relative;
+  
+    @media screen and (min-width: 576px) {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  
+    @media #{$sub-mid-size-breakpoint-range} {
+      min-width: 160px;
+    }
+
+    &__wallet{
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items: center;
+      margin-top:10px;
+      margin-left: 10px;
+      width: 272px;
+      height: 96px;
+      opacity: 1;
+      background: #f1f2fb;
+      border-radius: 6px;
+      &__item{
+        display: flex;
+        flex-direction: row;
+        width: 252px;
+        height: 20px;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+
+      &__name{
+
+        &__font{
+          width: auto;
+          height: 20px;
+          opacity: 1;
+          font-size: 15px;
+          font-family: PingFangSC, PingFangSC-Semibold;
+          font-weight: 600;
+          text-align: left;
+          color: #232323;
+          line-height: 20px;
+          letter-spacing: 2px;
+        }
+
+        &__default{
+          width: 34px;
+          height: 16px;
+          opacity: 1;
+          background: #586aff;
+          border-radius: 1px;
+          text-align: center;
+          font-family: PingFangSC, PingFangSC-Semibold;
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 17px;
+          letter-spacing: 0px;
+        }
+        
+        &__iocn{
+          margin-left: auto;
+          width: 8px;
+          height: 14px;
+          opacity: 1;
+          background: #ffffff;
+        }
+
+      }
+
+      &__address{
+        margin-left: 10px;
+        height: 12px;
+        width: 12px;
+        background: #ffffff;
+
+        &__font{
+          width: auto;
+          height: 18px;
+          opacity: 1;
+          font-size: 13px;
+          font-family: PingFangSC, PingFangSC-Regular;
+          font-weight: 400;
+          text-align: left;
+          color: #404040;
+          line-height: 18px;
+          letter-spacing: 1px;
+        }
+        
+      }
+
+      &__balance{
+        height: 18px;
+        width: auto;
+      }
+    }
+
+  
+    .wallet-view-account-details {
+      flex: 0 0 auto;
+    }
+  
+    &__head-wapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 64px;
+      width: 100%;
+
+    }
+
+    &__head-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 100%;
+      width: 312px;
+      justify-content: space-between;
+
+      &__title{
+        width: auto;
+        height: 22px;
+        opacity: 1;
+        font-size: 16px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #303030;
+        line-height: 22px;
+        letter-spacing: 1px;
+      }
+
+      &__wallet--icon{
+        width: 16px;
+        height: 16px;
+        opacity: 1;
+      }
+
+      &__back--icon{
+        width: 14px;
+        height: 14px;
+        opacity: 1;
+        background: #ffffff;
+      }
+    }
+
+    &__body-wappet{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 99%;
+    }
+
+
+
+    &__wallet_type_list{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 60px;
+      height: 100%;
+      opacity: 1;
+      background: #fafafa;
+
+      &__Item{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        opacity: 1;
+        background: #ffffff;
+      }
+    }
+
+    &__wallets{
+      height: auto;
+      width: 100%;
+      background: #ffffff;
+
+      &__title{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+
+        &__font{
+          margin-right: auto;
+          margin-left: 10px;
+          width: auto;
+          height: 20px;
+          opacity: 1;
+          font-size: 14px;
+          font-family: PingFangSC, PingFangSC-Regular;
+          font-weight: 400;
+          text-align: left;
+          color: #323232;
+          line-height: 20px;
+          letter-spacing: 1px;
+        }
+
+        &__icon{
+          margin-left: auto;
+          margin-right: 10px;
+          width: 16px;
+          height: 16px;
+          opacity: 1;
+          background: #ffffff;
+        }
+      }
+    }
+    
+  
+    &__keyring-label {
+      height: 50px;
+      color: $dusty-gray;
+      font-family: Roboto;
+      font-size: 10px;
+      text-align: right;
+      padding: 17px 20px 0;
+      box-sizing: border-box;
+    }
+  
+    &__details-button {
+      font-size: 10px;
+      border-radius: 17px;
+      background-color: transparent;
+      margin: 0 auto;
+      padding: 4px 12px;
+      flex: 0 0 auto;
+    }
+  
+    &__tooltip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+  
+    &__address {
+      border-radius: 3px;
+      background-color: $alto;
+      color: $scorpion;
+      font-size: 14px;
+      line-height: 12px;
+      padding: 4px 12px;
+      cursor: pointer;
+      flex: 0 0 auto;
+  
+      &__pressed {
+        background-color: $manatee,
+      }
+    }
+  
+    &__sidebar-close {
+  
+      @media screen and (max-width: 575px) {
+        &::after {
+          content: '\00D7';
+          font-size: 40px;
+          color: $tundora;
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+  @media screen and (min-width: 576px) {
+    .wallet-view::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .wallet-view-title-wrapper {
+    flex: 0 0 25px;
+  }
+  
+  .wallet-view-title {
+    margin-left: 15px;
+    font-size: 16px;
+  
+    // No title on mobile
+    @media screen and (max-width: 575px) {
+      display: none;
+    }
+  }
+  
+  .wallet-view.sidebar-right {
+    flex: 1 0 230px;
+    width: 340px;
+    height: 528px;
+    opacity: 1;
+    background: #ffffff;
+    z-index: $sidebar-z-index;
+    position: fixed;
+    top: 66px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+    will-change: transform;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, .15) 2px 2px 4px;
+  }

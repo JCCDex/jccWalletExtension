@@ -1,0 +1,71 @@
+.network-menu {
+    position: fixed;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 100;
+    top: 63px;
+    width: 200px;
+    height: auto;
+    opacity: 1;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px;
+  
+    @media screen and (max-width: 575px) {
+      right: calc(((100vw - 100%) / 2) + 80px);
+    }
+  
+    @media screen and (min-width: 576px) {
+      right: calc((100vw - 85vw) / 2);
+    }
+  
+    @media screen and (min-width: 769px) {
+      right: calc((100vw - 80vw) / 2);
+    }
+  
+    @media screen and (min-width: 1281px) {
+      right: calc((100vw - 65vw) / 2);
+    }
+
+    &__Item{
+      display: flex;
+      flex-direction:row;
+      align-items: center;
+      width: 198px;
+      height: 32px;
+      opacity: 1;
+      background: #f3f6ff;
+
+      &__font{
+        width: auto;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #232323;
+        line-height: 20px;
+      }
+
+      &__icon{
+        margin-left: auto;
+        margin-right: 11px;
+        width: 14px;
+        height: 10px;
+        opacity: 1;
+      }
+    }
+
+    &__add-network{
+      display: flex;
+      flex-direction:row;
+      align-items: center;
+      justify-content: center;
+      width: 198px;
+      height: 32px;
+      opacity: 1;
+      background: #f3f6ff;
+    }
+  }
+  

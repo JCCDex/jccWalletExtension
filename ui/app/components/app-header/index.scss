@@ -9,8 +9,9 @@
   flex: 0 0 auto;
 
   @media screen and (max-width: 575px) {
-    padding: 12px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    margin: 0,20px,0,20px;
+    background: #475af5;
+    height: 72px;
     z-index: $mobile-header-z-index;
   }
 
@@ -30,13 +31,16 @@
     }
   }
 
+
   &__metafox-logo {
     cursor: pointer;
 
     &--icon {
-      @media screen and (min-width: $break-large) {
-        display: none;
-      }
+      width: 36px;
+      height: 36px;
+      opacity: 1;
+      background: linear-gradient(180deg,#f1f4ff, #dadeff);
+      border-radius: 50%;
     }
 
     &--horizontal {
@@ -48,11 +52,12 @@
 
   &__contents {
     display: flex;
-    justify-content: space-between;
-    flex-flow: row nowrap;
+    align-items:center;
+    justify-content: center;
     width: 100%;
 
     @media screen and (max-width: 575px) {
+      width: 320px;
       height: 100%;
     }
 
@@ -80,11 +85,49 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: center;
+    margin-left: auto;
   }
 
   &__network-component-wrapper {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 24px;
+    width: 200px;
+    height: 34px;
+    opacity: 1;
+    border: 1px solid #6c7bf7;
+    border-radius: 19px;
+  }
+
+  &__network-component-container {
+    display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 0px,14px,0px,14px;
+    width: 162px;
+    height: 20px;
+    
+    &--text {
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #ccd2fc;
+      line-height: 20px;
+    }
+    &--drop-icon{
+      width: 10px;
+      height: 6px;
+      margin-left: auto;
+      opacity: 1;
+      background: #c9cfff;
+    }
   }
+
+
 }

@@ -13,6 +13,7 @@ const mapStateToProps = state => {
     selectedAddress,
     isUnlocked,
     isAccountMenuOpen,
+    isNetworkMenuOpen,
   } = metamask
 
   return {
@@ -21,12 +22,14 @@ const mapStateToProps = state => {
     selectedAddress,
     isUnlocked,
     isAccountMenuOpen,
+    isNetworkMenuOpen,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     toggleAccountMenu: () => dispatch(actions.toggleAccountMenu()),
+    toggleNetworkMenu: () => dispatch(actions.toggleNetworkMenu()),
   }
 }
 

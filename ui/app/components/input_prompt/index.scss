@@ -1,0 +1,19 @@
+.input-prompt{
+
+  &__tip{
+    height: 25px;
+    width: 300px;
+  
+    &__font{
+      width: auto;
+      height: 16px;
+      opacity: 1;
+      font-size: 12px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #ed3434;
+      line-height: 16px;
+    }
+  }
+}

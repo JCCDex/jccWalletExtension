@@ -81,10 +81,23 @@
     }
   }
 
-  &__button {
-    min-width: initial;
-    width: 100px;
+  &__button--send {
+    width: 140px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
 
+  &__button--reciver {
+    width: 140px;
+    height: 46px;
+    opacity: 1;
+    background: #f1a625;
+    border-radius: 6px;
     &:not(:last-child) {
       margin-right: 12px;
     }

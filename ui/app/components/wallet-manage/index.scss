@@ -1,0 +1,91 @@
+.wallet-manage{
+
+    &__wallet{
+        width: 360px;
+        height: 108px;
+        opacity: 1;
+        background: #586aff;
+        border-radius: 1px;
+
+        &__icon{
+            width: 48px;
+            height: 48px;
+            opacity: 1;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        &__Info{
+            height: 48px;
+            width: 100%;
+
+            &__name{
+                width: auto;
+                height: 20px;
+                
+                &__font{
+                    opacity: 1;
+                    font-size: 14px;
+                    font-family: PingFangSC, PingFangSC-Semibold;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #ffffff;
+                    line-height: 20px;
+                    letter-spacing: 1px;
+    
+                }
+                &__icon{
+                    width: 14px;
+                    height: 14px;
+                    opacity: 1;
+                    background: #ffffff;
+                }
+            }
+
+            &__address{
+                width: 71px;
+                height: 20px;
+                opacity: 1;
+                font-size: 14px;
+                font-family: PingFangSC, PingFangSC-Semibold;
+                font-weight: 600;
+                text-align: left;
+                color: #ffffff;
+                line-height: 20px;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+
+    &__item{
+        margin-top: 14px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 14px;
+        height: 20px;
+        width: 100%;
+
+        &__name{
+            width: auto;
+            height: 20px;
+            opacity: 1;
+            font-size: 14px;
+            font-family: PingFangSC, PingFangSC-Regular;
+            font-weight: 400;
+            text-align: left;
+            color: #232323;
+            line-height: 20px;
+            letter-spacing: 1px;
+        }
+
+        &__icon{
+            margin-left: auto;
+            width: 8px;
+            height: 14px;
+            opacity: 1;
+            background: #ffffff;
+        }
+    }
+
+}

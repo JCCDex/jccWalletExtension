@@ -29,19 +29,24 @@ export default class MenuBar extends PureComponent {
           title={t('menu')}
           position="bottom"
         >
-          <div
-            className="fa fa-bars menu-bar__sidebar-button"
-            onClick={() => {
-              this.context.metricsEvent({
-                eventOpts: {
-                  category: 'Navigation',
-                  action: 'Home',
-                  name: 'Opened Hamburger',
-                },
-              })
-              sidebarOpen ? hideSidebar() : showSidebar()
-            }}
-          />
+        <div className='menu-bar__sidebar__container'
+          onClick={() => {
+            this.context.metricsEvent({
+              eventOpts: {
+                category: 'Navigation',
+                action: 'Home',
+                name: 'Opened Hamburger',
+              },
+            })
+            sidebarOpen ? hideSidebar() : showSidebar()
+          }}>
+            <img
+              src="/images/wallet.png"
+              width={36}
+              height={36}
+            />
+          </div>
+
         </Tooltip>
         <SelectedAccount />
 

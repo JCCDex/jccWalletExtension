@@ -11,6 +11,7 @@ import {
   RESTORE_VAULT_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
 } from '../../../routes'
+import { conversionGreaterThan } from '../../../conversion-util'
 
 export default class Home extends PureComponent {
   static propTypes = {
@@ -35,6 +36,7 @@ export default class Home extends PureComponent {
   }
 
   render () {
+    console.log("home")
     const {
       forgottenPassword,
       seedWords,
