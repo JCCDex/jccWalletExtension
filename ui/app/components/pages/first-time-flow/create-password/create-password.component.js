@@ -2,19 +2,25 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import NewAccount from './new-account'
-import ImportWithSeedPhrase from './import-with-seed-phrase'
+import ImportAccount from './import-account-with-mode'
+import Password from './password-setting'
 import {
   INITIALIZE_CREATE_PASSWORD_ROUTE,
-  INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE,
+  INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_SEED_PHRASE_ROUTE,
+  INITIALIZE_CREATE_PASSWORD,
 } from '../../../../routes'
 
+//整个流程为 先选择导入/创建密钥  然后在流程中输入密码
 export default class CreatePassword extends PureComponent {
   static propTypes = {
     history: PropTypes.object,
     isInitialized: PropTypes.bool,
     onCreateNewAccount: PropTypes.func,
     onCreateNewAccountFromSeed: PropTypes.func,
+    completeOnboarding: PropTypes.func,
+    completionMetaMetricsName: PropTypes.string,
+    keypairs: PropTypes.object,
   }
 
   componentDidMount () {
@@ -25,43 +31,42 @@ export default class CreatePassword extends PureComponent {
     }
   }
 
-  render () {
-    const { onCreateNewAccount, onCreateNewAccountFromSeed } = this.props
 
+
+
+  render () {
+    const { onCreateNewAccount,keypairs} = this.props
     return (
       <div className="first-time-flow__wrapper">
-        <div className="app-header__logo-container">
-          <img
-            className="app-header__metafox-logo app-header__metafox-logo--horizontal"
-            src="/images/logo/swtclogo.png"
-            width={163}
-            height={50}
-          />
-          <img
-            className="app-header__metafox-logo app-header__metafox-logo--icon"
-            src="/images/logo/jingtum.png"
-            height={42}
-            width={42}
-          />
-        </div>
         <Switch>
           <Route
             exact
-            path={INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE}
+            path={INITIALIZE_IMPORT_WITH_SECRET}
             render={props => (
-              <ImportWithSeedPhrase
+              <ImportAccount
                 { ...props }
-                onSubmit={onCreateNewAccountFromSeed}
+                onSubmit={onCreateNewAccount}
               />
             )}
           />
+         <Route
+            path={INITIALIZE_CREATE_PASSWORD}
+            render={props => (
+              <Password
+                { ...props }
+                keypairs = {keypairs}
+                onSubmit={onCreateNewAccount}
+              />
+            )}
+          >
+          </Route>
           <Route
             exact
             path={INITIALIZE_CREATE_PASSWORD_ROUTE}
             render={props => (
               <NewAccount
                 { ...props }
-                onSubmit={onCreateNewAccount}
+                keypairs = {keypairs}
               />
             )}
           />

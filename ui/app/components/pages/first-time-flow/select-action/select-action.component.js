@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 import Button from '../../../button'
 import {
   INITIALIZE_METAMETRICS_OPT_IN_ROUTE,
+  INITIALIZE_CREATE_PASSWORD_ROUTE,
+  INITIALIZE_IMPORT_WITH_SECRET,
+  DEFAULT_ROUTE,
 } from '../../../../routes'
-
 export default class SelectAction extends PureComponent {
   static propTypes = {
     history: PropTypes.object,
     isInitialized: PropTypes.bool,
     setFirstTimeFlowType: PropTypes.func,
     nextRoute: PropTypes.string,
+    onCreateWalletByType: PropTypes.func,
   }
 
   static contextTypes = {
@@ -25,89 +28,67 @@ export default class SelectAction extends PureComponent {
     }
   }
 
-  handleCreate = () => {
+  handleCreate = async () => {
+    const {onCreateWalletByType} = this.props
+    await onCreateWalletByType ('swt');
     this.props.setFirstTimeFlowType('create')
-    this.props.history.push(INITIALIZE_METAMETRICS_OPT_IN_ROUTE)
+    this.props.history.push(INITIALIZE_CREATE_PASSWORD_ROUTE)
   }
 
   handleImport = () => {
     this.props.setFirstTimeFlowType('import')
-    this.props.history.push(INITIALIZE_METAMETRICS_OPT_IN_ROUTE)
+    this.props.history.push(INITIALIZE_IMPORT_WITH_SECRET)
   }
 
   render () {
     const { t } = this.context
-
     return (
-       <div className="select-action">
-        <div className="app-header__logo-container">
-          <img
-            className="app-header__metafox-logo app-header__metafox-logo--horizontal"
-            src="/images/logo/swtclogo.png"
-            width={163}
-            height={50}
-          />
-          <img
-            className="app-header__metafox-logo app-header__metafox-logo--icon"
-            src="/images/logo/jingtum.png"
-            height={42}
-            width={42}
-          />
-        </div>
-
-        <div className="select-action__wrapper">
-
-
-          <div className="select-action__body">
-            <div className="select-action__body-header">
-              { t('newToMetaMask') }
-            </div>
-            <div className="select-action__select-buttons">
-              <div className="select-action__select-button">
-                <div className="select-action__button-content">
-                  <div className="select-action__button-symbol">
-                    <img src="/images/download-alt.svg" />
-                  </div>
-                  <div className="select-action__button-text-big">
-                    { t('noAlreadyHaveSeed') }
-                  </div>
-                  <div className="select-action__button-text-small">
-                    { t('importYourExisting') }
-                  </div>
-                </div>
-                <Button
-                  type="primary"
-                  className="first-time-flow__button"
-                  onClick={this.handleImport}
-                >
-                  { t('importWallet') }
-                </Button>
-              </div>
-              <div className="select-action__select-button">
-                <div className="select-action__button-content">
-                  <div className="select-action__button-symbol">
-                    <img src="/images/thin-plus.svg" />
-                  </div>
-                  <div className="select-action__button-text-big">
-                    { t('letsGoSetUp') }
-                  </div>
-                  <div className="select-action__button-text-small">
-                    { t('thisWillCreate') }
-                  </div>
-                </div>
-                <Button
-                  type="confirm"
-                  className="first-time-flow__button"
-                  onClick={this.handleCreate}
-                >
-                  { t('createAWallet') }
-                </Button>
-              </div>
-            </div>
+      <div className='first-time-flow__wrapper'>
+        <div className="first-time-flow__Symbol">
+        <img
+          className="first-time-flow__Symbol--icon"
+          src="/images/emogi.png"
+          height={16}
+          width={16}
+        />
+          <div className="first-time-flow__Symbol--font">
+            {t('Reminder')}
           </div>
-
         </div>
-       </div>
+      <div className="first-time-flow__Describe">
+        <div className="first-time-flow__Star">*</div>
+        <div className="first-time-flow__FirstUsedTips1">
+        { t('FirstUsedTips1') }
+        </div>
+      </div>
+      <div className="first-time-flow__Describe">
+        <div className="first-time-flow__Star">*</div>
+        <div className="first-time-flow__FirstUsedTips2">
+       { t('FirstUsedTips2') }
+       </div>  
+      </div>
+      <div className="first-time-flow__Describe">
+        <div className="first-time-flow__Star">*</div>
+        <div className="first-time-flow__FirstUsedTips2">
+       { t('FirstUsedTips3') }
+       </div> 
+      </div>
+      <div className="first-time-flow__Empty"/> 
+       <Button
+            type="confirm"
+            className="first-time-flow__button"
+            onClick={this.handleCreate}
+          >
+            { t('createAWallet') }
+          </Button>
+       <Button
+            type="confirm"
+            className="first-time-flow__button"
+            onClick={this.handleImport}
+          >
+            { t('importWallet') }
+          </Button>
+      </div>
     )
   }
 }

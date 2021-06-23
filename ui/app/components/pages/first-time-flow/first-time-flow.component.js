@@ -8,7 +8,8 @@ import EndOfFlow from './end-of-flow'
 import Unlock from '../unlock-page'
 import CreatePassword from './create-password'
 import SeedPhrase from './seed-phrase'
-import MetaMetricsOptInScreen from './metametrics-opt-in'
+import MetaMetricsOptIn from './metametrics-opt-in'
+import TitleBar from '../../titlebar'
 import {
   DEFAULT_ROUTE,
   INITIALIZE_WELCOME_ROUTE,
@@ -19,11 +20,13 @@ import {
   INITIALIZE_END_OF_FLOW_ROUTE,
   INITIALIZE_METAMETRICS_OPT_IN_ROUTE,
 } from '../../../routes'
+import { contours } from 'd3'
 
 export default class FirstTimeFlow extends PureComponent {
   static propTypes = {
     completedOnboarding: PropTypes.bool,
     createNewAccount: PropTypes.func,
+    createWalletByType : PropTypes.func,
     createNewAccountFromSeed: PropTypes.func,
     history: PropTypes.object,
     isInitialized: PropTypes.bool,
@@ -31,9 +34,11 @@ export default class FirstTimeFlow extends PureComponent {
     unlockAccount: PropTypes.func,
     nextRoute: PropTypes.func,
   }
-
+  static contextTypes = {
+    t: PropTypes.func,
+  }
   state = {
-    seedPhrase: '',
+    keypairs: '',
     isImportedKeyring: false,
   }
 
@@ -51,22 +56,32 @@ export default class FirstTimeFlow extends PureComponent {
     }
   }
 
-  handleCreateNewAccount = async password => {
+  handleCreateNewAccount = async (password,keypair) => {
     const { createNewAccount } = this.props
-
+    console.log("目标函数被调用")
     try {
-      const seedPhrase = await createNewAccount(password)
-      this.setState({ seedPhrase })
+      await createNewAccount(password,keypair)
     } catch (error) {
       throw new Error(error.message)
     }
   }
 
-  handleImportWithSeedPhrase = async (seedPhrase) => {
+  handleCreateWalletByType = async (type) => {
+    const { createWalletByType } = this.props
+    try {
+      const keypairs = await createWalletByType(type)
+      this.setState({ keypairs })
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  handleImportWithSecret = async (secret) => {
     const { createNewAccountFromSeed } = this.props
 
     try {
-      await createNewAccountFromSeed(seedPhrase)
+      console.log(secret)
+      await createNewAccountFromSeed(secret)
       this.setState({ isImportedKeyring: true })
     } catch (error) {
       throw new Error(error.message)
@@ -85,10 +100,9 @@ export default class FirstTimeFlow extends PureComponent {
       throw new Error(error.message)
     }
   }
-
+  
   render () {
-    const { seedPhrase, isImportedKeyring } = this.state
-
+    const { keypairs, isImportedKeyring } = this.state
     return (
       <div className="first-time-flow">
         <Switch>
@@ -97,7 +111,7 @@ export default class FirstTimeFlow extends PureComponent {
             render={props => (
               <SeedPhrase
                 { ...props }
-                seedPhrase={seedPhrase}
+                keypairs={keypairs}
               />
             )}
           />
@@ -106,15 +120,21 @@ export default class FirstTimeFlow extends PureComponent {
             render={props => (
               <CreatePassword
                 { ...props }
+                keypairs={keypairs}
                 isImportedKeyring={isImportedKeyring}
                 onCreateNewAccount={this.handleCreateNewAccount}
-                onCreateNewAccountFromSeed={this.handleImportWithSeedPhrase}
+                onCreateNewAccountFromSeed={this.handleImportWithSecret}
               />
             )}
           />
           <Route
             path={INITIALIZE_SELECT_ACTION_ROUTE}
-            component={SelectAction}
+            render={props => (
+              <SelectAction
+                { ...props }
+                onCreateWalletByType={this.handleCreateWalletByType}
+              />
+            )}
           />
           <Route
             path={INITIALIZE_UNLOCK_ROUTE}
@@ -138,7 +158,7 @@ export default class FirstTimeFlow extends PureComponent {
           <Route
             exact
             path={INITIALIZE_METAMETRICS_OPT_IN_ROUTE}
-            component={MetaMetricsOptInScreen}
+            component={MetaMetricsOptIn}
           />
           <Route
             exact

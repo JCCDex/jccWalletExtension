@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { setFirstTimeFlowType } from '../../../../actions'
+import SelectAction from './select-action.component'
 import { getFirstTimeFlowTypeRoute } from '../first-time-flow.selectors'
-import Welcome from './select-action.component'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(Welcome)
+)(SelectAction)

@@ -13,19 +13,19 @@ export default class SeedPhrase extends PureComponent {
   static propTypes = {
     address: PropTypes.string,
     history: PropTypes.object,
-    seedPhrase: PropTypes.string,
+    keypairs: PropTypes.object,
   }
 
   componentDidMount () {
-    const { seedPhrase, history } = this.props
+    const { keypairs, history } = this.props
 
-    if (!seedPhrase) {
+    if (!keypairs) {
       history.push(DEFAULT_ROUTE)
     }
   }
 
   render () {
-    const { seedPhrase } = this.props
+    const { keypairs } = this.props
 
     return (
       <div className="first-time-flow__wrapper">
@@ -50,7 +50,7 @@ export default class SeedPhrase extends PureComponent {
             render={props => (
               <ConfirmSeedPhrase
                 { ...props }
-                seedPhrase={seedPhrase}
+                keypairs={keypairs}
               />
             )}
           />
@@ -60,7 +60,7 @@ export default class SeedPhrase extends PureComponent {
             render={props => (
               <RevealSeedPhrase
                 { ...props }
-                seedPhrase={seedPhrase}
+                keypairs={keypairs}
               />
             )}
           />

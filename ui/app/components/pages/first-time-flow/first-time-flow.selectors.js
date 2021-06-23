@@ -1,6 +1,6 @@
 import {
   INITIALIZE_CREATE_PASSWORD_ROUTE,
-  INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE,
+  INITIALIZE_IMPORT_WITH_SECRET,
   DEFAULT_ROUTE,
 } from '../../../routes'
 
@@ -17,7 +17,7 @@ function getFirstTimeFlowTypeRoute (state) {
   if (firstTimeFlowType === 'create') {
     nextRoute = INITIALIZE_CREATE_PASSWORD_ROUTE
   } else if (firstTimeFlowType === 'import') {
-    nextRoute = INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE
+    nextRoute = INITIALIZE_IMPORT_WITH_SECRET
   } else {
     nextRoute = DEFAULT_ROUTE
   }

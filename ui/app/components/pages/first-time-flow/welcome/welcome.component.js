@@ -43,17 +43,16 @@ export default class Welcome extends PureComponent {
       <div className="welcome-page__wrapper">
         <div className="welcome-page">
         <img
-            className="app-header__metafox-logo app-header__metafox-logo--icon"
-            src="/images/logo/jingtum.png"
-            height={125}
-            width={125}
+            className="welcome-page__icon"
+            src="/images/logo/JCCwallet.png"
+            height={110}
+            width={111}
           />
-          <div className="welcome-page__header">
-            { t('welcome') }
+          <div className="welcome-page__appname ">
+            {t('welcome')} { t('appName')}
           </div>
           <div className="welcome-page__description">
             <div>{ t('metamaskDescription') }</div>
-            <div>{ t('happyToSeeYou') }</div>
           </div>
           <Button
             type="confirm"

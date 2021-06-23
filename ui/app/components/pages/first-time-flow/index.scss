@@ -1,29 +1,25 @@
 @import './welcome/index';
 
-@import './select-action/index';
-
 @import './seed-phrase/index';
 
 @import './end-of-flow/index';
 
 @import './metametrics-opt-in/index';
 
+@import './create-password/import-account-with-mode/index';
+
+@import './create-password/new-account/index';
 
 .first-time-flow {
-  width: 100%;
-  background-color: $white;
   display: flex;
-  justify-content: center;
-
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  background-color: $white;
   &__wrapper {
-    @media screen and (min-width: $break-large) {
-      max-width: 742px;
       display: flex;
       flex-direction: column;
-      width: 100%;
-      margin-top: 2%;
-    }
-
+      width: 320px;
     .app-header__metafox-logo {
       margin-bottom: 40px;
     }
@@ -46,10 +42,6 @@
 
   &__subheader {
     margin-bottom: 16px;
-  }
-
-  &__input {
-    max-width: 350px;
   }
 
   &__textarea-wrapper {
@@ -156,4 +148,109 @@
   &__link-text {
     color: $curious-blue;
   }
+
+
+  &__Symbol{
+    display: flex;
+    flex-direction:row;
+    margin-top: 25px;
+    width: 320px;
+    height: 20px;
+    align-items:center;
+
+    &--icon{
+      width: 16px;
+      height: 16px;
+      opacity: 1;
+      background: #ffffff;
+    }
+    &--font{
+      width: 56px;
+      height: 20px;
+      margin-left: 6px;
+      text-align:center;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: justify;
+      color: #e87711;
+      line-height: 20px;
+    }
+  }
+
+  &__Describe{
+    display: flex;
+    flex-direction:row;
+    width: 320px;
+    height: auto;
+    margin-top: 8px;
+  }
+
+  &__Star{
+    width: 8px;
+    height: 20px;
+    margin-left: 4px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Medium;
+    font-weight: 500;
+    text-align: left;
+    color: #e87711;
+    line-height: 20px;
+  }
+
+  &__Empty{
+    width:320px;
+    height: 12px;
+  }
+
+
+  &__FirstUsedTips1 {
+    width: 294px;
+    height: 44px;
+    opacity: 1;
+    font-size: 14px;
+    margin-left: 10px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: justify;
+    color: #404040;
+    line-height: 22px;
+  }
+
+  &__FirstUsedTips2 {
+    width: 294px;
+    height: 22px;
+    opacity: 1;
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: justify;
+    color: #404040;
+    line-height: 22px;
+  }
+
+  .first-time-flow__button {
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+    margin-top: 24px;
+    margin-bottom: 0;
+    color: #ffffff;
+  }
+
+  &__input{
+    margin-bottom: 0px;
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px;
+  }
+
 }
