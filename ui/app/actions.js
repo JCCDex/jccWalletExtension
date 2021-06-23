@@ -8,10 +8,12 @@ const WebcamUtils = require('../lib/webcam-utils')
 const LocalSign = require('jcc_jingtum_lib/src/local_sign')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import JCCExchange from "jcc_exchange";
+import { func } from 'joi'
+import { dispatch } from 'd3'
 
 var actions = {
   _setBackgroundConnection: _setBackgroundConnection,
-
+  
   GO_HOME: 'GO_HOME',
   goHome: goHome,
   // modal state
@@ -75,7 +77,8 @@ var actions = {
   createNewVaultAndKeychain: createNewVaultAndKeychain,
   createNewVaultAndRestore: createNewVaultAndRestore,
   createNewVaultInProgress: createNewVaultInProgress,
-  createNewVaultAndGetSeedPhrase,
+  createNewAccount,
+  createWalletByType,
   unlockAndGetSeedPhrase,
   addNewKeyring,
   importNewAccount,
@@ -245,7 +248,11 @@ var actions = {
   forceUpdateMetamaskState,
 
   TOGGLE_ACCOUNT_MENU: 'TOGGLE_ACCOUNT_MENU',
+  SETIMPORTMODE:"SET_IMPORTMODE",
   toggleAccountMenu,
+  TOGGLE_NETWORK_MENU: 'TOGGLE_NETWORK_MENU',
+  toggleNetworkMenu,
+  setImportAccountMode,
 
   useEtherscanProvider,
 
@@ -299,6 +306,24 @@ var actions = {
 
   setFirstTimeFlowType,
   SET_FIRST_TIME_FLOW_TYPE: 'SET_FIRST_TIME_FLOW_TYPE',
+
+
+  //wallet or chain
+  SET_CHAIN_TYPE: 'SET_CHAIN_TYPE',
+  SET_SELECTED_WALLET_TYPE:'SET_SELECTED_WALLET_TYPE',
+
+
+  setSelectedWalletType,
+  getWalletsByType,
+  setDefaultAccount,
+  setCurrentWallet,
+  setChainType,
+
+  ADD_WALLET:"ADD_WALLET",
+  addWallet,
+
+
+  //通过 密码 生成 keystore
 }
 
 module.exports = actions
@@ -443,15 +468,12 @@ function createNewVaultAndKeychain (password) {
   }
 }
 
-function createNewVaultAndGetSeedPhrase (password) {
+function createNewAccount (password,keypair) {
   return async dispatch => {
     dispatch(actions.showLoadingIndication())
-
     try {
-      const seedWords = await createNewVault(password)
-     // const seedWords = await verifySeedPhrase()
+      await createNewVault(password,keypair.secret)
       dispatch(actions.hideLoadingIndication())
-      return seedWords
     } catch (error) {
       dispatch(actions.hideLoadingIndication())
       dispatch(actions.displayWarning(error.message))
@@ -459,6 +481,49 @@ function createNewVaultAndGetSeedPhrase (password) {
     }
   }
 }
+
+function createWalletByType (type) {
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.createWalletByType(type, (error, keypair) => {
+          if (error) {
+            console.log(error)
+            reject(error)
+          }
+          console.log(keypair)
+          resolve(keypair)
+      })
+    })
+  }
+}
+
+function addWallet(walletType,account,name){
+
+  return (dispatch) => {
+    dispatch(actions.showLoadingIndication())
+
+    return new Promise((resolve, reject) => {
+      background.setAccountLabel(account, label, (err) => {
+
+        dispatch(actions.hideLoadingIndication())
+
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          reject(err)
+        }
+
+        dispatch({
+          type:actions.ADD_WALLET,
+          value:{walletType,account,name},
+        })
+
+        resolve(account)
+      })
+    })
+  }
+}
+
+
 
 function unlockAndGetSeedPhrase (password) {
   return async dispatch => {
@@ -496,14 +561,15 @@ function submitPassword (password) {
   })
 }
 
-function createNewVault (password) {
+function createNewVault (password,secret) {
   return new Promise((resolve, reject) => {
-    background.createNewVaultAndKeychain(password, (error, seedWords) => {
+    background.createNewVaultAndKeychain(password,secret, (error, inst) => {
       if (error) {
+        console.log(error)
         return reject(error)
       }
-
-      resolve(seedWords)
+      console.log(inst)
+      resolve(inst)
     })
   })
 }
@@ -1301,6 +1367,7 @@ function setSelectedToken (tokenAddress) {
   }
 }
 
+
 function setSelectedAddress (address) {
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
@@ -2034,12 +2101,10 @@ function setCompletedOnboarding () {
     return new Promise((resolve, reject) => {
       background.completeOnboarding(err => {
         dispatch(actions.hideLoadingIndication())
-
         if (err) {
           dispatch(actions.displayWarning(err.message))
           return reject(err)
         }
-
         dispatch(actions.completeOnboarding())
         resolve()
       })
@@ -2138,6 +2203,62 @@ function toggleAccountMenu () {
     type: actions.TOGGLE_ACCOUNT_MENU,
   }
 }
+
+function setImportAccountMode(type) {
+  return {
+    type: actions.SETIMPORTMODE,
+    value:type
+  }
+}
+
+
+function toggleNetworkMenu() {
+  return {
+    type: actions.TOGGLE_NETWORK_MENU,
+  }
+}
+
+
+
+
+//从store中读取钱包列表 存入 state 
+function getWalletsByType(type){
+  return (dispatch) => {
+    background.getWallets()
+  }
+}
+
+//实际上是设定 默认‘帐号’ 类似威链钱包的逻辑，仅仅和导出 相关
+function setDefaultAccount(wallet){
+  return (dispatch) => {
+    dispatch(actions.setChainType(walelt.type))
+  }
+}
+//设定 主页面显示的钱包
+//包含了 链的设定
+function setCurrentWallet(wallet){
+  return (dispatch) => {
+    //切换 链的状态
+    dispatch(actions.setChainType(walelt.type))
+    //设定当前钱包
+    background.setCurrentWallet(wallet)
+  }
+}
+
+function setChainType(type){
+  return  {
+    type: actions.SET_CHAIN_TYPE,
+    value: type,
+  }
+}
+
+function setSelectedWalletType(type){
+  return {
+    type: actions.SET_SELECTED_WALLET_TYPE,
+    value:type,
+  }
+}
+
 
 function setMetaMetricsSendCount (val) {
   return (dispatch) => {

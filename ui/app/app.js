@@ -33,14 +33,15 @@ const Loading = require('./components/loading-screen')
 
 import AccountMenu from './components/account-menu'
 
+import NetworkMenu from './components/network-menu'
+
 // Global Modals
 const Modal = require('./components/modals/index').Modal
 // Global Alert
 const Alert = require('./components/alert')
-
+import TitleBar from './components/titlebar' 
 import AppHeader from './components/app-header'
 import UnlockPage from './components/pages/unlock-page'
-
 
 // Routes
 import {
@@ -57,6 +58,16 @@ import {
   INITIALIZE_ROUTE,
   INITIALIZE_UNLOCK_ROUTE,
   NOTICE_ROUTE,
+
+  INITIALIZE_WELCOME_ROUTE,
+  INITIALIZE_CREATE_PASSWORD_ROUTE,
+  INITIALIZE_SEED_PHRASE_ROUTE,
+  INITIALIZE_SELECT_ACTION_ROUTE,
+  INITIALIZE_END_OF_FLOW_ROUTE,
+  INITIALIZE_METAMETRICS_OPT_IN_ROUTE,
+  INITIALIZE_IMPORT_WITH_SECRET,
+  INITIALIZE_IMPORT_WITH_KEYSTORE,
+  INITIALIZE_CREATE_PASSWORD
 } from './routes'
 
 // enums
@@ -71,21 +82,46 @@ class App extends Component {
 
   }
 
-  renderRoutes () {
+
+
+  renderTitle () {
+    const { t } = this.context
+    let massage =''
+    switch(this.props.location.pathname){
+      case INITIALIZE_SELECT_ACTION_ROUTE:massage = t('getStarted');
+        break;
+      case INITIALIZE_CREATE_PASSWORD_ROUTE:massage = t('createKeyPair');break;
+      case INITIALIZE_IMPORT_WITH_SECRET:massage = t('importAccount');break;
+      case INITIALIZE_IMPORT_WITH_KEYSTORE:massage = t('importAccount');break;
+      case INITIALIZE_CREATE_PASSWORD:massage = t('SettingsPassword');break;
+      default:
+        return;
+
+    }
     return (
-      <Switch>
-        <Route path={LOCK_ROUTE} component={Lock} exact />
-        <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
-        <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
-        <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
-        <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
-        <Authenticated path={SETTINGS_ROUTE} component={Settings} />
-        <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
-        <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
-        <Authenticated path={CREATE_ORDER_ROUTE} component={OrderScreen} exact />
-        <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
-        <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
-      </Switch>
+      <TitleBar title = {massage}></TitleBar>
+    )
+  }
+
+  renderRoutes () {
+    console.log("app "+this.props.location.pathname)
+    
+    return (
+      <div>
+        <Switch>
+          <Route path={LOCK_ROUTE} component={Lock} exact />
+          <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
+          <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
+          <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
+          <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
+          <Authenticated path={SETTINGS_ROUTE} component={Settings} />
+          <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
+          <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
+          <Authenticated path={CREATE_ORDER_ROUTE} component={OrderScreen} exact />
+          <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
+          <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
+        </Switch>
+      </div>
     )
   }
 
@@ -181,9 +217,11 @@ class App extends Component {
           onOverlayClose={sidebarOnOverlayClose}
         />
         <AccountMenu />
+        <NetworkMenu/>
         <div className="main-container-wrapper">
-          { this.renderRoutes() }
-        </div>
+          {this.renderTitle() }
+          {this.renderRoutes() }
+        </div> 
       </div>
     )
   }
@@ -218,6 +256,7 @@ App.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   toggleAccountMenu: PropTypes.func,
+  toggleNetworkMenu:PropTypes.func,
   selectedAddress: PropTypes.string,
   noActiveNotices: PropTypes.bool,
   lostAccounts: PropTypes.array,
@@ -300,6 +339,7 @@ function mapDispatchToProps (dispatch, ownProps) {
     dispatch,
     hideSidebar: () => dispatch(actions.hideSidebar()),
     toggleAccountMenu: () => dispatch(actions.toggleAccountMenu()),
+    toggleNetworkMenu:() => dispatch(actions.toggleNetworkMenu()),
     setMouseUserState: (isMouseUser) => dispatch(actions.setMouseUserState(isMouseUser)),
   }
 }

@@ -45,9 +45,11 @@ async function start () {
     const state = store.getState()
     const { metamask: { completedOnboarding } = {} } = state
 
+    //如果未初始化，且为非全屏模式，则重新打开初始化页面。初始化页面为全屏
+    //将初始化账户流程 更改为 在弹窗中进行。
     if (!completedOnboarding && windowType !== ENVIRONMENT_TYPE_FULLSCREEN) {
-      global.platform.openExtensionInBrowser()
-      return
+      //global.platform.openExtensionInBrowser()
+      //return
     }
 
     injectCss(NewMetaMaskUiCss())

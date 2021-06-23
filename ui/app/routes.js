@@ -24,6 +24,9 @@ const INITIALIZE_UNLOCK_ROUTE = '/initialize/unlock'
 const INITIALIZE_CREATE_PASSWORD_ROUTE = '/initialize/create-password'
 const INITIALIZE_IMPORT_ACCOUNT_ROUTE = '/initialize/create-password/import-account'
 const INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE = '/initialize/create-password/import-with-seed-phrase'
+const INITIALIZE_IMPORT_WITH_SECRET = '/initialize/create-password/import-with-secret'
+const INITIALIZE_IMPORT_WITH_KEYSTORE = '/initialize/create-password/import-with-keystore'
+const INITIALIZE_CREATE_PASSWORD = '/initialize/create-password/create-password'
 const INITIALIZE_UNIQUE_IMAGE_ROUTE = '/initialize/create-password/unique-image'
 const INITIALIZE_NOTICE_ROUTE = '/initialize/notice'
 const INITIALIZE_SELECT_ACTION_ROUTE = '/initialize/select-action'
@@ -52,6 +55,7 @@ module.exports = {
   CONFIRM_SEED_ROUTE,
   RESTORE_VAULT_ROUTE,
   ADD_TOKEN_ROUTE,
+  INITIALIZE_CREATE_PASSWORD,
   CONFIRM_ADD_TOKEN_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
   NEW_ACCOUNT_ROUTE,
@@ -67,6 +71,8 @@ module.exports = {
   INITIALIZE_CREATE_PASSWORD_ROUTE,
   INITIALIZE_IMPORT_ACCOUNT_ROUTE,
   INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE,
+  INITIALIZE_IMPORT_WITH_KEYSTORE,
+  INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_UNIQUE_IMAGE_ROUTE,
   INITIALIZE_NOTICE_ROUTE,
   INITIALIZE_SELECT_ACTION_ROUTE,

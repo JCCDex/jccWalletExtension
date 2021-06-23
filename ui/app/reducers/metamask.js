@@ -14,6 +14,7 @@ function reduceMetamask (state, action) {
     isInitialized: false,
     isUnlocked: false,
     isAccountMenuOpen: false,
+    isNetworkMenuOpen:false,
     isPopup: getEnvironmentType(window.location.href) === ENVIRONMENT_TYPE_POPUP,
     rpcTarget: 'https://rawtestrpc.metamask.io/',
     identities: {},
@@ -24,6 +25,39 @@ function reduceMetamask (state, action) {
     frequentRpcList: [],
     addressBook: [],
     selectedTokenAddress: null,
+    selectedChainType:'swtc',
+    selectedWalletType:'jingtum',
+    wallets: {},
+
+    Networks:{
+      'jingtum':[{
+        name :"井通默认节点",
+        url:'http://101.200.174.239:7545',
+      },{
+        name :"井通默认节点2",
+        url:'http://101.200.174.239:7545',
+      }],
+      'eth':[{
+        name :"ETH默认节点",
+        url:'https://eth626892d.jccdex.cn',
+      },{
+        name :"ETH默认节点",
+        url:'https://ropsten.infura.io/v3/9af2760f61ea4fedbf3b10b5c07f2781',
+      }]
+    },
+
+    selectedNetWork:{
+      name :"井通默认节点",
+      url:'http://101.200.174.239:7545',
+    },
+    ChainTypeList :[{
+      ChainType :"jingtum",
+      IconUrl:'images/chain/jingtum',
+    },
+    {
+      ChainType :"eth",
+      IconUrl:'images/chain/eth',
+    }],
     contractExchangeRates: {},
     tokenExchangeRates: {},
     tokens: [],
@@ -53,6 +87,7 @@ function reduceMetamask (state, action) {
     isRevealingSeedWords: false,
     welcomeScreenSeen: false,
     currentLocale: '',
+    importMode:'secret',
     preferences: {
       useNativeCurrencyAsPrimaryCurrency: true,
       showFiatInTestnets: false,
@@ -63,6 +98,10 @@ function reduceMetamask (state, action) {
     participateInMetaMetrics: null,
     metaMetricsSendCount: 0,
   }, state.metamask)
+
+
+  let temp = {};
+  let walletsTemp = {};
 
   switch (action.type) {
 
@@ -169,12 +208,29 @@ function reduceMetamask (state, action) {
 
     case actions.SET_ACCOUNT_LABEL:
       const account = action.value.account
-      const name = action.value.label
+      const name = action.value.name
       const id = {}
       id[account] = extend(metamaskState.identities[account], { name })
       const identities = extend(metamaskState.identities, id)
       return extend(metamaskState, { identities })
 
+    case actions.ADD_WALLET:
+      //要插在数组中的数据
+      const WalletType = action.value.walletType;
+      const name1 = action.value.name;
+      const address = action.value.account;
+      const wallet = {name1,address}
+      let wallets={};
+      //如果数组不存在 则添加 对应的type 属性
+      if(!metamaskState.wallets[WalletType]){
+        wallets[WalletType]=[wallet];
+      }else{
+        //否则先深拷贝
+        wallets = JSON.parse(JSON.stringify(metamaskState.wallet[WalletType]))
+        wallets[WalletType].push(wallet);
+      }
+      return extend(metamaskState,{wallets})
+  
     case actions.SET_CURRENT_FIAT:
       return extend(metamaskState, {
         currentCurrency: action.value.currentCurrency,
@@ -249,6 +305,7 @@ function reduceMetamask (state, action) {
           toNickname: action.value.nickname,
         },
       })
+
 
     case actions.UPDATE_SEND_AMOUNT:
       return extend(metamaskState, {
@@ -404,6 +461,20 @@ function reduceMetamask (state, action) {
         currentLocale: action.value,
       })
 
+    case actions.SETIMPORTMODE:
+      return extend(metamaskState,{
+        importMode: action.value,
+      })
+
+    case actions.TOGGLE_NETWORK_MENU:
+      return extend(metamaskState,{
+        isNetworkMenuOpen: !metamaskState.isNetworkMenuOpen,
+      })
+
+    case actions.SET_SELECTED_WALLET_TYPE:
+      return extend(metamaskState, {
+        selectedWalletType:action.value
+      })
     case actions.SET_PENDING_TOKENS:
       return extend(metamaskState, {
         pendingTokens: { ...action.payload },
@@ -439,6 +510,12 @@ function reduceMetamask (state, action) {
     case actions.SET_FIRST_TIME_FLOW_TYPE: {
       return extend(metamaskState, {
         firstTimeFlowType: action.value,
+      })
+    }
+
+    case actions.SET_CHAIN_TYPE:{
+      return extend(metamaskState, {
+        selectedChainType: action.value,
       })
     }
 

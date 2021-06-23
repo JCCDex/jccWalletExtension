@@ -23,9 +23,17 @@ const {Mutex} = require('await-semaphore')
 const {version} = require('../manifest.json')
 const log = require('loglevel')
 const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
-import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
-import * as jtWallet from 'jcc_wallet/lib/jingtum'
+import {bvcadtWallet, callWallet, ethWallet, JingchangWallet, jtWallet, moacWallet, rippleWallet, stmWallet} from 'jcc_wallet'
 
+const WALLET_TYPES = {
+  SWTC:'swt', //井通链
+  RIPPLE:'ripple', //瑞波链
+  CALL:  'call', //CALL 链
+  STM: 'stm', //stm 链
+  JINGTUM: 'jingtum',
+  MOAC: 'moac',
+  ETH:'eth'
+};
 module.exports = class MetamaskController extends EventEmitter {
 
   /**
@@ -185,6 +193,7 @@ module.exports = class MetamaskController extends EventEmitter {
       importAccountWithStrategy: nodeify(this.importAccountWithStrategy, this),
 
       createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
+      createWalletByType : nodeify(this.createWalletByType,this),
       createNewVaultAndRestore: nodeify(this.createNewVaultAndRestore, this),
 
       // mobile
@@ -236,34 +245,58 @@ module.exports = class MetamaskController extends EventEmitter {
     this.preferencesController.setAccountLabel(account, label)
   }
 
-  async createNewVaultAndKeychain (password) {
+  //
+  async createNewVaultAndKeychain (password,secret) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {
-
-      const keypairs = await JingtumWallet.generate()
-      if (!JingchangWallet.get()) {
-        await JingchangWallet.generate(password, keypairs.secret).then((wallet) => {
+      const inst = JingchangWallet.get()
+      if (!inst) {
+        await JingchangWallet.generate(password, secret).then((wallet) => {
        // inst.setJingchangWallet(wallet)
          JingchangWallet.save(wallet)
         })
       } else {
-        const inst = JingchangWallet.get()
-        const getSecret = jtWallet.getAddress
-        await inst.importSecret(keypairs.secret, password, 'swt', getSecret)
+        const getSecret =  jtWallet.getAddress
+        await inst.importSecret(secret, password, 'swt', getSecret)
       }
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
     this.preferencesController.setAddresses(wallets)
     const addrToAdd = []
-    addrToAdd.push(keypairs.address)
+    addrToAdd.push(jtWallet.getAddress(secret))
     this.accountTracker.addAccounts(addrToAdd)
     this.selectFirstIdentity()
     releaseLock()
-      return keypairs.secret
+      return inst
     } catch (err) {
       releaseLock()
       throw err
     }
   }
+  /**
+   * Create wallet by type
+   * @param {*} type 
+   * @returns 
+   */
+  async createWalletByType (type){
+    switch(type){
+      case WALLET_TYPES.SWTC:
+          return jtWallet.createWallet();
+      case WALLET_TYPES.ETH:
+          return ethWallet.createWallet();
+      case WALLET_TYPES.MOAC:
+          return moacWallet.createWallet();;
+      case WALLET_TYPES.RIPPLE:
+          return rippleWallet.createWallet();
+      case WALLET_TYPES.CALL:
+          return callWallet.createWallet();
+      case WALLET_TYPES.STM:
+          return stmWallet.createWallet();
+      default:
+          console.log("checkSecretByType",type+" is not support")
+          return false;
+    }
+  }
+
 
   /**
    * Create a new Vault and restore an existent keyring.

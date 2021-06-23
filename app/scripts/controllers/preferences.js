@@ -1,7 +1,7 @@
 const ObservableStore = require('obs-store')
 const extend = require('xtend')
 
-
+// 这是 单链钱包页面的存储逻辑，需要改成 多链钱包
 class PreferencesController {
 
   /**
@@ -377,6 +377,7 @@ class PreferencesController {
    * onboarding process.
    */
   completeOnboarding () {
+    console.log("metamask completeOnboarding()")
     this.store.updateState({ completedOnboarding: true })
     return Promise.resolve(true)
   }
