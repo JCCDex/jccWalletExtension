@@ -1,6 +1,7 @@
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
 
+//这是 jingchang wallet的逻辑 暂时弃用
 const accountImporter = {
 
    importAccount (strategy, args) {

@@ -36,13 +36,11 @@ export default class Home extends PureComponent {
   }
 
   render () {
-    console.log("home")
     const {
       forgottenPassword,
       seedWords,
       providerRequests,
     } = this.props
-
     // seed words
     if (seedWords) {
      // return <Redirect to={{ pathname: INITIALIZE_SEED_PHRASE_ROUTE }}/>

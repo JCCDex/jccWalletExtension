@@ -183,7 +183,7 @@ class App extends Component {
       props,
     } = sidebar
     const { transaction: sidebarTransaction } = props || {}
-
+    console.log("初始 首页")
     return (
       <div
         className="app"

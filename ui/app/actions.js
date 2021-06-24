@@ -72,7 +72,6 @@ var actions = {
   showImportPage,
   showNewAccountPage,
   setNewAccountForm,
-  createNewVaultAndKeychain: createNewVaultAndKeychain,
   createNewVaultAndRestore: createNewVaultAndRestore,
   createNewVaultInProgress: createNewVaultInProgress,
   createNewAccount,
@@ -563,26 +562,6 @@ function createNewVaultAndRestore (password, seed) {
   }
 }
 
-function createNewVaultAndKeychain (password) {
-  return dispatch => {
-    dispatch(actions.showLoadingIndication())
-    log.debug(`background.createNewVaultAndKeychain`)
-
-    return new Promise((resolve, reject) => {
-      background.createNewVaultAndKeychain(password, err => {
-        if (err) {
-          dispatch(actions.displayWarning(err.message))
-          return reject(err)
-        }
-
-      })
-    })
-      .then(() => forceUpdateMetamaskState(dispatch))
-      .then(() => dispatch(actions.hideLoadingIndication()))
-      .catch(() => dispatch(actions.hideLoadingIndication()))
-  }
-}
-
 function createNewAccount (password,keypair) {
   return async dispatch => {
     dispatch(actions.showLoadingIndication())
@@ -635,12 +614,11 @@ function submitPassword (password) {
 
 function createNewVault (password,secret) {
   return new Promise((resolve, reject) => {
-    background.createNewVaultAndKeychain(password,secret, (error, inst) => {
+    background.createNewAccount(password,secret, (error, inst) => {
       if (error) {
         console.log(error)
         return reject(error)
       }
-      console.log(inst)
       resolve(inst)
     })
   })
@@ -1441,11 +1419,13 @@ function setSelectedToken (tokenAddress) {
 
 
 function setSelectedAddress (address) {
+  console.log('setSelectedAddress ++++++++++')
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
-    log.debug(`background.setSelectedAddress`)
+    //开始执行
     background.setSelectedAddress(address, (err) => {
       dispatch(actions.hideLoadingIndication())
+      log.debug(`background.setSelectedAddress`)
       if (err) {
         return dispatch(actions.displayWarning(err.message))
       }

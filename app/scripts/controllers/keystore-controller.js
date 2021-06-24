@@ -1,7 +1,8 @@
 const ObservableStore = require('obs-store')
 const extend = require('xtend')
-
 //keystore 的本地化存储，通过配置文件动态增加不同链的keystore 支持
+//等同于钱包密钥管理，基本上所有的操作都牵扯到授权，而所谓授权 即使用户自己通过 password 取出对应的 密钥
+//用户的 password 密钥将不作任何存储
 
 /**
  *  @typedef {Object} KeystoresController
@@ -11,51 +12,40 @@ const extend = require('xtend')
  * 
  */
 class KeystoresController {
-
     constructor (opts = {}) {
         const initState = extend({
-            keystores
+            keystores:[]
         }, opts.initState)
 
         this.store = new ObservableStore(initState)
-
     }
 
-    setKeystore(type,keystore){
+    setKeystore(keystore){
         let keystores={};
-        if(!this.store.getState().keystores[type]){
-            keystores[type]=[keystore];
+        if(!this.store.getState().keystores){
+            keystores=[keystore];
         }else{
-          keystores = JSON.parse(JSON.stringify(this.store.getState().keystores))
-          keystores[type].push(keystore);
+          keystores =this.store.getState().keystores
+          keystores.push(keystore);
         }
         this.store.updateState({keystores})
+        return Promise.resolve(true)
     }
 
-    getKeystore(type,address){
-        if(!this.store.getState().keystores[type]){
+    removeKeystore(address){
+        if(!this.store.getState().keystores){
             return null
         }
+        
+        let keystores = this.store.getState().keystores
 
-        for(let key in this.store.getState().keystores[type]){
-            if(key.wallets.address === address)
-            return key;
-        }
-    }
-
-    removeKeystore(type,address){
-        if(!this.store.getState().keystores[type]){
-            return null
-        }
-        let keystores={};
-        keystores = JSON.parse(JSON.stringify(this.store.getState().keystores))
-        for(let key in keystores){
-            if(key.wallets.address === address){
-                keystores.remove(key)
+        keystores.forEach((item, index, arr)=>{
+            if(item[1].address === address ){
+              arr.splice(index, 1);
             }
-            return key;
-        }
+          });
         this.store.updateState({keystores})
+        return Promise.resolve(true)
     }
 
 }

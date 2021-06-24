@@ -15,6 +15,7 @@ const debounce = require('debounce')
 const {setupMultiplex} = require('./lib/stream-utils.js')
 const PreferencesController = require('./controllers/preferences')
 const NetworkController = require('./controllers/network-controller')
+const KeystoresController = require('./controllers/keystore-controller')
 const CachedBalancesController = require('./controllers/cached-balances')
 const NoticeController = require('./notice-controller')
 const MessageManager = require('./lib/message-manager')
@@ -28,6 +29,8 @@ const walletUtils = require('./wallet/walletUtils')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import * as jtWallet from 'jcc_wallet/lib/jingtum'
 
+//这你会看到 初版metamask 的方法， 修改以后的 jingtum mask 的方法， 还有多链钱包 方法
+//很多代码没用，需要去除这些冗余
 module.exports = class MetamaskController extends EventEmitter {
 
   /**
@@ -66,10 +69,15 @@ module.exports = class MetamaskController extends EventEmitter {
       initState: initState.NetworkController
     })
 
+    //wallet
     this.accountTracker = new AccountTracker({
       initState: initState.AccountTracker,
     })
 
+    this.keystoresController = new KeystoresController({
+      initState: initState.KeystoresController,
+    })
+    
     // start and stop polling for balances based on activeControllerConnections
     this.on('controllerConnectionChanged', (activeControllerConnections) => {
       if (activeControllerConnections > 0) {
@@ -94,10 +102,10 @@ module.exports = class MetamaskController extends EventEmitter {
     this.messageManager = new MessageManager()
     this.publicConfigStore = this.initPublicConfigStore()
 
-
     this.store.updateStructure({
       AccountTracker: this.accountTracker.store,
       PreferencesController: this.preferencesController.store,
+      KeystoresController:this.keystoresController.store,
       NetworkController : this.networkController.store,
       NoticeController: this.noticeController.store,
       CachedBalancesController: this.cachedBalancesController.store,
@@ -108,6 +116,7 @@ module.exports = class MetamaskController extends EventEmitter {
       MessageManager: this.messageManager.memStore,
       NetworkController : this.networkController.store,
       PreferencesController: this.preferencesController.store,
+      KeystoresController:this.keystoresController.store,
       NoticeController: this.noticeController.memStore,
       CachedBalancesController: this.cachedBalancesController.store,
     })
@@ -173,6 +182,7 @@ module.exports = class MetamaskController extends EventEmitter {
     const preferencesController = this.preferencesController
     const noticeController = this.noticeController
     const networkController = this.networkController
+    const keystoresController = this.keystoresController
     return {
       // etc
       getState: (cb) => cb(null, this.getState()),
@@ -192,7 +202,7 @@ module.exports = class MetamaskController extends EventEmitter {
       removeAccount: nodeify(this.removeAccount, this),
       importAccountWithStrategy: nodeify(this.importAccountWithStrategy, this),
 
-      createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
+      createNewAccount: nodeify(this.createNewAccount, this),
       createWalletByType : nodeify(this.createWalletByType,this),
       checkAddressByType : nodeify(this.checkAddressByType,this),
       checkSecretByType : nodeify(this.checkSecretByType,this),
@@ -216,7 +226,7 @@ module.exports = class MetamaskController extends EventEmitter {
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
       completeOnboarding: nodeify(preferencesController.completeOnboarding, preferencesController),
       addKnownMethodData: nodeify(preferencesController.addKnownMethodData, preferencesController),
-      //关于 钱包类型的切换 即是对链钱包 整
+      
       setSelectedWalletType: nodeify(preferencesController.setSelectedWalletType, preferencesController),
       getSelectedWalletType: nodeify(preferencesController.getSelectedWalletType, preferencesController),
       setNetwork:nodeify(networkController.setNetwork, networkController),
@@ -255,34 +265,29 @@ module.exports = class MetamaskController extends EventEmitter {
     this.preferencesController.setAccountLabel(type,account, label)
   }
 
-  //生成帐号作用的 jingchangwallet
-  async createNewVaultAndKeychain (password,secret) {
+  //逻辑为创建出 keystore 然后导出 keystore 放入统一的 keystoreController
+  //所有keystore 均不保存
+  //可以看出 导入帐号其实相同逻辑
+  async createNewAccount (password,secret) {
     const releaseLock = await this.createVaultMutex.acquire()
+    const address =  walletUtils.getAddress('jingtum',secret)
     try {
-      const keypairs = await JingtumWallet.generate()
-      if (!JingchangWallet.get()) {
-        await JingchangWallet.generate(password, keypairs.secret).then((wallet) => {
-       // inst.setJingchangWallet(wallet)
-         JingchangWallet.save(wallet)
-        })
-      } else {
-        const inst = JingchangWallet.get()
-        const getSecret = jtWallet.getAddress
-        await inst.importSecret(secret, password, 'swt', getSecret)
-      }
-    const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-    this.preferencesController.setAddresses('jingtum',wallets)
-    const addrToAdd = []
-    addrToAdd.push(keypairs.address)
-    this.accountTracker.addAccounts(addrToAdd)
-    this.selectFirstIdentity()
-    releaseLock()
-      return keypairs.secret
+        const init = await walletUtils.generateKeystore('jingtum',secret,password)
+        this.keystoresController.setKeystore(init)
+        const addrToAdd = []
+        addrToAdd.push(address)
+        this.accountTracker.addAccounts(addrToAdd)
+        //this.preferencesController.setAddresses('jingtum',address)
+        //this.selectFirstIdentity()
+        releaseLock()
+        return secret
     } catch (err) {
       releaseLock()
       throw err
     }
   }
+
+
 
   async createWalletByType (type){
     return walletUtils.createWalletByType(type)
@@ -346,11 +351,12 @@ module.exports = class MetamaskController extends EventEmitter {
   getBalance (address, ethQuery) {
     return new Promise((resolve, reject) => {
       const cached = this.accountTracker.store.getState().accounts[address]
-
+      console.log(cached)
       if (cached && cached.balance) {
         resolve(cached.balance)
       } else {
         ethQuery.getBalance(address, (error, balance) => {
+          console.log("开始获得 balance")
           if (error) {
             reject(error)
             log.error(error)
@@ -412,7 +418,9 @@ module.exports = class MetamaskController extends EventEmitter {
    */
   selectFirstIdentity () {
     const { identities } = this.preferencesController.store.getState()
+    console.log(identities)
     const address = Object.keys(identities)[0]
+    console.log(address)
     this.preferencesController.setSelectedAddress(address)
   }
 

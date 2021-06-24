@@ -174,6 +174,7 @@ class PreferencesController {
       ids[wallet.address] = {name: `Account ${index}`, address, type,...oldId}
       return ids
     }, {})
+    console.log(identities)
     this.store.updateState({ identities })
   }
 

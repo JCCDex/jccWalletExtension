@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
 import Password from './password-setting.component'
-import { setCompletedOnboarding,setImportAccountMode ,setAccountLabel} from '../../../../../actions'
+import { setCompletedOnboarding,setImportAccountMode ,setAccountLabel,setSelectedAddress} from '../../../../../actions'
 
 const firstTimeFlowTypeNameMap = {
   create: 'New Wallet Created',
@@ -20,10 +20,9 @@ const mapStateToProps = ({ metamask }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setImportAccountMode: (type) => dispatch(setImportAccountMode(type)),
-    completeOnboarding: () => dispatch(setCompletedOnboarding()),
-    setAccountLabel: (type,account, label) => {
-    dispatch(setAccountLabel(type,account, label))
-    },
+    setCompletedOnboarding: () => dispatch(setCompletedOnboarding()),
+    setAccountLabel: (type,account, label) => dispatch(setAccountLabel(type,account, label)),
+    setSelectedAddress:(address)=>dispatch(setSelectedAddress(address))
   }
 }
 

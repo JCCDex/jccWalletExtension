@@ -91,6 +91,7 @@ function getSelectedAddressTransaction (state) {
   }
 
 function getSelectedIdentity (state) {
+  
   const selectedAddress = getSelectedAddress(state)
   const identities = state.metamask.identities
 

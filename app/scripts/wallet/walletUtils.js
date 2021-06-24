@@ -1,24 +1,23 @@
-const jccwallet = require('jcc_wallet');
+const {jtWallet,ethWallet,moacWallet,rippleWallet,callWallet,stmWallet} = require('jcc_wallet');
 const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
 const WalletTypes = require('../constants/walletType-constants')
-
-
+import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 const walletUtils = {
 
     checkSecretByType (secret,WalletType){
     switch(WalletType){
         case WalletTypes.JINGTUM:
-            return jccwallet.jtWallet.isValidSecret(secret);
+            return jtWallet.isValidSecret(secret);
         case WalletTypes.ETH:
-            return jccwallet.ethWallet.isValidSecret(secret);
+            return ethWallet.isValidSecret(secret);
         case WalletTypes.MOAC:
-            return jccwallet.moacWallet.isValidSecret(secret);;
+            return moacWallet.isValidSecret(secret);;
         case WalletTypes.RIPPLE:
-            return jccwallet.rippleWallet.isValidSecret(secret);
+            return rippleWallet.isValidSecret(secret);
         case WalletTypes.CALL:
-            return jccwallet.callWallet.isValidSecret(secret);
+            return callWallet.isValidSecret(secret);
         case WalletTypes.STM:
-            return jccwallet.stmWallet.isValidSecret(secret);
+            return stmWallet.isValidSecret(secret);
         default:
             throw(new Error("checkSecretByType",type+" is not support"))
       }
@@ -27,36 +26,36 @@ const walletUtils = {
     checkAddressByType (address,WalletType){
         switch(WalletType){
             case WalletTypes.JINGTUM:
-                return jccwallet.jtWallet.isValidAddress(address);
+                return jtWallet.isValidAddress(address);
             case WalletTypes.ETH:
-                return jccwallet.ethWallet.isValidAddress(address);
+                return ethWallet.isValidAddress(address);
             case WalletTypes.MOAC:
-                return jccwallet.moacWallet.isValidAddress(address);;
+                return moacWallet.isValidAddress(address);;
             case WalletTypes.RIPPLE:
-                return jccwallet.rippleWallet.isValidAddress(address);
+                return rippleWallet.isValidAddress(address);
             case WalletTypes.CALL:
-                return jccwallet.callWallet.isValidAddress(address);
+                return callWallet.isValidAddress(address);
             case WalletTypes.STM:
-                return jccwallet.stmWallet.isValidAddress(address);
+                return stmWallet.isValidAddress(address);
             default:
                 throw(new Error("checkSecretByType",type+" is not support"))
           }
     },
 
-    createWalletByType (WalletType){
+    async createWalletByType (WalletType){
         switch(WalletType){
             case WalletTypes.JINGTUM:
-                return jccwallet.jtWallet.createWallet();
+                return jtWallet.createWallet();
             case WalletTypes.ETH:
-                return jccwallet.ethWallet.createWallet();
+                return ethWallet.createWallet();
             case WalletTypes.MOAC:
-                return jccwallet.moacWallet.createWallet();;
+                return moacWallet.createWallet();;
             case WalletTypes.RIPPLE:
-                return jccwallet.rippleWallet.createWallet();
+                return rippleWallet.createWallet();
             case WalletTypes.CALL:
-                return jccwallet.callWallet.createWallet();
+                return callWallet.createWallet();
             case WalletTypes.STM:
-                return jccwallet.stmWallet.createWallet();
+                return stmWallet.createWallet();
             default:
                 throw(new Error("checkSecretByType",type+" is not support"))
           }
@@ -65,35 +64,45 @@ const walletUtils = {
     getAddress (WalletType,secret){
         switch(WalletType){
             case WalletTypes.JINGTUM:
-                return jccwallet.jtWallet.getAddress(secret);
+                return jtWallet.getAddress(secret);
             case WalletTypes.ETH:
-                return jccwallet.ethWallet.getAddress(secret);
+                return ethWallet.getAddress(secret);
             case WalletTypes.MOAC:
-                return jccwallet.moacWallet.getAddress(secret);;
+                return moacWallet.getAddress(secret);;
             case WalletTypes.RIPPLE:
-                return jccwallet.rippleWallet.getAddress(secret);
+                return rippleWallet.getAddress(secret);
             case WalletTypes.CALL:
-                return jccwallet.callWallet.getAddress(secret);
+                return callWallet.getAddress(secret);
             case WalletTypes.STM:
-                return jccwallet.stmWallet.getAddress(secret);
+                return stmWallet.getAddress(secret);
             default:
                 throw(new Error("checkSecretByType",type+" is not support"))
           }
     },
 
-    generateKeystore(type,secret,password){
+
+    //这里粗暴了一把，每次创建直接创建 一个 jingchangwallet 按照输入的密码，只保存一个钱包。
+    //其实只是个keystore 创建 工具，影响不大
+    //后面可以 按weidex的逻辑进行进一步的修改
+    async generateKeystore(type,secret,password){
+        const keypairs = await JingtumWallet.generate()
+        //初始化一个 keystore list 
+        let init = await JingchangWallet.generate(password, keypairs.secret)
+        let jcWallet = new JingchangWallet(init)
         switch(type){
             case WalletTypes.ETH:
-                return 
+                return await jcWallet.importSecret(secret, password, type, (secret)=>{
+                    return ethWallet.getAddress(secret);
+                  })
             case WalletTypes.JINGTUM:
-                return 
+                return await jcWallet.importSecret(secret, password, type, (secret)=>{
+                    return jtWallet.getAddress(secret);
+                })
+            default:
+                throw(new Error("this type is not support"))
+ 
         }
-
-
-
     }
-
-    
 }
 
 module.exports = walletUtils

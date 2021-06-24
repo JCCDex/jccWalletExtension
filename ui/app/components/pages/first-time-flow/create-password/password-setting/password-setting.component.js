@@ -17,10 +17,11 @@ export default class Password extends PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    completeOnboarding: PropTypes.func,
+    setCompletedOnboarding: PropTypes.func,
     completionMetaMetricsName: PropTypes.string,
     keypairs: PropTypes.object,
-    setAccountLabel:PropTypes.func
+    setAccountLabel:PropTypes.func,
+    setSelectedAddress:PropTypes.func
   }
 
   state = {
@@ -118,11 +119,17 @@ export default class Password extends PureComponent {
     //if (!this.isValid()) {return}
 
     const { password ,walletName} = this.state
-    const { onSubmit,setAccountLabel, history,completeOnboarding,completionMetaMetricsName,keypairs} = this.props
+    const { onSubmit,setAccountLabel, history,setCompletedOnboarding,completionMetaMetricsName,keypairs,setSelectedAddress} = this.props
     try {
+      console.log(1)
       await onSubmit(password,keypairs)
-      setAccountLabel("jingtum",keypairs.address,walletName)
-      await completeOnboarding()
+      console.log(2)
+      await setAccountLabel("jingtum",keypairs.address,walletName)
+      console.log(3)
+      await setCompletedOnboarding()
+      console.log(4)
+      await setSelectedAddress(keypairs.address)
+      console.log(5)
       this.context.metricsEvent({
         eventOpts: {
           category: 'Onboarding',
