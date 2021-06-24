@@ -14,6 +14,7 @@ import Button from '../button'
 function mapStateToProps (state) {
   return {
     network: state.metamask.network,
+    selectedWalletType:state.metamask.selectedWalletType,
     selectedIdentity: getSelectedIdentity(state),
     keyrings: state.metamask.keyrings,
   }
@@ -27,7 +28,7 @@ function mapDispatchToProps (dispatch) {
       dispatch(actions.showModal({ name: 'EXPORT_PRIVATE_KEY' }))
     },
     hideModal: () => dispatch(actions.hideModal()),
-    setAccountLabel: (address, label) => dispatch(actions.setAccountLabel(address, label)),
+    setAccountLabel: (walletType,address, label) => dispatch(actions.setAccountLabel(walletType ,address, label)),
   }
 }
 
@@ -52,7 +53,7 @@ AccountDetailsModal.prototype.render = function () {
     network,
     showExportPrivateKeyModal,
     setAccountLabel,
-   // keyrings,
+    selectedWalletType
   } = this.props
   const { name, address } = selectedIdentity
 
@@ -70,7 +71,7 @@ AccountDetailsModal.prototype.render = function () {
       h(EditableLabel, {
         className: 'account-modal__name',
         defaultValue: name,
-        onSubmit: label => setAccountLabel(address, label),
+        onSubmit: label => setAccountLabel(selectedWalletType,address, label),
       }),
 
       h(QrView, {

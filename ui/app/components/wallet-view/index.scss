@@ -21,15 +21,17 @@
       align-items: center;
       margin-top:10px;
       margin-left: 10px;
-      width: 272px;
+      width: 252px;
       height: 96px;
       opacity: 1;
       background: #f1f2fb;
       border-radius: 6px;
+
+
       &__item{
         display: flex;
         flex-direction: row;
-        width: 252px;
+        width: 232px;
         height: 20px;
         margin-top: 10px;
         margin-left: 10px;
@@ -121,7 +123,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      height: 100%;
+      height: 64px;
       width: 312px;
       justify-content: space-between;
 
@@ -317,3 +319,17 @@
     overflow-y: auto;
     box-shadow: rgba(0, 0, 0, .15) 2px 2px 4px;
   }
+.wallet-view-addWallet{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  margin-top:10px;
+  margin-left: 10px;
+  width: 272px;
+  height: 96px;
+  opacity: 1;
+  background: #f1f2fb;
+  border-radius: 6px;
+}
+  

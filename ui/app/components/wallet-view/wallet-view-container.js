@@ -1,5 +1,3 @@
-
-
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -16,7 +14,6 @@ const actions = require('../../actions')
       selectedAddress: selectors.getSelectedAddress(state),
       selectedAccount: selectors.getSelectedAccount(state),
       selectedTokenAddress: state.metamask.selectedTokenAddress,
-      wallets : state.metamask.wallets,
       ChainTypeList : state.metamask.ChainTypeList,
       selectedWalletType :  state.metamask.selectedWalletType,
       selectedIdentity: selectors.getSelectedIdentity(state),

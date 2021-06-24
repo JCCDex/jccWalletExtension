@@ -21,7 +21,7 @@ export default class NetworkMenu extends PureComponent {
         toggleWalletTypeMenu: PropTypes.func,
         toggleNetworkMenu: PropTypes.func,
         selectedWalletType:PropTypes.string,
-        Networks:PropTypes.array,
+        networks:PropTypes.array,
         selectedNetWork:PropTypes.object
       }
 
@@ -31,10 +31,8 @@ export default class NetworkMenu extends PureComponent {
       }
 
       renderNetWorkList(){
-        const {Networks,selectedNetWork,selectedWalletType} = this.props;
-        console.log(selectedNetWork.url)
-
-        const NetworkList = Networks[selectedWalletType].map((network,key)=>
+        const {networks,selectedNetWork,selectedWalletType} = this.props;
+        const NetworkList = networks[selectedWalletType].map((network,key)=>
           <div className='network-menu__Item' key ={key}>
             <div className='network-menu__Item__font'>
               {network.name}

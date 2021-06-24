@@ -14,6 +14,7 @@ const AccountTracker = require('./lib/account-tracker')
 const debounce = require('debounce')
 const {setupMultiplex} = require('./lib/stream-utils.js')
 const PreferencesController = require('./controllers/preferences')
+const NetworkController = require('./controllers/network-controller')
 const CachedBalancesController = require('./controllers/cached-balances')
 const NoticeController = require('./notice-controller')
 const MessageManager = require('./lib/message-manager')
@@ -23,17 +24,10 @@ const {Mutex} = require('await-semaphore')
 const {version} = require('../manifest.json')
 const log = require('loglevel')
 const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
-import {bvcadtWallet, callWallet, ethWallet, JingchangWallet, jtWallet, moacWallet, rippleWallet, stmWallet} from 'jcc_wallet'
+const walletUtils = require('./wallet/walletUtils')
+import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
+import * as jtWallet from 'jcc_wallet/lib/jingtum'
 
-const WALLET_TYPES = {
-  SWTC:'swt', //井通链
-  RIPPLE:'ripple', //瑞波链
-  CALL:  'call', //CALL 链
-  STM: 'stm', //stm 链
-  JINGTUM: 'jingtum',
-  MOAC: 'moac',
-  ETH:'eth'
-};
 module.exports = class MetamaskController extends EventEmitter {
 
   /**
@@ -68,6 +62,28 @@ module.exports = class MetamaskController extends EventEmitter {
       openPopup: opts.openPopup,
     })
 
+    //没找到 初始化文件 就按最 蠢的办法初始化了
+    this.networkController = new NetworkController({initState:{networks:{'jingtum':[{
+      name :"井通默认节点",
+      url:'http://101.200.174.239:7545',
+    },{
+      name :"井通默认节点2",
+      url:'http://101.200.174.239:7545',
+    }],
+    'eth':[{
+      name :"ETH默认节点",
+      url:'https://eth626892d.jccdex.cn',
+    },{
+      name :"ETH默认节点",
+      url:'https://ropsten.infura.io/v3/9af2760f61ea4fedbf3b10b5c07f2781',
+    }]},
+    selectedNetWork:
+    {
+      name :"井通默认节点",
+      url:'http://101.200.174.239:7545',
+    }
+  }})
+
     this.accountTracker = new AccountTracker({
       initState: initState.AccountTracker,
     })
@@ -100,6 +116,7 @@ module.exports = class MetamaskController extends EventEmitter {
     this.store.updateStructure({
       AccountTracker: this.accountTracker.store,
       PreferencesController: this.preferencesController.store,
+      NetworkController : this.networkController.store,
       NoticeController: this.noticeController.store,
       CachedBalancesController: this.cachedBalancesController.store,
     })
@@ -107,6 +124,7 @@ module.exports = class MetamaskController extends EventEmitter {
     this.memStore = new ComposableObservableStore(null, {
       AccountTracker: this.accountTracker.store,
       MessageManager: this.messageManager.memStore,
+      NetworkController : this.networkController.store,
       PreferencesController: this.preferencesController.store,
       NoticeController: this.noticeController.memStore,
       CachedBalancesController: this.cachedBalancesController.store,
@@ -172,7 +190,7 @@ module.exports = class MetamaskController extends EventEmitter {
   getApi () {
     const preferencesController = this.preferencesController
     const noticeController = this.noticeController
-
+    const networkController = this.networkController
     return {
       // etc
       getState: (cb) => cb(null, this.getState()),
@@ -194,6 +212,10 @@ module.exports = class MetamaskController extends EventEmitter {
 
       createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
       createWalletByType : nodeify(this.createWalletByType,this),
+      checkAddressByType : nodeify(this.checkAddressByType,this),
+      checkSecretByType : nodeify(this.checkSecretByType,this),
+      getAddress : nodeify(this.getAddress,this),
+
       createNewVaultAndRestore: nodeify(this.createNewVaultAndRestore, this),
 
       // mobile
@@ -206,12 +228,19 @@ module.exports = class MetamaskController extends EventEmitter {
       setSelectedAddress: nodeify(preferencesController.setSelectedAddress, preferencesController),
       setCurrentAccountTab: nodeify(preferencesController.setCurrentAccountTab, preferencesController),
      // setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
+      
       setAccountLabel: nodeify(this.setAccountLabel,this),
       setFeatureFlag: nodeify(preferencesController.setFeatureFlag, preferencesController),
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
       completeOnboarding: nodeify(preferencesController.completeOnboarding, preferencesController),
       addKnownMethodData: nodeify(preferencesController.addKnownMethodData, preferencesController),
-
+      //关于 钱包类型的切换 即是对链钱包 整
+      setSelectedWalletType: nodeify(preferencesController.setSelectedWalletType, preferencesController),
+      getSelectedWalletType: nodeify(preferencesController.getSelectedWalletType, preferencesController),
+      getNetworks:nodeify(networkController.getNetworks, networkController),
+      setNetwork:nodeify(networkController.setNetwork, networkController),
+      addNetwork:nodeify(networkController.addNetwork, networkController),
+      deleteNetwork:nodeify(networkController.deleteNetwork, networkController),
 
 
       // notices
@@ -241,60 +270,54 @@ module.exports = class MetamaskController extends EventEmitter {
    * @returns {Object} vault
    */
 
-  async setAccountLabel(account, label) {
-    this.preferencesController.setAccountLabel(account, label)
+  async setAccountLabel(type,account, label) {
+    this.preferencesController.setAccountLabel(type,account, label)
   }
 
-  //
-  async createNewVaultAndKeychain (password,secret) {
+  //仅仅在初始创建的时候 jingChangWallet 
+  async createNewVaultAndKeychain (password) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {
-      const inst = JingchangWallet.get()
-      if (!inst) {
-        await JingchangWallet.generate(password, secret).then((wallet) => {
+
+      const keypairs = await JingtumWallet.generate()
+      if (!JingchangWallet.get()) {
+        await JingchangWallet.generate(password, keypairs.secret).then((wallet) => {
        // inst.setJingchangWallet(wallet)
          JingchangWallet.save(wallet)
         })
       } else {
-        const getSecret =  jtWallet.getAddress
-        await inst.importSecret(secret, password, 'swt', getSecret)
+        const inst = JingchangWallet.get()
+        const getSecret = jtWallet.getAddress
+        await inst.importSecret(keypairs.secret, password, 'swt', getSecret)
       }
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-    this.preferencesController.setAddresses(wallets)
+    this.preferencesController.setAddresses('jingtum',wallets)
     const addrToAdd = []
-    addrToAdd.push(jtWallet.getAddress(secret))
+    addrToAdd.push(keypairs.address)
     this.accountTracker.addAccounts(addrToAdd)
     this.selectFirstIdentity()
     releaseLock()
-      return inst
+      return keypairs.secret
     } catch (err) {
       releaseLock()
       throw err
     }
   }
-  /**
-   * Create wallet by type
-   * @param {*} type 
-   * @returns 
-   */
+
   async createWalletByType (type){
-    switch(type){
-      case WALLET_TYPES.SWTC:
-          return jtWallet.createWallet();
-      case WALLET_TYPES.ETH:
-          return ethWallet.createWallet();
-      case WALLET_TYPES.MOAC:
-          return moacWallet.createWallet();;
-      case WALLET_TYPES.RIPPLE:
-          return rippleWallet.createWallet();
-      case WALLET_TYPES.CALL:
-          return callWallet.createWallet();
-      case WALLET_TYPES.STM:
-          return stmWallet.createWallet();
-      default:
-          console.log("checkSecretByType",type+" is not support")
-          return false;
-    }
+    return walletUtils.createWalletByType(type)
+  }
+
+  async checkAddressByType (type){
+    return walletUtils.checkAddressByType(type)
+  }
+
+  async checkSecretByType (type){
+    return walletUtils.checkSecretByType(type)
+  }
+
+  async getAddress (secret,type){
+    return walletUtils.getAddress(secret,type)
   }
 
 
@@ -310,7 +333,7 @@ module.exports = class MetamaskController extends EventEmitter {
       let address
       const jccwallets = keystore.wallets[0]
       // clear known identities
-      this.preferencesController.setAddresses([])
+      this.preferencesController.setAddresses('jingtum',[])
       // create new vault
       if (!JingchangWallet.get()) {
        // inst.setJingchangWallet(jccwallets)
@@ -322,7 +345,7 @@ module.exports = class MetamaskController extends EventEmitter {
         address = jccwallets.address
       }
       const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-      this.preferencesController.setAddresses(wallets)
+      this.preferencesController.setAddresses('jingtum',wallets)
       const addrToAdd = []
       addrToAdd.push(address)
       this.accountTracker.addAccounts(addrToAdd)
@@ -434,7 +457,7 @@ module.exports = class MetamaskController extends EventEmitter {
         JingchangWallet.save(inst)
       }
       const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-      this.preferencesController.setAddresses(wallets)
+      this.preferencesController.setAddresses('jingtum',wallets)
       const addrToAdd = []
       addrToAdd.push(keypairs.address)
       this.accountTracker.addAccounts(addrToAdd)
@@ -526,7 +549,7 @@ module.exports = class MetamaskController extends EventEmitter {
   async importAccountWithStrategy (strategy, args) {
     const address = await accountImporter.importAccount(strategy, args)
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-    this.preferencesController.setAddresses(wallets)
+    this.preferencesController.setAddresses('jingtum',wallets)
    // await this.preferencesController.setSelectedAddress(address)
     const addrToAdd = []
     addrToAdd.push(address)

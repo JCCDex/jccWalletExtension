@@ -30,7 +30,7 @@ export default class SelectAction extends PureComponent {
 
   handleCreate = async () => {
     const {onCreateWalletByType} = this.props
-    await onCreateWalletByType ('swt');
+    await onCreateWalletByType ('jingtum');
     this.props.setFirstTimeFlowType('create')
     this.props.history.push(INITIALIZE_CREATE_PASSWORD_ROUTE)
   }

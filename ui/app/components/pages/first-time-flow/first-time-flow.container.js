@@ -21,9 +21,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // 先创建 wallets
     createWalletByType: (type) => dispatch(createWalletByType(type)),
-    // 然后通过  password 和 wallets.secret 创建 Account
     createNewAccount: (password,keypair) => dispatch(createNewAccount(password,keypair)),
     createNewAccountFromSeed: (seedPhrase) => {
       return dispatch(createNewVaultAndRestore(seedPhrase))

@@ -9,7 +9,6 @@ import Unlock from '../unlock-page'
 import CreatePassword from './create-password'
 import SeedPhrase from './seed-phrase'
 import MetaMetricsOptIn from './metametrics-opt-in'
-import TitleBar from '../../titlebar'
 import {
   DEFAULT_ROUTE,
   INITIALIZE_WELCOME_ROUTE,
@@ -20,7 +19,6 @@ import {
   INITIALIZE_END_OF_FLOW_ROUTE,
   INITIALIZE_METAMETRICS_OPT_IN_ROUTE,
 } from '../../../routes'
-import { contours } from 'd3'
 
 export default class FirstTimeFlow extends PureComponent {
   static propTypes = {
@@ -58,7 +56,6 @@ export default class FirstTimeFlow extends PureComponent {
 
   handleCreateNewAccount = async (password,keypair) => {
     const { createNewAccount } = this.props
-    console.log("目标函数被调用")
     try {
       await createNewAccount(password,keypair)
     } catch (error) {

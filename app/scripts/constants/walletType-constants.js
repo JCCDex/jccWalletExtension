@@ -1,1 +1,9 @@
 export const NETWORK_TYPE_RPC = 'rpc';
+export const SWTC = 'swt' //井通链
+export const RIPPLE = 'ripple' //瑞波链
+export const CALL = 'call' //CALL 链
+export const STM = 'stm' //stm 链
+export const JINGTUM = 'jingtum'
+export const MOAC = 'moac'
+export const ETH = 'eth'
+export const WALLET_TYPES = [SWTC, RIPPLE, CALL, STM, JINGTUM, MOAC, ETH];

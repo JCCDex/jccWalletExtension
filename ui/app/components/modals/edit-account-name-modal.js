@@ -18,8 +18,8 @@ function mapDispatchToProps (dispatch) {
     hideModal: () => {
       dispatch(actions.hideModal())
     },
-    setAccountLabel: (account, label) => {
-      dispatch(actions.setAccountLabel(account, label))
+    setAccountLabel: (type,account, label) => {
+      dispatch(actions.setAccountLabel(type,account, label))
     },
   }
 }
@@ -69,7 +69,7 @@ EditAccountNameModal.prototype.render = function () {
       h('button.btn-clear.edit-account-name-modal-save-button.allcaps', {
         onClick: () => {
           if (this.state.inputText.length !== 0) {
-            setAccountLabel(identity.address, this.state.inputText)
+            setAccountLabel(identity.type,identity.address, this.state.inputText)
             hideModal()
           }
         },

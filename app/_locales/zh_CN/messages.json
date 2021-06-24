@@ -1298,5 +1298,14 @@
   },
   "InputEmpty": {
     "message": "输入为空"
+  },
+  "AddWallet": {
+    "message": "添加钱包"
+  },
+  "jingtum": {
+    "message": "井通"
+  },
+  "eth": {
+    "message": "以太坊"
   }
 }

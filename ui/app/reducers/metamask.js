@@ -25,39 +25,12 @@ function reduceMetamask (state, action) {
     frequentRpcList: [],
     addressBook: [],
     selectedTokenAddress: null,
-    selectedChainType:'swtc',
-    selectedWalletType:'jingtum',
+    selectedWalletType:'',
     wallets: {},
+    
+    networks:{},
 
-    Networks:{
-      'jingtum':[{
-        name :"井通默认节点",
-        url:'http://101.200.174.239:7545',
-      },{
-        name :"井通默认节点2",
-        url:'http://101.200.174.239:7545',
-      }],
-      'eth':[{
-        name :"ETH默认节点",
-        url:'https://eth626892d.jccdex.cn',
-      },{
-        name :"ETH默认节点",
-        url:'https://ropsten.infura.io/v3/9af2760f61ea4fedbf3b10b5c07f2781',
-      }]
-    },
-
-    selectedNetWork:{
-      name :"井通默认节点",
-      url:'http://101.200.174.239:7545',
-    },
-    ChainTypeList :[{
-      ChainType :"jingtum",
-      IconUrl:'images/chain/jingtum',
-    },
-    {
-      ChainType :"eth",
-      IconUrl:'images/chain/eth',
-    }],
+    selectedNetWork:{},
     contractExchangeRates: {},
     tokenExchangeRates: {},
     tokens: [],
@@ -208,28 +181,12 @@ function reduceMetamask (state, action) {
 
     case actions.SET_ACCOUNT_LABEL:
       const account = action.value.account
+      const type = action.value.walletType
       const name = action.value.name
       const id = {}
-      id[account] = extend(metamaskState.identities[account], { name })
+      id[account] = extend(metamaskState.identities[account], { name ,type})
       const identities = extend(metamaskState.identities, id)
       return extend(metamaskState, { identities })
-
-    case actions.ADD_WALLET:
-      //要插在数组中的数据
-      const WalletType = action.value.walletType;
-      const name1 = action.value.name;
-      const address = action.value.account;
-      const wallet = {name1,address}
-      let wallets={};
-      //如果数组不存在 则添加 对应的type 属性
-      if(!metamaskState.wallets[WalletType]){
-        wallets[WalletType]=[wallet];
-      }else{
-        //否则先深拷贝
-        wallets = JSON.parse(JSON.stringify(metamaskState.wallet[WalletType]))
-        wallets[WalletType].push(wallet);
-      }
-      return extend(metamaskState,{wallets})
   
     case actions.SET_CURRENT_FIAT:
       return extend(metamaskState, {
@@ -238,6 +195,13 @@ function reduceMetamask (state, action) {
         conversionDate: action.value.conversionDate,
       })
 
+    case actions.SET_NETWORK:
+      console.log("在 metamask 中变化")
+      console.log(action.value)
+      return extend(metamaskState,{
+        selectedNetWork :action.value
+      })
+        
     case actions.UPDATE_TOKENS:
       return extend(metamaskState, {
         tokens: action.newTokens,
@@ -510,12 +474,6 @@ function reduceMetamask (state, action) {
     case actions.SET_FIRST_TIME_FLOW_TYPE: {
       return extend(metamaskState, {
         firstTimeFlowType: action.value,
-      })
-    }
-
-    case actions.SET_CHAIN_TYPE:{
-      return extend(metamaskState, {
-        selectedChainType: action.value,
       })
     }
 

@@ -14,7 +14,11 @@ const mapStateToProps = ({ metamask }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setImportAccountMode: (type) => dispatch(action.setImportAccountMode(type)),
-    completeOnboarding: () => dispatch(setCompletedOnboarding()),
+    completeOnboarding: () => dispatch(action.setCompletedOnboarding()),
+    setAccountLabel: (type,account, label) => {
+      dispatch(action.setAccountLabel(type,account, label))
+    },
+    getAddressByType:(secret,type)=>dispatch(action.getAddressByType(secret,type))
   }
 }
 

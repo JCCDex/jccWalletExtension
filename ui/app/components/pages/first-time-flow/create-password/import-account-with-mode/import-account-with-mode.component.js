@@ -23,6 +23,8 @@ export default class ImportAccount extends PureComponent {
     completeOnboarding: PropTypes.func,
     setImportAccountMode:PropTypes.func,
     completionMetaMetricsName: PropTypes.string,
+    setAccountLabel:PropTypes.func,
+    getAddressByType:PropTypes.func
   }
 
   state = {
@@ -118,10 +120,13 @@ export default class ImportAccount extends PureComponent {
     if (!this.isValid()) {
       return
     }
-    const { secret,password,walletName,confirmPassword} = this.state
-    const { history, onSubmit ,completeOnboarding} = this.props
+    const { secret,password,walletName} = this.state
+    const { history, onSubmit ,completeOnboarding,completionMetaMetricsName,setAccountLabel,getAddressByType} = this.props
     try {
-      await onSubmit(password,secret)
+      let keypair={};
+      keypair.secret = secret
+      let address = await getAddressByType(secret,'jingtum')
+      await onSubmit(password,keypair)
       await completeOnboarding()
       this.context.metricsEvent({
         eventOpts: {
@@ -130,16 +135,15 @@ export default class ImportAccount extends PureComponent {
           name: completionMetaMetricsName,
         },
       })
-      console.log("等待跳转")
+      setAccountLabel("jingtum",address,walletName)
       setTimeout(
         ()=>{
-          console.log("执行跳转")
           history.push(DEFAULT_ROUTE)
         },
         1500
       )
     } catch (error) {
-      this.setState({ passwordError: error.message })
+      throw error
     }
   }
 

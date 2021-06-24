@@ -20,8 +20,7 @@ const walletUtils = {
         case WalletTypes.STM:
             return jccwallet.stmWallet.isValidSecret(secret);
         default:
-            console.log("checkSecretByType",WalletType+" is not support")
-            return false;
+            throw(new Error("checkSecretByType",type+" is not support"))
       }
     },
 
@@ -40,8 +39,7 @@ const walletUtils = {
             case WalletTypes.STM:
                 return jccwallet.stmWallet.isValidAddress(address);
             default:
-                console.log("checkSecretByType",WalletType+" is not support")
-                return false;
+                throw(new Error("checkSecretByType",type+" is not support"))
           }
     },
 
@@ -60,28 +58,26 @@ const walletUtils = {
             case WalletTypes.STM:
                 return jccwallet.stmWallet.createWallet();
             default:
-                console.log("checkSecretByType",WalletType+" is not support")
-                return false;
+                throw(new Error("checkSecretByType",type+" is not support"))
           }
     },
 
-    getAddress (WalletType){
+    getAddress (WalletType,secret){
         switch(WalletType){
             case WalletTypes.JINGTUM:
-                return jccwallet.jtWallet.getAddress();
+                return jccwallet.jtWallet.getAddress(secret);
             case WalletTypes.ETH:
-                return jccwallet.ethWallet.getAddress();
+                return jccwallet.ethWallet.getAddress(secret);
             case WalletTypes.MOAC:
-                return jccwallet.moacWallet.getAddress();;
+                return jccwallet.moacWallet.getAddress(secret);;
             case WalletTypes.RIPPLE:
-                return jccwallet.rippleWallet.getAddress();
+                return jccwallet.rippleWallet.getAddress(secret);
             case WalletTypes.CALL:
-                return jccwallet.callWallet.getAddress();
+                return jccwallet.callWallet.getAddress(secret);
             case WalletTypes.STM:
-                return jccwallet.stmWallet.getAddress();
+                return jccwallet.stmWallet.getAddress(secret);
             default:
-                console.log("checkSecretByType",WalletType+" is not support")
-                return false;
+                throw(new Error("checkSecretByType",type+" is not support"))
           }
     }
 

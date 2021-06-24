@@ -10,6 +10,7 @@ export default class Welcome extends PureComponent {
     isInitialized: PropTypes.bool,
     participateInMetaMetrics: PropTypes.bool,
     welcomeScreenSeen: PropTypes.bool,
+    setNetwork:PropTypes.func
   }
 
   static contextTypes = {

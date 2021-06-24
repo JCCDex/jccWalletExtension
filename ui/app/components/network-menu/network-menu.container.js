@@ -5,12 +5,12 @@ const actions = require('../../actions')
 import NetworkMenu from './network-menu.component'
 
 function mapStateToProps (state) {
-    const { metamask: { isWalletTypeMenuOpen,isNetworkMenuOpen,isAccountMenuOpen ,Networks,selectedWalletType,selectedNetWork} } = state
+    const { metamask: { isWalletTypeMenuOpen,isNetworkMenuOpen,isAccountMenuOpen ,networks,selectedWalletType,selectedNetWork} } = state
     return {
         isWalletTypeMenuOpen,
         isNetworkMenuOpen,
         isAccountMenuOpen,
-        Networks,
+        networks,
         selectedWalletType,
         selectedNetWork
     }

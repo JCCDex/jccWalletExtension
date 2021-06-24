@@ -20,7 +20,7 @@ export default class Password extends PureComponent {
     completeOnboarding: PropTypes.func,
     completionMetaMetricsName: PropTypes.string,
     keypairs: PropTypes.object,
-    addWallet:PropTypes.func,
+    setAccountLabel:PropTypes.func
   }
 
   state = {
@@ -118,15 +118,11 @@ export default class Password extends PureComponent {
     //if (!this.isValid()) {return}
 
     const { password ,walletName} = this.state
-    const { addWallet,onSubmit, history,completeOnboarding,completionMetaMetricsName,keypairs} = this.props
+    const { onSubmit,setAccountLabel, history,completeOnboarding,completionMetaMetricsName,keypairs} = this.props
     try {
       await onSubmit(password,keypairs)
-      console.log("成功设置钱包")
+      setAccountLabel("jingtum",keypairs.address,walletName)
       await completeOnboarding()
-      console.log("开始初始化")
-      console.log(keypairs)
-      addWallet("jingtum", keypairs.address, walletName)
-      console.log("设置完成钱包")
       this.context.metricsEvent({
         eventOpts: {
           category: 'Onboarding',

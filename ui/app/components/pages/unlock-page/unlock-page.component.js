@@ -58,8 +58,9 @@ export default class UnlockPage extends Component {
     this.submitting = true
 
     try {
+      console.log(password)
       await onSubmit(password)
-      const newState = await forceUpdateMetamaskState()
+      console.log("password 11111111111111")
       this.context.metricsEvent({
         eventOpts: {
           category: 'Navigation',
@@ -68,6 +69,7 @@ export default class UnlockPage extends Component {
         },
         isNewVisit: true,
       })
+      console.log("password 22222222222")
 
     //  if (newState.participateInMetaMetrics === null || newState.participateInMetaMetrics === undefined) {
     //    showOptInModal()

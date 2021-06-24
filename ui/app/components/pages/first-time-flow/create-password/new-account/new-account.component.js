@@ -2,12 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../../../button'
 import {
-  INITIALIZE_SEED_PHRASE_ROUTE,
-  INITIALIZE_IMPORT_WITH_SECRET,
-  INITIALIZE_SELECT_ACTION_ROUTE,
   INITIALIZE_CREATE_PASSWORD
 } from '../../../../../routes'
-import TextField from '../../../../text-field'
 
 export default class NewAccount extends PureComponent {
   static contextTypes = {

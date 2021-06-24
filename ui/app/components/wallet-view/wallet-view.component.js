@@ -81,16 +81,17 @@ export default class WalletView extends PureComponent {
 
   renderWalletList(){
     const {t} = this.context;
-    const {wallets,selectedAccount,selectedWalletType,selectedAddress, selectedIdentity} = this.props
-    console.log(wallets)
-    const walletList = wallets[selectedWalletType].map((wallet,key)=>
-      <div className='wallet-view__wallet' key={key} >
+    const {identities,selectedAccount,selectedWalletType} = this.props
+
+    return Object.keys(identities).map((key, index)=>{
+      return identities[key].type === selectedWalletType?  
+       <div className='wallet-view__wallet' key={index} >
         <div className='wallet-view__wallet__item'>
           <div className='wallet-view__wallet__name__font'>
-            {wallet.name}
+            {identities[key].name}
           </div>
           {
-            wallet.address == selectedAccount?(
+            identities[key].address == selectedAccount.address?(
               <div className='wallet-view__wallet__name__default'>
                 {t('current')}
               </div>
@@ -100,7 +101,7 @@ export default class WalletView extends PureComponent {
           <img
               className="wallet-view__wallet__name__iocn"
               onClick={()=>{
-                this.skipToWalletManage(wallet)
+                this.skipToWalletManage(identities[key].address)
               }}
               src="images/swap.png"
               height={14}
@@ -115,12 +116,11 @@ export default class WalletView extends PureComponent {
           >
             <div className='wallet-view__wallet__address__font'
             onClick={()=>{
-              console.log(wallet.address)
               this.setState({ copied: true })
               setTimeout(() => this.setState({ copied: false }), 3000)
-              copyToClipboard(wallet.address)
+              copyToClipboard(key)
             }}>
-              {wallet.address}
+              {key.length< 22? key:key.substring(0,7)+"..."+key.substring(key.length-8,key.length)}
             </div>
           </Tooltip>
             <img
@@ -133,16 +133,11 @@ export default class WalletView extends PureComponent {
 
         <div className='wallet-view__wallet__item'>
         <div className='wallet-view__wallet__address__font'>
-             {this.getBalance(wallet.address)}
+             {this.getBalance(key)}
           </div>
-          
         </div>
-      </div>
-      )
-    return (
-    <div>
-     {walletList}
-    </div>)
+      </div>:null
+    })
   }
 
   renderTypeList(){
@@ -169,10 +164,8 @@ export default class WalletView extends PureComponent {
     const {
       responsiveDisplayClassname,
       selectedAddress,
-      showAccountDetailModal,
       hideSidebar,
       selectedWalletType,
-      identities,
     } = this.props
     // temporary logs + fake extra wallets
     const { t } = this.context
@@ -211,7 +204,7 @@ export default class WalletView extends PureComponent {
               <div className='wallet-view__wallets'>
                 <div className='wallet-view__wallets__title' >
                   <div className='wallet-view__wallets__title__font' >
-                    {selectedWalletType}
+                    {selectedWalletType == "jingtum"?t('jingtum'):t('eth')}
                   </div>
                   <img
                     className="wallet-view__wallets__title__icon"
@@ -224,6 +217,10 @@ export default class WalletView extends PureComponent {
                   />
                 </div>
                 {this.renderWalletList()}
+                <div className='wallet-view__wallet'
+                 onClick={this.skipToAddWallet}>
+                      {t('AddWallet')}
+                </div>
               </div>
           </div>
       </div>

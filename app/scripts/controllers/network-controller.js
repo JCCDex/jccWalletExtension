@@ -1,92 +1,79 @@
-//
-import EventEmitter from 'events';
-const {ObservableStore,ComposedStore} = require('obs-store')
-const {WALLET_TYPES,NETWORK_TYPE_RPC} = require('../constants/walletType-constants')
-import {
-    createSwappableProxy,
-    createEventEmitterProxy,
-  } from 'swappable-obj-proxy';
+const ObservableStore = require('obs-store')
+const EventEmitter = require('events')
+const extend = require('xtend')
+
 export const NETWORK_EVENTS = {
-    // Fired after the actively selected network is changed
-    NETWORK_DID_CHANGE: 'networkDidChange',
-    // Fired when the actively selected network *will* change
-    NETWORK_WILL_CHANGE: 'networkWillChange',
-};
+    NETWORK_WILL_CHANGE: 'networkWillChange', //开始切换链支持
+    NETWORK_DID_CHANGE: 'networkDidChange', //切换链支持结束 
+  };
 
-//参考了部分 metamask 的写法
-
-
-export default class NetworkController extends EventEmitter {
+/** 
+ * @typedef {Object} NetworkController
+ * @param {object} opts Overrides the defaults for the initial state of this.store
+ * @property {object} networks ,  {"jingtum":[networkname,url],"eth":[networkname,url]}
+ * @property {object} preNetWork , old network,  When the switch fails, the initial state is restored
+ * @property {object} selectedNetWork , Current node
+ * 
+ * 
+ */
+class NetworkController extends EventEmitter {
     constructor(opts = {}) {
-        super();
-        const providerConfig = opts.provider || defaultProviderConfig
-        // create stores
-        this.providerStore = new ObservableStore(providerConfig)//即上面的provider，到底是default的RINKEBY或MAINNET还是用户自己传进来的provider
-        this.networkStore = new ObservableStore('loading') //network处于加载状态
-        this.store = new ComposedStore({ provider: this.providerStore, network: this.networkStore }) //即将两个store组合起来
-        // create event emitter proxy
-        this._proxy = createEventEmitterProxy()
-        this.on('networkDidChange', this.lookupNetwork)
+        super()
+        const initState = extend({
+            networks:"",
+            preNetWork:"",
+            selectedNetWork:"",
+
+        }, opts.initState)
+        this.store = new ObservableStore(initState)
+        this.on(NETWORK_EVENTS.NETWORK_WILL_CHANGE,this.handleNetwrokChange)
     }
-    
-    initializeProvider(providerParams) {
-        this._baseProviderParams = providerParams;
-        const { type, rpcUrl} = this.getProviderConfig();
-        this._configureProvider({type, rpcUrl});
-        this.lookupNetwork();
-      }
 
-      getProviderConfig() {
-        return this.providerStore.getState();
-      }
 
-    _configureProvider({ type, rpcUrl}) {
-        if (WALLET_TYPES.includes(type)) {
-            //钱包类型中的一类
-            this._configureChainProvider(type);
-        } else if (type === NETWORK_TYPE_RPC) {
-            //本地 节点类型
-            this._configureStandardProvider(rpcUrl);
-        } else {
-            throw new Error(
-            `NetworkController - _configureProvider - unknown type "${type}"`,
-            );
+    //获取network列表
+    getNetworks(type){
+        return this.store.getState(networks)[type]
+    }
+
+    //切换
+    setNetwork(network){
+        //发出 network change 事件， 并且修改
+        this.store.updateState({preNetWork:this.store.getState().selectedNetWork})
+        this.store.updateState({selectedNetWork:network})
+        return Promise.resolve(network)
+    }
+
+    //添加
+    addNetwork(type,network){
+        let networks =  this.store.getState(networks)
+        if(networks){
+            networks[type].push(network)
+        }else{
+            networks[type] = [network]
         }
+        this.store.updateState(networks)
     }
 
-    _configureChainProvider(type) {
-        log.info('NetworkController - _configureChainProvider', type);
-
-
-        const networkClient = createInfuraClient({
-            network: type,
+    //删除
+    deleteNetwork(type,url){
+        let networks =  this.store.getState(networks)
+        if(!networks){
+            return 
+        }
+        networks[type].forEach(element => {
+           if(element.url === url ){
+            networks[type].remove(element)
+           }
+            
         });
-        this._setNetworkClient(networkClient);
+        this.store.updateState(networks)
     }
 
-    _setNetworkClient({ networkMiddleware, blockTracker }) {
-        const metamaskMiddleware = createMetamaskMiddleware(
-            this._baseProviderParams,
-        );
-        const engine = new JsonRpcEngine();
-        engine.push(metamaskMiddleware);
-        engine.push(networkMiddleware);
-        const provider = providerFromEngine(engine);
-        this._setProviderAndBlockTracker({ provider, blockTracker });
+    handleNetwrokChange(){
+        console.log("")
+        //TODO 检测当前 selectedNetWork 不可用时切换 preNetWork
     }
 
-    _configureStandardProvider(rpcUrl) {
-        log.info('NetworkController - configureStandardProvider', rpcUrl);
-        
-        const networkClient = createJsonRpcClient({ rpcUrl });
-
-        this._setNetworkClient(networkClient);
-      }
-    
-    _switchNetwork(opts) {
-        this.emit(NETWORK_EVENTS.NETWORK_WILL_CHANGE);
-        this.setNetworkState('loading');
-        this._configureProvider(opts);
-        this.emit(NETWORK_EVENTS.NETWORK_DID_CHANGE, opts.type);
-    }
 }
+
+module.exports = NetworkController
