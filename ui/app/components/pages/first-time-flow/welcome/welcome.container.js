@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
-import { closeWelcomeScreen ,setNetwork} from '../../../../actions'
+import { closeWelcomeScreen ,setNetwork,addNetwork,deleteNetwork} from '../../../../actions'
 import Welcome from './welcome.component'
 
 const mapStateToProps = ({ metamask }) => {
-  const { welcomeScreenSeen, isInitialized, participateInMetaMetrics,selectedNetWork} = metamask
+  const { welcomeScreenSeen, isInitialized, selectedWalletType,participateInMetaMetrics,selectedNetWork} = metamask
 
   return {
     welcomeScreenSeen,
     isInitialized,
     participateInMetaMetrics,
+    selectedWalletType,
     selectedNetWork
   }
 }
@@ -18,7 +19,9 @@ const mapStateToProps = ({ metamask }) => {
 const mapDispatchToProps = dispatch => {
   return {
     closeWelcomeScreen: () => dispatch(closeWelcomeScreen()),
-    setNetwork:(network)=>dispatch(setNetwork(network))
+    setNetwork:(type,network)=>dispatch(setNetwork(type,network)),
+    addNetwork:(type,network)=>dispatch(addNetwork(type,network)),
+    deleteNetwork:(type,network)=>dispatch(deleteNetwork(type,network)),
   }
 }
 

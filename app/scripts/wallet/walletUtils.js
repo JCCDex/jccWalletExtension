@@ -79,6 +79,18 @@ const walletUtils = {
             default:
                 throw(new Error("checkSecretByType",type+" is not support"))
           }
+    },
+
+    generateKeystore(type,secret,password){
+        switch(type){
+            case WalletTypes.ETH:
+                return 
+            case WalletTypes.JINGTUM:
+                return 
+        }
+
+
+
     }
 
     

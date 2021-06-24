@@ -5,12 +5,22 @@ const classnames = require('classnames')
 const Tooltip = require('../tooltip-v2.js').default
 import BalanceComponent from '../balance'
 import copyToClipboard from 'copy-to-clipboard'
+
+//等同 preferences 定义的ChainType 
+//整个系统中 ChainType == walletType == NetworkType  注 ： 对钱包应用来说 链类型只和 钱包的本地化 操作有关。其他均无关。
+const WALLET_TYPE_MAP = {
+  jingtum: 'jingtum',
+  eth: 'eth',
+}
+
 export default class WalletView extends PureComponent {
+
 
   constructor (props) {
     super(props)
     this.state = {
-      hasCopied: false,
+      seletcedType : WALLET_TYPE_MAP.jingtum,
+      close : false,
       copyToClipboardPressed: false,
     }
   }
@@ -21,6 +31,14 @@ export default class WalletView extends PureComponent {
     ChainTypeList:PropTypes.array,
     selectedWalletType:PropTypes.string,
     setSelectedWalletType:PropTypes.func,
+  }
+
+  changeType(seletcedType){
+    this.setState(state => {
+      return {
+        seletcedType
+      }
+    })
   }
 
   getBalance(address){
@@ -79,12 +97,21 @@ export default class WalletView extends PureComponent {
     
   }
 
+
+  //设置主页面显示的 钱包
+  //1 初始化 钱包类型对应的 节点
+  //2 设置界面显示 的几个 prefaceController 属性
+  //3 设置当前钱包类型
+  setAccount(){
+    
+  }
+
   renderWalletList(){
     const {t} = this.context;
     const {identities,selectedAccount,selectedWalletType} = this.props
 
     return Object.keys(identities).map((key, index)=>{
-      return identities[key].type === selectedWalletType?  
+      return identities[key].type === this.state.seletcedType?  
        <div className='wallet-view__wallet' key={index} >
         <div className='wallet-view__wallet__item'>
           <div className='wallet-view__wallet__name__font'>
@@ -145,9 +172,9 @@ export default class WalletView extends PureComponent {
     const TypeList = ChainTypeList.map((item,key)=>
     <div className='wallet-view__wallet_type_list__Item' 
       key={key} 
-      onClick={() => {this.props.setSelectedWalletType(item.ChainType)}}>
+      onClick={() => {this.changeType(item.ChainType)}}>
       <img
-        src={selectedWalletType == item.ChainType ? item.IconUrl+"_select.png" :item.IconUrl+'.png'}
+        src={this.state.seletcedType == item.ChainType ? item.IconUrl+"_select.png" :item.IconUrl+'.png'}
         height={32}
         width={32}
       />    
@@ -204,7 +231,7 @@ export default class WalletView extends PureComponent {
               <div className='wallet-view__wallets'>
                 <div className='wallet-view__wallets__title' >
                   <div className='wallet-view__wallets__title__font' >
-                    {selectedWalletType == "jingtum"?t('jingtum'):t('eth')}
+                    {this.state.seletcedType  == "jingtum"?t('jingtum'):t('eth')}
                   </div>
                   <img
                     className="wallet-view__wallets__title__icon"

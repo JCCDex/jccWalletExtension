@@ -10,7 +10,10 @@ export default class Welcome extends PureComponent {
     isInitialized: PropTypes.bool,
     participateInMetaMetrics: PropTypes.bool,
     welcomeScreenSeen: PropTypes.bool,
-    setNetwork:PropTypes.func
+    setNetwork:PropTypes.func,
+    selectedWalletType:PropTypes.string,
+    addNetwork:PropTypes.func,
+    deleteNetwork:PropTypes.func,
   }
 
   static contextTypes = {
@@ -34,6 +37,7 @@ export default class Welcome extends PureComponent {
   }
 
   handleContinue = () => {
+    const {deleteNetwork,selectedWalletType} = this.props
     this.props.history.push(INITIALIZE_SELECT_ACTION_ROUTE)
   }
 

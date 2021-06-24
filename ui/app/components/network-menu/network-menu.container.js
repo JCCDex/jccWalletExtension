@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router-dom'
-const actions = require('../../actions')
+const {setNetwork,toggleWalletTypeMenu,toggleNetworkMenu,toggleAccountMenu,updateNetWork} = require('../../actions')
 import NetworkMenu from './network-menu.component'
 
 function mapStateToProps (state) {
@@ -18,10 +18,11 @@ function mapStateToProps (state) {
 
   function mapDispatchToProps (dispatch) {
     return {
-        updateNetWork:() => dispatch(actions.updateNetWork(url)),
-        toggleAccountMenu: () => dispatch(actions.toggleAccountMenu()),
-        toggleNetworkMenu: () => dispatch(actions.toggleNetworkMenu()),
-        toggleWalletTypeMenu: () => dispatch(actions.toggleWalletTypeMenu()),
+        updateNetWork:() => dispatch(updateNetWork(url)),
+        toggleAccountMenu: () => dispatch(toggleAccountMenu()),
+        toggleNetworkMenu: () => dispatch(toggleNetworkMenu()),
+        toggleWalletTypeMenu: () => dispatch(toggleWalletTypeMenu()),
+        setNetwork:(type,network)=>dispatch(setNetwork(type,network)),
     }
   }
 

@@ -334,12 +334,12 @@ function goHome () {
 
 //对 background 使用最好都封装为 promise 的返回
 //network manage
-function setNetwork(network){
+function setNetwork(type,network){
   return dispatch => {
     dispatch(actions.showLoadingIndication())
     log.debug('background setNetwork ')
     return new Promise((resolve, reject) => {
-      background.setNetwork(network,(err, value) => {
+      background.setNetwork(type,network,(err, value) => {
         dispatch(actions.hideLoadingIndication())
         if (err) {
           dispatch(actions.displayWarning(err.message))
@@ -347,7 +347,7 @@ function setNetwork(network){
         }
         dispatch({
           type:actions.SET_NETWORK,
-          value:network
+          value:{type,network}
         })
         resolve(value)
       })

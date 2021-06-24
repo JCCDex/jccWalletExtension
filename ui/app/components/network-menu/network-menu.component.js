@@ -1,11 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import debounce from 'lodash.debounce'
-import { Menu, Item, Divider } from '../dropdowns/components/menu'
-import Tooltip from '../tooltip'
-import UserPreferencedCurrencyDisplay from '../user-preferenced-currency-display'
-import { PRIMARY } from '../../constants/common'
-const h = require('react-hyperscript')
+import { Menu} from '../dropdowns/components/menu'
 export default class NetworkMenu extends PureComponent {
     static contextTypes = {
         t: PropTypes.func,
@@ -22,29 +17,40 @@ export default class NetworkMenu extends PureComponent {
         toggleNetworkMenu: PropTypes.func,
         selectedWalletType:PropTypes.string,
         networks:PropTypes.array,
-        selectedNetWork:PropTypes.object
+        selectedNetWork:PropTypes.object,
+        setNetwork:PropTypes.func
       }
 
       skipToNetworkManage(){
-        const {history} = this.props;
-        
+      //  const {history} = this.props;
+      //  history.push(NETWORK_MANAGE)
+      }
+
+      async setCurrentNetwork(network){
+        const {setNetwork,selectedWalletType} = this.props
+        await setNetwork(selectedWalletType,network);
       }
 
       renderNetWorkList(){
         const {networks,selectedNetWork,selectedWalletType} = this.props;
+        let selectedNet =  selectedNetWork[selectedWalletType]
+        console.log(selectedNet)
+        console.log(selectedWalletType)
+        console.log(selectedNetWork)
+        console.log(networks)
         const NetworkList = networks[selectedWalletType].map((network,key)=>
-          <div className='network-menu__Item' key ={key}>
+          <div className='network-menu__Item' key ={key}
+            onClick={()=>{
+              this.setCurrentNetwork(network)
+            }}>
             <div className='network-menu__Item__font'>
               {network.name}
             </div>
                 
             {
-            selectedNetWork.url == network.url?(
+            selectedNet.url === network.url?(
               <img
               className="network-menu__Item__icon"
-              onClick={()=>{
-                this.setNetwork(network)
-              }}
               src="images/selected.png"
               height={10}
               width={14}

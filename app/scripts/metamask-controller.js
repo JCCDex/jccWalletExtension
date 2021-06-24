@@ -62,27 +62,9 @@ module.exports = class MetamaskController extends EventEmitter {
       openPopup: opts.openPopup,
     })
 
-    //没找到 初始化文件 就按最 蠢的办法初始化了
-    this.networkController = new NetworkController({initState:{networks:{'jingtum':[{
-      name :"井通默认节点",
-      url:'http://101.200.174.239:7545',
-    },{
-      name :"井通默认节点2",
-      url:'http://101.200.174.239:7545',
-    }],
-    'eth':[{
-      name :"ETH默认节点",
-      url:'https://eth626892d.jccdex.cn',
-    },{
-      name :"ETH默认节点",
-      url:'https://ropsten.infura.io/v3/9af2760f61ea4fedbf3b10b5c07f2781',
-    }]},
-    selectedNetWork:
-    {
-      name :"井通默认节点",
-      url:'http://101.200.174.239:7545',
-    }
-  }})
+    this.networkController = new NetworkController({
+      initState: initState.NetworkController
+    })
 
     this.accountTracker = new AccountTracker({
       initState: initState.AccountTracker,
@@ -237,7 +219,6 @@ module.exports = class MetamaskController extends EventEmitter {
       //关于 钱包类型的切换 即是对链钱包 整
       setSelectedWalletType: nodeify(preferencesController.setSelectedWalletType, preferencesController),
       getSelectedWalletType: nodeify(preferencesController.getSelectedWalletType, preferencesController),
-      getNetworks:nodeify(networkController.getNetworks, networkController),
       setNetwork:nodeify(networkController.setNetwork, networkController),
       addNetwork:nodeify(networkController.addNetwork, networkController),
       deleteNetwork:nodeify(networkController.deleteNetwork, networkController),
@@ -274,11 +255,10 @@ module.exports = class MetamaskController extends EventEmitter {
     this.preferencesController.setAccountLabel(type,account, label)
   }
 
-  //仅仅在初始创建的时候 jingChangWallet 
-  async createNewVaultAndKeychain (password) {
+  //生成帐号作用的 jingchangwallet
+  async createNewVaultAndKeychain (password,secret) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {
-
       const keypairs = await JingtumWallet.generate()
       if (!JingchangWallet.get()) {
         await JingchangWallet.generate(password, keypairs.secret).then((wallet) => {
@@ -288,7 +268,7 @@ module.exports = class MetamaskController extends EventEmitter {
       } else {
         const inst = JingchangWallet.get()
         const getSecret = jtWallet.getAddress
-        await inst.importSecret(keypairs.secret, password, 'swt', getSecret)
+        await inst.importSecret(secret, password, 'swt', getSecret)
       }
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
     this.preferencesController.setAddresses('jingtum',wallets)

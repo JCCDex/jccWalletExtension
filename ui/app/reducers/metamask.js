@@ -196,11 +196,13 @@ function reduceMetamask (state, action) {
       })
 
     case actions.SET_NETWORK:
-      console.log("在 metamask 中变化")
-      console.log(action.value)
-      return extend(metamaskState,{
-        selectedNetWork :action.value
-      })
+      const selectedNetWork = metamaskState.selectedNetWork
+      //action.value.network
+      selectedNetWork[action.value.type] = {name:"1234","url":"##########"}
+
+      console.log(selectedNetWork)
+
+      return extend(metamaskState,{selectedNetWork})
         
     case actions.UPDATE_TOKENS:
       return extend(metamaskState, {
