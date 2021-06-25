@@ -8,7 +8,7 @@ import log from 'loglevel'
 import { getMetaMaskAccounts } from './selectors'
 
 // init
-import FirstTimeFlow from './components/pages/first-time-flow'
+import FirstTimeFlow from './components/first-time-flow'
 // accounts
 const SendTransactionScreen = require('./components/send/send.container')
 const OrderScreen = require('./components/create-order/order.container')
@@ -59,12 +59,8 @@ import {
   INITIALIZE_UNLOCK_ROUTE,
   NOTICE_ROUTE,
 
-  INITIALIZE_WELCOME_ROUTE,
   INITIALIZE_CREATE_PASSWORD_ROUTE,
-  INITIALIZE_SEED_PHRASE_ROUTE,
   INITIALIZE_SELECT_ACTION_ROUTE,
-  INITIALIZE_END_OF_FLOW_ROUTE,
-  INITIALIZE_METAMETRICS_OPT_IN_ROUTE,
   INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_IMPORT_WITH_KEYSTORE,
   INITIALIZE_CREATE_PASSWORD
@@ -81,9 +77,7 @@ class App extends Component {
     const { currentCurrency} = this.props
 
   }
-
-
-
+  
   renderTitle () {
     const { t } = this.context
     let massage =''
