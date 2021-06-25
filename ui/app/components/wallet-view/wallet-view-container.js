@@ -17,6 +17,7 @@ const actions = require('../../actions')
       ChainTypeList : state.metamask.ChainTypeList,
       selectedWalletType :  state.metamask.selectedWalletType,
       selectedIdentity: selectors.getSelectedIdentity(state),
+      manageWalletType:state.metamask.manageWalletType,
     }
   }
   
@@ -25,6 +26,7 @@ const actions = require('../../actions')
       showSendPage: () => dispatch(actions.showSendPage()),
       hideSidebar: () => dispatch(actions.hideSidebar()),
       unsetSelectedToken: () => dispatch(actions.setSelectedToken()),
+      setManageWalletType:(type)=>dispatch(actions.setManageWalletType(type)),
       setSelectedWalletType:(type)=>dispatch(actions.setSelectedWalletType(type)),
       showAccountDetailModal: () => {
         dispatch(actions.showModal({ name: 'ACCOUNT_DETAILS' }))

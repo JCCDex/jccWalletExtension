@@ -20,6 +20,7 @@ function reduceMetamask (state, action) {
     identities: {},
     accountPwd: {},
     unapprovedTxs: {},
+    manageWalletType:"jingtum",
     noActiveNotices: true,
     nextUnreadNotice: undefined,
     frequentRpcList: [],
@@ -194,7 +195,11 @@ function reduceMetamask (state, action) {
         conversionRate: action.value.conversionRate,
         conversionDate: action.value.conversionDate,
       })
-
+    case actions.SET_MANAGE_WALLET_TYPE:
+      return extend(metamaskState,{
+        manageWalletType: action.value,
+      })
+    
     case actions.SET_NETWORK:
       const selectedNetWork = metamaskState.selectedNetWork
       //action.value.network

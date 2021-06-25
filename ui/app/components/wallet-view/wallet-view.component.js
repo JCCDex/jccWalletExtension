@@ -19,7 +19,6 @@ export default class WalletView extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      seletcedType : WALLET_TYPE_MAP.jingtum,
       close : false,
       copyToClipboardPressed: false,
     }
@@ -31,14 +30,8 @@ export default class WalletView extends PureComponent {
     ChainTypeList:PropTypes.array,
     selectedWalletType:PropTypes.string,
     setSelectedWalletType:PropTypes.func,
-  }
-
-  changeType(seletcedType){
-    this.setState(state => {
-      return {
-        seletcedType
-      }
-    })
+    manageWalletType:PropTypes.string,
+    setManageWalletType:PropTypes.func,
   }
 
   getBalance(address){
@@ -108,10 +101,10 @@ export default class WalletView extends PureComponent {
 
   renderWalletList(){
     const {t} = this.context;
-    const {identities,selectedAccount,selectedWalletType} = this.props
+    const {identities,selectedAccount,manageWalletType} = this.props
 
     return Object.keys(identities).map((key, index)=>{
-      return identities[key].type === this.state.seletcedType?  
+      return identities[key].type === manageWalletType?  
        <div className='wallet-view__wallet' key={index} >
         <div className='wallet-view__wallet__item'>
           <div className='wallet-view__wallet__name__font'>
@@ -168,13 +161,13 @@ export default class WalletView extends PureComponent {
   }
 
   renderTypeList(){
-    const {ChainTypeList,selectedWalletType} = this.props;
+    const {ChainTypeList,manageWalletType,setManageWalletType} = this.props;
     const TypeList = ChainTypeList.map((item,key)=>
     <div className='wallet-view__wallet_type_list__Item' 
       key={key} 
-      onClick={() => {this.changeType(item.ChainType)}}>
+      onClick={() => {setManageWalletType(item.ChainType)}}>
       <img
-        src={this.state.seletcedType == item.ChainType ? item.IconUrl+"_select.png" :item.IconUrl+'.png'}
+        src={manageWalletType == item.ChainType ? item.IconUrl+"_select.png" :item.IconUrl+'.png'}
         height={32}
         width={32}
       />    
@@ -201,6 +194,8 @@ export default class WalletView extends PureComponent {
     }
 
     return (
+
+
       <div className ={classnames('wallet-view flex-column', responsiveDisplayClassname)} >
         <div className='wallet-view__head-wapper'>
           <div className='wallet-view__head-container'>
@@ -231,7 +226,7 @@ export default class WalletView extends PureComponent {
               <div className='wallet-view__wallets'>
                 <div className='wallet-view__wallets__title' >
                   <div className='wallet-view__wallets__title__font' >
-                    {this.state.seletcedType  == "jingtum"?t('jingtum'):t('eth')}
+                    {this.props.manageWalletType  == "jingtum"?t('jingtum'):t('eth')}
                   </div>
                   <img
                     className="wallet-view__wallets__title__icon"

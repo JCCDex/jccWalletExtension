@@ -8,6 +8,7 @@ const WebcamUtils = require('../lib/webcam-utils')
 const LocalSign = require('jcc_jingtum_lib/src/local_sign')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import JCCExchange from "jcc_exchange";
+import { retryable } from 'async'
 
 var actions = {
   _setBackgroundConnection: _setBackgroundConnection,
@@ -308,6 +309,9 @@ var actions = {
   //wallet or chain
   SET_SELECTED_WALLET_TYPE:'SET_SELECTED_WALLET_TYPE',
   setSelectedWalletType,
+  //从钱包列表 跳转到管理页面或者 添加页面时 的状态判断。
+  SET_MANAGE_WALLET_TYPE:"SET_MANAGEWALLETTYPE",
+  setManageWalletType,
 
   //network setting
   SET_NETWORK:"SET_NETWORK",
@@ -418,6 +422,13 @@ function setSelectedWalletType(type){
   }
 }
 
+
+function setManageWalletType(type){
+  return {
+    type:actions.SET_MANAGE_WALLET_TYPE,
+    value:type
+  }
+}
 function createWalletByType (type) {
   console.log("backgroud createWalletByType")
   return dispatch =>{

@@ -44,6 +44,8 @@ const CONFIRM_TRANSFER_FROM_PATH = '/transfer-from'
 const CONFIRM_TOKEN_METHOD_PATH = '/token-method'
 const SIGNATURE_REQUEST_PATH = '/signature-request'
 
+const CREATE_WALLET = "/create-wallet"
+const WALLET_MANAGE = "/wallet-manage"
 module.exports = {
   DEFAULT_ROUTE,
   UNLOCK_ROUTE,
