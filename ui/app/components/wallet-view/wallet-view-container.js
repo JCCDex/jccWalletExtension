@@ -27,6 +27,7 @@ const actions = require('../../actions')
       hideSidebar: () => dispatch(actions.hideSidebar()),
       unsetSelectedToken: () => dispatch(actions.setSelectedToken()),
       setManageWalletType:(type)=>dispatch(actions.setManageWalletType(type)),
+      setManageWalletAddress:(address)=>dispatch(actions.setManageWalletAddress(address)),
       setSelectedWalletType:(type)=>dispatch(actions.setSelectedWalletType(type)),
       showAccountDetailModal: () => {
         dispatch(actions.showModal({ name: 'ACCOUNT_DETAILS' }))

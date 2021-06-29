@@ -28,7 +28,7 @@ const RestoreVaultPage = require('./components/pages/keychains/restore-vault').d
 const RevealSeedConfirmation = require('./components/pages/keychains/reveal-seed')
 const CreateAccountPage = require('./components/pages/create-account')
 const NoticeScreen = require('./components/pages/notice')
-
+import WalletManage  from './components/wallet-manage'
 const Loading = require('./components/loading-screen')
 
 import AccountMenu from './components/account-menu'
@@ -59,11 +59,20 @@ import {
   INITIALIZE_UNLOCK_ROUTE,
   NOTICE_ROUTE,
 
+  WALLET_MANAGE_CHANGE_NAME,
+  WALLET_MANAGE_SECRET_EXPORT,
+  WALLET_MANAGE_CHANGE_PASSWORD,
+
   INITIALIZE_CREATE_PASSWORD_ROUTE,
   INITIALIZE_SELECT_ACTION_ROUTE,
   INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_IMPORT_WITH_KEYSTORE,
-  INITIALIZE_CREATE_PASSWORD
+  INITIALIZE_CREATE_PASSWORD,
+
+  WALLET_MANAGE_CHANGE_RESTORE,
+
+  WALLET_MANAGE
+
 } from './routes'
 
 // enums
@@ -80,20 +89,26 @@ class App extends Component {
   
   renderTitle () {
     const { t } = this.context
-    let massage =''
+    let message =''
+    this.hideAppHeader()
     switch(this.props.location.pathname){
-      case INITIALIZE_SELECT_ACTION_ROUTE:massage = t('getStarted');
+      case INITIALIZE_SELECT_ACTION_ROUTE:message = t('getStarted');
         break;
-      case INITIALIZE_CREATE_PASSWORD_ROUTE:massage = t('createKeyPair');break;
-      case INITIALIZE_IMPORT_WITH_SECRET:massage = t('importAccount');break;
-      case INITIALIZE_IMPORT_WITH_KEYSTORE:massage = t('importAccount');break;
-      case INITIALIZE_CREATE_PASSWORD:massage = t('SettingsPassword');break;
+      case INITIALIZE_CREATE_PASSWORD_ROUTE:message = t('createKeyPair');break;
+      case INITIALIZE_IMPORT_WITH_SECRET:message = t('importAccount');break;
+      case INITIALIZE_IMPORT_WITH_KEYSTORE:message = t('importAccount');break;
+      case INITIALIZE_CREATE_PASSWORD:message = t('SettingsPassword');break;
+      case WALLET_MANAGE_CHANGE_NAME:message = t('SettingsPassword');break;
+      case WALLET_MANAGE_SECRET_EXPORT:message = t('exportPrivateKey');break;
+      case WALLET_MANAGE_CHANGE_PASSWORD:message = t('ChangePassword');break;
+      case WALLET_MANAGE :message = t('WalletInfo');break;
+      case WALLET_MANAGE_CHANGE_RESTORE:message = t('RestorePassword');break;
       default:
         return;
 
     }
     return (
-      <TitleBar title = {massage}></TitleBar>
+      <TitleBar title = {message}></TitleBar>
     )
   }
 
@@ -104,6 +119,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route path={LOCK_ROUTE} component={Lock} exact />
+          <Authenticated path={WALLET_MANAGE} component ={WalletManage}/>
           <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
           <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
           <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
@@ -177,7 +193,6 @@ class App extends Component {
       props,
     } = sidebar
     const { transaction: sidebarTransaction } = props || {}
-    console.log("初始 首页")
     return (
       <div
         className="app"

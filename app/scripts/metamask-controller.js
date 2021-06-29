@@ -28,6 +28,7 @@ const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
 const walletUtils = require('./wallet/walletUtils')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import * as jtWallet from 'jcc_wallet/lib/jingtum'
+import { forEach } from '../../notices/notices'
 
 //这你会看到 初版metamask 的方法， 修改以后的 jingtum mask 的方法， 还有多链钱包 方法
 //很多代码没用，需要去除这些冗余
@@ -220,7 +221,8 @@ module.exports = class MetamaskController extends EventEmitter {
       setSelectedAddress: nodeify(preferencesController.setSelectedAddress, preferencesController),
       setCurrentAccountTab: nodeify(preferencesController.setCurrentAccountTab, preferencesController),
      // setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
-      
+    
+      getSecret:nodeify(this.getSecret, this),
       setAccountLabel: nodeify(this.setAccountLabel,this),
       setFeatureFlag: nodeify(preferencesController.setFeatureFlag, preferencesController),
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
@@ -286,7 +288,16 @@ module.exports = class MetamaskController extends EventEmitter {
       throw err
     }
   }
-
+  //通过 address 和 password 从存储中获取 密钥
+  async getSecret(address,password){
+    const  keystores =  this.keystoresController.store.getState().keystores
+    for(let i=0;i<keystores.length;i++){
+      if(keystores[i].wallets[1].address === address){
+        const inst = new JingchangWallet(keystores[i])
+        return inst.getSecretWithAddress(password,address)
+      }
+    }
+  }
 
 
   async createWalletByType (type){
@@ -351,12 +362,10 @@ module.exports = class MetamaskController extends EventEmitter {
   getBalance (address, ethQuery) {
     return new Promise((resolve, reject) => {
       const cached = this.accountTracker.store.getState().accounts[address]
-      console.log(cached)
       if (cached && cached.balance) {
         resolve(cached.balance)
       } else {
         ethQuery.getBalance(address, (error, balance) => {
-          console.log("开始获得 balance")
           if (error) {
             reject(error)
             log.error(error)

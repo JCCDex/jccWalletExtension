@@ -1307,5 +1307,29 @@
   },
   "eth": {
     "message": "以太坊"
+  },
+  "WalletInfo": {
+    "message": "钱包详情"
+  },
+  "ChangePassword":{
+    "message": "修改密码"
+  },
+  "RestorePassword":{
+    "message": "重置密码"
+  },
+  "skipToBlockchainBrowser":{
+    "message": "在SWTC区块链浏览器上查看"
+  },
+  "DeleteWallet":{
+    "message": "删除钱包"
+  },
+  "inputOldPassword":{
+    "message":"请输入当前密码"
+  },
+  "inputNewPassword":{
+    "message":"请设置新密码（至少8个字符）"
+  },
+  "inputNewPasswordAgein":{
+    "message":"请确认新密码"
   }
 }

@@ -16,7 +16,6 @@ export default class WalletCreate extends PureComponent {
       }
     
     static propTypes = {
-      manageWalletType:PropTypes.string,
       setManageWalletType:PropTypes.func,
     }
 

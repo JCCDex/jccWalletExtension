@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 /**
  * 不同链 钱包的密钥备份界面共通，通过父组件 keypairs 和 nextRoute 实现信息显示和页面跳转逻辑
+ * 后期可以通过添加 备份选项 的 type 来实现多种类型的 钱包密钥的备份。
  */
 export default class WalltBackup extends PureComponent {
   static contextTypes = {

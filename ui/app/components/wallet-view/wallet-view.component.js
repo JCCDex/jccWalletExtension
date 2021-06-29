@@ -5,6 +5,8 @@ const classnames = require('classnames')
 const Tooltip = require('../tooltip-v2.js').default
 import BalanceComponent from '../balance'
 import copyToClipboard from 'copy-to-clipboard'
+import { WALLET_MANAGE } from '../../routes'
+import { contours } from 'd3'
 
 //等同 preferences 定义的ChainType 
 //整个系统中 ChainType == walletType == NetworkType  注 ： 对钱包应用来说 链类型只和 钱包的本地化 操作有关。其他均无关。
@@ -32,6 +34,7 @@ export default class WalletView extends PureComponent {
     setSelectedWalletType:PropTypes.func,
     manageWalletType:PropTypes.string,
     setManageWalletType:PropTypes.func,
+    setManageWalletAddress:PropTypes.func,
   }
 
   getBalance(address){
@@ -79,13 +82,18 @@ export default class WalletView extends PureComponent {
   }
 
 
-  skipToWalletManage(){
+  //这里 规定了 跳转到钱包管理页面的路由
+  skipToWalletManage(address){
+    const {setManageWalletAddress} = this.props
+    const {history,hideSidebar} = this.props;
+    setManageWalletAddress(address)
     hideSidebar()
-
+    history.push(WALLET_MANAGE)
   }
 
 
   skipToAddWallet(){
+    const {history,hideSidebar} = this.props;
     hideSidebar()
     
   }
@@ -111,7 +119,7 @@ export default class WalletView extends PureComponent {
             {identities[key].name}
           </div>
           {
-            identities[key].address == selectedAccount.address?(
+            key == selectedAccount.address?(
               <div className='wallet-view__wallet__name__default'>
                 {t('current')}
               </div>
@@ -121,7 +129,7 @@ export default class WalletView extends PureComponent {
           <img
               className="wallet-view__wallet__name__iocn"
               onClick={()=>{
-                this.skipToWalletManage(identities[key].address)
+                this.skipToWalletManage(key)
               }}
               src="images/swap.png"
               height={14}

@@ -6,7 +6,6 @@ import action from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
-    manageWalletType:state.metamask.manageWalletType,
   }
 }
 

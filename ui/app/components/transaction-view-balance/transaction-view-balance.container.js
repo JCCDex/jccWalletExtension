@@ -15,9 +15,6 @@ import { showModal } from '../../actions'
 const mapStateToProps = state => {
   const selectedAddress = getSelectedAddress(state)
   const accounts = getMetaMaskAccounts(state)
-  console.log("++++++++++++++++++++++")
-  console.log(selectedAddress)
-  console.log(accounts)
   const account = accounts[selectedAddress]
   const { balance } = account
  

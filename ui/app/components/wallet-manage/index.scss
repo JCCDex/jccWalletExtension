@@ -1,6 +1,12 @@
 .wallet-manage{
-
-    &__wallet{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &__wallet_info{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         width: 360px;
         height: 108px;
         opacity: 1;
@@ -11,39 +17,21 @@
             width: 48px;
             height: 48px;
             opacity: 1;
+            margin-left: 20px;
             background: #ffffff;
             border-radius: 50%;
         }
 
-        &__Info{
-            height: 48px;
-            width: 100%;
-
+        &__font{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 10px;
+            width: 253px;
+            height: 46px;
+            
             &__name{
                 width: auto;
-                height: 20px;
-                
-                &__font{
-                    opacity: 1;
-                    font-size: 14px;
-                    font-family: PingFangSC, PingFangSC-Semibold;
-                    font-weight: 600;
-                    text-align: left;
-                    color: #ffffff;
-                    line-height: 20px;
-                    letter-spacing: 1px;
-    
-                }
-                &__icon{
-                    width: 14px;
-                    height: 14px;
-                    opacity: 1;
-                    background: #ffffff;
-                }
-            }
-
-            &__address{
-                width: 71px;
                 height: 20px;
                 opacity: 1;
                 font-size: 14px;
@@ -54,19 +42,35 @@
                 line-height: 20px;
                 letter-spacing: 1px;
             }
+
+            &__address{
+                width: auto;
+                width: 214px;
+                height: 18px;
+                opacity: 1;
+                font-size: 12px;
+                font-family: PingFangSC, PingFangSC-Regular;
+                font-weight: 400;
+                text-align: left;
+                color: #e4e6f1;
+                line-height: 18px;
+                letter-spacing: 0px;
+
+            }
         }
+
     }
 
-
     &__item{
-        margin-top: 14px;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 14px;
-        height: 20px;
-        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 48px;
+        width: 320px;
 
-        &__name{
+
+        &__font{
+            height: 20px;
             width: auto;
             height: 20px;
             opacity: 1;
@@ -80,12 +84,63 @@
         }
 
         &__icon{
-            margin-left: auto;
             width: 8px;
             height: 14px;
+            margin-left: auto;
             opacity: 1;
-            background: #ffffff;
+            background: #a9a9a9;
         }
     }
+    
+}
 
+.export-secret{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title{
+        margin-top: 24px;
+        margin-bottom: 0px;
+        width: auto;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #404040;
+        line-height: 20px;
+        letter-spacing: 1px;
+    }
+
+    &__QRcode{
+        margin: 20px;
+        width: 132px;
+        height: 132px;
+        opacity: 1;
+    }
+
+    &__KeyPairs{
+        width: 301px;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #232323;
+        line-height: 20px;
+    }
+
+}
+
+.wallet-manage__button{
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+    margin-bottom: 0;
+    color: #ffffff;
 }

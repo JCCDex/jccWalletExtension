@@ -45,7 +45,15 @@ const CONFIRM_TOKEN_METHOD_PATH = '/token-method'
 const SIGNATURE_REQUEST_PATH = '/signature-request'
 
 const CREATE_WALLET = "/create-wallet"
-const WALLET_MANAGE = "/wallet-manage"
+
+//非 initialize 路径将会添加 首页的导航，这里省懶劲都搞成 initialize 路径了
+const WALLET_MANAGE = "/initialize/wallet-manage"
+const WALLET_MANAGE_CHANGE_NAME = "/initialize/wallet-manage/name-change"
+const WALLET_MANAGE_SECRET_EXPORT = "/initialize/wallet-manage/secret-export"
+const WALLET_MANAGE_CHANGE_PASSWORD = "/initialize/wallet-manage/password-change"
+const WALLET_MANAGE_CHANGE_RESTORE = "/initialize/wallet-manage/password-restore"
+
+
 module.exports = {
   DEFAULT_ROUTE,
   UNLOCK_ROUTE,
@@ -62,7 +70,13 @@ module.exports = {
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
   NEW_ACCOUNT_ROUTE,
   IMPORT_ACCOUNT_ROUTE,
+  CREATE_WALLET,
+  WALLET_MANAGE,
+  WALLET_MANAGE_CHANGE_NAME,
+  WALLET_MANAGE_SECRET_EXPORT,
+  WALLET_MANAGE_CHANGE_PASSWORD,
   CONNECT_HARDWARE_ROUTE,
+  WALLET_MANAGE_CHANGE_RESTORE,
   SEND_ROUTE,
   CREATE_ORDER_ROUTE,
   NOTICE_ROUTE,

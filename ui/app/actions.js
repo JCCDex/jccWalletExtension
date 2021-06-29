@@ -311,7 +311,10 @@ var actions = {
   setSelectedWalletType,
   //从钱包列表 跳转到管理页面或者 添加页面时 的状态判断。
   SET_MANAGE_WALLET_TYPE:"SET_MANAGEWALLETTYPE",
+  SET_MANAGE_WALLET_ADDRESS:"SET_MANAGE_WALLET_ADDRESS",
   setManageWalletType,
+  setManageWalletAddress,
+  getSecret,
 
   //network setting
   SET_NETWORK:"SET_NETWORK",
@@ -332,6 +335,28 @@ function _setBackgroundConnection (backgroundConnection) {
 function goHome () {
   return {
     type: actions.GO_HOME,
+  }
+}
+
+function setManageWalletAddress(address){
+  return {
+    type: actions.SET_MANAGE_WALLET_ADDRESS,
+    value:address,
+  }
+
+}
+
+
+function getSecret(address,password){
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.getSecret(address,password, (error, secret) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(secret)
+      })
+    })
   }
 }
 
@@ -450,16 +475,14 @@ function getAddressByType (type,secret) {
     return new Promise((resolve, reject) => {
         background.getAddress(secret,type, (error, address) => {
           if (error) {
-            console.log(error)
             reject(error)
           }
-          console.log("_++++++++++++++== 收到了")
-          console.log(address)
           resolve(address)
       })
     })
   }
 }
+
 
 
 
@@ -1430,7 +1453,6 @@ function setSelectedToken (tokenAddress) {
 
 
 function setSelectedAddress (address) {
-  console.log('setSelectedAddress ++++++++++')
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
     //开始执行

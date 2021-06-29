@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import InputPrompt from '../../input_prompt'
 import PropTypes from 'prop-types'
 import Button from '../../button'
-export default class PasswordChange extends PureComponent {
+export default class PasswordRestore extends PureComponent {
 
     static contextTypes = {
         t: PropTypes.func,

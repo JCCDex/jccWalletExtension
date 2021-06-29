@@ -7,14 +7,11 @@ const actions = require('../../actions')
   const mapStateToProps = state => {
 
     return {
-      sidebarOpen: state.appState.sidebar.isOpen,
       identities: state.metamask.identities,
       accounts: selectors.getMetaMaskAccounts(state),
-      keyrings: state.metamask.keyrings,
-      selectedAddress: selectors.getSelectedAddress(state),
-      selectedAccount: selectors.getSelectedAccount(state),
       selectedTokenAddress: state.metamask.selectedTokenAddress,
-
+      manageWalletAddress:state.metamask.manageWalletAddress,
+      manageWalletType:state.metamask.manageWalletType,
     }
   }
   
@@ -26,16 +23,10 @@ const actions = require('../../actions')
       showAccountDetailModal: () => {
         dispatch(actions.showModal({ name: 'ACCOUNT_DETAILS' }))
       },
-      //
-      getWalletsByType:(type)=> dispatch(actions.getWalletsByType(type)),
-      //设置 默认帐号的行为
-      setDefaultAccount:(type,address)=> dispatch(actions.setDefaultAccount(type,address)),
-      setCurrentWallet:(wallet)=>dispatch(actions.setCurrentWallet(wallet)),
-
+      getSecret:(address,secret)=>dispatch(actions.getSecret(address,secret))
     }
   }
-
-
+  
 export default compose(
   withRouter,
   connect(mapStateToProps,mapDispatchToProps)

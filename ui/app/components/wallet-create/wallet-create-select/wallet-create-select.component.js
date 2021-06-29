@@ -10,7 +10,6 @@ export default class WalletCreateSelect extends PureComponent {
       }
     
     static propTypes = {
-      manageWalletType:PropTypes.string,
       setManageWalletType:PropTypes.func,
     }
 

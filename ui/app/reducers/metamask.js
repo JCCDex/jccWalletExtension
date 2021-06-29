@@ -28,7 +28,7 @@ function reduceMetamask (state, action) {
     selectedTokenAddress: null,
     selectedWalletType:'',
     wallets: {},
-    
+    manageWalletAddress:"",
     networks:{},
 
     selectedNetWork:{},
@@ -204,9 +204,6 @@ function reduceMetamask (state, action) {
       const selectedNetWork = metamaskState.selectedNetWork
       //action.value.network
       selectedNetWork[action.value.type] = {name:"1234","url":"##########"}
-
-      console.log(selectedNetWork)
-
       return extend(metamaskState,{selectedNetWork})
         
     case actions.UPDATE_TOKENS:
@@ -481,6 +478,12 @@ function reduceMetamask (state, action) {
     case actions.SET_FIRST_TIME_FLOW_TYPE: {
       return extend(metamaskState, {
         firstTimeFlowType: action.value,
+      })
+    }
+
+    case actions.SET_MANAGE_WALLET_ADDRESS:{
+      return extend(metamaskState,{
+        manageWalletAddress :action.value
       })
     }
 

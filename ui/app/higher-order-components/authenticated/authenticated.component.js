@@ -8,7 +8,6 @@ export default function Authenticated (props) {
   switch (true) {
    // case isUnlocked && completedOnboarding:
    case completedOnboarding:
-     console.log("还在 初始化")
       return <Route { ...props } />
     case !completedOnboarding:
       return <Redirect to={{ pathname: INITIALIZE_ROUTE }} />
