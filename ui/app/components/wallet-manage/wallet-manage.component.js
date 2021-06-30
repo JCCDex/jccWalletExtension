@@ -36,13 +36,13 @@ export default class WalletManage extends PureComponent {
 
     handlePasswordChange = async (oldPassword,inputNewPassword)=>{
         //先通过当前密码获取密钥，成功则说明密码正确
-        const { manageWalletAddress,getSecret,createNewAccount,history} =this.props;
+        const {manageWalletType, manageWalletAddress,getSecret,createNewAccount,history} =this.props;
         try{
             let secret = await getSecret(manageWalletAddress,oldPassword)
             if(secret){
                 //用新密码加密密钥并存储，同时覆盖 旧钱包信息
                 let keypair = {address:manageWalletAddress,secret:secret};
-                await createNewAccount(inputNewPassword,keypair)
+                await createNewAccount(manageWalletType,inputNewPassword,keypair)
                 history.goBack();
                 alert(t('PasswordChangeSuccess'))
                 return true;
@@ -63,7 +63,7 @@ export default class WalletManage extends PureComponent {
                 alert(t('InputSecretError'))
             }else{
                 let keypair = {address:manageWalletAddress,secret:secret};
-                await createNewAccount(password,keypair)
+                await createNewAccount(manageWalletType,password,keypair)
                 alert(t('PasswordChangeSuccess'))
                 history.goBack();
                 return true;

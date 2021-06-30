@@ -54,7 +54,7 @@ export default class WalltBackup extends PureComponent {
           {keypairs.secret}
       </div>
 
-        <button className ='first-time-flow__button'
+        <button className ='new-account__button'
           onClick={e => {
             e.preventDefault()
             this.context.metricsEvent({

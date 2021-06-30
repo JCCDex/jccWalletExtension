@@ -52,9 +52,16 @@ const WALLET_MANAGE_SECRET_EXPORT = "/initialize/wallet-manage/secret-export"
 const WALLET_MANAGE_CHANGE_PASSWORD = "/initialize/wallet-manage/password-change"
 const WALLET_MANAGE_CHANGE_RESTORE = "/initialize/wallet-manage/password-restore"
 
-
+const WALLET_ADD = "/initialize/wallet-add"
+const WALLET_ADD_BY_CREATE = "/initialize/wallet-add/create"
+const WALLET_ADD_BY_IMPORT = "/initialize/wallet-add/import"
+const WALLET_ADD_SET_NAME = "/initialize/wallet-add/setName"
 module.exports = {
   DEFAULT_ROUTE,
+  WALLET_ADD,
+  WALLET_ADD_BY_IMPORT,
+  WALLET_ADD_BY_CREATE,
+  WALLET_ADD_SET_NAME,
   UNLOCK_ROUTE,
   LOCK_ROUTE,
   SETTINGS_ROUTE,

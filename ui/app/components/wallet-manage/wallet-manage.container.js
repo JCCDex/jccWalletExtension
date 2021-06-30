@@ -30,7 +30,7 @@ const actions = require('../../actions')
       setAccountLabel: (type,account, label) => {
         dispatch(actions.setAccountLabel(type,account, label))
       },
-      createNewAccount: (password,keypair) => dispatch(actions.createNewAccount(password,keypair)),
+      createNewAccount: (type,password,keypair) => dispatch(actions.createNewAccount(type,password,keypair)),
     }
   }
   

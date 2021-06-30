@@ -50,7 +50,6 @@ export default class ExportSecret extends PureComponent {
                 }
               })
         } catch (error) {
-            console.log(error)
             let passwordError = ''
             passwordError = error.message
             this.setState(state => {
@@ -92,14 +91,14 @@ export default class ExportSecret extends PureComponent {
     }
 
     renderSecretBox(){
-        const qrImage = qrCode(4, 'M')
+        const qrImage = qrCode(4, 'L')
         qrImage.addData(this.state.secret)
         qrImage.make()
         return (
         <div className='export-secret'>
             <div className='export-secret__QRcode' 
                 dangerouslySetInnerHTML = {{__html: qrImage.createImgTag(3),}} />
-            <div className='export-secret __KeyPairs'>
+            <div className='export-secret__KeyPairs'>
                     {this.state.secret}
             </div>
         </div>
@@ -122,7 +121,7 @@ export default class ExportSecret extends PureComponent {
                 <div className='export-secret__QRcode' 
                 dangerouslySetInnerHTML = {{__html: qrImage.createImgTag(3),}} />
 
-                <div className='export-secret __KeyPairs'>
+                <div className='export-secret__KeyPairs'>
                     {selectAddress}
                 </div>
                 <div className='export-secret__title'>

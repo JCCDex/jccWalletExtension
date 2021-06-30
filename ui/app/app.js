@@ -42,6 +42,7 @@ const Alert = require('./components/alert')
 import TitleBar from './components/titlebar' 
 import AppHeader from './components/app-header'
 import UnlockPage from './components/pages/unlock-page'
+import WalletAdd from './components/wallet-add'
 
 // Routes
 import {
@@ -67,6 +68,11 @@ import {
   INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_IMPORT_WITH_KEYSTORE,
   INITIALIZE_CREATE_PASSWORD,
+
+  WALLET_ADD,
+  WALLET_ADD_BY_IMPORT,
+  WALLET_ADD_BY_CREATE,
+  WALLET_ADD_SET_NAME,
 
   WALLET_MANAGE_CHANGE_RESTORE,
 
@@ -101,6 +107,10 @@ class App extends Component {
       case WALLET_MANAGE_CHANGE_PASSWORD:message = t('ChangePassword');break;
       case WALLET_MANAGE :message = t('WalletInfo');break;
       case WALLET_MANAGE_CHANGE_RESTORE:message = t('RestorePassword');break;
+      case WALLET_ADD_BY_IMPORT:message = t('importAccount');break;
+      case WALLET_ADD:message = t('chooseAddMethod');break;
+      case WALLET_ADD_BY_CREATE:message = t('createKeyPair');break;
+      case WALLET_ADD_SET_NAME:message = t('createAWallet');break;
       default:
         return;
 
@@ -117,6 +127,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route path={LOCK_ROUTE} component={Lock} exact />
+          <Authenticated path={WALLET_ADD} component={WalletAdd}/>
           <Authenticated path={WALLET_MANAGE} component ={WalletManage}/>
           <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
           <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />

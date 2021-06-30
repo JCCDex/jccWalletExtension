@@ -51,10 +51,10 @@ export default class FirstTimeFlow extends PureComponent {
     }
   }
 
-  handleCreateNewAccount = async (password,keypair) => {
+  handleCreateNewAccount = async (type,password,keypair) => {
     const { createNewAccount } = this.props
     try {
-      await createNewAccount(password,keypair)
+      await createNewAccount(type,password,keypair)
     } catch (error) {
       throw new Error(error.message)
     }

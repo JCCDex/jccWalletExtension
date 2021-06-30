@@ -121,7 +121,7 @@ export default class Password extends PureComponent {
     const { password ,walletName} = this.state
     const { onSubmit,setAccountLabel, history,setCompletedOnboarding,completionMetaMetricsName,keypairs,setSelectedAddress} = this.props
     try {
-      await onSubmit(password,keypairs)
+      await onSubmit("jingtum",password,keypairs)
       await setAccountLabel("jingtum",keypairs.address,walletName)
       await setCompletedOnboarding()
       await setSelectedAddress(keypairs.address)

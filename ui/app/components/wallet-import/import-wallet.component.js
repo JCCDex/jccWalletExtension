@@ -124,15 +124,22 @@ export default class ImportAccount extends PureComponent {
       return
     }
     const { secret,password,walletName} = this.state
-    const { history, onSubmit, setSelectedAddress,setCompletedOnboarding,completionMetaMetricsName,setAccountLabel,getAddressByType} = this.props
+    const { history, 
+      manageWalletType,
+      onSubmit, 
+      setSelectedAddress,
+      setCompletedOnboarding,
+      completionMetaMetricsName,
+      setAccountLabel,
+      getAddressByType} = this.props
     try {
-      let address = await getAddressByType(secret,'jingtum')
+      let address = await getAddressByType(secret,manageWalletType)
       let keypair={};
       keypair.secret = secret
       keypair.address = address;
       await setSelectedAddress(keypair.address)
-      await onSubmit(password,keypair)
-      await setAccountLabel("jingtum",keypair.address,walletName)
+      await onSubmit(manageWalletType,password,keypair)
+      await setAccountLabel(manageWalletType,keypair.address,walletName)
       await setCompletedOnboarding()
       this.context.metricsEvent({
         eventOpts: {

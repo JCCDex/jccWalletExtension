@@ -270,10 +270,10 @@ module.exports = class MetamaskController extends EventEmitter {
   //逻辑为创建出 keystore 然后导出 keystore 放入统一的 keystoreController
   //所有keystore 均不保存
   //可以看出 导入帐号其实相同逻辑
-  async createNewAccount (password,keypair) {
+  async createNewAccount (type,password,keypair) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {
-        const init = await walletUtils.generateKeystore('jingtum',keypair.secret,password)
+        const init = await walletUtils.generateKeystore(type,keypair.secret,password)
         console.log(init)
         console.log(password)
         this.keystoresController.setKeystore(keypair.address,init)

@@ -5,9 +5,10 @@ import ImportAccount from './import-wallet.component'
 import action from '../../actions'
 
 const mapStateToProps = ({ metamask }) => {
-  const { importMode } = metamask
+  const { importMode ,manageWalletType} = metamask
   return {
-    importMode
+    importMode,
+    manageWalletType
   }
 }
 

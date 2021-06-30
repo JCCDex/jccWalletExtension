@@ -48,5 +48,17 @@
         border-radius: 7px;
         vertical-align:middle;
         display:table-cell;
+        word-break: break-all;
+    }
+
+    &__button{
+        width: 320px;
+        height: 46px;
+        opacity: 1;
+        background: #586aff;
+        border-radius: 6px;
+        margin-top: 24px;
+        margin-bottom: 0;
+        color: #ffffff;
     }
 }

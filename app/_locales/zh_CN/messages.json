@@ -1343,5 +1343,8 @@
   },
   "PasswordChangeSuccess":{
     "message":"密码修改成功"
+  },
+  "chooseAddMethod":{
+    "message":"选择添加方式"
   }
 }

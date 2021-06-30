@@ -617,11 +617,11 @@ function createNewVaultAndRestore (password, seed) {
   }
 }
 
-function createNewAccount (password,keypair) {
+function createNewAccount (type,password,keypair) {
   return async dispatch => {
     dispatch(actions.showLoadingIndication())
     try {
-      await createNewVault(password,keypair)
+      await createNewVault(type,password,keypair)
       dispatch(actions.hideLoadingIndication())
     } catch (error) {
       dispatch(actions.hideLoadingIndication())
@@ -667,9 +667,9 @@ function submitPassword (password) {
   })
 }
 
-function createNewVault (password,keypair) {
+function createNewVault (type,password,keypair) {
   return new Promise((resolve, reject) => {
-    background.createNewAccount(password,keypair, (error, inst) => {
+    background.createNewAccount(type,password,keypair, (error, inst) => {
       if (error) {
         console.log(error)
         return reject(error)

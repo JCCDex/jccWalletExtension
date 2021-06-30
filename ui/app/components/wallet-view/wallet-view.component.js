@@ -5,8 +5,8 @@ const classnames = require('classnames')
 const Tooltip = require('../tooltip-v2.js').default
 import BalanceComponent from '../balance'
 import copyToClipboard from 'copy-to-clipboard'
-import { WALLET_MANAGE } from '../../routes'
-import { contours } from 'd3'
+import { WALLET_MANAGE ,WALLET_ADD} from '../../routes'
+
 
 //等同 preferences 定义的ChainType 
 //整个系统中 ChainType == walletType == NetworkType  注 ： 对钱包应用来说 链类型只和 钱包的本地化 操作有关。其他均无关。
@@ -95,6 +95,7 @@ export default class WalletView extends PureComponent {
   skipToAddWallet(){
     const {history,hideSidebar} = this.props;
     hideSidebar()
+    history.push(WALLET_ADD)
     
   }
 
@@ -240,7 +241,7 @@ export default class WalletView extends PureComponent {
                     className="wallet-view__wallets__title__icon"
                     src="images/add.png"
                     onClick={()=>{
-                      this.skipToAddWallet(wallet)
+                      this.skipToAddWallet()
                     }}
                     height={16}
                     width={16}
@@ -248,7 +249,7 @@ export default class WalletView extends PureComponent {
                 </div>
                 {this.renderWalletList()}
                 <div className='wallet-view__wallet'
-                 onClick={this.skipToAddWallet}>
+                 onClick={()=>{this.skipToAddWallet()}}>
                       {t('AddWallet')}
                 </div>
               </div>

@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     createWalletByType: (type) => dispatch(createWalletByType(type)),
-    createNewAccount: (password,keypair) => dispatch(createNewAccount(password,keypair)),
+    createNewAccount: (type,password,keypair) => dispatch(createNewAccount(type,password,keypair)),
     createNewAccountFromSeed: (seedPhrase) => {
       return dispatch(createNewVaultAndRestore(seedPhrase))
     },
