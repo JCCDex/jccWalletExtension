@@ -60,6 +60,7 @@ function reduceApp (state, action) {
     isLoading: false,
     // Used to display error text
     warning: null,
+    isEditNameShowing:false,
     buyView: {},
     isMouseUser: false,
     gasIsLoading: false,
@@ -358,6 +359,11 @@ function reduceApp (state, action) {
     case actions.SET_SELECTED_ACCOUNT:
       return extend(appState, {
         activeAddress: action.value,
+      })
+
+    case actions.SHOW_EDIT_WALLET_NAME:
+      return extend(appState,{
+        isEditNameShowing :!appState.isEditNameShowing
       })
 
     case actions.GO_HOME:

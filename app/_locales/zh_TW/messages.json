@@ -427,6 +427,9 @@
   "editingTransaction": {
     "message": "修改交易"
   },
+  "editingWalletName": {
+    "message": "修改钱包名称"
+  },
   "emailUs": {
     "message": "寄 Email 給我們!"
   },

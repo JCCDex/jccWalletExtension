@@ -59,7 +59,6 @@ import {
   INITIALIZE_UNLOCK_ROUTE,
   NOTICE_ROUTE,
 
-  WALLET_MANAGE_CHANGE_NAME,
   WALLET_MANAGE_SECRET_EXPORT,
   WALLET_MANAGE_CHANGE_PASSWORD,
 
@@ -98,7 +97,6 @@ class App extends Component {
       case INITIALIZE_IMPORT_WITH_SECRET:message = t('importAccount');break;
       case INITIALIZE_IMPORT_WITH_KEYSTORE:message = t('importAccount');break;
       case INITIALIZE_CREATE_PASSWORD:message = t('SettingsPassword');break;
-      case WALLET_MANAGE_CHANGE_NAME:message = t('SettingsPassword');break;
       case WALLET_MANAGE_SECRET_EXPORT:message = t('exportPrivateKey');break;
       case WALLET_MANAGE_CHANGE_PASSWORD:message = t('ChangePassword');break;
       case WALLET_MANAGE :message = t('WalletInfo');break;

@@ -14,20 +14,21 @@ const extend = require('xtend')
 class KeystoresController {
     constructor (opts = {}) {
         const initState = extend({
-            keystores:[]
+            keystores:''
         }, opts.initState)
 
         this.store = new ObservableStore(initState)
     }
 
-    setKeystore(keystore){
+    setKeystore(address,keystore){
         let keystores={};
         if(!this.store.getState().keystores){
-            keystores=[keystore];
+            keystores[address]=keystore;
         }else{
           keystores =this.store.getState().keystores
-          keystores.push(keystore);
+          keystores[address] = keystore;
         }
+        console.log(keystores)
         this.store.updateState({keystores})
         return Promise.resolve(true)
     }

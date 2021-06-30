@@ -1326,10 +1326,22 @@
   "inputOldPassword":{
     "message":"请输入当前密码"
   },
+  "inputSecret":{
+    "message":"请输入当前密钥"
+  },
   "inputNewPassword":{
     "message":"请设置新密码（至少8个字符）"
   },
   "inputNewPasswordAgein":{
     "message":"请确认新密码"
+  },
+  "editingWalletName": {
+    "message": "修改钱包名称"
+  },
+  "InputSecretError":{
+    "message":"密钥输入错误"
+  },
+  "PasswordChangeSuccess":{
+    "message":"密码修改成功"
   }
 }

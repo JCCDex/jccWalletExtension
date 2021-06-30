@@ -2,13 +2,19 @@ import React, { PureComponent } from 'react'
 import InputPrompt from '../../input_prompt'
 import PropTypes from 'prop-types'
 import Button from '../../button'
-export default class PasswordRestore extends PureComponent {
+export default class PasswordChange extends PureComponent {
 
     static contextTypes = {
         t: PropTypes.func,
         metricsEvent: PropTypes.func,
       }
 
+      static propTypes = {
+        identities: PropTypes.object,
+        selectAddress:PropTypes.string,
+        onSubmit:PropTypes.func,
+      }
+      
     state = {
         termsChecked: false,
         confirmPassword:'',
@@ -23,9 +29,21 @@ export default class PasswordRestore extends PureComponent {
 
     handleOldPasswordChange(oldPassword){
         const { t } = this.context
-
-
-
+        if(!oldPassword){
+          this.setState(state => {
+            return {
+              oldPassword:t('InputEmpty'),
+              oldPassword,
+            }
+          })
+        }else{
+          this.setState(state => {
+            return {
+              oldPassword:'',
+              oldPassword,
+            }
+          })
+        }
     }
 
     handlePasswordChange(password){
@@ -69,25 +87,20 @@ export default class PasswordRestore extends PureComponent {
         })
       }
 
-      handleChange(){
-
-      }
-
 
     render(){
         const { t } = this.context
         const {oldPasswordError,passwordError,confirmPasswordError} = this.state;
+        const {onSubmit} = this.props
 
         return(
-            <form
-            className="first-time-flow__form"
-            onSubmit={this.handleChange()}>
-    
+          <div>
             <InputPrompt
               isShowing={false}
             />
             <input
               className="first-time-flow__input"
+              type='password'
               onChange={e => this.handleOldPasswordChange(e.target.value)}
               placeholder={t('inputOldPassword')}
               value={this.state.oldPassword}
@@ -124,11 +137,11 @@ export default class PasswordRestore extends PureComponent {
             <Button
               type="confirm"
               className="wallet-manage__button"
-              onClick={()=>{this.handleImport}}
+              onClick={()=>{onSubmit(this.state.oldPassword,this.state.password)}}
             >
               {t('ok')}
             </Button>
-          </form>
+          </div>
         )
     }
 }

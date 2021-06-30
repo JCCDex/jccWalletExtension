@@ -270,19 +270,18 @@ module.exports = class MetamaskController extends EventEmitter {
   //逻辑为创建出 keystore 然后导出 keystore 放入统一的 keystoreController
   //所有keystore 均不保存
   //可以看出 导入帐号其实相同逻辑
-  async createNewAccount (password,secret) {
+  async createNewAccount (password,keypair) {
     const releaseLock = await this.createVaultMutex.acquire()
-    const address =  walletUtils.getAddress('jingtum',secret)
     try {
-        const init = await walletUtils.generateKeystore('jingtum',secret,password)
-        this.keystoresController.setKeystore(init)
+        const init = await walletUtils.generateKeystore('jingtum',keypair.secret,password)
+        console.log(init)
+        console.log(password)
+        this.keystoresController.setKeystore(keypair.address,init)
         const addrToAdd = []
-        addrToAdd.push(address)
+        addrToAdd.push(keypair.address)
         this.accountTracker.addAccounts(addrToAdd)
-        //this.preferencesController.setAddresses('jingtum',address)
-        //this.selectFirstIdentity()
         releaseLock()
-        return secret
+        return keypair.address
     } catch (err) {
       releaseLock()
       throw err
@@ -291,12 +290,14 @@ module.exports = class MetamaskController extends EventEmitter {
   //通过 address 和 password 从存储中获取 密钥
   async getSecret(address,password){
     const  keystores =  this.keystoresController.store.getState().keystores
-    for(let i=0;i<keystores.length;i++){
-      if(keystores[i].wallets[1].address === address){
-        const inst = new JingchangWallet(keystores[i])
-        return inst.getSecretWithAddress(password,address)
-      }
-    }
+        console.log(address)
+        console.log(password)
+        console.log(keystores[address])
+        if(keystores[address]){
+          const inst = new JingchangWallet(keystores[address])
+          return inst.getSecretWithAddress(password,address)
+        }
+      return new Error("address not exit")
   }
 
 
@@ -304,12 +305,12 @@ module.exports = class MetamaskController extends EventEmitter {
     return walletUtils.createWalletByType(type)
   }
 
-  async checkAddressByType (type){
-    return walletUtils.checkAddressByType(type)
+  async checkAddressByType (address,type){
+    return walletUtils.checkAddressByType(address,type)
   }
 
-  async checkSecretByType (type){
-    return walletUtils.checkSecretByType(type)
+  async checkSecretByType (secret,type){
+    return walletUtils.checkSecretByType(secret,type)
   }
 
   async getAddress (secret,type){

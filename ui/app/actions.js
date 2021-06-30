@@ -316,6 +316,9 @@ var actions = {
   setManageWalletAddress,
   getSecret,
 
+  toggleEditWalletName,
+  SHOW_EDIT_WALLET_NAME:'SHOW_EDIT_WALLET_NAME',
+
   //network setting
   SET_NETWORK:"SET_NETWORK",
   ADD_NETWORK:"ADD_NETWORK",
@@ -323,7 +326,8 @@ var actions = {
   setNetwork,
   addNetwork,
   deleteNetwork,
-  getAddressByType
+  getAddressByType,
+  checkSecretByType,
 }
 
 module.exports = actions
@@ -343,9 +347,26 @@ function setManageWalletAddress(address){
     type: actions.SET_MANAGE_WALLET_ADDRESS,
     value:address,
   }
-
 }
 
+function toggleEditWalletName(){
+  return {
+    type: actions.SHOW_EDIT_WALLET_NAME
+  }
+}
+
+function checkSecretByType(secret,type){
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.checkSecretByType(secret,type, (error, result) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(result)
+      })
+    })
+  }
+}
 
 function getSecret(address,password){
   return dispatch =>{
@@ -600,7 +621,7 @@ function createNewAccount (password,keypair) {
   return async dispatch => {
     dispatch(actions.showLoadingIndication())
     try {
-      await createNewVault(password,keypair.secret)
+      await createNewVault(password,keypair)
       dispatch(actions.hideLoadingIndication())
     } catch (error) {
       dispatch(actions.hideLoadingIndication())
@@ -646,9 +667,9 @@ function submitPassword (password) {
   })
 }
 
-function createNewVault (password,secret) {
+function createNewVault (password,keypair) {
   return new Promise((resolve, reject) => {
-    background.createNewAccount(password,secret, (error, inst) => {
+    background.createNewAccount(password,keypair, (error, inst) => {
       if (error) {
         console.log(error)
         return reject(error)

@@ -16,7 +16,7 @@ export default class NetworkMenu extends PureComponent {
         toggleWalletTypeMenu: PropTypes.func,
         toggleNetworkMenu: PropTypes.func,
         selectedWalletType:PropTypes.string,
-        networks:PropTypes.array,
+        networks:PropTypes.object,
         selectedNetWork:PropTypes.object,
         setNetwork:PropTypes.func
       }

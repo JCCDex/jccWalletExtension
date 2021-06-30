@@ -2,30 +2,48 @@ import React, { PureComponent } from 'react'
 import InputPrompt from '../../input_prompt'
 import PropTypes from 'prop-types'
 import Button from '../../button'
-export default class PasswordChange extends PureComponent {
+export default class PasswordRestore extends PureComponent {
 
+    static propTypes = {
+      history: PropTypes.object,
+      manageWalletType:PropTypes.string,
+      selectAddress:PropTypes.string,
+      onSubmit:PropTypes.func,
+    }
+    
     static contextTypes = {
         t: PropTypes.func,
         metricsEvent: PropTypes.func,
-      }
+    }      
 
     state = {
-        termsChecked: false,
         confirmPassword:'',
         password:'',
-        oldPassword:'',
+        secret:'',
     
         confirmPasswordError: '',
-        oldPasswordError:'',
+        secretError:'',
         passwordError:'',
       }
     
 
-    handleOldPasswordChange(oldPassword){
+    handleSecretChange(secret){
         const { t } = this.context
-
-
-
+        if(!secret){
+          this.setState((state)=>{
+            return {
+              secret,
+              secretError:t('InputEmpty')
+            }
+          })
+        }else{
+          this.setState((state)=>{
+            return {
+              secret,
+              secretError:""
+            }
+          })
+        }
     }
 
     handlePasswordChange(password){
@@ -69,32 +87,27 @@ export default class PasswordChange extends PureComponent {
         })
       }
 
-      handleChange(){
-
-      }
-
 
     render(){
         const { t } = this.context
-        const {oldPasswordError,passwordError,confirmPasswordError} = this.state;
-
+        const {secretError,passwordError,confirmPasswordError} = this.state;
+        const {onSubmit} = this.props
         return(
-            <form
-            className="first-time-flow__form"
-            onSubmit={this.handleChange()}>
+            <div
+            className="first-time-flow__form">
     
             <InputPrompt
               isShowing={false}
             />
             <input
               className="first-time-flow__input"
-              onChange={e => this.handleOldPasswordChange(e.target.value)}
-              placeholder={t('inputOldPassword')}
-              value={this.state.oldPassword}
+              onChange={e => this.handleSecretChange(e.target.value)}
+              placeholder={t('inputSecret')}
+              value={this.state.secret}
             />  
             <InputPrompt
-              isShowing={oldPasswordError?true:false}
-              massage={oldPasswordError}
+              isShowing={secretError?true:false}
+              massage={secretError}
             />
     
             <input
@@ -124,11 +137,11 @@ export default class PasswordChange extends PureComponent {
             <Button
               type="confirm"
               className="wallet-manage__button"
-              onClick={()=>{this.handleImport}}
+              onClick={()=>{onSubmit(this.state.secret,this.state.password)}}
             >
               {t('ok')}
             </Button>
-          </form>
+          </div>
         )
     }
 }

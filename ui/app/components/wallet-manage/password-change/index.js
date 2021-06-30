@@ -1,1 +1,1 @@
-export { default } from './password-manage.component'
+export { default } from './password-change.component'

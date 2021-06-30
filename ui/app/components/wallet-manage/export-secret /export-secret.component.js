@@ -2,21 +2,24 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import InputPrompt from '../../input_prompt'
 import Button from '../../button'
+const qrCode = require('qrcode-generator')
 export default class ExportSecret extends PureComponent {
 
     static contextTypes = {
         t: PropTypes.func,
         metricsEvent: PropTypes.func,
-        selectAddress:PropTypes.string,
-        onSubmit:PropTypes.func
+
       }
 
+    static PropTypes={
+        selectAddress:PropTypes.string,
+        onSubmit:PropTypes.func
+    }
 
     state = {
         password:'',
         passwordError:'',
         secret:'',
-
     }
 
     async handlePasswordChange(password){
@@ -89,12 +92,13 @@ export default class ExportSecret extends PureComponent {
     }
 
     renderSecretBox(){
-
+        const qrImage = qrCode(4, 'M')
+        qrImage.addData(this.state.secret)
+        qrImage.make()
         return (
-        <div>
-            <div className='export-secret__QRcode'>
-                    {this.state.secret}
-            </div> 
+        <div className='export-secret'>
+            <div className='export-secret__QRcode' 
+                dangerouslySetInnerHTML = {{__html: qrImage.createImgTag(3),}} />
             <div className='export-secret __KeyPairs'>
                     {this.state.secret}
             </div>
@@ -106,19 +110,23 @@ export default class ExportSecret extends PureComponent {
     render(){
         const { t } = this.context
         const {selectAddress } =this.props
+
+        const qrImage = qrCode(4, 'M')
+        qrImage.addData(selectAddress)
+        qrImage.make()
         return(
             <div className='export-secret'>
                 <div className='export-secret__title'>
                     {t('WalletAddress')}
                 </div>  
-                <div className='export-secret__QRcode'>
-                    {selectAddress}
-                </div>  
+                <div className='export-secret__QRcode' 
+                dangerouslySetInnerHTML = {{__html: qrImage.createImgTag(3),}} />
+
                 <div className='export-secret __KeyPairs'>
                     {selectAddress}
                 </div>
                 <div className='export-secret__title'>
-                    {t('WalletAddress')}
+                    {t('WalletSecret')}
                 </div> 
 
                 {this.state.secret?this.renderSecretBox():this.renderInputPassword()}

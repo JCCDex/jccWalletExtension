@@ -48,7 +48,6 @@ const CREATE_WALLET = "/create-wallet"
 
 //非 initialize 路径将会添加 首页的导航，这里省懶劲都搞成 initialize 路径了
 const WALLET_MANAGE = "/initialize/wallet-manage"
-const WALLET_MANAGE_CHANGE_NAME = "/initialize/wallet-manage/name-change"
 const WALLET_MANAGE_SECRET_EXPORT = "/initialize/wallet-manage/secret-export"
 const WALLET_MANAGE_CHANGE_PASSWORD = "/initialize/wallet-manage/password-change"
 const WALLET_MANAGE_CHANGE_RESTORE = "/initialize/wallet-manage/password-restore"
@@ -72,7 +71,6 @@ module.exports = {
   IMPORT_ACCOUNT_ROUTE,
   CREATE_WALLET,
   WALLET_MANAGE,
-  WALLET_MANAGE_CHANGE_NAME,
   WALLET_MANAGE_SECRET_EXPORT,
   WALLET_MANAGE_CHANGE_PASSWORD,
   CONNECT_HARDWARE_ROUTE,

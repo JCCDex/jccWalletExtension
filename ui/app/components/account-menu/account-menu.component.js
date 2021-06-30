@@ -54,9 +54,6 @@ export default class AccountMenu extends PureComponent {
       selectedAddress,
       showAccountDetail,
     } = this.props
-
-
-    
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
     // this.getJccRpc()
     return wallets.map(wallet => {
