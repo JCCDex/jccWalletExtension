@@ -59,7 +59,6 @@ export default class UnlockPage extends Component {
 
     try {
       await onSubmit(password)
-      const newState = await forceUpdateMetamaskState()
       this.context.metricsEvent({
         eventOpts: {
           category: 'Navigation',

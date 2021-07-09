@@ -68,6 +68,9 @@
   "addTokens": {
     "message": "添加代币"
   },
+  "addNetwork": {
+    "message": "添加节点"
+  },
   "addAcquiredTokens": {
     "message": "在Metamask上添加已用的代币"
   },
@@ -82,7 +85,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "JingtumMask",
+    "message": "JCCwallet",
     "description": "The name of the application"
   },
   "approved": {
@@ -214,6 +217,9 @@
   },
   "create": {
     "message": "创建"
+  },
+  "createKeyPair":{
+    "message": "生成钱包地址、密钥"
   },
   "createAccount": {
     "message": "创建账户"
@@ -546,7 +552,7 @@
     "message": "消息"
   },
   "metamaskDescription": {
-    "message": "带您进入井通公链和去中心化网络."
+    "message": "欢迎进入去中心化网络，很高兴遇到您。"
   },
   "metamaskSeedWords": {
     "message": "JingtumMask 助记词"
@@ -993,7 +999,7 @@
     "message": "警告"
   },
   "welcome": {
-    "message": "欢迎使用 JingtumMask"
+    "message": "欢迎使用"
   },
   "whatsThis": {
     "message": "这是什么？"
@@ -1011,7 +1017,7 @@
     "message": "我们很高兴遇到您."
   },
   "getStarted": {
-    "message": "开始"
+    "message": "开始使用"
   },
   "newToMetaMask": {
     "message": "初次使用?"
@@ -1204,5 +1210,141 @@
   },
   "confirmSend": {
     "message": "确认发送"
+  },
+  "FirstUsedTips1": {
+    "message": "从不收集密钥、地址、交易、余额、哈希和其它任何个人信息。"
+  },
+  "FirstUsedTips2": {
+    "message": "从不收集您的IP地址。"
+  },
+  "FirstUsedTips3": {
+    "message": "从不为了利益销售数据。"
+  },
+  "FirstUsedTips4": {
+    "message": "保存这个密钥在密码管理器，比如JPassword。"
+  },
+  "FirstUsedTips5": {
+    "message": "把这个密钥写在纸上并保存在安全的地方。如果需要更安全些，可以写在多张纸上，放在不同的地方。"
+  },
+  "FirstUsedTips7": {
+    "message": "千万不要丢失备份密钥，任何人获得密钥即可拿走您的数字资产。"
+  },
+  "FirstUsedTips8": {
+    "message": "请务必备份密钥，以便您下次恢复账号需要。"
+  },
+  "FirstUsedTips9": {
+    "message": "已抄写、复制钱包地址、密钥，确认"
+  },
+  
+  "Reminder": {
+    "message": "温馨提示"
+  },
+  "CreactWaleltTips1": {
+    "message": "请务必备份密钥，以便您下次恢复账号需要；"
+  },
+  "CreactWaleltTips2": {
+    "message": "千万不要丢失备份密钥，任何人获得密钥即可拿走您的数字资产。；"
+  },
+  "ImportKeystoreTips1": {
+    "message": "仅用于导入WeiDEX.vip的keystore文件。"
+  },
+  "ImportKeystoreTips2": {
+    "message": "多个SWTC钱包导入需选择默认的SWTC钱包。"
+  } ,
+  "Secret": {
+    "message": "密钥"
+  },
+  "placeholder1": {
+    "message": "请设置钱包名称"
+  },
+  "placeholder2": {
+    "message": "请输入钱包密钥"
+  },
+  "placeholder3": {
+    "message": "请设置密码（至少8个字符）"
+  },
+  "placeholder4": {
+    "message": "请确认密码"
+  },
+  "placeholder5": {
+    "message": "请设置钱包名称"
+  },
+  "placeholder6": {
+    "message": "请选择文件"
+  },
+  "placeholder7": {
+    "message": "选择默认的SWTC钱包"
+  },
+  "WalletAddress": {
+    "message": "钱包地址"
+  },
+  "WalletSecret": {
+    "message": "钱包密钥"
+  },
+  "SettingsPassword": {
+    "message": "设置密码"
+  },
+  "MainNetwork": {
+    "message": "公链主网络"
+  },
+  "asset": {
+    "message": "资产"
+  },
+  "WalletList": {
+    "message": "钱包列表"
+  },
+  "current": {
+    "message": "当前"
+  },
+  "InputEmpty": {
+    "message": "输入为空"
+  },
+  "AddWallet": {
+    "message": "添加钱包"
+  },
+  "jingtum": {
+    "message": "井通"
+  },
+  "eth": {
+    "message": "以太坊"
+  },
+  "WalletInfo": {
+    "message": "钱包详情"
+  },
+  "ChangePassword":{
+    "message": "修改密码"
+  },
+  "RestorePassword":{
+    "message": "重置密码"
+  },
+  "skipToBlockchainBrowser":{
+    "message": "在SWTC区块链浏览器上查看"
+  },
+  "DeleteWallet":{
+    "message": "删除钱包"
+  },
+  "inputOldPassword":{
+    "message":"请输入当前密码"
+  },
+  "inputSecret":{
+    "message":"请输入当前密钥"
+  },
+  "inputNewPassword":{
+    "message":"请设置新密码（至少8个字符）"
+  },
+  "inputNewPasswordAgein":{
+    "message":"请确认新密码"
+  },
+  "editingWalletName": {
+    "message": "修改钱包名称"
+  },
+  "InputSecretError":{
+    "message":"密钥输入错误"
+  },
+  "PasswordChangeSuccess":{
+    "message":"密码修改成功"
+  },
+  "chooseAddMethod":{
+    "message":"选择添加方式"
   }
 }

@@ -1962,108 +1962,16 @@ button.btn-thin {
 
 .main-container-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   flex: 1 0 auto;
   min-height: 0;
   width: 100%; }
 
 .account-and-transaction-details {
   display: flex;
-  flex: 1 1 auto;
-  min-width: 0; }
-
-.wallet-view {
-  display: flex;
-  flex-direction: column;
-  flex: 32 1 32%;
-  width: 0;
-  background: #fafafa;
-  z-index: 200;
-  position: relative; }
-  @media screen and (min-width: 576px) {
-    .wallet-view {
-      overflow-y: scroll;
-      overflow-x: hidden; } }
-  @media screen and (min-width: 576px) and (max-width: 667px) {
-    .wallet-view {
-      min-width: 160px; } }
-  .wallet-view .wallet-view-account-details {
-    flex: 0 0 auto; }
-  .wallet-view__name-container {
-    flex: 0 0 auto;
-    cursor: pointer;
-    width: 100%; }
-  .wallet-view__keyring-label {
-    height: 50px;
-    color: #9b9b9b;
-    font-family: Roboto;
-    font-size: 10px;
-    text-align: right;
-    padding: 17px 20px 0;
-    box-sizing: border-box; }
-  .wallet-view__details-button {
-    font-size: 10px;
-    border-radius: 17px;
-    background-color: transparent;
-    margin: 0 auto;
-    padding: 4px 12px;
-    flex: 0 0 auto; }
-  .wallet-view__tooltip {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px; }
-  .wallet-view__address {
-    border-radius: 3px;
-    background-color: #dedede;
-    color: #5d5d5d;
-    font-size: 14px;
-    line-height: 12px;
-    padding: 4px 12px;
-    cursor: pointer;
-    flex: 0 0 auto; }
-    .wallet-view__address__pressed {
-      background-color: #93949d; }
-  @media screen and (max-width: 575px) {
-    .wallet-view__sidebar-close::after {
-      content: '\00D7';
-      font-size: 40px;
-      color: #4d4d4d;
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      cursor: pointer; } }
-
-@media screen and (min-width: 576px) {
-  .wallet-view::-webkit-scrollbar {
-    display: none; } }
-
-.wallet-view-title-wrapper {
-  flex: 0 0 25px; }
-
-.wallet-view-title {
-  margin-left: 15px;
-  font-size: 16px; }
-  @media screen and (max-width: 575px) {
-    .wallet-view-title {
-      display: none; } }
-
-.wallet-view.sidebar-right {
-  flex: 1 0 230px;
-  background: #fafafa;
-  z-index: 26;
-  position: fixed;
-  top: 66px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 1;
-  visibility: visible;
-  will-change: transform;
-  overflow-y: auto;
-  box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 4px;
-  width: 85%;
-  height: calc(100% - 56px); }
+  width: 360px;
+  height: 528px; }
 
 @media screen and (min-width: 576px) {
   .lap-visible {
@@ -5603,6 +5511,64 @@ div.message-container > div:first-child {
     .account-menu__scroll-button:hover {
       opacity: 1; }
 
+.network-menu {
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 100;
+  top: 63px;
+  width: 200px;
+  height: auto;
+  opacity: 1;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 7px; }
+  @media screen and (max-width: 575px) {
+    .network-menu {
+      right: calc(((100vw - 100%) / 2) + 80px); } }
+  @media screen and (min-width: 576px) {
+    .network-menu {
+      right: calc((100vw - 85vw) / 2); } }
+  @media screen and (min-width: 769px) {
+    .network-menu {
+      right: calc((100vw - 80vw) / 2); } }
+  @media screen and (min-width: 1281px) {
+    .network-menu {
+      right: calc((100vw - 65vw) / 2); } }
+  .network-menu__Item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 198px;
+    height: 32px;
+    opacity: 1;
+    background: #f3f6ff; }
+    .network-menu__Item__font {
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #232323;
+      line-height: 20px; }
+    .network-menu__Item__icon {
+      margin-left: auto;
+      margin-right: 11px;
+      width: 14px;
+      height: 10px;
+      opacity: 1; }
+  .network-menu__add-network {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 198px;
+    height: 32px;
+    opacity: 1;
+    background: #f3f6ff; }
+
 .app-header {
   align-items: center;
   background: #efefef;
@@ -5614,8 +5580,9 @@ div.message-container > div:first-child {
   flex: 0 0 auto; }
   @media screen and (max-width: 575px) {
     .app-header {
-      padding: 12px;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+      margin: 0,20px,0,20px;
+      background: #475af5;
+      height: 72px;
       z-index: 26; } }
   @media screen and (min-width: 576px) {
     .app-header {
@@ -5630,19 +5597,23 @@ div.message-container > div:first-child {
         bottom: -32px; } }
   .app-header__metafox-logo {
     cursor: pointer; }
-    @media screen and (min-width: 576px) {
-      .app-header__metafox-logo--icon {
-        display: none; } }
+    .app-header__metafox-logo--icon {
+      width: 36px;
+      height: 36px;
+      opacity: 1;
+      background: linear-gradient(180deg, #f1f4ff, #dadeff);
+      border-radius: 50%; }
     @media screen and (max-width: 575px) {
       .app-header__metafox-logo--horizontal {
         display: none; } }
   .app-header__contents {
     display: flex;
-    justify-content: space-between;
-    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
     width: 100%; }
     @media screen and (max-width: 575px) {
       .app-header__contents {
+        width: 320px;
         height: 100%; } }
     @media screen and (min-width: 576px) {
       .app-header__contents {
@@ -5661,11 +5632,42 @@ div.message-container > div:first-child {
   .app-header__account-menu-container {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center; }
+    align-items: center;
+    justify-content: center;
+    margin-left: auto; }
   .app-header__network-component-wrapper {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 24px;
+    width: 200px;
+    height: 34px;
+    opacity: 1;
+    border: 1px solid #6c7bf7;
+    border-radius: 19px; }
+  .app-header__network-component-container {
+    display: flex;
     flex-direction: row;
-    align-items: center; }
+    align-items: center;
+    margin: 0px,14px,0px,14px;
+    width: 162px;
+    height: 20px; }
+    .app-header__network-component-container--text {
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #ccd2fc;
+      line-height: 20px; }
+    .app-header__network-component-container--drop-icon {
+      width: 10px;
+      height: 6px;
+      margin-left: auto;
+      opacity: 1;
+      background: #c9cfff; }
 
 .breadcrumbs {
   display: flex;
@@ -5804,21 +5806,14 @@ div.message-container > div:first-child {
 .menu-bar {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  flex: 0 0 auto;
-  margin-bottom: 16px;
   padding: 5px;
   border-bottom: 1px solid #e5e5e5; }
-  .menu-bar__sidebar-button {
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 10px; }
-  .menu-bar__open-in-browser {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    padding: 10px; }
+  .menu-bar__sidebar__container {
+    margin-left: 20px;
+    width: 32px;
+    height: 32px;
+    opacity: 1; }
 
 .modal-content {
   flex: 1;
@@ -6160,7 +6155,7 @@ div.message-container > div:first-child {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 357px;
+  width: 360px;
   padding: 30px;
   font-weight: 400;
   color: #aeaeae; }
@@ -6338,450 +6333,6 @@ div.message-container > div:first-child {
       .settings-page__content-item-col {
         max-width: 100%;
         width: 100%; } }
-
-.welcome-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  max-width: 442px;
-  padding: 0 18px;
-  color: black; }
-  .welcome-page__wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    margin-top: 110px; }
-  .welcome-page__header {
-    font-size: 28px;
-    margin-bottom: 22px;
-    margin-top: 50px; }
-  .welcome-page__description {
-    text-align: center; }
-    .welcome-page__description div {
-      font-size: 16px; }
-    @media screen and (max-width: 575px) {
-      .welcome-page__description {
-        font-size: .9rem; } }
-  .welcome-page .first-time-flow__button {
-    width: 184px;
-    font-weight: 500;
-    margin-top: 44px; }
-
-.select-action .app-header__logo-container {
-  width: 742px;
-  margin-top: 3%; }
-
-.select-action__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-
-.select-action__body-header {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 39px;
-  font-size: 28px;
-  text-align: center;
-  margin-top: 65px;
-  color: black; }
-
-.select-action__select-buttons {
-  display: flex;
-  flex-direction: row;
-  margin-top: 40px; }
-
-.select-action__select-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 388px;
-  height: 278px;
-  border: 1px solid #D8D8D8;
-  box-sizing: border-box;
-  border-radius: 10px;
-  margin-left: 22px; }
-  .select-action__select-button .first-time-flow__button {
-    max-width: 221px;
-    height: 44px; }
-
-.select-action__button-symbol {
-  color: #C4C4C4;
-  margin-top: 41px; }
-
-.select-action__button-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 144px; }
-
-.select-action__button-text-big {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 28px;
-  font-size: 20px;
-  color: #000000;
-  margin-top: 12px;
-  text-align: center; }
-
-.select-action__button-text-small {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 20px;
-  font-size: 14px;
-  color: #7A7A7B;
-  margin-top: 10px;
-  text-align: center; }
-
-.select-action button {
-  font-weight: 500;
-  width: 221px; }
-
-.confirm-seed-phrase__back-button {
-  margin-bottom: 12px; }
-
-.confirm-seed-phrase__selected-seed-words {
-  min-height: 190px;
-  max-width: 496px;
-  border: 1px solid #CDCDCD;
-  border-radius: 6px;
-  background-color: #fff;
-  margin: 24px 0 36px;
-  padding: 12px; }
-
-.confirm-seed-phrase__shuffled-seed-words {
-  max-width: 496px; }
-
-.confirm-seed-phrase__seed-word {
-  display: inline-block;
-  color: #5B5D67;
-  background-color: #E7E7E7;
-  padding: 8px 18px;
-  min-width: 64px;
-  margin: 4px;
-  text-align: center; }
-  .confirm-seed-phrase__seed-word--selected {
-    background-color: #85D1CC;
-    color: #fff; }
-  .confirm-seed-phrase__seed-word--shuffled {
-    cursor: pointer;
-    margin: 6px; }
-  @media screen and (max-width: 575px) {
-    .confirm-seed-phrase__seed-word {
-      font-size: .875rem;
-      padding: 6px 18px; } }
-
-.confirm-seed-phrase button {
-  margin-top: 0xp; }
-
-.reveal-seed-phrase__secret {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  border: 1px solid #CDCDCD;
-  border-radius: 6px;
-  background-color: #fff;
-  padding: 18px;
-  margin-top: 36px;
-  max-width: 380px; }
-
-.reveal-seed-phrase__secret-words {
-  width: 380px;
-  font-size: 1.25rem;
-  text-align: center; }
-  .reveal-seed-phrase__secret-words--hidden {
-    -webkit-filter: blur(5px);
-            filter: blur(5px); }
-
-.reveal-seed-phrase__secret-blocker {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 0 18px;
-  cursor: pointer; }
-
-.reveal-seed-phrase__reveal-button {
-  color: #fff;
-  font-size: .75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  margin-top: 8px;
-  text-align: center; }
-
-.reveal-seed-phrase__export-text {
-  color: #2f9ae0;
-  cursor: pointer;
-  font-weight: 500; }
-
-.reveal-seed-phrase button {
-  margin-top: 0xp; }
-
-.seed-phrase__sections {
-  display: flex; }
-  @media screen and (min-width: 576px) {
-    .seed-phrase__sections {
-      flex-direction: row; } }
-  @media screen and (max-width: 575px) {
-    .seed-phrase__sections {
-      flex-direction: column; } }
-
-.seed-phrase__main {
-  flex: 3;
-  min-width: 0; }
-
-.seed-phrase__side {
-  flex: 2;
-  min-width: 0; }
-  @media screen and (min-width: 576px) {
-    .seed-phrase__side {
-      margin-left: 81px; } }
-  @media screen and (max-width: 575px) {
-    .seed-phrase__side {
-      margin-top: 24px; } }
-  .seed-phrase__side .first-time-flow__text-block {
-    color: #5A5A5A; }
-
-.end-of-flow {
-  color: black;
-  font-family: Roboto;
-  font-style: normal; }
-  .end-of-flow .app-header__logo-container {
-    width: 742px;
-    margin-top: 3%; }
-    @media screen and (max-width: 575px) {
-      .end-of-flow .app-header__logo-container {
-        width: 100%; } }
-  .end-of-flow__text-1, .end-of-flow__text-3 {
-    font-weight: normal;
-    font-size: 16px;
-    margin-top: 18px; }
-  .end-of-flow__text-2 {
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 26px; }
-  .end-of-flow__text-3 {
-    margin-top: 2px;
-    margin-bottom: 2px; }
-    @media screen and (max-width: 575px) {
-      .end-of-flow__text-3 {
-        margin-bottom: 16px;
-        font-size: .875rem; } }
-  .end-of-flow__text-4 {
-    margin-top: 26px; }
-  .end-of-flow button {
-    width: 207px; }
-  .end-of-flow__start-over-button {
-    width: 744px; }
-  .end-of-flow__emoji {
-    font-size: 80px;
-    margin-top: 70px; }
-
-.metametrics-opt-in {
-  position: relative;
-  width: 100%; }
-  .metametrics-opt-in a {
-    color: #2f9ae0bf; }
-  .metametrics-opt-in__main {
-    display: flex;
-    flex-direction: column;
-    margin-left: 26.26%;
-    margin-right: 28%;
-    color: black; }
-    @media screen and (max-width: 575px) {
-      .metametrics-opt-in__main {
-        justify-content: center;
-        margin-left: 2%;
-        margin-right: 0%; } }
-    .metametrics-opt-in__main .app-header__logo-container {
-      margin-top: 3%; }
-  .metametrics-opt-in__title {
-    position: relative;
-    margin-top: 20px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    font-size: 42px; }
-  .metametrics-opt-in__body-graphic {
-    margin-top: 25px; }
-    .metametrics-opt-in__body-graphic .fa-bar-chart {
-      color: #C4C4C4; }
-  .metametrics-opt-in__description {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 21px;
-    font-size: 16px;
-    margin-top: 12px; }
-  .metametrics-opt-in__committments {
-    display: flex;
-    flex-direction: column; }
-  .metametrics-opt-in__content {
-    overflow-y: scroll;
-    flex: 1; }
-  .metametrics-opt-in__row {
-    display: flex;
-    margin-top: 8px; }
-    .metametrics-opt-in__row .fa-check {
-      margin-right: 12px;
-      color: #1ACC56; }
-    .metametrics-opt-in__row .fa-times {
-      margin-right: 12px;
-      color: #D0021B; }
-  .metametrics-opt-in__bold {
-    font-weight: bold; }
-  .metametrics-opt-in__break-row {
-    margin-top: 30px; }
-  .metametrics-opt-in__body {
-    position: relative;
-    display: flex;
-    max-width: 730px;
-    flex-direction: column; }
-  .metametrics-opt-in__body-text {
-    max-width: 548px;
-    margin-left: 16px;
-    margin-right: 16px; }
-  .metametrics-opt-in__bottom-text {
-    margin-top: 10px;
-    color: #9a9a9a; }
-  .metametrics-opt-in__content {
-    overflow-y: auto; }
-  .metametrics-opt-in__footer {
-    margin-top: 26px; }
-    @media screen and (max-width: 575px) {
-      .metametrics-opt-in__footer {
-        margin-top: 10px;
-        justify-content: center;
-        margin-left: 2%;
-        max-height: 520px; } }
-    .metametrics-opt-in__footer .page-container__footer {
-      border-top: none;
-      max-width: 535px;
-      margin-bottom: 15px; }
-      .metametrics-opt-in__footer .page-container__footer button {
-        height: 44px;
-        min-height: 44px;
-        margin-right: 16px; }
-      .metametrics-opt-in__footer .page-container__footer header {
-        padding: 0px; }
-
-.first-time-flow {
-  width: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center; }
-  @media screen and (min-width: 576px) {
-    .first-time-flow__wrapper {
-      max-width: 742px;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      margin-top: 2%; } }
-  .first-time-flow__wrapper .app-header__metafox-logo {
-    margin-bottom: 40px; }
-  .first-time-flow__form {
-    display: flex;
-    flex-direction: column; }
-  .first-time-flow__create-back {
-    margin-bottom: 16px; }
-  .first-time-flow__header {
-    font-size: 2.5rem;
-    margin-bottom: 24px;
-    color: black; }
-  .first-time-flow__subheader {
-    margin-bottom: 16px; }
-  .first-time-flow__input {
-    max-width: 350px; }
-  .first-time-flow__textarea-wrapper {
-    margin-bottom: 8px;
-    display: inline-flex;
-    padding: 0;
-    position: relative;
-    min-width: 0;
-    flex-direction: column;
-    max-width: 350px; }
-  .first-time-flow__textarea-label {
-    margin-bottom: 9px;
-    color: #1B344D;
-    font-size: 18px; }
-  .first-time-flow__textarea {
-    font-size: 1rem;
-    font-family: Roboto;
-    height: 190px;
-    border: 1px solid #CDCDCD;
-    border-radius: 6px;
-    background-color: #FFFFFF;
-    padding: 16px;
-    margin-top: 8px; }
-  .first-time-flow__breadcrumbs {
-    margin: 36px 0; }
-  .first-time-flow__unique-image {
-    margin-bottom: 20px; }
-  .first-time-flow__markdown {
-    border: 1px solid #979797;
-    border-radius: 8px;
-    background-color: #fff;
-    height: 200px;
-    overflow-y: auto;
-    color: #757575;
-    font-size: .75rem;
-    line-height: 15px;
-    text-align: justify;
-    margin: 0;
-    padding: 16px 20px;
-    height: 30vh; }
-  .first-time-flow__text-block {
-    margin-bottom: 24px;
-    color: black; }
-    @media screen and (max-width: 575px) {
-      .first-time-flow__text-block {
-        margin-bottom: 16px;
-        font-size: .875rem; } }
-  .first-time-flow__button {
-    margin: 35px 0 14px;
-    width: 140px;
-    height: 44px; }
-  .first-time-flow__checkbox-container {
-    display: flex;
-    align-items: center;
-    margin-top: 24px; }
-  .first-time-flow__checkbox {
-    background: #FFFFFF;
-    border: 1px solid #CDCDCD;
-    box-sizing: border-box;
-    height: 34px;
-    width: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-    .first-time-flow__checkbox:hover {
-      border: 1.5px solid #2f9ae0; }
-    .first-time-flow__checkbox .fa-check {
-      color: #2f9ae0; }
-  .first-time-flow__checkbox-label {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    line-height: normal;
-    font-size: 18px;
-    color: #939090;
-    margin-left: 18px; }
-  .first-time-flow__link-text {
-    color: #2f9ae0; }
 
 .first-view-main-wrapper {
   display: flex;
@@ -7280,10 +6831,23 @@ div.message-container > div:first-child {
     @media screen and (max-width: 575px) {
       .transaction-view-balance__buttons {
         margin-bottom: 16px; } }
-  .transaction-view-balance__button {
-    min-width: initial;
-    width: 100px; }
-    .transaction-view-balance__button:not(:last-child) {
+  .transaction-view-balance__button--send {
+    width: 140px;
+    height: 46px;
+    opacity: 1;
+    color: #ffffff;
+    background: #586aff;
+    border-radius: 6px; }
+    .transaction-view-balance__button--send:not(:last-child) {
+      margin-right: 12px; }
+  .transaction-view-balance__button--reciver {
+    width: 140px;
+    height: 46px;
+    color: #ffffff;
+    opacity: 1;
+    background: #f1a625;
+    border-radius: 6px; }
+    .transaction-view-balance__button--reciver:not(:last-child) {
       margin-right: 12px; }
 
 .transaction-list {
@@ -7481,8 +7045,9 @@ div.message-container > div:first-child {
   flex: 0 0 auto; }
   @media screen and (max-width: 575px) {
     .app-header {
-      padding: 12px;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+      margin: 0,20px,0,20px;
+      background: #475af5;
+      height: 72px;
       z-index: 26; } }
   @media screen and (min-width: 576px) {
     .app-header {
@@ -7497,19 +7062,23 @@ div.message-container > div:first-child {
         bottom: -32px; } }
   .app-header__metafox-logo {
     cursor: pointer; }
-    @media screen and (min-width: 576px) {
-      .app-header__metafox-logo--icon {
-        display: none; } }
+    .app-header__metafox-logo--icon {
+      width: 36px;
+      height: 36px;
+      opacity: 1;
+      background: linear-gradient(180deg, #f1f4ff, #dadeff);
+      border-radius: 50%; }
     @media screen and (max-width: 575px) {
       .app-header__metafox-logo--horizontal {
         display: none; } }
   .app-header__contents {
     display: flex;
-    justify-content: space-between;
-    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
     width: 100%; }
     @media screen and (max-width: 575px) {
       .app-header__contents {
+        width: 320px;
         height: 100%; } }
     @media screen and (min-width: 576px) {
       .app-header__contents {
@@ -7528,11 +7097,42 @@ div.message-container > div:first-child {
   .app-header__account-menu-container {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center; }
+    align-items: center;
+    justify-content: center;
+    margin-left: auto; }
   .app-header__network-component-wrapper {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 24px;
+    width: 200px;
+    height: 34px;
+    opacity: 1;
+    border: 1px solid #6c7bf7;
+    border-radius: 19px; }
+  .app-header__network-component-container {
+    display: flex;
     flex-direction: row;
-    align-items: center; }
+    align-items: center;
+    margin: 0px,14px,0px,14px;
+    width: 162px;
+    height: 20px; }
+    .app-header__network-component-container--text {
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #ccd2fc;
+      line-height: 20px; }
+    .app-header__network-component-container--drop-icon {
+      width: 10px;
+      height: 6px;
+      margin-left: auto;
+      opacity: 1;
+      background: #c9cfff; }
 
 .sidebar-left {
   display: flex; }
@@ -7737,6 +7337,459 @@ div.message-container > div:first-child {
   .unit-input--error {
     border-color: #f00; }
 
+.wallet-view {
+  display: flex;
+  flex-direction: column;
+  flex: 32 1 32%;
+  z-index: 200;
+  position: relative; }
+  @media screen and (min-width: 576px) {
+    .wallet-view {
+      overflow-y: scroll;
+      overflow-x: hidden; } }
+  @media screen and (min-width: 576px) and (max-width: 667px) {
+    .wallet-view {
+      min-width: 160px; } }
+  .wallet-view__wallet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 252px;
+    height: 96px;
+    opacity: 1;
+    background: #f1f2fb;
+    border-radius: 6px; }
+    .wallet-view__wallet__item {
+      display: flex;
+      flex-direction: row;
+      width: 232px;
+      height: 20px;
+      margin-top: 10px;
+      margin-left: 10px; }
+    .wallet-view__wallet__name__font {
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 15px;
+      font-family: PingFangSC, PingFangSC-Semibold;
+      font-weight: 600;
+      text-align: left;
+      color: #232323;
+      line-height: 20px;
+      letter-spacing: 2px; }
+    .wallet-view__wallet__name__default {
+      width: 34px;
+      height: 16px;
+      opacity: 1;
+      background: #586aff;
+      border-radius: 1px;
+      text-align: center;
+      font-family: PingFangSC, PingFangSC-Semibold;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 17px;
+      letter-spacing: 0px; }
+    .wallet-view__wallet__name__iocn {
+      margin-left: auto;
+      width: 8px;
+      height: 14px;
+      opacity: 1;
+      background: #ffffff; }
+    .wallet-view__wallet__address {
+      margin-left: 10px;
+      height: 12px;
+      width: 12px;
+      background: #ffffff; }
+      .wallet-view__wallet__address__font {
+        width: auto;
+        height: 18px;
+        opacity: 1;
+        font-size: 13px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #404040;
+        line-height: 18px;
+        letter-spacing: 1px; }
+    .wallet-view__wallet__balance {
+      height: 18px;
+      width: auto; }
+  .wallet-view .wallet-view-account-details {
+    flex: 0 0 auto; }
+  .wallet-view__head-wapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    width: 100%; }
+  .wallet-view__head-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+    width: 312px;
+    justify-content: space-between; }
+    .wallet-view__head-container__title {
+      width: auto;
+      height: 22px;
+      opacity: 1;
+      font-size: 16px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #303030;
+      line-height: 22px;
+      letter-spacing: 1px; }
+    .wallet-view__head-container__wallet--icon {
+      width: 16px;
+      height: 16px;
+      opacity: 1; }
+    .wallet-view__head-container__back--icon {
+      width: 14px;
+      height: 14px;
+      opacity: 1;
+      background: #ffffff; }
+  .wallet-view__body-wappet {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 99%; }
+  .wallet-view__wallet_type_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60px;
+    height: 100%;
+    opacity: 1;
+    background: #fafafa; }
+    .wallet-view__wallet_type_list__Item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      opacity: 1;
+      background: #ffffff; }
+  .wallet-view__wallets {
+    height: auto;
+    width: 100%;
+    background: #ffffff; }
+    .wallet-view__wallets__title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 32px; }
+      .wallet-view__wallets__title__font {
+        margin-right: auto;
+        margin-left: 10px;
+        width: auto;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #323232;
+        line-height: 20px;
+        letter-spacing: 1px; }
+      .wallet-view__wallets__title__icon {
+        margin-left: auto;
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+        opacity: 1;
+        background: #ffffff; }
+  .wallet-view__keyring-label {
+    height: 50px;
+    color: #9b9b9b;
+    font-family: Roboto;
+    font-size: 10px;
+    text-align: right;
+    padding: 17px 20px 0;
+    box-sizing: border-box; }
+  .wallet-view__details-button {
+    font-size: 10px;
+    border-radius: 17px;
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 4px 12px;
+    flex: 0 0 auto; }
+  .wallet-view__tooltip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px; }
+  .wallet-view__address {
+    border-radius: 3px;
+    background-color: #dedede;
+    color: #5d5d5d;
+    font-size: 14px;
+    line-height: 12px;
+    padding: 4px 12px;
+    cursor: pointer;
+    flex: 0 0 auto; }
+    .wallet-view__address__pressed {
+      background-color: #93949d; }
+  @media screen and (max-width: 575px) {
+    .wallet-view__sidebar-close::after {
+      content: '\00D7';
+      font-size: 40px;
+      color: #4d4d4d;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      cursor: pointer; } }
+
+@media screen and (min-width: 576px) {
+  .wallet-view::-webkit-scrollbar {
+    display: none; } }
+
+.wallet-view-title-wrapper {
+  flex: 0 0 25px; }
+
+.wallet-view-title {
+  margin-left: 15px;
+  font-size: 16px; }
+  @media screen and (max-width: 575px) {
+    .wallet-view-title {
+      display: none; } }
+
+.wallet-view.sidebar-right {
+  flex: 1 0 230px;
+  width: 340px;
+  height: 528px;
+  opacity: 1;
+  background: #ffffff;
+  z-index: 26;
+  position: fixed;
+  top: 66px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1;
+  visibility: visible;
+  will-change: transform;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 4px; }
+
+.wallet-view-addWallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 272px;
+  height: 96px;
+  opacity: 1;
+  background: #f1f2fb;
+  border-radius: 6px; }
+
+.input-prompt__tip {
+  height: 25px;
+  width: 300px; }
+  .input-prompt__tip__font {
+    width: auto;
+    height: 16px;
+    opacity: 1;
+    font-size: 12px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #ed3434;
+    line-height: 16px; }
+
+.wallet-manage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; }
+  .wallet-manage__wallet_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 360px;
+    height: 108px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 1px; }
+    .wallet-manage__wallet_info__icon {
+      width: 48px;
+      height: 48px;
+      opacity: 1;
+      margin-left: 20px;
+      background: #ffffff;
+      border-radius: 50%; }
+    .wallet-manage__wallet_info__font {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 10px;
+      width: 253px;
+      height: 46px; }
+      .wallet-manage__wallet_info__font__name {
+        width: auto;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Semibold;
+        font-weight: 600;
+        text-align: left;
+        color: #ffffff;
+        line-height: 20px;
+        letter-spacing: 1px; }
+      .wallet-manage__wallet_info__font__address {
+        width: auto;
+        width: 214px;
+        height: 18px;
+        opacity: 1;
+        font-size: 12px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #e4e6f1;
+        line-height: 18px;
+        letter-spacing: 0px; }
+  .wallet-manage__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+    width: 320px; }
+    .wallet-manage__item__font {
+      height: 20px;
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #232323;
+      line-height: 20px;
+      letter-spacing: 1px; }
+    .wallet-manage__item__icon {
+      width: 8px;
+      height: 14px;
+      margin-left: auto;
+      opacity: 1;
+      background: #a9a9a9; }
+
+.export-secret {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .export-secret__title {
+    margin-top: 24px;
+    margin-bottom: 0px;
+    width: auto;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #404040;
+    line-height: 20px;
+    letter-spacing: 1px; }
+  .export-secret__QRcode {
+    margin: 20px;
+    width: 132px;
+    height: 132px;
+    opacity: 1; }
+  .export-secret__KeyPairs {
+    width: 301px;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #232323;
+    line-height: 20px;
+    word-break: break-all; }
+
+.wallet-manage__button {
+  width: 320px;
+  height: 46px;
+  opacity: 1;
+  background: #586aff;
+  border-radius: 6px;
+  margin-bottom: 0;
+  color: #ffffff; }
+
+.account-name-change {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: rgba(49, 50, 56, 0.7);
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 300; }
+  .account-name-change__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    height: 234px;
+    z-index: 400;
+    opacity: 1;
+    background: #ffffff;
+    border-radius: 8px; }
+  .account-name-change__title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 96px;
+    height: 22px;
+    opacity: 1;
+    font-size: 16px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #303030;
+    line-height: 22px; }
+  .account-name-change__input {
+    width: 260px;
+    height: 46px;
+    opacity: 1;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px; }
+  .account-name-change__button_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 260px;
+    height: 46px;
+    justify-content: space-between; }
+  .account-name-change__button__left {
+    width: 110px;
+    height: 46px;
+    z-index: 100;
+    opacity: 1;
+    background: #cccdcf;
+    border-radius: 6px; }
+  .account-name-change__button__right {
+    width: 110px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px; }
+
 .ui-migration-announcement {
   position: absolute;
   z-index: 9999;
@@ -7754,6 +7807,686 @@ div.message-container > div:first-child {
     cursor: pointer;
     text-decoration: underline;
     font-weight: bold; }
+
+.title-bar {
+  display: flex;
+  flex-direction: row;
+  width: 360px;
+  height: 54px;
+  opacity: 1;
+  align-items: center;
+  background: #ffffff; }
+  .title-bar__back--icon {
+    margin-left: 20px;
+    width: 10px;
+    height: 16px;
+    opacity: 1;
+    background: #ffffff; }
+  .title-bar__title {
+    margin-left: 14px;
+    width: auto;
+    height: 22px;
+    opacity: 1;
+    font-size: 16px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #303030;
+    line-height: 22px; }
+  .title-bar__title__separator {
+    margin: 0 0;
+    width: 100%;
+    border-color: #dedede;
+    border: none;
+    height: 1px;
+    background-color: #dedede;
+    color: #dedede; }
+
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 442px;
+  padding: 0 18px;
+  color: black; }
+  .welcome-page__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    margin-top: 110px; }
+  .welcome-page__icon {
+    width: 110px;
+    height: 111px;
+    opacity: 1;
+    background: linear-gradient(180deg, #f1f4ff, #dadeff); }
+  .welcome-page__header {
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-top: 10px; }
+  .welcome-page__appname {
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 40px; }
+  .welcome-page__description {
+    width: 320px;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: center;
+    color: #777777;
+    line-height: 20px; }
+  .welcome-page .first-time-flow__button {
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px; }
+
+.confirm-seed-phrase__back-button {
+  margin-bottom: 12px; }
+
+.confirm-seed-phrase__selected-seed-words {
+  min-height: 190px;
+  max-width: 496px;
+  border: 1px solid #CDCDCD;
+  border-radius: 6px;
+  background-color: #fff;
+  margin: 24px 0 36px;
+  padding: 12px; }
+
+.confirm-seed-phrase__shuffled-seed-words {
+  max-width: 496px; }
+
+.confirm-seed-phrase__seed-word {
+  display: inline-block;
+  color: #5B5D67;
+  background-color: #E7E7E7;
+  padding: 8px 18px;
+  min-width: 64px;
+  margin: 4px;
+  text-align: center; }
+  .confirm-seed-phrase__seed-word--selected {
+    background-color: #85D1CC;
+    color: #fff; }
+  .confirm-seed-phrase__seed-word--shuffled {
+    cursor: pointer;
+    margin: 6px; }
+  @media screen and (max-width: 575px) {
+    .confirm-seed-phrase__seed-word {
+      font-size: .875rem;
+      padding: 6px 18px; } }
+
+.confirm-seed-phrase button {
+  margin-top: 0xp; }
+
+.reveal-seed-phrase__secret {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #CDCDCD;
+  border-radius: 6px;
+  background-color: #fff;
+  padding: 18px;
+  margin-top: 36px;
+  max-width: 380px; }
+
+.reveal-seed-phrase__secret-words {
+  width: 380px;
+  font-size: 1.25rem;
+  text-align: center; }
+  .reveal-seed-phrase__secret-words--hidden {
+    -webkit-filter: blur(5px);
+            filter: blur(5px); }
+
+.reveal-seed-phrase__secret-blocker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0 18px;
+  cursor: pointer; }
+
+.reveal-seed-phrase__reveal-button {
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-top: 8px;
+  text-align: center; }
+
+.reveal-seed-phrase__export-text {
+  color: #2f9ae0;
+  cursor: pointer;
+  font-weight: 500; }
+
+.reveal-seed-phrase button {
+  margin-top: 0xp; }
+
+.seed-phrase__sections {
+  display: flex; }
+  @media screen and (min-width: 576px) {
+    .seed-phrase__sections {
+      flex-direction: row; } }
+  @media screen and (max-width: 575px) {
+    .seed-phrase__sections {
+      flex-direction: column; } }
+
+.seed-phrase__main {
+  flex: 3;
+  min-width: 0; }
+
+.seed-phrase__side {
+  flex: 2;
+  min-width: 0; }
+  @media screen and (min-width: 576px) {
+    .seed-phrase__side {
+      margin-left: 81px; } }
+  @media screen and (max-width: 575px) {
+    .seed-phrase__side {
+      margin-top: 24px; } }
+  .seed-phrase__side .first-time-flow__text-block {
+    color: #5A5A5A; }
+
+.first-time-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  background-color: #fff; }
+  .first-time-flow__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 320px; }
+    .first-time-flow__wrapper .app-header__metafox-logo {
+      margin-bottom: 40px; }
+  .first-time-flow__form {
+    display: flex;
+    flex-direction: column; }
+  .first-time-flow__create-back {
+    margin-bottom: 16px; }
+  .first-time-flow__header {
+    font-size: 2.5rem;
+    margin-bottom: 24px;
+    color: black; }
+  .first-time-flow__subheader {
+    margin-bottom: 16px; }
+  .first-time-flow__textarea-wrapper {
+    margin-bottom: 8px;
+    display: inline-flex;
+    padding: 0;
+    position: relative;
+    min-width: 0;
+    flex-direction: column;
+    max-width: 350px; }
+  .first-time-flow__textarea-label {
+    margin-bottom: 9px;
+    color: #1B344D;
+    font-size: 18px; }
+  .first-time-flow__textarea {
+    font-size: 1rem;
+    font-family: Roboto;
+    height: 190px;
+    border: 1px solid #CDCDCD;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    padding: 16px;
+    margin-top: 8px; }
+  .first-time-flow__breadcrumbs {
+    margin: 36px 0; }
+  .first-time-flow__unique-image {
+    margin-bottom: 20px; }
+  .first-time-flow__markdown {
+    border: 1px solid #979797;
+    border-radius: 8px;
+    background-color: #fff;
+    height: 200px;
+    overflow-y: auto;
+    color: #757575;
+    font-size: .75rem;
+    line-height: 15px;
+    text-align: justify;
+    margin: 0;
+    padding: 16px 20px;
+    height: 30vh; }
+  .first-time-flow__text-block {
+    margin-bottom: 24px;
+    color: black; }
+    @media screen and (max-width: 575px) {
+      .first-time-flow__text-block {
+        margin-bottom: 16px;
+        font-size: .875rem; } }
+  .first-time-flow__button {
+    margin: 35px 0 14px;
+    width: 140px;
+    height: 44px; }
+  .first-time-flow__checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 24px; }
+  .first-time-flow__checkbox {
+    background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .first-time-flow__checkbox:hover {
+      border: 1.5px solid #2f9ae0; }
+    .first-time-flow__checkbox .fa-check {
+      color: #2f9ae0; }
+  .first-time-flow__checkbox-label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 18px;
+    color: #939090;
+    margin-left: 18px; }
+  .first-time-flow__link-text {
+    color: #2f9ae0; }
+  .first-time-flow__Symbol {
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+    width: 320px;
+    height: 20px;
+    align-items: center; }
+    .first-time-flow__Symbol--icon {
+      width: 16px;
+      height: 16px;
+      opacity: 1;
+      background: #ffffff; }
+    .first-time-flow__Symbol--font {
+      width: 56px;
+      height: 20px;
+      margin-left: 6px;
+      text-align: center;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: justify;
+      color: #e87711;
+      line-height: 20px; }
+  .first-time-flow__Describe {
+    display: flex;
+    flex-direction: row;
+    width: 320px;
+    height: auto;
+    margin-top: 8px; }
+  .first-time-flow__Star {
+    width: 8px;
+    height: 20px;
+    margin-left: 4px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Medium;
+    font-weight: 500;
+    text-align: left;
+    color: #e87711;
+    line-height: 20px; }
+  .first-time-flow__Empty {
+    width: 320px;
+    height: 12px; }
+  .first-time-flow__FirstUsedTips1 {
+    width: 294px;
+    height: 44px;
+    opacity: 1;
+    font-size: 14px;
+    margin-left: 10px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: justify;
+    color: #404040;
+    line-height: 22px; }
+  .first-time-flow__FirstUsedTips2 {
+    width: 294px;
+    height: 22px;
+    opacity: 1;
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: justify;
+    color: #404040;
+    line-height: 22px; }
+  .first-time-flow .first-time-flow__button {
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+    margin-top: 24px;
+    margin-bottom: 0;
+    color: #ffffff; }
+  .first-time-flow__input {
+    margin-bottom: 0px;
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px; }
+
+.wallet-create-select {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; }
+  .wallet-create-select__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+    width: 320px; }
+    .wallet-create-select__item__font {
+      height: 20px;
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #232323;
+      line-height: 20px;
+      letter-spacing: 1px; }
+    .wallet-create-select__item__icon {
+      width: 8px;
+      height: 14px;
+      margin-left: auto;
+      opacity: 1;
+      background: #a9a9a9; }
+  .wallet-create-select__button {
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+    margin-top: 24px;
+    margin-bottom: 0;
+    color: #ffffff; }
+
+.import__importSelector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 320px;
+  margin-top: 24px;
+  margin-bottom: 25px;
+  height: 46px;
+  opacity: 1;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 24px; }
+  .import__importSelector__button--left {
+    width: 160px;
+    height: 46px;
+    opacity: 1;
+    background: #ffffff;
+    border-radius: 100px 0px 0px 100px; }
+  .import__importSelector__button--right {
+    width: 160px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 0px 100px 100px 0px; }
+
+.wallet-manage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; }
+  .wallet-manage__wallet_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 360px;
+    height: 108px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 1px; }
+    .wallet-manage__wallet_info__icon {
+      width: 48px;
+      height: 48px;
+      opacity: 1;
+      margin-left: 20px;
+      background: #ffffff;
+      border-radius: 50%; }
+    .wallet-manage__wallet_info__font {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 10px;
+      width: 253px;
+      height: 46px; }
+      .wallet-manage__wallet_info__font__name {
+        width: auto;
+        height: 20px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Semibold;
+        font-weight: 600;
+        text-align: left;
+        color: #ffffff;
+        line-height: 20px;
+        letter-spacing: 1px; }
+      .wallet-manage__wallet_info__font__address {
+        width: auto;
+        width: 214px;
+        height: 18px;
+        opacity: 1;
+        font-size: 12px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #e4e6f1;
+        line-height: 18px;
+        letter-spacing: 0px; }
+  .wallet-manage__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+    width: 320px; }
+    .wallet-manage__item__font {
+      height: 20px;
+      width: auto;
+      height: 20px;
+      opacity: 1;
+      font-size: 14px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-weight: 400;
+      text-align: left;
+      color: #232323;
+      line-height: 20px;
+      letter-spacing: 1px; }
+    .wallet-manage__item__icon {
+      width: 8px;
+      height: 14px;
+      margin-left: auto;
+      opacity: 1;
+      background: #a9a9a9; }
+
+.export-secret {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .export-secret__title {
+    margin-top: 24px;
+    margin-bottom: 0px;
+    width: auto;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #404040;
+    line-height: 20px;
+    letter-spacing: 1px; }
+  .export-secret__QRcode {
+    margin: 20px;
+    width: 132px;
+    height: 132px;
+    opacity: 1; }
+  .export-secret__KeyPairs {
+    width: 301px;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #232323;
+    line-height: 20px;
+    word-break: break-all; }
+
+.wallet-manage__button {
+  width: 320px;
+  height: 46px;
+  opacity: 1;
+  background: #586aff;
+  border-radius: 6px;
+  margin-bottom: 0;
+  color: #ffffff; }
+
+.account-name-change {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: rgba(49, 50, 56, 0.7);
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 300; }
+  .account-name-change__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    height: 234px;
+    z-index: 400;
+    opacity: 1;
+    background: #ffffff;
+    border-radius: 8px; }
+  .account-name-change__title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 96px;
+    height: 22px;
+    opacity: 1;
+    font-size: 16px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #303030;
+    line-height: 22px; }
+  .account-name-change__input {
+    width: 260px;
+    height: 46px;
+    opacity: 1;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 7px; }
+  .account-name-change__button_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 260px;
+    height: 46px;
+    justify-content: space-between; }
+  .account-name-change__button__left {
+    width: 110px;
+    height: 46px;
+    z-index: 100;
+    opacity: 1;
+    background: #cccdcf;
+    border-radius: 6px; }
+  .account-name-change__button__right {
+    width: 110px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px; }
+
+.new-account__Describe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  width: 320px;
+  height: 90px;
+  opacity: 1;
+  background: #fffaf5;
+  border: 1px solid #ffdab9;
+  border-radius: 7px; }
+  .new-account__Describe__UseTip {
+    width: 294px;
+    height: auto;
+    margin-top: 4px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: justify;
+    color: #e87711;
+    line-height: 22px; }
+
+.new-account__Entry {
+  width: 320px;
+  height: 20px;
+  margin-top: 24px;
+  opacity: 1;
+  font-size: 14px;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #303030;
+  line-height: 20px; }
+
+.new-account__Show {
+  width: 320px;
+  height: 46px;
+  margin-top: 10px;
+  opacity: 1;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 7px;
+  vertical-align: middle;
+  display: table-cell;
+  word-break: break-all; }
+
+.new-account__button {
+  width: 320px;
+  height: 46px;
+  opacity: 1;
+  background: #586aff;
+  border-radius: 6px;
+  margin-top: 24px;
+  margin-bottom: 0;
+  color: #ffffff; }
 
 /*
   Trumps

@@ -14,16 +14,24 @@ function reduceMetamask (state, action) {
     isInitialized: false,
     isUnlocked: false,
     isAccountMenuOpen: false,
+    isNetworkMenuOpen:false,
     isPopup: getEnvironmentType(window.location.href) === ENVIRONMENT_TYPE_POPUP,
     rpcTarget: 'https://rawtestrpc.metamask.io/',
     identities: {},
     accountPwd: {},
     unapprovedTxs: {},
+    manageWalletType:"jingtum",
     noActiveNotices: true,
     nextUnreadNotice: undefined,
     frequentRpcList: [],
     addressBook: [],
     selectedTokenAddress: null,
+    selectedWalletType:'',
+    wallets: {},
+    manageWalletAddress:"",
+    networks:{},
+
+    selectedNetWork:{},
     contractExchangeRates: {},
     tokenExchangeRates: {},
     tokens: [],
@@ -53,6 +61,7 @@ function reduceMetamask (state, action) {
     isRevealingSeedWords: false,
     welcomeScreenSeen: false,
     currentLocale: '',
+    importMode:'secret',
     preferences: {
       useNativeCurrencyAsPrimaryCurrency: true,
       showFiatInTestnets: false,
@@ -63,6 +72,10 @@ function reduceMetamask (state, action) {
     participateInMetaMetrics: null,
     metaMetricsSendCount: 0,
   }, state.metamask)
+
+
+  let temp = {};
+  let walletsTemp = {};
 
   switch (action.type) {
 
@@ -169,19 +182,30 @@ function reduceMetamask (state, action) {
 
     case actions.SET_ACCOUNT_LABEL:
       const account = action.value.account
-      const name = action.value.label
+      const type = action.value.walletType
+      const name = action.value.name
       const id = {}
-      id[account] = extend(metamaskState.identities[account], { name })
+      id[account] = extend(metamaskState.identities[account], { name ,type})
       const identities = extend(metamaskState.identities, id)
       return extend(metamaskState, { identities })
-
+  
     case actions.SET_CURRENT_FIAT:
       return extend(metamaskState, {
         currentCurrency: action.value.currentCurrency,
         conversionRate: action.value.conversionRate,
         conversionDate: action.value.conversionDate,
       })
-
+    case actions.SET_MANAGE_WALLET_TYPE:
+      return extend(metamaskState,{
+        manageWalletType: action.value,
+      })
+    
+    case actions.SET_NETWORK:
+      const selectedNetWork = metamaskState.selectedNetWork
+      //action.value.network
+      selectedNetWork[action.value.type] = {name:"1234","url":"##########"}
+      return extend(metamaskState,{selectedNetWork})
+        
     case actions.UPDATE_TOKENS:
       return extend(metamaskState, {
         tokens: action.newTokens,
@@ -249,6 +273,7 @@ function reduceMetamask (state, action) {
           toNickname: action.value.nickname,
         },
       })
+
 
     case actions.UPDATE_SEND_AMOUNT:
       return extend(metamaskState, {
@@ -404,6 +429,20 @@ function reduceMetamask (state, action) {
         currentLocale: action.value,
       })
 
+    case actions.SETIMPORTMODE:
+      return extend(metamaskState,{
+        importMode: action.value,
+      })
+
+    case actions.TOGGLE_NETWORK_MENU:
+      return extend(metamaskState,{
+        isNetworkMenuOpen: !metamaskState.isNetworkMenuOpen,
+      })
+
+    case actions.SET_SELECTED_WALLET_TYPE:
+      return extend(metamaskState, {
+        selectedWalletType:action.value
+      })
     case actions.SET_PENDING_TOKENS:
       return extend(metamaskState, {
         pendingTokens: { ...action.payload },
@@ -439,6 +478,12 @@ function reduceMetamask (state, action) {
     case actions.SET_FIRST_TIME_FLOW_TYPE: {
       return extend(metamaskState, {
         firstTimeFlowType: action.value,
+      })
+    }
+
+    case actions.SET_MANAGE_WALLET_ADDRESS:{
+      return extend(metamaskState,{
+        manageWalletAddress :action.value
       })
     }
 

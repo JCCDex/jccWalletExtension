@@ -17,6 +17,7 @@ const mapStateToProps = state => {
   const accounts = getMetaMaskAccounts(state)
   const account = accounts[selectedAddress]
   const { balance } = account
+ 
 
   return {
     selectedToken: getSelectedToken(state),

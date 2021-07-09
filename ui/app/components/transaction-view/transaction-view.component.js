@@ -11,6 +11,7 @@ export default class TransactionView extends PureComponent {
     t: PropTypes.func,
   }
 
+
   render () {
     return (
       <div className="transaction-view">

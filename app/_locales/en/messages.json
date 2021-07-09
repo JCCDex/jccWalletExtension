@@ -872,7 +872,7 @@
     "description": "Password and file needed to import an account"
   },
   "networks": {
-    "message": "Networks"
+    "message": "networks"
   },
   "nevermind": {
     "message": "Nevermind"
@@ -1370,7 +1370,7 @@
     "message": "Speed up this transaction"
   },
   "switchNetworks": {
-    "message": "Switch Networks"
+    "message": "Switch networks"
   },
   "status": {
     "message": "Status"

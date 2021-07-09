@@ -351,6 +351,7 @@ function openPopup () {
 // On first install, open a new tab with MetaMask
 extension.runtime.onInstalled.addListener(({reason}) => {
   if ((reason === 'install') && (!JingtumMask_DEBUG)) {
-    platform.openExtensionInBrowser()
+    //openPopup()
+    //platform.openExtensionInBrowser()
   }
 })

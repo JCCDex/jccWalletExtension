@@ -14,6 +14,8 @@ const AccountTracker = require('./lib/account-tracker')
 const debounce = require('debounce')
 const {setupMultiplex} = require('./lib/stream-utils.js')
 const PreferencesController = require('./controllers/preferences')
+const NetworkController = require('./controllers/network-controller')
+const KeystoresController = require('./controllers/keystore-controller')
 const CachedBalancesController = require('./controllers/cached-balances')
 const NoticeController = require('./notice-controller')
 const MessageManager = require('./lib/message-manager')
@@ -23,9 +25,13 @@ const {Mutex} = require('await-semaphore')
 const {version} = require('../manifest.json')
 const log = require('loglevel')
 const JingtumWallet = require('jcc_jingtum_base_lib').Wallet
+const walletUtils = require('./wallet/walletUtils')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import * as jtWallet from 'jcc_wallet/lib/jingtum'
+import { forEach } from '../../notices/notices'
 
+//这你会看到 初版metamask 的方法， 修改以后的 jingtum mask 的方法， 还有多链钱包 方法
+//很多代码没用，需要去除这些冗余
 module.exports = class MetamaskController extends EventEmitter {
 
   /**
@@ -60,10 +66,19 @@ module.exports = class MetamaskController extends EventEmitter {
       openPopup: opts.openPopup,
     })
 
+    this.networkController = new NetworkController({
+      initState: initState.NetworkController
+    })
+
+    //wallet
     this.accountTracker = new AccountTracker({
       initState: initState.AccountTracker,
     })
 
+    this.keystoresController = new KeystoresController({
+      initState: initState.KeystoresController,
+    })
+    
     // start and stop polling for balances based on activeControllerConnections
     this.on('controllerConnectionChanged', (activeControllerConnections) => {
       if (activeControllerConnections > 0) {
@@ -88,10 +103,11 @@ module.exports = class MetamaskController extends EventEmitter {
     this.messageManager = new MessageManager()
     this.publicConfigStore = this.initPublicConfigStore()
 
-
     this.store.updateStructure({
       AccountTracker: this.accountTracker.store,
       PreferencesController: this.preferencesController.store,
+      KeystoresController:this.keystoresController.store,
+      NetworkController : this.networkController.store,
       NoticeController: this.noticeController.store,
       CachedBalancesController: this.cachedBalancesController.store,
     })
@@ -99,7 +115,9 @@ module.exports = class MetamaskController extends EventEmitter {
     this.memStore = new ComposableObservableStore(null, {
       AccountTracker: this.accountTracker.store,
       MessageManager: this.messageManager.memStore,
+      NetworkController : this.networkController.store,
       PreferencesController: this.preferencesController.store,
+      KeystoresController:this.keystoresController.store,
       NoticeController: this.noticeController.memStore,
       CachedBalancesController: this.cachedBalancesController.store,
     })
@@ -164,7 +182,8 @@ module.exports = class MetamaskController extends EventEmitter {
   getApi () {
     const preferencesController = this.preferencesController
     const noticeController = this.noticeController
-
+    const networkController = this.networkController
+    const keystoresController = this.keystoresController
     return {
       // etc
       getState: (cb) => cb(null, this.getState()),
@@ -184,7 +203,12 @@ module.exports = class MetamaskController extends EventEmitter {
       removeAccount: nodeify(this.removeAccount, this),
       importAccountWithStrategy: nodeify(this.importAccountWithStrategy, this),
 
-      createNewVaultAndKeychain: nodeify(this.createNewVaultAndKeychain, this),
+      createNewAccount: nodeify(this.createNewAccount, this),
+      createWalletByType : nodeify(this.createWalletByType,this),
+      checkAddressByType : nodeify(this.checkAddressByType,this),
+      checkSecretByType : nodeify(this.checkSecretByType,this),
+      getAddress : nodeify(this.getAddress,this),
+
       createNewVaultAndRestore: nodeify(this.createNewVaultAndRestore, this),
 
       // mobile
@@ -197,12 +221,19 @@ module.exports = class MetamaskController extends EventEmitter {
       setSelectedAddress: nodeify(preferencesController.setSelectedAddress, preferencesController),
       setCurrentAccountTab: nodeify(preferencesController.setCurrentAccountTab, preferencesController),
      // setAccountLabel: nodeify(preferencesController.setAccountLabel, preferencesController),
+    
+      getSecret:nodeify(this.getSecret, this),
       setAccountLabel: nodeify(this.setAccountLabel,this),
       setFeatureFlag: nodeify(preferencesController.setFeatureFlag, preferencesController),
       setPreference: nodeify(preferencesController.setPreference, preferencesController),
       completeOnboarding: nodeify(preferencesController.completeOnboarding, preferencesController),
       addKnownMethodData: nodeify(preferencesController.addKnownMethodData, preferencesController),
-
+      
+      setSelectedWalletType: nodeify(preferencesController.setSelectedWalletType, preferencesController),
+      getSelectedWalletType: nodeify(preferencesController.getSelectedWalletType, preferencesController),
+      setNetwork:nodeify(networkController.setNetwork, networkController),
+      addNetwork:nodeify(networkController.addNetwork, networkController),
+      deleteNetwork:nodeify(networkController.deleteNetwork, networkController),
 
 
       // notices
@@ -232,38 +263,60 @@ module.exports = class MetamaskController extends EventEmitter {
    * @returns {Object} vault
    */
 
-  async setAccountLabel(account, label) {
-    this.preferencesController.setAccountLabel(account, label)
+  async setAccountLabel(type,account, label) {
+    this.preferencesController.setAccountLabel(type,account, label)
   }
 
-  async createNewVaultAndKeychain (password) {
+  //逻辑为创建出 keystore 然后导出 keystore 放入统一的 keystoreController
+  //所有keystore 均不保存
+  //可以看出 导入帐号其实相同逻辑
+  async createNewAccount (type,password,keypair) {
     const releaseLock = await this.createVaultMutex.acquire()
     try {
-
-      const keypairs = await JingtumWallet.generate()
-      if (!JingchangWallet.get()) {
-        await JingchangWallet.generate(password, keypairs.secret).then((wallet) => {
-       // inst.setJingchangWallet(wallet)
-         JingchangWallet.save(wallet)
-        })
-      } else {
-        const inst = JingchangWallet.get()
-        const getSecret = jtWallet.getAddress
-        await inst.importSecret(keypairs.secret, password, 'swt', getSecret)
-      }
-    const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-    this.preferencesController.setAddresses(wallets)
-    const addrToAdd = []
-    addrToAdd.push(keypairs.address)
-    this.accountTracker.addAccounts(addrToAdd)
-    this.selectFirstIdentity()
-    releaseLock()
-      return keypairs.secret
+        const init = await walletUtils.generateKeystore(type,keypair.secret,password)
+        console.log(init)
+        console.log(password)
+        this.keystoresController.setKeystore(keypair.address,init)
+        const addrToAdd = []
+        addrToAdd.push(keypair.address)
+        this.accountTracker.addAccounts(addrToAdd)
+        releaseLock()
+        return keypair.address
     } catch (err) {
       releaseLock()
       throw err
     }
   }
+  //通过 address 和 password 从存储中获取 密钥
+  async getSecret(address,password){
+    const  keystores =  this.keystoresController.store.getState().keystores
+        console.log(address)
+        console.log(password)
+        console.log(keystores[address])
+        if(keystores[address]){
+          const inst = new JingchangWallet(keystores[address])
+          return inst.getSecretWithAddress(password,address)
+        }
+      return new Error("address not exit")
+  }
+
+
+  async createWalletByType (type){
+    return walletUtils.createWalletByType(type)
+  }
+
+  async checkAddressByType (address,type){
+    return walletUtils.checkAddressByType(address,type)
+  }
+
+  async checkSecretByType (secret,type){
+    return walletUtils.checkSecretByType(secret,type)
+  }
+
+  async getAddress (secret,type){
+    return walletUtils.getAddress(secret,type)
+  }
+
 
   /**
    * Create a new Vault and restore an existent keyring.
@@ -277,7 +330,7 @@ module.exports = class MetamaskController extends EventEmitter {
       let address
       const jccwallets = keystore.wallets[0]
       // clear known identities
-      this.preferencesController.setAddresses([])
+      this.preferencesController.setAddresses('jingtum',[])
       // create new vault
       if (!JingchangWallet.get()) {
        // inst.setJingchangWallet(jccwallets)
@@ -289,7 +342,7 @@ module.exports = class MetamaskController extends EventEmitter {
         address = jccwallets.address
       }
       const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-      this.preferencesController.setAddresses(wallets)
+      this.preferencesController.setAddresses('jingtum',wallets)
       const addrToAdd = []
       addrToAdd.push(address)
       this.accountTracker.addAccounts(addrToAdd)
@@ -310,7 +363,6 @@ module.exports = class MetamaskController extends EventEmitter {
   getBalance (address, ethQuery) {
     return new Promise((resolve, reject) => {
       const cached = this.accountTracker.store.getState().accounts[address]
-
       if (cached && cached.balance) {
         resolve(cached.balance)
       } else {
@@ -376,7 +428,9 @@ module.exports = class MetamaskController extends EventEmitter {
    */
   selectFirstIdentity () {
     const { identities } = this.preferencesController.store.getState()
+    console.log(identities)
     const address = Object.keys(identities)[0]
+    console.log(address)
     this.preferencesController.setSelectedAddress(address)
   }
 
@@ -401,7 +455,7 @@ module.exports = class MetamaskController extends EventEmitter {
         JingchangWallet.save(inst)
       }
       const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-      this.preferencesController.setAddresses(wallets)
+      this.preferencesController.setAddresses('jingtum',wallets)
       const addrToAdd = []
       addrToAdd.push(keypairs.address)
       this.accountTracker.addAccounts(addrToAdd)
@@ -493,7 +547,7 @@ module.exports = class MetamaskController extends EventEmitter {
   async importAccountWithStrategy (strategy, args) {
     const address = await accountImporter.importAccount(strategy, args)
     const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-    this.preferencesController.setAddresses(wallets)
+    this.preferencesController.setAddresses('jingtum',wallets)
    // await this.preferencesController.setSelectedAddress(address)
     const addrToAdd = []
     addrToAdd.push(address)

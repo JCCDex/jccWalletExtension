@@ -1,0 +1,43 @@
+.title-bar {
+  display: flex;
+  flex-direction:row;
+  width: 360px;
+  height: 54px;
+  opacity: 1;
+  align-items: center;
+  background: #ffffff;
+
+  &__back--icon{
+    margin-left:20px;
+    width: 10px;
+    height: 16px;
+    opacity: 1;
+    background: #ffffff;
+  }
+
+  &__title{
+    margin-left:14px;
+    width: auto;
+    height: 22px;
+    opacity: 1;
+    font-size: 16px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #303030;
+    line-height: 22px;
+  }
+
+  &__title__separator{
+    margin: 0 0;
+    width: 100%;
+    border-color: #dedede;
+    border: none;
+    height: 1px;
+    background-color: #dedede;
+    color: #dedede;
+  }
+
+  
+}
+  

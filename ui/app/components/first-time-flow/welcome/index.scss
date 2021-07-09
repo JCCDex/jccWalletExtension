@@ -1,0 +1,57 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 442px;
+  padding: 0 18px;
+  color: black;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    margin-top: 110px;
+  }
+
+
+  &__icon{
+    width: 110px;
+    height: 111px;
+    opacity: 1;
+    background: linear-gradient(180deg, #f1f4ff, #dadeff);
+  }
+  &__header {
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  &__appname{
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 40px;
+  }
+
+  &__description {
+    width: 320px;
+    height: 20px;
+    opacity: 1;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: center;
+    color: #777777;
+    line-height: 20px;
+  }
+
+  .first-time-flow__button {
+    width: 320px;
+    height: 46px;
+    opacity: 1;
+    background: #586aff;
+    border-radius: 6px;
+  }
+}

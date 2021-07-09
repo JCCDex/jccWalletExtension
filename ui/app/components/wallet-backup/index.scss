@@ -1,0 +1,64 @@
+.new-account{
+    &__Describe{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 25px;
+        width: 320px;
+        height: 90px;
+        opacity: 1;
+        background: #fffaf5;
+        border: 1px solid #ffdab9;
+        border-radius: 7px;
+        &__UseTip{
+            width: 294px;
+            height: auto;
+            margin-top: 4px;
+            opacity: 1;
+            font-size: 14px;
+            font-family: PingFangSC, PingFangSC-Regular;
+            font-weight: 400;
+            text-align: justify;
+            color: #e87711;
+            line-height: 22px;
+        }
+    }
+
+    &__Entry{
+        width: 320px;
+        height: 20px;
+        margin-top: 24px;
+        opacity: 1;
+        font-size: 14px;
+        font-family: PingFangSC, PingFangSC-Regular;
+        font-weight: 400;
+        text-align: left;
+        color: #303030;
+        line-height: 20px;
+    }
+
+    &__Show{
+        width: 320px;
+        height: 46px;
+        margin-top: 10px;
+        opacity: 1;
+        background: #ffffff;
+        border: 1px solid #e9e9e9;
+        border-radius: 7px;
+        vertical-align:middle;
+        display:table-cell;
+        word-break: break-all;
+    }
+
+    &__button{
+        width: 320px;
+        height: 46px;
+        opacity: 1;
+        background: #586aff;
+        border-radius: 6px;
+        margin-top: 24px;
+        margin-bottom: 0;
+        color: #ffffff;
+    }
+}

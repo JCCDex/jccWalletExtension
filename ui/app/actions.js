@@ -8,10 +8,11 @@ const WebcamUtils = require('../lib/webcam-utils')
 const LocalSign = require('jcc_jingtum_lib/src/local_sign')
 import JingchangWallet from 'jcc_wallet/lib/jingchangWallet'
 import JCCExchange from "jcc_exchange";
+import { retryable } from 'async'
 
 var actions = {
   _setBackgroundConnection: _setBackgroundConnection,
-
+  
   GO_HOME: 'GO_HOME',
   goHome: goHome,
   // modal state
@@ -72,10 +73,10 @@ var actions = {
   showImportPage,
   showNewAccountPage,
   setNewAccountForm,
-  createNewVaultAndKeychain: createNewVaultAndKeychain,
   createNewVaultAndRestore: createNewVaultAndRestore,
   createNewVaultInProgress: createNewVaultInProgress,
-  createNewVaultAndGetSeedPhrase,
+  createNewAccount,
+  createWalletByType,
   unlockAndGetSeedPhrase,
   addNewKeyring,
   importNewAccount,
@@ -245,7 +246,11 @@ var actions = {
   forceUpdateMetamaskState,
 
   TOGGLE_ACCOUNT_MENU: 'TOGGLE_ACCOUNT_MENU',
+  SETIMPORTMODE:"SET_IMPORTMODE",
   toggleAccountMenu,
+  TOGGLE_NETWORK_MENU: 'TOGGLE_NETWORK_MENU',
+  toggleNetworkMenu,
+  setImportAccountMode,
 
   useEtherscanProvider,
 
@@ -299,6 +304,30 @@ var actions = {
 
   setFirstTimeFlowType,
   SET_FIRST_TIME_FLOW_TYPE: 'SET_FIRST_TIME_FLOW_TYPE',
+
+
+  //wallet or chain
+  SET_SELECTED_WALLET_TYPE:'SET_SELECTED_WALLET_TYPE',
+  setSelectedWalletType,
+  //从钱包列表 跳转到管理页面或者 添加页面时 的状态判断。
+  SET_MANAGE_WALLET_TYPE:"SET_MANAGEWALLETTYPE",
+  SET_MANAGE_WALLET_ADDRESS:"SET_MANAGE_WALLET_ADDRESS",
+  setManageWalletType,
+  setManageWalletAddress,
+  getSecret,
+
+  toggleEditWalletName,
+  SHOW_EDIT_WALLET_NAME:'SHOW_EDIT_WALLET_NAME',
+
+  //network setting
+  SET_NETWORK:"SET_NETWORK",
+  ADD_NETWORK:"ADD_NETWORK",
+  DELECTE_NETWORK:"DELECTE_NETWORK",
+  setNetwork,
+  addNetwork,
+  deleteNetwork,
+  getAddressByType,
+  checkSecretByType,
 }
 
 module.exports = actions
@@ -312,6 +341,171 @@ function goHome () {
     type: actions.GO_HOME,
   }
 }
+
+function setManageWalletAddress(address){
+  return {
+    type: actions.SET_MANAGE_WALLET_ADDRESS,
+    value:address,
+  }
+}
+
+function toggleEditWalletName(){
+  return {
+    type: actions.SHOW_EDIT_WALLET_NAME
+  }
+}
+
+function checkSecretByType(secret,type){
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.checkSecretByType(secret,type, (error, result) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(result)
+      })
+    })
+  }
+}
+
+function getSecret(address,password){
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.getSecret(address,password, (error, secret) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(secret)
+      })
+    })
+  }
+}
+
+//对 background 使用最好都封装为 promise 的返回
+//network manage
+function setNetwork(type,network){
+  return dispatch => {
+    dispatch(actions.showLoadingIndication())
+    log.debug('background setNetwork ')
+    return new Promise((resolve, reject) => {
+      background.setNetwork(type,network,(err, value) => {
+        dispatch(actions.hideLoadingIndication())
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          return reject(err)
+        }
+        dispatch({
+          type:actions.SET_NETWORK,
+          value:{type,network}
+        })
+        resolve(value)
+      })
+    })
+  }
+}
+
+function addNetwork (type,network){
+  return dispatch => {
+    dispatch(actions.showLoadingIndication())
+    log.debug(`background.addNetwork`)
+    return new Promise((resolve, reject) => {
+      background.addNetwork(type,network,(err, account) => {
+        dispatch(actions.hideLoadingIndication())
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          return reject(err)
+        }
+        dispatch({
+          type:actions.ADD_NETWORK,
+          value:network
+        })
+        log.info('Seed word cache cleared. ' + account)
+        dispatch(actions.showAccountsPage())
+        resolve(account)
+      })
+    })
+  }
+}
+
+function deleteNetwork (type,url){
+  return dispatch => {
+    dispatch(actions.showLoadingIndication())
+    log.debug(`background.addNetwork`)
+    return new Promise((resolve, reject) => {
+      background.deleteNetwork(type,url,(err, account) => {
+        dispatch(actions.hideLoadingIndication())
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          return reject(err)
+        }
+        dispatch({
+          type:actions.DELECTE_NETWORK,
+          value:{type,url}
+        })
+        dispatch(actions.showAccountsPage())
+        resolve(account)
+      })
+    })
+  }
+}
+
+function setSelectedWalletType(type){
+  return dispatch => {
+    log.debug('background setSelectedWalletType ')
+    return new Promise((resolve, reject) => {
+      background.setSelectedWalletType(type,(err, value) => {
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          return reject(err)
+        }
+        dispatch({
+          type: actions.SET_SELECTED_WALLET_TYPE,
+          value:type,
+        })
+        resolve(value)
+      })
+    })
+  }
+}
+
+
+function setManageWalletType(type){
+  return {
+    type:actions.SET_MANAGE_WALLET_TYPE,
+    value:type
+  }
+}
+function createWalletByType (type) {
+  console.log("backgroud createWalletByType")
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.createWalletByType(type, (error, keypair) => {
+          if (error) {
+            console.log(error)
+            reject(error)
+          }
+          resolve(keypair)
+      })
+    })
+  }
+}
+
+function getAddressByType (type,secret) {
+  console.log("backgroud createWalletByType")
+  return dispatch =>{
+    return new Promise((resolve, reject) => {
+        background.getAddress(secret,type, (error, address) => {
+          if (error) {
+            reject(error)
+          }
+          resolve(address)
+      })
+    })
+  }
+}
+
+
+
 
 // async actions
 
@@ -423,35 +617,12 @@ function createNewVaultAndRestore (password, seed) {
   }
 }
 
-function createNewVaultAndKeychain (password) {
-  return dispatch => {
-    dispatch(actions.showLoadingIndication())
-    log.debug(`background.createNewVaultAndKeychain`)
-
-    return new Promise((resolve, reject) => {
-      background.createNewVaultAndKeychain(password, err => {
-        if (err) {
-          dispatch(actions.displayWarning(err.message))
-          return reject(err)
-        }
-
-      })
-    })
-      .then(() => forceUpdateMetamaskState(dispatch))
-      .then(() => dispatch(actions.hideLoadingIndication()))
-      .catch(() => dispatch(actions.hideLoadingIndication()))
-  }
-}
-
-function createNewVaultAndGetSeedPhrase (password) {
+function createNewAccount (type,password,keypair) {
   return async dispatch => {
     dispatch(actions.showLoadingIndication())
-
     try {
-      const seedWords = await createNewVault(password)
-     // const seedWords = await verifySeedPhrase()
+      await createNewVault(type,password,keypair)
       dispatch(actions.hideLoadingIndication())
-      return seedWords
     } catch (error) {
       dispatch(actions.hideLoadingIndication())
       dispatch(actions.displayWarning(error.message))
@@ -496,14 +667,14 @@ function submitPassword (password) {
   })
 }
 
-function createNewVault (password) {
+function createNewVault (type,password,keypair) {
   return new Promise((resolve, reject) => {
-    background.createNewVaultAndKeychain(password, (error, seedWords) => {
+    background.createNewAccount(type,password,keypair, (error, inst) => {
       if (error) {
+        console.log(error)
         return reject(error)
       }
-
-      resolve(seedWords)
+      resolve(inst)
     })
   })
 }
@@ -1301,12 +1472,14 @@ function setSelectedToken (tokenAddress) {
   }
 }
 
+
 function setSelectedAddress (address) {
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
-    log.debug(`background.setSelectedAddress`)
+    //开始执行
     background.setSelectedAddress(address, (err) => {
       dispatch(actions.hideLoadingIndication())
+      log.debug(`background.setSelectedAddress`)
       if (err) {
         return dispatch(actions.displayWarning(err.message))
       }
@@ -1789,12 +1962,12 @@ function showPrivateKey (key) {
   }
 }
 
-function setAccountLabel (account, label) {
+function setAccountLabel (walletType , account, label) {
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
     log.debug(`background.setAccountLabel`)
     return new Promise((resolve, reject) => {
-      background.setAccountLabel(account, label, (err) => {
+      background.setAccountLabel(walletType,account, label, (err) => {
         dispatch(actions.hideLoadingIndication())
 
         if (err) {
@@ -1804,7 +1977,7 @@ function setAccountLabel (account, label) {
 
         dispatch({
           type: actions.SET_ACCOUNT_LABEL,
-          value: { account, label },
+          value: { walletType,account, label },
         })
 
         resolve(account)
@@ -2034,12 +2207,10 @@ function setCompletedOnboarding () {
     return new Promise((resolve, reject) => {
       background.completeOnboarding(err => {
         dispatch(actions.hideLoadingIndication())
-
         if (err) {
           dispatch(actions.displayWarning(err.message))
           return reject(err)
         }
-
         dispatch(actions.completeOnboarding())
         resolve()
       })
@@ -2138,6 +2309,21 @@ function toggleAccountMenu () {
     type: actions.TOGGLE_ACCOUNT_MENU,
   }
 }
+
+function setImportAccountMode(type) {
+  return {
+    type: actions.SETIMPORTMODE,
+    value:type
+  }
+}
+
+
+function toggleNetworkMenu() {
+  return {
+    type: actions.TOGGLE_NETWORK_MENU,
+  }
+}
+
 
 function setMetaMetricsSendCount (val) {
   return (dispatch) => {

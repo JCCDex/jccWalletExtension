@@ -1,7 +1,7 @@
 const ObservableStore = require('obs-store')
 const extend = require('xtend')
 
-
+// 这是 单链钱包页面的存储逻辑，需要改成 多链钱包
 class PreferencesController {
 
   /**
@@ -42,6 +42,15 @@ class PreferencesController {
       firstTimeFlowType: null,
       currentLocale: opts.initLangCode,
       identities: {},
+      ChainTypeList :[{
+        ChainType :"jingtum",
+        IconUrl:'images/chain/jingtum',
+      },
+      {
+        ChainType :"eth",
+        IconUrl:'images/chain/eth',
+      }],
+      selectedWalletType:"jingtum",
       lostIdentities: {},
       seedWords: null,
       forgottenPassword: false,
@@ -88,6 +97,15 @@ class PreferencesController {
    */
   setUseBlockie (val) {
     this.store.updateState({ useBlockie: val })
+  }
+
+  setSelectedWalletType(type){
+    this.store.updateState({selectedWalletType:type})
+    return Promise.resolve(type)
+  }
+
+  getSelectedWalletType(){
+    return this.store.getState().selectedWalletType
   }
 
   setMetaMetricsSendCount (val) {
@@ -148,14 +166,15 @@ class PreferencesController {
    * @param {string[]} addresses An array of hex addresses
    *
    */
-  setAddresses (wallets) {
+  setAddresses (type,wallets) {
     const oldIdentities = this.store.getState().identities
     const identities = wallets.reduce((ids, wallet, index) => {
       const oldId = oldIdentities[wallet.address] || {}
       const address = wallet.address
-      ids[wallet.address] = {name: `Account ${index}`, address, ...oldId}
+      ids[wallet.address] = {name: `Account ${index}`, address, type,...oldId}
       return ids
     }, {})
+    console.log(identities)
     this.store.updateState({ identities })
   }
 
@@ -191,7 +210,7 @@ class PreferencesController {
    * @param {string[]} addresses An array of hex addresses
    *
    */
-  addAddresses (addresses) {
+  addAddresses (type,addresses) {
     const identities = this.store.getState().identities
     const accountTokens = this.store.getState().accountTokens
     addresses.forEach((address) => {
@@ -201,7 +220,7 @@ class PreferencesController {
       const identityCount = Object.keys(identities).length
 
       accountTokens[address] = {}
-      identities[address] = { name: `Account ${identityCount + 1}`, address }
+      identities[address] = { name: `Account ${identityCount + 1}`, address ,type}
     })
     this.store.updateState({ identities, accountTokens })
   }
@@ -287,16 +306,17 @@ class PreferencesController {
 
   /**
    * Sets a custom label for an account
+   * @param {string} type the type of account
    * @param {string} address the account to set a label for
    * @param {string} label the custom label for the account
    * @return {Promise<string>}
    */
-  setAccountLabel (address, label) {
+  setAccountLabel (walletType,address, label) {
     if (!address) throw new Error('setAccountLabel requires a valid address, got ' + String(address))
-   // const address = account.address
     const {identities} = this.store.getState()
     identities[address] = identities[address] || {}
     identities[address].name = label
+    identities[address].type = walletType;
     this.store.updateState({ identities })
     return Promise.resolve(label)
   }
@@ -377,6 +397,7 @@ class PreferencesController {
    * onboarding process.
    */
   completeOnboarding () {
+    console.log("metamask completeOnboarding()")
     this.store.updateState({ completedOnboarding: true })
     return Promise.resolve(true)
   }

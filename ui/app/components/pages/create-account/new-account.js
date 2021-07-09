@@ -122,7 +122,7 @@ const mapDispatchToProps = dispatch => {
       return dispatch(actions.addNewAccount(password))
         .then(newAccountAddress => {
           if (newAccountName) {
-            dispatch(actions.setAccountLabel(newAccountAddress, newAccountName))
+            dispatch(actions.setAccountLabel("jingtum",newAccountAddress, newAccountName))
           }
         })
     },

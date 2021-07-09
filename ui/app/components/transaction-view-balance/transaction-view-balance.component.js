@@ -64,11 +64,28 @@ export default class TransactionViewBalance extends PureComponent {
 
     return (
       <div className="transaction-view-balance__buttons">
+
+        <Button
+          type="primary"
+          className="transaction-view-balance__button--send"
+          onClick={() => {
+            metricsEvent({
+              eventOpts: {
+                category: 'Navigation',
+                action: 'Home',
+                name: 'Clicked Send',
+              },
+            })
+            history.push(SEND_ROUTE)
+          }}
+        >
+          { t('send') }
+        </Button>
         {
           !selectedToken && (
             <Button
               type="primary"
-              className="transaction-view-balance__button"
+              className="transaction-view-balance__button--reciver"
               onClick={() => {
                 metricsEvent({
                   eventOpts: {
@@ -84,38 +101,6 @@ export default class TransactionViewBalance extends PureComponent {
             </Button>
           )
         }
-        <Button
-          type="primary"
-          className="transaction-view-balance__button"
-          onClick={() => {
-            metricsEvent({
-              eventOpts: {
-                category: 'Navigation',
-                action: 'Home',
-                name: 'Clicked Send',
-              },
-            })
-            history.push(SEND_ROUTE)
-          }}
-        >
-          { t('send') }
-        </Button>
-        <Button
-          type="primary"
-          className="transaction-view-balance__button"
-          onClick={() => {
-            metricsEvent({
-              eventOpts: {
-                category: 'Navigation',
-                action: 'Home',
-                name: 'Clicked Create Order',
-              },
-            })
-            history.push(CREATE_ORDER_ROUTE)
-          }}
-        >
-          { t('CreateOrder') }
-        </Button>
       </div>
     )
   }

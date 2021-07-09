@@ -24,6 +24,9 @@ const INITIALIZE_UNLOCK_ROUTE = '/initialize/unlock'
 const INITIALIZE_CREATE_PASSWORD_ROUTE = '/initialize/create-password'
 const INITIALIZE_IMPORT_ACCOUNT_ROUTE = '/initialize/create-password/import-account'
 const INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE = '/initialize/create-password/import-with-seed-phrase'
+const INITIALIZE_IMPORT_WITH_SECRET = '/initialize/create-password/import-with-secret'
+const INITIALIZE_IMPORT_WITH_KEYSTORE = '/initialize/create-password/import-with-keystore'
+const INITIALIZE_CREATE_PASSWORD = '/initialize/create-password/create-password'
 const INITIALIZE_UNIQUE_IMAGE_ROUTE = '/initialize/create-password/unique-image'
 const INITIALIZE_NOTICE_ROUTE = '/initialize/notice'
 const INITIALIZE_SELECT_ACTION_ROUTE = '/initialize/select-action'
@@ -41,8 +44,24 @@ const CONFIRM_TRANSFER_FROM_PATH = '/transfer-from'
 const CONFIRM_TOKEN_METHOD_PATH = '/token-method'
 const SIGNATURE_REQUEST_PATH = '/signature-request'
 
+const CREATE_WALLET = "/create-wallet"
+
+//非 initialize 路径将会添加 首页的导航，这里省懶劲都搞成 initialize 路径了
+const WALLET_MANAGE = "/initialize/wallet-manage"
+const WALLET_MANAGE_SECRET_EXPORT = "/initialize/wallet-manage/secret-export"
+const WALLET_MANAGE_CHANGE_PASSWORD = "/initialize/wallet-manage/password-change"
+const WALLET_MANAGE_CHANGE_RESTORE = "/initialize/wallet-manage/password-restore"
+
+const WALLET_ADD = "/initialize/wallet-add"
+const WALLET_ADD_BY_CREATE = "/initialize/wallet-add/create"
+const WALLET_ADD_BY_IMPORT = "/initialize/wallet-add/import"
+const WALLET_ADD_SET_NAME = "/initialize/wallet-add/setName"
 module.exports = {
   DEFAULT_ROUTE,
+  WALLET_ADD,
+  WALLET_ADD_BY_IMPORT,
+  WALLET_ADD_BY_CREATE,
+  WALLET_ADD_SET_NAME,
   UNLOCK_ROUTE,
   LOCK_ROUTE,
   SETTINGS_ROUTE,
@@ -52,11 +71,17 @@ module.exports = {
   CONFIRM_SEED_ROUTE,
   RESTORE_VAULT_ROUTE,
   ADD_TOKEN_ROUTE,
+  INITIALIZE_CREATE_PASSWORD,
   CONFIRM_ADD_TOKEN_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
   NEW_ACCOUNT_ROUTE,
   IMPORT_ACCOUNT_ROUTE,
+  CREATE_WALLET,
+  WALLET_MANAGE,
+  WALLET_MANAGE_SECRET_EXPORT,
+  WALLET_MANAGE_CHANGE_PASSWORD,
   CONNECT_HARDWARE_ROUTE,
+  WALLET_MANAGE_CHANGE_RESTORE,
   SEND_ROUTE,
   CREATE_ORDER_ROUTE,
   NOTICE_ROUTE,
@@ -67,6 +92,8 @@ module.exports = {
   INITIALIZE_CREATE_PASSWORD_ROUTE,
   INITIALIZE_IMPORT_ACCOUNT_ROUTE,
   INITIALIZE_IMPORT_WITH_SEED_PHRASE_ROUTE,
+  INITIALIZE_IMPORT_WITH_KEYSTORE,
+  INITIALIZE_IMPORT_WITH_SECRET,
   INITIALIZE_UNIQUE_IMAGE_ROUTE,
   INITIALIZE_NOTICE_ROUTE,
   INITIALIZE_SELECT_ACTION_ROUTE,

@@ -1,0 +1,52 @@
+.wallet-create-select{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    &__item{
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 48px;
+        width: 320px;
+
+
+        &__font{
+            height: 20px;
+            width: auto;
+            height: 20px;
+            opacity: 1;
+            font-size: 14px;
+            font-family: PingFangSC, PingFangSC-Regular;
+            font-weight: 400;
+            text-align: left;
+            color: #232323;
+            line-height: 20px;
+            letter-spacing: 1px;
+        }
+
+        &__icon{
+            width: 8px;
+            height: 14px;
+            margin-left: auto;
+            opacity: 1;
+            background: #a9a9a9;
+        }
+    }
+
+    &__button{
+        width: 320px;
+        height: 46px;
+        opacity: 1;
+        background: #586aff;
+        border-radius: 6px;
+        margin-top: 24px;
+        margin-bottom: 0;
+        color: #ffffff;
+    }
+    
+}

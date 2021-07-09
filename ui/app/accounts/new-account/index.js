@@ -24,7 +24,7 @@ function mapDispatchToProps (dispatch) {
       dispatch(actions.showModal({ name: 'EXPORT_PRIVATE_KEY' }))
     },
     hideModal: () => dispatch(actions.hideModal()),
-    setAccountLabel: (address, label) => dispatch(actions.setAccountLabel(address, label)),
+    setAccountLabel: (walletType,address, label) => dispatch(actions.setAccountLabel(walletType,address, label)),
   }
 }
 

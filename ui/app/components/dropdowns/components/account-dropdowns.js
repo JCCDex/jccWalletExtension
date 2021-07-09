@@ -30,7 +30,7 @@ class AccountDropdowns extends Component {
       const identity = identities[key]
       const isSelected = identity.address === selected
 
-      const balanceValue = accounts[key].balance
+     
       const formattedBalance = balanceValue ? formatBalance(balanceValue, 6, true, ticker) : '...'
       const simpleAddress = identity.address.substring(2).toLowerCase()
 

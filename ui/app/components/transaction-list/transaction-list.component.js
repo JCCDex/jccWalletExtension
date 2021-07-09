@@ -57,21 +57,19 @@ export default class TransactionList extends PureComponent {
           {/* <div className="transaction-list__header">
             { t('history') }
           </div> */}
+          {
+            //TODO 修改tabs 样式
+          }
           <div>
             <Tabs onChange={(key) => this.tabsChange(key)} defaultActiveKey="1">
-            <TabPane tab={t('transfer')} key="1">
+            <TabPane tab={t('asset')} key="1">
             {
               this.state.completedTransactions.length > 0
                 ? this.renderTransaction(this.state.completedTransactions): this.renderEmpty()
+                //TODO add 添加 token 的样式
             }
             </TabPane>
-            <TabPane tab={t('current_commission')} key="2">
-            {
-              this.state.commissionTransaction.length > 0
-                ? this.renderCommissionTransaction(this.state.commissionTransaction): this.renderEmpty()
-            }
-            </TabPane>
-            <TabPane tab={t('transaction_record')} key="3">
+            <TabPane tab={t('transaction_record')} key="2">
             {
               this.state.historyTransactions.length > 0
                 ? this.renderHistoryTransaction(this.state.historyTransactions): this.renderEmpty()

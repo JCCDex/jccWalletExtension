@@ -8,7 +8,7 @@ import log from 'loglevel'
 import { getMetaMaskAccounts } from './selectors'
 
 // init
-import FirstTimeFlow from './components/pages/first-time-flow'
+import FirstTimeFlow from './components/first-time-flow'
 // accounts
 const SendTransactionScreen = require('./components/send/send.container')
 const OrderScreen = require('./components/create-order/order.container')
@@ -28,19 +28,21 @@ const RestoreVaultPage = require('./components/pages/keychains/restore-vault').d
 const RevealSeedConfirmation = require('./components/pages/keychains/reveal-seed')
 const CreateAccountPage = require('./components/pages/create-account')
 const NoticeScreen = require('./components/pages/notice')
-
+import WalletManage  from './components/wallet-manage'
 const Loading = require('./components/loading-screen')
 
 import AccountMenu from './components/account-menu'
+
+import NetworkMenu from './components/network-menu'
 
 // Global Modals
 const Modal = require('./components/modals/index').Modal
 // Global Alert
 const Alert = require('./components/alert')
-
+import TitleBar from './components/titlebar' 
 import AppHeader from './components/app-header'
 import UnlockPage from './components/pages/unlock-page'
-
+import WalletAdd from './components/wallet-add'
 
 // Routes
 import {
@@ -57,6 +59,25 @@ import {
   INITIALIZE_ROUTE,
   INITIALIZE_UNLOCK_ROUTE,
   NOTICE_ROUTE,
+
+  WALLET_MANAGE_SECRET_EXPORT,
+  WALLET_MANAGE_CHANGE_PASSWORD,
+
+  INITIALIZE_CREATE_PASSWORD_ROUTE,
+  INITIALIZE_SELECT_ACTION_ROUTE,
+  INITIALIZE_IMPORT_WITH_SECRET,
+  INITIALIZE_IMPORT_WITH_KEYSTORE,
+  INITIALIZE_CREATE_PASSWORD,
+
+  WALLET_ADD,
+  WALLET_ADD_BY_IMPORT,
+  WALLET_ADD_BY_CREATE,
+  WALLET_ADD_SET_NAME,
+
+  WALLET_MANAGE_CHANGE_RESTORE,
+
+  WALLET_MANAGE
+
 } from './routes'
 
 // enums
@@ -70,22 +91,56 @@ class App extends Component {
     const { currentCurrency} = this.props
 
   }
+  
+  renderTitle () {
+    const { t } = this.context
+    let message =''
+    this.hideAppHeader()
+    switch(this.props.location.pathname){
+      case INITIALIZE_SELECT_ACTION_ROUTE:message = t('getStarted');
+        break;
+      case INITIALIZE_CREATE_PASSWORD_ROUTE:message = t('createKeyPair');break;
+      case INITIALIZE_IMPORT_WITH_SECRET:message = t('importAccount');break;
+      case INITIALIZE_IMPORT_WITH_KEYSTORE:message = t('importAccount');break;
+      case INITIALIZE_CREATE_PASSWORD:message = t('SettingsPassword');break;
+      case WALLET_MANAGE_SECRET_EXPORT:message = t('exportPrivateKey');break;
+      case WALLET_MANAGE_CHANGE_PASSWORD:message = t('ChangePassword');break;
+      case WALLET_MANAGE :message = t('WalletInfo');break;
+      case WALLET_MANAGE_CHANGE_RESTORE:message = t('RestorePassword');break;
+      case WALLET_ADD_BY_IMPORT:message = t('importAccount');break;
+      case WALLET_ADD:message = t('chooseAddMethod');break;
+      case WALLET_ADD_BY_CREATE:message = t('createKeyPair');break;
+      case WALLET_ADD_SET_NAME:message = t('createAWallet');break;
+      default:
+        return;
+
+    }
+    return (
+      <TitleBar title = {message}></TitleBar>
+    )
+  }
 
   renderRoutes () {
+    console.log("app "+this.props.location.pathname)
+    
     return (
-      <Switch>
-        <Route path={LOCK_ROUTE} component={Lock} exact />
-        <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
-        <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
-        <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
-        <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
-        <Authenticated path={SETTINGS_ROUTE} component={Settings} />
-        <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
-        <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
-        <Authenticated path={CREATE_ORDER_ROUTE} component={OrderScreen} exact />
-        <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
-        <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
-      </Switch>
+      <div>
+        <Switch>
+          <Route path={LOCK_ROUTE} component={Lock} exact />
+          <Authenticated path={WALLET_ADD} component={WalletAdd}/>
+          <Authenticated path={WALLET_MANAGE} component ={WalletManage}/>
+          <Route path={INITIALIZE_ROUTE} component={FirstTimeFlow} />
+          <Initialized path={UNLOCK_ROUTE} component={UnlockPage} exact />
+          <Initialized path={RESTORE_VAULT_ROUTE} component={RestoreVaultPage} exact />
+          <Authenticated path={REVEAL_SEED_ROUTE} component={RevealSeedConfirmation} exact />
+          <Authenticated path={SETTINGS_ROUTE} component={Settings} />
+          <Authenticated path={NOTICE_ROUTE} component={NoticeScreen} exact />
+          <Authenticated path={SEND_ROUTE} component={SendTransactionScreen} exact />
+          <Authenticated path={CREATE_ORDER_ROUTE} component={OrderScreen} exact />
+          <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
+          <Authenticated path={DEFAULT_ROUTE} component={Home} exact />
+        </Switch>
+      </div>
     )
   }
 
@@ -147,7 +202,6 @@ class App extends Component {
       props,
     } = sidebar
     const { transaction: sidebarTransaction } = props || {}
-
     return (
       <div
         className="app"
@@ -181,9 +235,11 @@ class App extends Component {
           onOverlayClose={sidebarOnOverlayClose}
         />
         <AccountMenu />
+        <NetworkMenu/>
         <div className="main-container-wrapper">
-          { this.renderRoutes() }
-        </div>
+          {this.renderTitle() }
+          {this.renderRoutes() }
+        </div> 
       </div>
     )
   }
@@ -218,6 +274,7 @@ App.propTypes = {
   location: PropTypes.object,
   dispatch: PropTypes.func,
   toggleAccountMenu: PropTypes.func,
+  toggleNetworkMenu:PropTypes.func,
   selectedAddress: PropTypes.string,
   noActiveNotices: PropTypes.bool,
   lostAccounts: PropTypes.array,
@@ -300,6 +357,7 @@ function mapDispatchToProps (dispatch, ownProps) {
     dispatch,
     hideSidebar: () => dispatch(actions.hideSidebar()),
     toggleAccountMenu: () => dispatch(actions.toggleAccountMenu()),
+    toggleNetworkMenu:() => dispatch(actions.toggleNetworkMenu()),
     setMouseUserState: (isMouseUser) => dispatch(actions.setMouseUserState(isMouseUser)),
   }
 }

@@ -11,6 +11,7 @@ import {
   RESTORE_VAULT_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
 } from '../../../routes'
+import { conversionGreaterThan } from '../../../conversion-util'
 
 export default class Home extends PureComponent {
   static propTypes = {
@@ -40,7 +41,6 @@ export default class Home extends PureComponent {
       seedWords,
       providerRequests,
     } = this.props
-
     // seed words
     if (seedWords) {
      // return <Redirect to={{ pathname: INITIALIZE_SEED_PHRASE_ROUTE }}/>
