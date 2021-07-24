@@ -49,7 +49,7 @@ export default class Welcome extends PureComponent {
         <div className="welcome-page">
         <img
             className="welcome-page__icon"
-            src="/images/logo/JCCwallet.png"
+            src="/images/logo/JCCWallet.png"
             height={110}
             width={111}
           />

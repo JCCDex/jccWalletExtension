@@ -287,34 +287,34 @@ module.exports = class MetamaskController extends EventEmitter {
       throw err
     }
   }
-  //通过 address 和 password 从存储中获取 密钥
-  async getSecret(address,password){
-    const  keystores =  this.keystoresController.store.getState().keystores
+  // 通过 address 和 password 从存储中获取 密钥
+  async getSecret (address, password) {
+    const keystores = this.keystoresController.store.getState().keystores
         console.log(address)
         console.log(password)
         console.log(keystores[address])
-        if(keystores[address]){
+        if (keystores[address]) {
           const inst = new JingchangWallet(keystores[address])
-          return inst.getSecretWithAddress(password,address)
+          return inst.getSecretWithAddress(password, address)
         }
-      return new Error("address not exit")
+      return new Error('address not exit')
   }
 
 
-  async createWalletByType (type){
+  async createWalletByType (type) {
     return walletUtils.createWalletByType(type)
   }
 
-  async checkAddressByType (address,type){
-    return walletUtils.checkAddressByType(address,type)
+  async checkAddressByType (address, type) {
+    return walletUtils.checkAddressByType(address, type)
   }
 
-  async checkSecretByType (secret,type){
-    return walletUtils.checkSecretByType(secret,type)
+  async checkSecretByType (secret, type) {
+    return walletUtils.checkSecretByType(secret, type)
   }
 
-  async getAddress (secret,type){
-    return walletUtils.getAddress(secret,type)
+  async getAddress (secret, type) {
+    return walletUtils.getAddress(secret, type)
   }
 
 
@@ -342,7 +342,7 @@ module.exports = class MetamaskController extends EventEmitter {
         address = jccwallets.address
       }
       const wallets = JingchangWallet.getWallets(JingchangWallet.get())
-      this.preferencesController.setAddresses('jingtum',wallets)
+      this.preferencesController.setAddresses('jingtum', wallets)
       const addrToAdd = []
       addrToAdd.push(address)
       this.accountTracker.addAccounts(addrToAdd)

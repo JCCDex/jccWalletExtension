@@ -15,8 +15,8 @@
     }
   },
   "icons": {
-    "16": "images/JCCwallet.png",
-    "128": "images/JCCwallet.png"
+    "16": "images/JCCWallet.png",
+    "128": "images/JCCWallet.png"
   },
   "default_locale": "en",
   "background": {
@@ -28,10 +28,10 @@
   },
   "browser_action": {
     "default_icon": {
-      "19": "images/JCCwallet.png",
-      "38": "images/JCCwallet.png"
+      "19": "images/JCCWallet.png",
+      "38": "images/JCCWallet.png"
     },
-    "default_title": "JCCwallet",
+    "default_title": "JCCWallet",
     "default_popup": "popup.html"
   },
   "content_scripts": [
