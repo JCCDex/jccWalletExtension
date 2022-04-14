@@ -48,7 +48,7 @@
     "@sentry/browser": "^4.1.1",
     "@zxing/library": "^0.8.0",
     "asmcrypto.js": "0.22.0",
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "await-semaphore": "^0.1.1",
     "babel-runtime": "^6.23.0",
     "bignumber.js": "^4.1.0",
