@@ -76,7 +76,7 @@
     "extension-link-enabler": "^1.0.0",
     "extension-port-stream": "^1.0.0",
     "extensionizer": "^1.0.1",
-    "fast-json-patch": "^2.0.4",
+    "fast-json-patch": "^3.1.1",
     "fast-levenshtein": "^2.0.6",
     "fuse.js": "^3.2.0",
     "hat": "0.0.3",
